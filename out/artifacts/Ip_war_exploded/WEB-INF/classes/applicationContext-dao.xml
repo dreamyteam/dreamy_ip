@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/task 
+      	   http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    <context:component-scan base-package="com.dreamy.dao"/>
+    <context:component-scan base-package="com.dreamy.mapper"/>
+    <bean id="abstractDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          abstract="true" destroy-method="close">
+        <property name="driverClass" value="${connection_driver_class}"/>
+        <property name="idleConnectionTestPeriod"
+                  value="${jdbc_pool_c3p0_idle_connection_test_period}"/>
+        <property name="preferredTestQuery" value="${jdbc_pool_c3p0_preferred_test_query}"/>
+        <property name="maxIdleTime" value="${jdbc_pool_c3p0_max_idle_time}"/>
+        <property name="initialPoolSize" value="${jdbc_pool_c3p0_initial_pool_size}"/>
+        <property name="acquireIncrement" value="${jdbc_pool_c3p0_acquire_increment}"/>
+        <property name="acquireRetryAttempts" value="${jdbc_pool_c3p0_acquire_retry_attempts}"/>
+    </bean>
+
+    <bean id="defaultDataSource" parent="abstractDataSource">
+        <property name="user" value="${jdbc_connection_username}"/>
+        <property name="password" value="${jdbc_connection_password}"/>
+        <property name="jdbcUrl" value="${jdbc_connection_url}"/>
+        <property name="maxPoolSize" value="${jdbc_pool_c3p0_max_size}"/>
+        <property name="minPoolSize" value="${jdbc_pool_c3p0_min_size}"/>
+    </bean>
+
+    <bean id="userBehaviorDataSource" parent="abstractDataSource">
+        <property name="user" value="${jdbc_connection_username}"/>
+        <property name="password" value="${jdbc_connection_password}"/>
+        <property name="jdbcUrl" value="${jdbc_connection_user_behavior_url}"/>
+        <property name="maxPoolSize" value="${jdbc_pool_c3p0_max_size}"/>
+        <property name="minPoolSize" value="${jdbc_pool_c3p0_min_size}"/>
+    </bean>
+
+    <bean id="wechatDataSource" parent="abstractDataSource">
+        <property name="user" value="${jdbc_connection_username}"/>
+        <property name="password" value="${jdbc_connection_password}"/>
+        <property name="jdbcUrl" value="${jdbc_connection_wechat_url}"/>
+        <property name="maxPoolSize" value="${jdbc_pool_c3p0_max_size}"/>
+        <property name="minPoolSize" value="${jdbc_pool_c3p0_min_size}"/>
+    </bean>
+
+    <bean id="messageDataSource" parent="abstractDataSource">
+        <property name="user" value="${jdbc_connection_username}"/>
+        <property name="password" value="${jdbc_connection_password}"/>
+        <property name="jdbcUrl" value="${jdbc_connection_message_url}"/>
+        <property name="maxPoolSize" value="${jdbc_pool_c3p0_max_size}"/>
+        <property name="minPoolSize" value="${jdbc_pool_c3p0_min_size}"/>
+    </bean>
+
+    <bean id="coreDataSource" parent="abstractDataSource">
+        <property name="user" value="${jdbc_connection_username}"/>
+        <property name="password" value="${jdbc_connection_password}"/>
+        <property name="jdbcUrl" value="${jdbc_connection_core_url}"/>
+        <property name="maxPoolSize" value="${jdbc_pool_c3p0_max_size}"/>
+        <property name="minPoolSize" value="${jdbc_pool_c3p0_min_size}"/>
+    </bean>
+
+    <bean id="dataSource" class="com.duotin.dao.shard.database.PartitionDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="wc" value-ref="wechatDataSource"/>
+                <entry key="ub" value-ref="userBehaviorDataSource"/>
+                <entry key="msg" value-ref="messageDataSource"/>
+                <entry key="core" value-ref="coreDataSource"/>
+                <entry key="default" value-ref="defaultDataSource"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="defaultDataSource"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:sqlmap-config.xml"/>
+        <property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean id="shardingInterceptor" class="com.duotin.dao.shard.table.ShardingInterceptor"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.duotin.dao.mapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="mapperInterceptor" class="com.duotin.dao.mapper.interceptor.MapperInterceptor">
+    </bean>
+    <aop:config>
+        <aop:advisor pointcut="execution(* com.duotin.dao.mapper..*(..))"
+                     advice-ref="mapperInterceptor"/>
+    </aop:config>
+
+    <!--单数据源事务-->
+    <bean name="txManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="defaultDataSource"/>
+
+    </bean>
+    <bean name="txManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="wechatDataSource"/>
+
+    </bean>
+
+    <bean id="routingTransactionManager" class="com.duotin.dao.utils.RoutingTransactionManager">
+        <property name="targetTransactionManagers">
+            <map value-type="org.springframework.transaction.PlatformTransactionManager">
+                <entry key="db1" value-ref="txManager1" />
+                <entry key="db2" value-ref="txManager2" />
+
+            </map>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="routingTransactionManager"/>
+
+</beans>
