@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d24f2e4-abef-4220-ae26-5d22566072fb" name="Default" comment="" />
+    <list default="true" id="6d24f2e4-abef-4220-ae26-5d22566072fb" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Jcrop/C:\Users\Administrator\AppData\Roaming\Subversion/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Jcrop/C:\Users\Administrator\AppData\Roaming\Subversion/config" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Jcrop/C:\Users\Administrator\AppData\Roaming\Subversion/servers" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Kindeditor/examples/C:\Users\Administrator\AppData\Roaming\Subversion/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Kindeditor/examples/C:\Users\Administrator\AppData\Roaming\Subversion/config" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/Kindeditor/examples/C:\Users\Administrator\AppData\Roaming\Subversion/servers" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/jwplay/C:\Users\Administrator\AppData\Roaming\Subversion/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/jwplay/C:\Users\Administrator\AppData\Roaming\Subversion/config" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/js/jwplay/C:\Users\Administrator\AppData\Roaming\Subversion/servers" afterPath="" />
+    </list>
     <ignored path="dreamy.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/dashboard/target/" />
@@ -904,12 +914,12 @@
       <option name="presentableId" value="Default" />
       <updated>1460019691942</updated>
       <workItem from="1460019695989" duration="223000" />
-      <workItem from="1460019993408" duration="3486000" />
+      <workItem from="1460019993408" duration="3573000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3709000" />
+    <option name="totallyTimeSpent" value="3796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="20" y="23" width="1260" height="693" extended-state="0" />
