@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d24f2e4-abef-4220-ae26-5d22566072fb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/doc/Android_help.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/doc/C:\Users\Administrator\AppData\Roaming\Subversion/README.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/doc/C:\Users\Administrator\AppData\Roaming\Subversion/config" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/doc/C:\Users\Administrator\AppData\Roaming\Subversion/servers" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/doc/ios_help.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/src/main/webapp/static/readme" afterPath="" />
-    </list>
+    <list default="true" id="6d24f2e4-abef-4220-ae26-5d22566072fb" name="Default" comment="" />
     <ignored path="dreamy.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/dashboard/target/" />
