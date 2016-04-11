@@ -28,33 +28,6 @@ public abstract class DefaultCacheManager {
         }
     }
 
-    /**
-     * 获取缓存
-     *
-     * @param tt
-     * @return
-     */
-    public Object getFormCache(CacheUtil<?> tt) {
-        /**
-         * 缓存key
-         */
-        String key = fetchCache + tt.key();
-        try {
-            if (cacheService.contains(key)) {
-                //已存在缓存
-                return cacheService.get(key);
-            } else {
-                //缓存不存在
-                Object o = tt.get();
-                cacheService.put(key, o);
-                cacheService.putList(fetchCacheIndexKey, key);
-                return o;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * 清除缓存

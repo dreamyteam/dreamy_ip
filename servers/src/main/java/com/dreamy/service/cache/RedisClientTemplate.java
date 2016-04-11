@@ -28,6 +28,7 @@ public class RedisClientTemplate {
         shardedJedis.disconnect();
     }
 
+
     /**
      * 设置单个值
      *
@@ -37,7 +38,6 @@ public class RedisClientTemplate {
      */
     public String set(String key, String value){
         String result = null;
-
         ShardedJedis shardedJedis = redisDataSource.getRedisClient();
         if (shardedJedis == null) {
             return result;
@@ -49,7 +49,6 @@ public class RedisClientTemplate {
             log.error(e.getMessage(), e);
             broken = true;
         } finally {
-
             redisDataSource.returnResource(shardedJedis, broken);
         }
         return result;

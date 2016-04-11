@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="crawler" />
         <module name="dashboard" />
+        <module name="IPcool" />
         <module name="servers" />
         <module name="tools" />
       </profile>
@@ -32,6 +33,7 @@
       <module name="crawler" target="1.6" />
       <module name="dashboard" target="1.7" />
       <module name="dreamy" target="1.5" />
+      <module name="IPcool" target="1.5" />
       <module name="servers" target="1.7" />
       <module name="tools" target="1.6" />
     </bytecodeTargetLevel>

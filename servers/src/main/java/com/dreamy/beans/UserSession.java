@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by wangyongxing on 16/4/1.
  */
-public class UserSession {
+public class UserSession  implements CanonicalSession {
 
     private static final long serialVersionUID = -6308267983694496853L;
 
@@ -87,4 +87,8 @@ public class UserSession {
         this.userKey = userKey;
     }
 
+    @Override
+    public boolean isLogin() {
+        return userId > 0;
+    }
 }

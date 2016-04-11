@@ -40,7 +40,7 @@ $(function(){
 		    <li><a href="${contextPath! }/admin/logout.html" onclick="return confirm('确定需要退出？')" target="_parent" title="点击退出系统">退出</a></li>
 	    </ul>
 	    <div class="user">
-		    <span>${adminLogin.username! }</span>
+		    <span>${thisUser.username! }</span>
 		    <#--<i>消息</i>
 		    <b>5</b>-->
 	    </div>    

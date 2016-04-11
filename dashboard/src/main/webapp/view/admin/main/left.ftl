@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<link href="${staticPath! }/static/css/admin_style.css${staticVersion! }" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="${staticPath! }/static/js/jquery-1.7.1.min.js${staticVersion! }"></script>
+<link href="/static/css/admin_style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="/static/js/jquery-1.7.1.min.js"></script>
 
 <script type="text/javascript">
 $(function(){	
@@ -35,11 +35,11 @@ $(function(){
 	<#list models?keys as item>
 	<dd>
 	    <div class="title">
-	    	<span><img src="${staticPath! }${models[item][0].img! }" /></span>${models[item][0].name! }
+	    	<span><img src="${models[item][0].img! }" /></span>${models[item][0].name! }
 	    </div>
     	<ul class="menuson">
     	<#list models[item][1]?if_exists as entity>
-	        <li><cite></cite><a href="${contextPath! }${entity.url! }" target="mainFrame">${entity.name! }</a><i></i></li>
+	        <li><cite></cite><a href="${entity.url! }" target="mainFrame">${entity.name! }</a><i></i></li>
 	    </#list>
         </ul>
     </dd>

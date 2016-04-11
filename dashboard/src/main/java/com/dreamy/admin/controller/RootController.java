@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class RootController<S extends Object> {
 
     public static final String REQUEST_ATTRIBUTE_USERSESSION = "thisUser";
-    public static final String REQUEST_ATTRIBUTE_USERSESSION_ID = "DUOTIN_USERSESSION_ID";
+    public static final String REQUEST_ATTRIBUTE_USERSESSION_ID = "DREAMY_USERSESSION_ID";
 
     /**
      * 是否启用用户登录信息

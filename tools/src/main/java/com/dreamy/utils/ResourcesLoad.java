@@ -30,7 +30,7 @@ public class ResourcesLoad {
             if (resource != null && resource.length > 0) {
                 Map<String, String> map = new HashMap<String, String>();
                 readProperties(map, resource[0]);
-                String mode = map.get("struts.devMode");
+                String mode = map.get("devMode");
                 if (StringUtils.isNotEmpty(mode)) {
                     devMode = Boolean.valueOf(mode);
                 }

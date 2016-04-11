@@ -1,13 +1,17 @@
 package com.dreamy.test.base.admin;
 
+import com.dreamy.dao.admin.AdminUserDao;
 import com.dreamy.dao.admin.RoleDao;
 import com.dreamy.dao.admin.SysModelDao;
 import com.dreamy.dao.admin.UserRoleDao;
+import com.dreamy.domain.admin.AdminUser;
 import com.dreamy.domain.admin.Role;
 import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.service.admin.SysModelService;
+import com.dreamy.service.cache.CommonService;
 import com.dreamy.test.base.BaseJunitTest;
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,6 +29,10 @@ public class Test extends BaseJunitTest {
     private UserRoleDao userRoleDao;
     @Resource
     SysModelService sysModelService;
+    @Resource
+    AdminUserDao adminUserDao;
+    @Resource
+    CommonService commonService;
 
     @org.junit.Test
     public void insertSysModel() {
@@ -53,5 +61,13 @@ public class Test extends BaseJunitTest {
         List<SysModel> list = sysModelService.getByUserId(2);
         System.out.println(1212);
         list=sysModelService.getAll();
+    }
+    @org.junit.Test
+    public void  insertAdminUuser(){
+        AdminUser adminUser=new AdminUser().username("test");
+        adminUserDao.save(adminUser);
+        commonService.getCacheService().put("1","1");
+
+
     }
 }

@@ -12,7 +12,17 @@ public interface CacheService {
      * @param o
      * @return
      */
-    public Boolean put(String key, Object o) throws Exception;
+    public Boolean put(String key, Object o);
+
+    /**
+     * 设置缓存值
+     *
+     * @param key
+     * @param value  缓存值
+     * @param expire 失效时间(单位秒)
+     */
+    public void set(String key, Object value, int expire);
+
     /**
      * 获取缓存
      * @return

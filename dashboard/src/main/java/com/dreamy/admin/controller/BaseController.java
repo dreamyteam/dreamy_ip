@@ -46,7 +46,7 @@ public class BaseController extends RootController<UserSession> {
      * @param admin
      * @return
      */
-    public UserSession buildUserSession(AdminUser admin) {
+    public UserSession  buildUserSession(AdminUser admin) {
         if (admin != null) {
             UserSession userSession = new UserSession();
             userSession.setUserId(admin.getId());

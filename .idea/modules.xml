@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IPcool/IPcool.iml" filepath="$PROJECT_DIR$/IPcool/IPcool.iml" />
       <module fileurl="file://$PROJECT_DIR$/crawler/crawler.iml" filepath="$PROJECT_DIR$/crawler/crawler.iml" />
       <module fileurl="file://$PROJECT_DIR$/dashboard/dashboard.iml" filepath="$PROJECT_DIR$/dashboard/dashboard.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dreamy.iml" filepath="$PROJECT_DIR$/dreamy.iml" />
       <module fileurl="file://$PROJECT_DIR$/servers/servers.iml" filepath="$PROJECT_DIR$/servers/servers.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
     </modules>
