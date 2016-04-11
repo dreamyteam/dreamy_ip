@@ -4,6 +4,7 @@ import com.dreamy.dao.admin.RoleModelDao;
 import com.dreamy.domain.admin.RoleModel;
 import com.dreamy.domain.admin.RoleModelConditions;
 import com.dreamy.mapper.admin.RoleModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -19,7 +20,10 @@ public class RoleModelDaoImpl extends BaseDaoImpl<RoleModel,Integer,RoleModelCon
     private RoleModelMapper roleModelMapper;
 
     @Override
+    @Autowired
     public void setBaseMapper() {
         super.setBaseMapper(roleModelMapper);
     }
+
+
 }

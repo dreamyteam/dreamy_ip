@@ -61,5 +61,5 @@
         <aop:advisor pointcut="execution(* com.dreamy.mapper..*(..))"
                      advice-ref="mapperInterceptor"/>
     </aop:config>
-    <import resource="applicationContext-redis.xml"/>
+    <import resource="applicationContext-redis-1.xml"/>
 </beans>

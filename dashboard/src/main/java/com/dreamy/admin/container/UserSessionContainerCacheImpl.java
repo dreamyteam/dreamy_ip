@@ -3,7 +3,6 @@ package com.dreamy.admin.container;
 import com.dreamy.beans.CanonicalSession;
 import com.dreamy.beans.UserSessionContainer;
 import com.dreamy.service.cache.CommonService;
-import com.dreamy.service.cache.DefaultCacheManager;
 import com.dreamy.utils.ConstUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by wangyongxing on 16/4/8.
  */
-public class UserSessionContainerCacheImpl <S extends CanonicalSession> implements UserSessionContainer<S> {
+public class UserSessionContainerCacheImpl<S extends CanonicalSession> implements UserSessionContainer<S> {
 
     private static final Logger log = LoggerFactory.getLogger(UserSessionContainerCacheImpl.class);
 
@@ -28,8 +27,11 @@ public class UserSessionContainerCacheImpl <S extends CanonicalSession> implemen
     private String buildRemenberKey(String id) {
         return prefix == null ? id : prefix + "rm_" + id;
     }
+
     @Autowired
-     CommonService commonService;
+
+    CommonService commonService;
+
     public String getPrefix() {
         return prefix;
     }

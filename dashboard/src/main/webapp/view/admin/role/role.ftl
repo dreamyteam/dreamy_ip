@@ -5,10 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<link href="${staticPath! }/static/css/admin_style.css${staticVersion! }" rel="stylesheet" type="text/css" />
-<link href="${staticPath! }/static/css/select.css${staticVersion! }" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${staticPath! }/static/js/jquery-1.7.1.min.js${staticVersion! }"></script>
-<@plugins.msg />
+<link href="static/css/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
 <#-- 全选 -->
 function checkAll(){

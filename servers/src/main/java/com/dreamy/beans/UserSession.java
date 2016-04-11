@@ -3,6 +3,7 @@ package com.dreamy.beans;
 import com.dreamy.utils.StringUtils;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,8 @@ public class UserSession  implements CanonicalSession {
     private String userKey;
 
     private String username;
+
+    private Date loginTime;
 
 
 
@@ -53,7 +56,13 @@ public class UserSession  implements CanonicalSession {
         this.userId = userId;
     }
 
+    public Date getLoginTime() {
+        return loginTime;
+    }
 
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
 
     public void remoteAttribute(String key) {
         attributes.remove(key);

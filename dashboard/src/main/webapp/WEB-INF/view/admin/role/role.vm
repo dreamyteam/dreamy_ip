@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="static/css/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+function checkAll(){
+	var b = $("input[id='allIds']").attr('checked');
+	$("input[name='ids']").attr('checked', b == "checked");
+}
+</script>
+</head>
+
+<body>
+	<div class="place">
+	    <span>位置：</span>
+	    <ul class="placeul">
+		    <li><a href="#">首页</a></li>
+		    <li><a href="#">管理信息</a></li>
+		    <li><a href="#">角色管理</a></li>
+    	</ul>
+    </div>
+    <div class="formbody">
+	    <div id="usual1" class="usual"> 
+	    <div class="itab">
+	  	<ul> 
+		    <li><a href="#tab1" class="selected">角色管理</a></li> 
+	  	</ul>
+    </div> 
+    
+    <div class="rightinfo"  style="overflow:auto;height:500px;" id="contentDiv">
+	  	<div id="tab1" class="tabson">
+		    <div class="tools">
+		    	<ul class="toolbar">
+		        	<li onclick="location.href='/role/view.html'"><span><img src="$!{staticPath}/static/images/t01.png" /></span>新增</li>
+		        </ul>
+		    </div>
+		    
+		    <table class="tablelist">
+		    	<thead>
+			    	<tr>
+				        <th><input id="allIds" type="checkbox" value="" onclick="checkAll();"/></th>
+				        <th>角色名</th>
+				        <th>状态</th>
+				        <th>类型</th>
+				        <th>排序号</th>
+				        <th>创建时间<i class="sort"><img src="$!{staticPath}/static/images/px.gif" /></i></th>
+				        <th>操作</th>
+			        </tr>
+		        </thead>
+		        <tbody>
+				#foreach($item in $list)
+		        <tr title="$!{item.value}">
+			        <td><input name="ids" type="checkbox" value="$!{item.id}" /></td>
+			        <td>$!{item.name}</td>
+			        <td>
+						#if ($!item.status == "1")正常
+						#elseif ($item.status == "2")
+							<label style="color:red">停用</label>
+						#end
+					</td>
+			        <td>
+						#if ($!item.isSys==0)<label style="color:red">系统内置</label>
+							#else
+								用户创建
+						#end
+					</td>
+			        <td>$!{item.displayOrder}</td>
+			        <td>$dateUtils.toString(
+						"yyyy-MM-dd HH:mm:ss",$item.createdAt)</td>
+			        <td>
+			        #if ($!item.isSys==0)
+			        	<a href="/role/view.html?id=$!{item.id}" class="tablelink">查看</a>
+			        #else
+			        	<a href="/role/view.html?id=$!{item.id}" class="tablelink">修改</a>
+			        	<a href="/role/del.html?id=$!{item.id}" class="tablelink" onclick="return confirm('确定需要停用吗？')">停用</a>
+			        #end
+			        </td>
+		        </tr>
+		        #end
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+    
+    <script type="text/javascript">
+    jQuery("#contentDiv").height(jQuery("#mainFrame", window.parent.parent.document).height() - 120);
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+    </div>
+</body>
+
+</html>

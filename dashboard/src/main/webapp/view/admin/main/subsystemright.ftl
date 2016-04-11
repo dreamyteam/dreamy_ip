@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="/static/css/admin_style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="static/js/jquery-1.7.1.min.js${staticVersion! }"></script>
+<script type="text/javascript" src="static/js/jquery-1.7.1.min.js"></script>
 </head>
 <body>
 	<div class="place">
@@ -16,7 +16,7 @@
     
     <div class="mainindex">
     <div class="welinfo">
-	    <span><img src="${staticPath! }/static/images/sun.png" alt="天气" /></span>
+	    <span><img src="/static/images/sun.png" alt="天气" /></span>
 	    <b>您好 ${thisUser.username! }，欢迎使用${platFormName!}</b>
     </div>
     <div class="welinfo">
@@ -24,7 +24,7 @@
     </div>
     <div class="welinfo">
 	    <span><img src="/static/images/time.png" alt="时间" /></span>
-	    <i>您上次登录的时间：${thisUser.loginTime?datetime}</i> （不是您登录的？<a href="${contextPath! }/admin/changePwd.html">请点这里</a>）
+	    <#--<i>您上次登录的时间：${thisUser.loginTime?datetime}</i> （不是您登录的？<a href="${contextPath! }/admin/changePwd.html">请点这里</a>）-->
     </div>
     </div>
 </body>

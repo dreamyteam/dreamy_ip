@@ -8,4 +8,7 @@ import com.dreamy.domain.admin.RoleModelConditions;
  * Created by wangyongxing on 16/4/1.
  */
 public interface RoleModelDao extends BaseDao<RoleModel,Integer,RoleModelConditions> {
+
+
+
 }

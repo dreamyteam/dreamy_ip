@@ -20,7 +20,9 @@ public interface SysModelService {
     public List<SysModel> getAll();
 
 
-    public Map<Integer, Object[]>  findFunctionByUserId(int userId);
+    public Map<Integer, Object[]>  getSysModelMapByUserId(int userId);
+
+
 
 
 }

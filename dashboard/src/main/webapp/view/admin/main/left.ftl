@@ -25,25 +25,12 @@ $(function(){
 	});
 })	
 </script>
-
-
 </head>
-
 <body style="background:#f0f9fd;">
 <div class="lefttop"><span></span>目录导航</div>
 <dl class="leftmenu">
-	<#list models?keys as item>
-	<dd>
-	    <div class="title">
-	    	<span><img src="${models[item][0].img! }" /></span>${models[item][0].name! }
-	    </div>
-    	<ul class="menuson">
-    	<#list models[item][1]?if_exists as entity>
-	        <li><cite></cite><a href="${entity.url! }" target="mainFrame">${entity.name! }</a><i></i></li>
-	    </#list>
-        </ul>
-    </dd>
-    </#list>
+${str!}
+
 </dl>
 </body>
 </html>

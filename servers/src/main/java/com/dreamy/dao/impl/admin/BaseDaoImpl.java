@@ -22,6 +22,8 @@ public abstract class BaseDaoImpl<BaseDomain,ID extends Serializable,T> implemen
         return baseMapper.insertSelective(record);
     }
 
+
+
     @Override
     public BaseDomain selectById(ID id) {
         return baseMapper.selectByPrimaryKey(id);
@@ -31,6 +33,10 @@ public abstract class BaseDaoImpl<BaseDomain,ID extends Serializable,T> implemen
     public int deleteById(ID id) {
         return baseMapper.deleteByPrimaryKey(id);
     }
+    @Override
+    public int deleteByExample(T example) {
+        return baseMapper.deleteByExample(example);
+    }
 
     @Override
     public int countByExample(T example) {
@@ -39,7 +45,7 @@ public abstract class BaseDaoImpl<BaseDomain,ID extends Serializable,T> implemen
 
     @Override
     public int update(BaseDomain record) {
-        return baseMapper.updateByPrimaryKey(record);
+        return baseMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override

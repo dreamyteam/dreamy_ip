@@ -1,6 +1,6 @@
 package com.dreamy.dao;
 
-import com.dreamy.domain.BaseDomain;
+import com.dreamy.domain.admin.RoleModelConditions;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,6 +32,14 @@ public interface BaseDao<BaseDomain, ID extends Serializable, T> {
      * @return
      */
     int deleteById(ID id);
+
+    /**
+     *   根据条件删除实体
+      * @param example
+     * @return
+     */
+    int deleteByExample(T example);
+
 
     /**
      * 更新

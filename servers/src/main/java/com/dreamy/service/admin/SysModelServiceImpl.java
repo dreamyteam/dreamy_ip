@@ -7,6 +7,7 @@ import com.dreamy.domain.admin.SysModelConditions;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,12 +44,11 @@ public class SysModelServiceImpl implements SysModelService {
 
     @Override
     public List<SysModel> queryByRoles(List<Integer> roles) {
+        List<SysModel> list=new ArrayList<SysModel>();
         if(CollectionUtils.isNotEmpty(roles)) {
-            return sysModelDao.selectByRoles(roles);
+            list=sysModelDao.selectByRoles(roles);
         }
-        else{
-            return null;
-        }
+        return list;
     }
 
     @Override
@@ -67,14 +67,19 @@ public class SysModelServiceImpl implements SysModelService {
     }
 
     @Override
-    public Map<Integer, Object[]> findFunctionByUserId(int userId) {
-
-
+    public Map<Integer, Object[]> getSysModelMapByUserId(int userId) {
 
         Map<Integer, List<SysModel>> functionMap = new HashMap<Integer, List<SysModel>>();
-        List<SysModel> sysModels = getByUserId(userId);
-        Map<Integer, Object[]> map= buildMap(sysModels);
+        List<SysModel> sysModels=new ArrayList<>();
+        if(userId<=0)
+        {
+           sysModels=getAll();
+        }
+        else{
+            sysModels= getByUserId(userId);
+        }
 
+        Map<Integer, Object[]> map= buildMap(sysModels);
 
         return map;
     }
