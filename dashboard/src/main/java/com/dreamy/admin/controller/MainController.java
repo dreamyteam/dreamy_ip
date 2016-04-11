@@ -1,7 +1,7 @@
 package com.dreamy.admin.controller;
 
 import com.dreamy.domain.admin.SysModel;
-import com.dreamy.service.admin.SysModelService;
+import com.dreamy.service.iface.admin.SysModelService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;

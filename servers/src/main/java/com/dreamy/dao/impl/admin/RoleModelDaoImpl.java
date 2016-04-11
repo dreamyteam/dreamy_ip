@@ -1,6 +1,7 @@
 package com.dreamy.dao.impl.admin;
 
-import com.dreamy.dao.admin.RoleModelDao;
+import com.dreamy.dao.BaseDaoImpl;
+import com.dreamy.dao.iface.admin.RoleModelDao;
 import com.dreamy.domain.admin.RoleModel;
 import com.dreamy.domain.admin.RoleModelConditions;
 import com.dreamy.mapper.admin.RoleModelMapper;

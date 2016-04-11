@@ -1,9 +1,8 @@
-package com.dreamy.service.admin;
+package com.dreamy.service.iface.admin;
 
 import com.dreamy.domain.admin.Role;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/6.

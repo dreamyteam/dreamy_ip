@@ -6,7 +6,7 @@ import com.dreamy.beans.InterfaceBean;
 import com.dreamy.beans.UserSession;
 import com.dreamy.beans.UserSessionContainer;
 import com.dreamy.domain.admin.AdminUser;
-import com.dreamy.service.admin.AdminUserService;
+import com.dreamy.service.iface.admin.AdminUserService;
 import com.dreamy.utils.HashUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

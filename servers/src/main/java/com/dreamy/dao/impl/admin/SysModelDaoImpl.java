@@ -1,6 +1,7 @@
 package com.dreamy.dao.impl.admin;
 
-import com.dreamy.dao.admin.SysModelDao;
+import com.dreamy.dao.BaseDaoImpl;
+import com.dreamy.dao.iface.admin.SysModelDao;
 import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.SysModelConditions;
 import com.dreamy.mapper.admin.SysModelMapper;

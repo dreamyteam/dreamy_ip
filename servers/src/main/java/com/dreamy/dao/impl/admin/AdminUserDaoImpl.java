@@ -1,6 +1,8 @@
 package com.dreamy.dao.impl.admin;
 
-import com.dreamy.dao.admin.AdminUserDao;
+
+import com.dreamy.dao.BaseDaoImpl;
+import com.dreamy.dao.iface.admin.AdminUserDao;
 import com.dreamy.domain.admin.AdminUser;
 import com.dreamy.domain.admin.AdminUserConditions;
 import com.dreamy.mapper.admin.AdminUserMapper;

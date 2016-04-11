@@ -34,10 +34,10 @@
 		<javaClientGenerator targetPackage="com.dreamy.mapper"
 			targetProject="servers/src/main/java" type="XMLMAPPER" />
 
-		<table tableName="admin_role" domainObjectName="admin.Role">
-			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+		<!--<table tableName="admin_role" domainObjectName="admin.Role">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
-		</table>
+		<!--</table>-->
 		<!--<table tableName="admin_role_model" domainObjectName="admin.RoleModel">-->
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
@@ -55,6 +55,15 @@
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
 		<!--</table>-->
+
+		<table tableName="ip_book" domainObjectName="ipcool.IpBook">
+		<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+
+		</table>
+		<table tableName="book_crawler_info" domainObjectName="ipcool.BookCrawlerInfo">
+			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+
+		</table>
 
 
 	</context>

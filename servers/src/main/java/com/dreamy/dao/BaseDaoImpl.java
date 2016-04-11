@@ -1,4 +1,4 @@
-package com.dreamy.dao.impl.admin;
+package com.dreamy.dao;
 
 import com.dreamy.dao.BaseDao;
 import com.dreamy.mapper.BaseMapper;

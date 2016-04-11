@@ -1,13 +1,14 @@
-package com.dreamy.service.admin;
+package com.dreamy.service.impl.admin;
 
 import com.dreamy.beans.Page;
-import com.dreamy.dao.admin.SysModelDao;
+import com.dreamy.dao.iface.admin.SysModelDao;
 import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.SysModelConditions;
 import com.dreamy.domain.admin.UserRole;
+import com.dreamy.service.iface.admin.SysModelService;
+import com.dreamy.service.iface.admin.UserRoleService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

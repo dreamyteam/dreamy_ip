@@ -1,4 +1,4 @@
-package com.dreamy.dao.admin;
+package com.dreamy.dao.iface.admin;
 
 import com.dreamy.dao.BaseDao;
 import com.dreamy.domain.admin.RoleModel;

@@ -1,7 +1,9 @@
-package com.dreamy.service.admin;
+package com.dreamy.service.impl.admin;
 
-import com.dreamy.dao.admin.AdminUserDao;
+
 import com.dreamy.domain.admin.AdminUser;
+import com.dreamy.dao.iface.admin.AdminUserDao;
+import com.dreamy.service.iface.admin.AdminUserService;
 import com.dreamy.domain.admin.AdminUserConditions;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.dreamy.service.admin;
+package com.dreamy.service.iface.admin;
 
 import com.dreamy.domain.admin.UserRole;
 

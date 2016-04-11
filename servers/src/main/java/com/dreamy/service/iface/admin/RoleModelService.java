@@ -1,8 +1,7 @@
-package com.dreamy.service.admin;
+package com.dreamy.service.iface.admin;
 
 import com.dreamy.domain.admin.RoleModel;
 
-import java.util.List;
 import java.util.Set;
 
 /**

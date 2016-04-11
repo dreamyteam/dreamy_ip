@@ -1,6 +1,7 @@
 package com.dreamy.dao.impl.admin;
 
-import com.dreamy.dao.admin.UserRoleDao;
+import com.dreamy.dao.BaseDaoImpl;
+import com.dreamy.dao.iface.admin.UserRoleDao;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.domain.admin.UserRoleConditions;
 import com.dreamy.mapper.admin.UserRoleMapper;
@@ -14,7 +15,7 @@ import javax.annotation.Resource;
  */
 @SuppressWarnings("unchecked")
 @Repository("userRoleDao")
-public class UserRoleDaoImpl extends BaseDaoImpl<UserRole,Integer,UserRoleConditions>implements UserRoleDao {
+public class UserRoleDaoImpl extends BaseDaoImpl<UserRole,Integer,UserRoleConditions> implements UserRoleDao {
     @Resource
     private UserRoleMapper userRoleMapper;
 
