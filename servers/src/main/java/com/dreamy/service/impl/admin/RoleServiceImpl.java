@@ -1,6 +1,8 @@
 package com.dreamy.service.impl.admin;
 
+import com.dreamy.dao.iface.admin.RoleDao;
 import com.dreamy.domain.admin.Role;
+import com.dreamy.service.iface.admin.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

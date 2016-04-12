@@ -11,19 +11,13 @@ public abstract class AbstractCrawlerHandler implements CrawlerHandler {
 
 	@PostConstruct
 	public void init() {
+
 		crawlerManage.register(this);
 	}
 
-	@Override
-	public Object analye(String url, int type) {
-
-		switch (type) {
-		case CRAWLER_NET_BOOK:
-			return getByUrl(url);
-		case CRAWLER_PUBLISHE_BOOK:
-			return getByUrl(url);
-		default:
-			return null;
-		}
-	}
+	/**
+	 * 处理类的Id
+	 * @return
+	 */
+	public abstract int getId();
 }

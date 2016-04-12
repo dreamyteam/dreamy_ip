@@ -1,16 +1,17 @@
 package com.dreamy.handler;
 
-import com.dreamy.handler.CrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/6.
  */
+@Component
 public class CrawlerManage {
+
 
     private Map<Integer, CrawlerHandler> handlers = new HashMap<Integer, CrawlerHandler>();
 
@@ -21,15 +22,12 @@ public class CrawlerManage {
             return 0;
         }
 
-        @Override
-        public List<BookInfo> analye(String url, int type) {
-            return null;
-        }
 
         @Override
         public BookInfo getByUrl(String url) {
             return null;
         }
+
 
         @Override
         public String analyeUrl(String url) {
@@ -51,13 +49,7 @@ public class CrawlerManage {
         return handler != null ? handler : DEFAULT_HANDLER;
     }
 
-    public Object crawler(int id, String url, int type) {
-        CrawlerHandler handler = getHandler(id);
-        if (handler != null) {
-            return handler.analye(url, type);
-        }
-        return null;
-    }
+
 
     public Map<Integer, CrawlerHandler> getHandlerMap() {
         return handlers;

@@ -1,6 +1,7 @@
 package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 
 import java.util.List;
@@ -10,11 +11,13 @@ import java.util.List;
  */
 public interface IpBookService {
 
-    IpBook save(IpBook ipBook);
+    IpBook save(IpBook ipBook,List<BookCrawlerInfo> list);
 
     IpBook getById(Integer id);
 
     List<IpBook> getIpBookList(IpBook ipBook, Page page);
 
     int update(IpBook ipBook);
+
+    int del(List<Integer> ids);
 }

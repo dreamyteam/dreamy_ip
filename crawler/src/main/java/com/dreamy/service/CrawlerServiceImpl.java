@@ -18,11 +18,6 @@ public class CrawlerServiceImpl implements CrawlerService {
 	private CrawlerManage crawlerManage;
 
 
-	@Override
-	public Object analye(String url, int source, int type) {
-
-		return crawlerManage.crawler(source, url, type);
-	}
 
 
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>爬虫维护</title>
+    <link href="$!{staticPath}/static/css/admin_style.css" rel="stylesheet" type="text/css"/>
+    <link href="$!{staticPath}/static/css/select.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{staticPath}/static/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="$!{staticPath}/static/js/select-ui.min.js"></script>
+    <script>
+
+        function save() {
+            var name = $("#name").val();
+            if (name == "") {
+                addFieldError("名称不能为空");
+                return false;
+            }
+            //表单提交
+            $("#form1").submit();
+        }
+
+        function addFieldError(msg, elem){
+            if(typeof Effects == 'undefined'){
+                alert(msg);
+            }else{
+                Effects.messageBox(msg);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">爬虫管理</a></li>
+        <li><a href="#">爬虫维护</a></li>
+    </ul>
+</div>
+<div class="formbody">
+    <div class="rightinfo" style="overflow:auto;" id="contentDiv">
+        <form action="/crawler/save.html" id="form1" method="post">
+            <input type="hidden" name="id" value="$!{entity.id}"/>
+
+            <div class="formtitle"><span class="sp">文学信息</span></div>
+
+            <ul class="forminfo">
+                <li><label style="width:150px">标题：</label>
+                    <input value="$!{book.title}" id="title" name="title" type="text" class="dfinput-345"
+                           maxlength=200/>
+                </li>
+                <li><label style="width:150px">书名：</label>
+                    <input value="$!{book.name}" id="name" name="name" type="text" class="dfinput-345"
+                           maxlength=200/>
+                </li>
+                <li><label style="width:150px">CODE：</label>
+                    <input value="$!{book.code}" id="code" name="code" type="text" class="dfinput-345"
+                           maxlength=200/>
+                </li>
+                #foreach($item in $list)
+                #if($item.source==1)
+                <li><label style="width:150px">亚马孙平台</label>
+                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[0].source" value="1"/>
+                    <textarea cols="1" rows="1" class="textinput" name="infos[0].url" >$!{item.url}</textarea>
+                </li>
+                #elseif($item.source==2)
+                <li><label style="width:150px">京东书城</label>
+                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[1].source" value="2"/>
+                    <textarea cols="3" rows="3" class="textinput" name="infos[1].url" >$!{item.url}</textarea>
+                </li>
+                #elseif($item.source==3)
+                <li><label style="width:150px">当当书城</label>
+                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[2].source" value="3"/>
+                    <textarea cols="1" rows="1" class="textinput" name="infos[2].url">$!{item.url}</textarea>
+                </li>
+                #elseif($item.source==4)
+                <li><label style="width:150px">豆瓣平台</label>
+                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[3].source" value="4"/>
+                    <textarea cols="1" rows="1" class="textinput" name="infos[3].url" >$!{item.url}</textarea>
+                </li>
+                    #end
+                #end
+
+
+                <li>
+                    <label style="width:150px">&nbsp;</label>
+                    <input name="" type="button" class="btn" value="保存" onclick="save()"/>
+                    <input name="" type="button" class="btn" value="返回"
+                           onclick="location.href='/crawler.html'"/>
+                </li>
+            </ul>
+    </div>
+    </form>
+</div>
+</div>
+</body>
+<script>
+    jQuery("#contentDiv").width(jQuery("#mainFrame", window.parent.parent.document).width() - 45).height(jQuery("#mainFrame", window.parent.parent.document).height() - 65);
+    $(document).ready(function () {
+        $(".select3").uedSelect({
+            width: 150
+        });
+    });
+</script>
+</html>

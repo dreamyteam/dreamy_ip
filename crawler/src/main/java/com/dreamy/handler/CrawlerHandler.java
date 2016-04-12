@@ -1,9 +1,6 @@
 package com.dreamy.handler;
 
-import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
-
-import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/6.
@@ -11,28 +8,16 @@ import java.util.List;
 public interface CrawlerHandler {
 
 
-    public static final int CRAWLER_NET_BOOK = 1;
-    public static final int CRAWLER_PUBLISHE_BOOK = 2;
-
 
     public int getId();
 
-    /**
-     * 解析链接对应网页
-     *
-     * @param url
-     *            目标链接地址
-     * @param type
-     *            解析类型（专辑，单节目，热门）
-     * @return
-     */
-    public Object analye(String url, int type);
+
 
     /**
-     * 解析链接获得专辑信息
+     * 解析链接获得信息
      *
      * @param url
-     *            目标链接地址
+     * 目标链接地址
      * @return
      */
     public BookInfo getByUrl(String url);

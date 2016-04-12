@@ -13,7 +13,16 @@
 		   http://www.springframework.org/schema/util/spring-util-3.0.xsd"
        default-lazy-init="true">
 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:rabbitmq_develop.properties</value>
+                <value>classpath:jdbc_develop.properties</value>
+                <value>classpath:redis-develop.properties</value>
 
+            </list>
+        </property>
+    </bean>
     <context:component-scan base-package="com.dreamy.admin"/>
 
 
@@ -89,6 +98,7 @@
             <props>
                 <prop key="input.encoding">utf-8</prop>
                 <prop key="output.encoding">utf-8</prop>
+                <prop key="velocimacro.library">/macro/macros.vm</prop>
             </props>
         </property>
     </bean>
@@ -149,7 +159,7 @@
             <property name="cookieHandler" ref="sessionCookieHandler"/>
 
         </bean>
-        <bean class="com.dreamy.admin.interceptor.AdvertiseWebContentInterceptor"/>
+        <bean class="com.dreamy.admin.interceptor.DashboardWebContentInterceptor"/>
 
     </mvc:interceptors>
 
@@ -166,6 +176,7 @@
     </bean>
 
 
-    <import resource="classpath:applicationContext-cop.xml"/>
+    <import resource="classpath:applicationContext-dao.xml"/>
+    <import resource="applicationContext-rabbitmq.xml"/>
 
 </beans>

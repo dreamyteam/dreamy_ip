@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="$!{staticPath}/static/css/admin_style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{staticPath}/static/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="$!{staticPath}/static/js/calendar/WdatePicker.js"></script>
+    <script type="text/javascript">
+
+        function checkAll() {
+            var b = $("input[name='allIds']").attr('checked');
+            $("input[name='ids']").attr('checked', b == "checked");
+        }
+
+
+        function doDelete(id) {
+            if (confirm("确定需要删除？")) {
+                location.href = '/crawler/del.html?&ids=' + id;
+            }
+        }
+
+        function deleteAll() {
+            var i = $("input[type='checkbox'][name='ids']:checked").length;
+            if (i <= 0) {
+                addFieldError("请先选择需要删除的数据");
+            } else {
+                if (confirm("确定需要删除？")) {
+                    var form2 = document.getElementById("form1");
+                    form2.action = "/crawler/del.html";
+                    form2.submit();
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">爬虫管理</a></li>
+        <li><a href="#">爬虫列表</a></li>
+    </ul>
+</div>
+<div class="formbody">
+    <div class="itab">
+        <ul>
+            <li><a href="/literary/publish">出版文学</a></li>
+            <li><a href="#tab1" class="selected">网络文学</a></li>
+
+        </ul>
+    </div>
+    <div class="rightinfo" style="overflow:auto;height:500px;" id="contentDiv">
+        <form id="form1" action="/crawler.html" method="post">
+            <div class="tools">
+                <ul class="toolbar">
+                    <li onclick="location.href='/crawler/insert.html'" class=".toolbar li"><span><img
+                            src="$!{staticPath}/static/images/t01.png"/></span>新增
+                    </li>
+                    <li onclick="deleteAll()"><span><img src="$!{staticPath}/static/images/t03.png"/></span>删除
+                    </li>
+                    名称：<input name="name" value="$!{ipBook.name}" type="text" class="scinput-150"/>
+                    时间：<input type="text" name="startTime" id="startTime" value="" onclick="WdatePicker();"
+                              class="scinput-150" readonly/>
+                    <input type="text" name="endTime" id="endTime" value="" onclick="WdatePicker();"
+                           class="scinput-150" readonly/>
+                    <input name="" type="submit" class="scbtn" value="查询"/>
+                </ul>
+            </div>
+            <table class="tablelist">
+                <thead>
+                <tr>
+                    <th><input name="allIds" type="checkbox" value="" onclick="checkAll();"/></th>
+                    <th>标题</th>
+                    <th>书名</th>
+                    <th>CODE</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($item in $list)
+                    <tr title="$!{item.title}">
+                        <td><input name="ids" type="checkbox" value="$!{item.id}"/></td>
+                        <td>$!{item.title}</td>
+                        <td>$!{item.name}</td>
+                        <td>$!{item.code}</td>
+                        <td>
+                            #if($item.status==1)
+
+                                启用中
+                            #elseif($item.status==-1)
+                                 删除
+
+
+                            #end</td>
+
+                        <td>
+                            <a href="/crawler/view.html?id=$!{item.id}" class="tablelink">查看</a>
+                            <a href="/crawler/edit.html?id=$!{item.id}" class="tablelink">修改</a> |
+                            <a href="javascript:doDelete('$!{item.id}')" class="tablelink"> 删除</a>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+        </form>
+        <div class="pagin">
+            #page($!page,"/crawler.html")
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery("#contentDiv").height(jQuery("#mainFrame", window.parent.parent.document).height() - 120);
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+</body>
+</html>

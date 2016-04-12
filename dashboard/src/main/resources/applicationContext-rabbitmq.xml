@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://www.springframework.org/schema/rabbit  
+       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+       http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!--队列服务-->
+    <bean id="queueService" class="com.dreamy.service.mq.QueueServiceImpl">
+        <property name="template" ref="amqpTemplate"/>
+        <property name="rabbitTemplate" ref="defaultTemplate"/>
+    </bean>
+
+    <!-- 连接服务配置  -->
+    <rabbit:connection-factory
+            id="connectionFactory"
+            host="${rabbit_host}"
+            port="${rabbit_port}"
+            username="${rabbit_username}"
+            password="${rabbit_password}"
+            channel-cache-size="${channel_cache_size}"/>
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!--配置模版-->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="data.listen"/>
+
+    <!--默认配置模版-->
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
+
+    <!--队列声明-->
+    <rabbit:queue name="${queue_crawler_event}"/>
+
+
+    <!--交换器声明-->
+    <rabbit:direct-exchange name="data.listen" >
+        <rabbit:bindings>
+            <rabbit:binding queue="${queue_crawler_event}"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter" />
+
+    <bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
+
+
+</beans>  

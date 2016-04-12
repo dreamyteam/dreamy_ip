@@ -28,10 +28,10 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 			Document document = Jsoup.parse(html);
 			if (document != null) {
 				BookInfo bean = new BookInfo();
-				Elements images = document.select("div.content >ul>li");
-				if (images != null && images.size() > 0) {
+				Elements infos = document.select("div.content >ul>li");
+				if (infos != null && infos.size() > 0) {
 
-					Element title = images.first();
+					Element title = infos.first();
 					if (title != null) {
 						String content=title.text();
 						if(StringUtils.isNotEmpty(content))
