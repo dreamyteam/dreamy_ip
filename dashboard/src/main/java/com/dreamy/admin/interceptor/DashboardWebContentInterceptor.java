@@ -24,8 +24,6 @@ public class DashboardWebContentInterceptor extends WebContentInterceptor {
         if (super.preHandle(request, response, arg)) {
             if (arg != null && arg instanceof DashboardBaseController) {
                 DashboardBaseController controller = (DashboardBaseController) arg;
-                System.out.println(controller.enableUserSession()+"wqwqwq");
-                System.out.println(controller.checkLogin()+"wyyy");
                 if (controller.enableUserSession() && controller.checkLogin()) {
                     UserSession userSession = controller.getUserSession(request);
                     if (userSession == null || !userSession.isLogin()) {

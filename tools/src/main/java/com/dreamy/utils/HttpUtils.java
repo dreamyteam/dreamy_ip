@@ -50,6 +50,12 @@ public class HttpUtils {
         return getHtmlGet(tempurl, "utf-8", null, 0, null, null, null, null);
     }
 
+
+    public static String getHtmlGetBycharSet(String tempurl,String charSet ) {
+        return getHtmlGet(tempurl,charSet, null, 0, null, null, null, null);
+    }
+
+
     /**
      * get方法获取网页
      *

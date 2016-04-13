@@ -1,6 +1,5 @@
 package com.dreamy.handler;
 
-import com.dreamy.handler.AbstractCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.HttpUtils;
@@ -13,7 +12,7 @@ import org.jsoup.select.Elements;
 /**
  * Created by wangyongxing on 16/4/6.
  */
-public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
+public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public int getId() {
         return ConstUtil.CRAWLER_SOURCE_DD;
@@ -22,40 +21,21 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
 
-        String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        String html = HttpUtils.getHtmlGetBycharSet(url, "utf-8");
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
-            if (document != null) {
-                BookInfo bean = new BookInfo();
-                //作品内容
-                Elements contents = document.getElementById("content").getElementsByTag("textarea");
-                if (contents != null && contents.size() > 0) {
-                    Element content = contents.first();
-                    bean.setInfo(content.text());
-                }
-                //编辑评论
-                Elements infos = document.getElementById("abstract").getElementsByTag("textarea");
-                if (infos != null && infos.size() > 0) {
-                    Element content = infos.first();
-                    bean.setComment(content.text());
-                }
-                //作者信息
-                Elements authorintro = document.getElementById("authorintro").getElementsByTag("textarea");
-                if (authorintro != null && authorintro.size() > 0) {
-                    Element content = authorintro.first();
-                    bean.setAuthorInfo(content.text());
-                }
-                //图片
-                Element image = document.getElementById("largePic");
-                if (image != null) {
-                    bean.setImage(image.attr("src"));
-                }
+            if(document!=null)
+            {
+                BookInfo bean=new BookInfo();
+            }
+
+
+
 
 
             }
 
 
-        }
         return null;
 
     }

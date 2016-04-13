@@ -22,34 +22,53 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
 
-        String html = HttpUtils.getHtmlGet(url, "http://www.qidian.com/Book/3620214.aspx");
+        String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
-                Elements images = document.select("div.pic_box >a>img");
-                if (images != null && images.size() > 0) {
+                Element author = document.getElementById("p-author");
+                bean.setAuthor(author.text());
+                Element image = document.getElementById("spec-n1").getElementsByTag("img").first();
+                bean.setImage(image.attr("src"));
+                bean.setTitle(image.attr("alt"));
 
-                    Element image = images.first();
-                    if (image != null) {
-                        System.out.println(image.attr("src"));
-                    }
-                }
 
             }
-            Elements images = document.select("div.book_info>div.title>h1");
-            System.out.println(images.first().text());
-            Elements images1 = document.select("div.book_info>div.title>span").first().getElementsByAttributeValue("itemprop","name");
-            Elements images11 = document.getElementById("divBookInfo").getElementsByAttributeValue("itemprop","name");
-
-            System.out.println(11);
-
 
 
         }
         return null;
 
     }
+
+    /**
+     * 解析出版社 出版时间
+     * @param bookInfo
+     * @param document
+     */
+    private void pushTime(BookInfo bookInfo, Document document) {
+
+        Elements types = document.select("ul.p-parameter-list>li");
+        if (types != null && types.size() > 0) {
+            bookInfo.setPress(types.get(0).attr("title"));
+            bookInfo.setPushTime(types.get(7).attr("title"));
+        }
+    }
+
+    /**
+     * 编辑评论
+     * @param bookInfo
+     * @param document
+     */
+    private void comment(BookInfo bookInfo, Document document) {
+
+
+        Element comment = document.getElementsByClass("book-detail-content").first();
+        bookInfo.setComment(comment.text());
+    }
+
+
 
 
 

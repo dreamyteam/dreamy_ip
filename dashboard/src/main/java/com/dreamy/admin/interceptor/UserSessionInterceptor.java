@@ -10,6 +10,7 @@ import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +23,10 @@ import java.util.UUID;
  * @date Nov 7, 2014 5:44:59 PM
  */
 @SuppressWarnings("unchecked")
-public class UserSessionInterceptor<S extends CanonicalSession> implements HandlerInterceptor {
+public class UserSessionInterceptor<S extends CanonicalSession> extends HandlerInterceptorAdapter {
     private NamedThreadLocal<Long>  startTimeThreadLocal =
             new NamedThreadLocal<Long>("StopWatch-StartTime");
+
 
     private CookieHandler cookieHandler;
 
@@ -40,6 +42,8 @@ public class UserSessionInterceptor<S extends CanonicalSession> implements Handl
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             handler = handlerMethod.getBean();
         }
+        long beginTime = System.currentTimeMillis();//1、开始时间
+        startTimeThreadLocal.set(beginTime);
         if (handler instanceof RootController) {
             RootController<S> controller = (RootController<S>) handler;
             if (controller.enableUserSession() && controller.getUserSessionId(request) == null) {

@@ -29,7 +29,7 @@ public class BookInfo {
     /**
      * 总点击数量
      */
-    private Integer clickNum;
+    private String clickNum;
     /**
      * 封面
      */
@@ -48,11 +48,13 @@ public class BookInfo {
     /**
      * 评分
      */
-    private Double score;
+    private String score;
     /**
      * 作者简介
      */
     private String authorInfo;
+
+    private String comment;
 
     private List<Comment> commentList;
 
@@ -104,12 +106,20 @@ public class BookInfo {
         this.saleSort = saleSort;
     }
 
-    public Integer getClickNum() {
+    public String getClickNum() {
         return clickNum;
     }
 
-    public void setClickNum(Integer clickNum) {
+    public void setClickNum(String clickNum) {
         this.clickNum = clickNum;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public String getImage() {
@@ -144,13 +154,6 @@ public class BookInfo {
         this.lable = lable;
     }
 
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
-    }
 
     public String getAuthorInfo() {
         return authorInfo;
@@ -158,5 +161,13 @@ public class BookInfo {
 
     public void setAuthorInfo(String authorInfo) {
         this.authorInfo = authorInfo;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
