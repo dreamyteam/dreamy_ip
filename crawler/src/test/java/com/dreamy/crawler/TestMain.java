@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -164,7 +163,7 @@ public class TestMain {
     }
 
 
-    public static void mainww(String[] args) {
+    public static void main(String[] args) {
         String url = "http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0";
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         //System.out.println(html);
@@ -209,12 +208,21 @@ public class TestMain {
                 System.out.println(content.attr("src"));
             }
 
+            Elements types2 = document.getElementsByClass("breadcrumb");
+            if (types2 != null && types2.size() > 0) {
+
+                for (Element element : types2) {
+                    System.out.println(element.text());
+
+                }
+            }
+
         }
     }
 
 
-    public static void main(String[] args) {
-        String url = "https://book.douban.com/subject/25733653/";
+    public static void mainD(String[] args) {
+        String url = "https://book.douban.com/subject/1770782/";
         String html = HttpUtils.getHtmlGetBycharSet(url, "utf-8");
 
         if (StringUtils.isNotEmpty(html)) {
@@ -237,7 +245,40 @@ public class TestMain {
                     }
 
                 }
+                Elements elementsss = document.getElementById("mainpic").getElementsByTag("img");
+                if(elements!=null&&elementsss.size()>0)
+                {
+                    Element element1=elementsss.first();
+                    System.out.println(element1.attr("src"));
+                }
+
+                Element elements1 = document.getElementsByClass("rating_people").first();
+                System.out.println(elements1.text()+"121212");
+
             }
+
+            Elements elements = document.select("div.intro");
+            if(elements!=null&&elements.size()>0)
+            {
+                for(Element element:elements)
+                {
+                    System.out.println(element.text());
+                }
+
+            }
+
+            Elements elementss = document.select("div.blank20>div.indent>span>a");
+            if(elementss!=null&&elementss.size()>0)
+            {
+                for(Element element:elementss)
+                {
+                    System.out.println(element.text());
+                }
+
+            }
+
+            Element elements1 = document.select("div.rating_wrap>div.rating_self>strong").first();
+            System.out.println(elements1.text());
         }
     }
 }
