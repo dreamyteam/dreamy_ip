@@ -29,16 +29,13 @@ public class AdminLoginService {
     public InterfaceBean doLogin(LoginParam loginParam) {
         InterfaceBean bean = new InterfaceBean().success();
         if (loginParam != null) {
-            if (StringUtils.isNotEmpty(loginParam.getPhone())) {
+            if (StringUtils.isNotEmpty(loginParam.getUserName())) {
                 if (StringUtils.isNotEmpty(loginParam.getPassword())) {
-                    AdminUser adminUser = adminUserService.getByUsername(loginParam.getPhone());
+                    AdminUser adminUser = adminUserService.getByUsername(loginParam.getUserName());
                     if (adminUser != null) {
-                        System.out.println(HashUtils.md5(loginParam.getPassword()));
+
                         if (HashUtils.md5(loginParam.getPassword()).equals(adminUser.getPassword())) {
-                            //增加登录记录e10adc3949ba59abbe56e057f20f883e
-
-
-                            //redis增加登录信息
+                            //增加登录信息
                             addRedisSession(loginParam.getSessionId(), adminUser);
                             bean.setData(adminUser);
                         } else {
@@ -50,8 +47,6 @@ public class AdminLoginService {
                 } else {
                     bean.failure(Constants.InterfacebBeanCode.FAILURE, "用户密码不能为空!");
                 }
-            } else {
-                bean.failure(Constants.InterfacebBeanCode.FAILURE, "登录手机号不能为空!");
             }
         } else {
             bean.failure(Constants.InterfacebBeanCode.FAILURE, "系统错误!");

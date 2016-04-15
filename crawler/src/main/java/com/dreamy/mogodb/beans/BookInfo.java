@@ -56,6 +56,8 @@ public class BookInfo {
 
     private String comment;
 
+    private String tags;
+
     private List<Comment> commentList;
 
     public String getPress() {
@@ -169,5 +171,13 @@ public class BookInfo {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

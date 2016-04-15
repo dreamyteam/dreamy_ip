@@ -1,19 +1,25 @@
 package com.dreamy.handler;
 
-import com.dreamy.handler.AbstractCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by wangyongxing on 16/4/6.
  */
 public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
+
+    private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
+
     @Override
     public int getId() {
         return ConstUtil.CRAWLER_SOURCE_DD;
@@ -21,6 +27,21 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
+//        SeleniumDownloader seleniumDownloader = new SeleniumDownloader(chromeDriverPath);
+//        seleniumDownloader.setSleepTime(10000);
+//        long time1 = System.currentTimeMillis();
+//        Page page = seleniumDownloader.download(new Request("http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0"), new Task() {
+//            @Override
+//            public String getUUID() {
+//                return "product.dangdang.com";
+//            }
+//
+//            @Override
+//            public Site getSite() {
+//                return Site.me();
+//            }
+//        });
+//        System.out.println(page.getHtml());
 
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         if (StringUtils.isNotEmpty(html)) {
@@ -50,6 +71,12 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 if (image != null) {
                     bean.setImage(image.attr("src"));
                 }
+                getAuthor(bean, document);
+                getClickNum(bean, document);
+                getType(bean, document);
+                getTitle(bean, document);
+                saleSort(bean, document);
+                return bean;
 
 
             }
@@ -72,7 +99,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             int size = content.size();
             bookInfo.setAuthor(content.get(0).text());
             bookInfo.setPress(content.get(1).text());
-            bookInfo.setPushTime(content.get(2).text());
+            bookInfo.setPushTime(date(content.get(2).text()));
 
         }
     }
@@ -99,9 +126,93 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
+    /**
+     * 解析作者 出版社 出版时间
+     *
+     * @param bookInfo
+     * @param document
+     */
+    private void getTitle(BookInfo bookInfo, Document document) {
+        Elements elements = document.getElementsByAttributeValue("name", "keywords");
+        Element element = elements.first();
+        String content = element.attr("content");
+        if (StringUtils.isNotEmpty(content)) {
+            String arr[] = content.split(",");
+            int size = arr.length;
+            if (size > 3) {
+                bookInfo.setTitle(arr[0]);
+                bookInfo.setAuthor(arr[1]);
+                bookInfo.setPress(arr[2]);
+            }
+
+        }
+    }
+
+    /**
+     * 销售排名
+     * @param bookInfo
+     * @param document
+     */
+    public void saleSort(BookInfo bookInfo, Document document) {
+        Element element = document.getElementById("pid_span");
+
+
+        if (element != null) {
+            String product_id = element.attr("product_id");
+            String url = " http://product.dangdang.com/pricestock/callback.php?type=getpublishbangv2&product_id=" + product_id;
+            String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+            String str[] = result.split(";");
+            if (str != null && str.length > 1) {
+                String s = str[str.length - 1];
+                String info = PatternUtils.getNum(s);
+                bookInfo.setSaleSort(info);
+            }
+
+
+        }
+    }
+    /**
+     * 销售排名
+     * @param bookInfo
+     * @param document
+     */
+    public void score(BookInfo bookInfo, Document document) {
+        Element element = document.getElementById("pid_span");
+
+
+        if (element != null) {
+            String product_id = element.attr("product_id");
+            String url="http://product.dangdang.com/comment/comment.php?product_id="+product_id+"&datatype=1&page=1&filtertype=1&sysfilter=1";
+
+            String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+            System.out.println(result);
+
+
+        }
+    }
+
+
+    public static String date(String content) {
+        String result = "";
+        Pattern p = Pattern
+                .compile("[0-9]{4}[年|\\-|/][0-9]{1,2}[月|\\-|/]");
+        Matcher m = p.matcher(content);
+        while (m.find()) {
+            if (!"".equals(m.group())) {
+                result = m.group();
+            }
+        }
+        return result;
+    }
+
+
     @Override
     public String analyeUrl(String url) {
         return null;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 

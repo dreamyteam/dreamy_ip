@@ -5,17 +5,17 @@ package com.dreamy.admin.beans;
  */
 public class LoginParam {
 
-    private String phone;
+    private String userName;
     private String password;
     private String ip;
     private String sessionId;
 
-    public String getPhone() {
-        return phone;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getSessionId() {
@@ -44,15 +44,15 @@ public class LoginParam {
 
     /***
      * 工厂方法
-     * @param phone
+     * @param userName
      * @param password
      * @param ip
      * @param sessionId
      * @return
      */
-    public static LoginParam getNewInstance(String phone, String password, String ip, String sessionId) {
+    public static LoginParam getNewInstance(String userName, String password, String ip, String sessionId) {
         LoginParam loginParam = new LoginParam();
-        loginParam.setPhone(phone);
+        loginParam.setUserName(userName);
         loginParam.setPassword(password);
         loginParam.setIp(ip);
         loginParam.setSessionId(sessionId);

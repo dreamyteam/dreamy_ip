@@ -70,9 +70,8 @@ public class SysModelServiceImpl implements SysModelService {
     @Override
     public Map<Integer, Object[]> getSysModelMapByUserId(int userId) {
 
-        Map<Integer, List<SysModel>> functionMap = new HashMap<Integer, List<SysModel>>();
         List<SysModel> sysModels=new ArrayList<>();
-        if(userId<=0)
+        if(userId==1)
         {
            sysModels=getAll();
         }
