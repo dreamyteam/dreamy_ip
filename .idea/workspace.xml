@@ -90,7 +90,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tools/src/test/java/com/dreamy/test/base/HuabanProcessor.java" />
         <option value="$PROJECT_DIR$/crawler/src/main/java/com/dreamy/handler/AbstractCrawlerHandler.java" />
         <option value="$PROJECT_DIR$/crawler/src/main/java/com/dreamy/WebDriverPool.java" />
         <option value="$PROJECT_DIR$/crawler/src/main/java/com/dreamy/Downloader.java" />
@@ -141,6 +140,7 @@
         <option value="$PROJECT_DIR$/dashboard/src/main/java/com/dreamy/admin/controller/crawler/CrawlerController.java" />
         <option value="$PROJECT_DIR$/dashboard/src/main/webapp/WEB-INF/view/crawler/ipbook.vm" />
         <option value="$PROJECT_DIR$/dashboard/src/main/webapp/WEB-INF/view/crawler/ipbook-edit.vm" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -1100,7 +1100,7 @@
       <workItem from="1460706007785" duration="299000" />
       <workItem from="1460706768424" duration="116000" />
       <workItem from="1460707035344" duration="69000" />
-      <workItem from="1460708026966" duration="74000" />
+      <workItem from="1460708026966" duration="613000" />
     </task>
     <servers />
   </component>
@@ -1137,7 +1137,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155080000" />
+    <option name="totallyTimeSpent" value="155619000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
