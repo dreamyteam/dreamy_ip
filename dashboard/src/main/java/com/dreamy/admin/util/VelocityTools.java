@@ -1,5 +1,8 @@
 package com.dreamy.admin.util;
 
+import com.dreamy.utils.CollectionUtils;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +18,9 @@ public class VelocityTools {
      * @return
      */
     public static Boolean contains(Set<Integer> list, Integer id) {
-        return list.contains(id);
+        if(CollectionUtils.isNotEmpty(list)) {
+            return list.contains(id);
+        }
+        return false;
     }
 }

@@ -22,4 +22,17 @@ public class UserRoleServiceImpl implements UserRoleService {
         roleConditions.createCriteria().andAdminIdEqualTo(userId);
         return userRoleDao.selectByExample(roleConditions);
     }
+
+    @Override
+    public void save(UserRole userRole) {
+        userRoleDao.save(userRole);
+
+    }
+
+    @Override
+    public int updateRoleId(UserRole userRole) {
+        UserRoleConditions userRoleConditions=new UserRoleConditions();
+        userRoleConditions.createCriteria().andAdminIdEqualTo(userRole.getAdminId());
+        return userRoleDao.updateByExampleSelective(userRole,userRoleConditions);
+    }
 }

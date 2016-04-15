@@ -2,12 +2,12 @@ package com.dreamy.mapper.ipcool;
 
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
+import java.util.List;
+
 import com.dreamy.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-public interface BookCrawlerInfoMapper extends BaseMapper<BookCrawlerInfo,Integer,BookCrawlerInfoConditions> {
+public interface BookCrawlerInfoMapper extends BaseMapper<BookCrawlerInfo,Integer,BookCrawlerInfoConditions>{
     int countByExample(BookCrawlerInfoConditions example);
 
     int deleteByExample(BookCrawlerInfoConditions example);

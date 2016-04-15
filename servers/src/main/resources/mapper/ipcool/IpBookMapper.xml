@@ -8,7 +8,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
-    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, title, name, type, created_at, update_at, status
+    id, code, title, name, type, created_at, updated_at, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.IpBookConditions" >
     select
@@ -105,10 +105,10 @@
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.IpBook" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book (code, title, name, 
-      type, created_at, update_at, 
+      type, created_at, updated_at, 
       status)
     values (#{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.IpBook" useGeneratedKeys="true" keyProperty="id" >
@@ -129,8 +129,8 @@
       <if test="createdAt != null" >
         created_at,
       </if>
-      <if test="updateAt != null" >
-        update_at,
+      <if test="updatedAt != null" >
+        updated_at,
       </if>
       <if test="status != null" >
         status,
@@ -152,8 +152,8 @@
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -187,8 +187,8 @@
       <if test="record.createdAt != null" >
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateAt != null" >
-        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
@@ -206,7 +206,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -230,8 +230,8 @@
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -246,7 +246,7 @@
       name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -35,9 +35,9 @@ $(function(){
     <div class="topright">    
 	    <ul>
 	    	<li><a id="message" style="color:#FFFF00;" href="#" ></a></i></li>
-		    <li><span><img src="$!{staticPath}/static/images/help.png" title="密码修改" class="helpimg"/></span><a href="changePwd.html" target="mainFrame">密码修改</a></li>
+		    <li><span><img src="$!{staticPath}/static/images/help.png" title="密码修改" class="helpimg"/></span><a href="/adminUser/changePwd.html" target="mainFrame">密码修改</a></li>
 		    <li><a href="#">关于</a></li>
-		    <li><a href="$!{contextPath}/admin/logout.html" onclick="return confirm('确定需要退出？')" target="_parent" title="点击退出系统">退出</a></li>
+		    <li><a href="$!{contextPath}/logout.html" onclick="return confirm('确定需要退出？')" target="_parent" title="点击退出系统">退出</a></li>
 	    </ul>
 	    <div class="user">
 		    <span>$!{thisUser.username}</span>

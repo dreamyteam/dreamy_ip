@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by wangyongxing on 16/4/1.
  */
 @Controller
-@RequestMapping(value = {"/admin/login", "/"})
+@RequestMapping(value = {"/login", "/"})
 public class LoginController extends DashboardBaseController {
 
     @Resource
@@ -67,6 +67,7 @@ public class LoginController extends DashboardBaseController {
 
         return "/admin/main/login";
     }
+
 
 
 }

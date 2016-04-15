@@ -42,19 +42,19 @@ function doSave(){
 	    <div style="overflow:auto;height:500px" id="contentDiv">
 		    <ul class="forminfo">
 			    <li><label>类型：</label>
-				#if ($entity.isSys==0)
+				#if ($role.isSys==0)
 					<label style="color:red">系统内置</label>
 				#else
                     <label style="color:red">用户创建</label>
 				#end
 				</li>
-			    <li><label>角色名：</label><input name="name" id="name" value="$!{entity.name}" type="text" class="dfinput-345" maxlength="30"/></li>
+			    <li><label>角色名：</label><input name="name" id="name" value="$!{role.name}" type="text" class="dfinput-345" maxlength="30"/></li>
 			    <li><label>状态：</label>
 			    	<label><input type="radio" name="status" value="1" checked/> 正常</label>
-			    	<label><input type="radio" name="status" value="2" #if ($entity.status==2)checked #end/> 停用</label>
+			    	<label><input type="radio" name="status" value="2" #if ($role.status==2)checked #end/> 停用</label>
 			    </li>
-			    <li><label>排序号：</label><input name="displayOrder" id="displayOrder" value="$!{entity.displayOrder}" type="text" class="dfinput-345" maxlength="2"/></li>
-			    <li><label>首页地址：</label><input name="indexUrl" id="indexUrl" value="$!{entity.indexUrl}" type="text" class="dfinput-345" /></li>
+			    <li><label>排序号：</label><input name="displayOrder" id="displayOrder" value="$!{role.displayOrder}" type="text" class="dfinput-345" maxlength="2"/></li>
+			    <li><label>首页地址：</label><input name="indexUrl" id="indexUrl" value="$!{role.indexUrl}" type="text" class="dfinput-345" /></li>
 			</ul>
 		    
 		    <ul class="forminfo">

@@ -7,15 +7,13 @@ import java.util.Date;
 public class AdminUser extends BaseDomain<Integer> implements Serializable {
     private Integer id;
 
-    private String username;
+    private String userName;
 
     private String password;
 
     private String photo;
 
-    private String state;
-
-    private Date createdAt;
+    private Integer status;
 
     private Date loginTime;
 
@@ -27,9 +25,11 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
 
     private String telphone;
 
-    private String realname;
+    private Date createdAt;
 
-    private Date updateAt;
+    private String realName;
+
+    private Date updatedAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -41,12 +41,12 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -65,20 +65,12 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         this.photo = photo;
     }
 
-    public String getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getLoginTime() {
@@ -121,20 +113,28 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         this.telphone = telphone;
     }
 
-    public String getRealname() {
-        return realname;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -150,18 +150,18 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         }
         AdminUser other = (AdminUser) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
+            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getPhoto() == null ? other.getPhoto() == null : this.getPhoto().equals(other.getPhoto()))
-            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
-            && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getLoginTime() == null ? other.getLoginTime() == null : this.getLoginTime().equals(other.getLoginTime()))
             && (this.getLoginIp() == null ? other.getLoginIp() == null : this.getLoginIp().equals(other.getLoginIp()))
             && (this.getIsSys() == null ? other.getIsSys() == null : this.getIsSys().equals(other.getIsSys()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getTelphone() == null ? other.getTelphone() == null : this.getTelphone().equals(other.getTelphone()))
-            && (this.getRealname() == null ? other.getRealname() == null : this.getRealname().equals(other.getRealname()))
-            && (this.getUpdateAt() == null ? other.getUpdateAt() == null : this.getUpdateAt().equals(other.getUpdateAt()));
+            && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
+            && (this.getRealName() == null ? other.getRealName() == null : this.getRealName().equals(other.getRealName()))
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
     }
 
     @Override
@@ -169,18 +169,18 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
+        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getPhoto() == null) ? 0 : getPhoto().hashCode());
-        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
-        result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getLoginTime() == null) ? 0 : getLoginTime().hashCode());
         result = prime * result + ((getLoginIp() == null) ? 0 : getLoginIp().hashCode());
         result = prime * result + ((getIsSys() == null) ? 0 : getIsSys().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getTelphone() == null) ? 0 : getTelphone().hashCode());
-        result = prime * result + ((getRealname() == null) ? 0 : getRealname().hashCode());
-        result = prime * result + ((getUpdateAt() == null) ? 0 : getUpdateAt().hashCode());
+        result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
+        result = prime * result + ((getRealName() == null) ? 0 : getRealName().hashCode());
+        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         return result;
     }
 
@@ -189,8 +189,8 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public AdminUser username(String value) {
-        this.username = value;
+    public AdminUser userName(String value) {
+        this.userName = value;
         return this;
     }
 
@@ -204,13 +204,8 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public AdminUser state(String value) {
-        this.state = value;
-        return this;
-    }
-
-    public AdminUser createdAt(Date value) {
-        this.createdAt = value;
+    public AdminUser status(Integer value) {
+        this.status = value;
         return this;
     }
 
@@ -239,17 +234,18 @@ public class AdminUser extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public AdminUser realname(String value) {
-        this.realname = value;
+    public AdminUser createdAt(Date value) {
+        this.createdAt = value;
         return this;
     }
 
-    public AdminUser updateAt(Date value) {
-        this.updateAt = value;
+    public AdminUser realName(String value) {
+        this.realName = value;
         return this;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        
+    public AdminUser updatedAt(Date value) {
+        this.updatedAt = value;
+        return this;
     }
 }

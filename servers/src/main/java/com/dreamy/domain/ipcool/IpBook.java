@@ -17,7 +17,7 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
 
     private Date createdAt;
 
-    private Date updateAt;
+    private Date updatedAt;
 
     private Integer status;
 
@@ -71,12 +71,12 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Integer getStatus() {
@@ -105,7 +105,7 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdateAt() == null ? other.getUpdateAt() == null : this.getUpdateAt().equals(other.getUpdateAt()))
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
@@ -119,7 +119,7 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
-        result = prime * result + ((getUpdateAt() == null) ? 0 : getUpdateAt().hashCode());
+        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
@@ -154,17 +154,13 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public IpBook updateAt(Date value) {
-        this.updateAt = value;
+    public IpBook updatedAt(Date value) {
+        this.updatedAt = value;
         return this;
     }
 
     public IpBook status(Integer value) {
         this.status = value;
         return this;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        
     }
 }

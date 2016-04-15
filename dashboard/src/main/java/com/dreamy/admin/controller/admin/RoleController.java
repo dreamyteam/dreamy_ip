@@ -56,17 +56,17 @@ public class RoleController extends DashboardController {
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String view(@RequestParam(value = "id", required = false) Integer id, ModelMap model) {
         if (id != null) {
-            Role entity = roleService.getRoleById(id);
+            Role role = roleService.getRoleById(id);
            if(id<=1)
            {
                id=0;
            }
             Set<Integer> list = roleModelService.getRoleModelList(id);
-            model.put("entity", entity);
+            model.put("role", role);
             model.put("list", list);
         }
         //获取模块
-        Map<Integer, Object[]> data = sysModelService.getSysModelMapByUserId(0);
+        Map<Integer, Object[]> data = sysModelService.getSysModelMapByUserId(1);
         model.put("data", data);
 
         return "/admin/role/role-view";
@@ -101,14 +101,42 @@ public class RoleController extends DashboardController {
     }
 
     /**
-     * 修改角色
+     * 删除角色
      *
      * @return
      */
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    @RequestMapping(value = "/del")
     public String del( @RequestParam(value = "id", required = true) Integer id) {
+        Role role=new Role().status(-1).id(id);
+        roleService.update(role);
+        return redirect("/role.html");
+    }
+
+    /**
+     * 停用角色
+     *
+     * @return
+     */
+    @RequestMapping(value = "/disable")
+    public String disable(@RequestParam(value = "id", required = true) Integer id) {
         Role role=new Role().status(2).id(id);
         roleService.update(role);
         return redirect("/role.html");
     }
+
+
+    /**
+     * 启用角色
+     *
+     * @return
+     */
+    @RequestMapping(value = "/enable")
+    public String enable(@RequestParam(value = "id", required = true) Integer id) {
+        Role role=new Role().status(1).id(id);
+        roleService.update(role);
+        return redirect("/role.html");
+    }
+
 }
+
+

@@ -17,7 +17,7 @@ public interface IpBookService {
 
     List<IpBook> getIpBookList(IpBook ipBook, Page page);
 
-    int update(IpBook ipBook);
+    int update(IpBook ipBook,List<BookCrawlerInfo> list);
 
     int del(List<Integer> ids);
 }

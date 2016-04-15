@@ -13,7 +13,7 @@ public class UserRole extends BaseDomain<Integer> implements Serializable {
 
     private Date createdAt;
 
-    private Date updateAt;
+    private Date updatedAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -49,12 +49,12 @@ public class UserRole extends BaseDomain<Integer> implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class UserRole extends BaseDomain<Integer> implements Serializable {
             && (this.getAdminId() == null ? other.getAdminId() == null : this.getAdminId().equals(other.getAdminId()))
             && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdateAt() == null ? other.getUpdateAt() == null : this.getUpdateAt().equals(other.getUpdateAt()));
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class UserRole extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getAdminId() == null) ? 0 : getAdminId().hashCode());
         result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
-        result = prime * result + ((getUpdateAt() == null) ? 0 : getUpdateAt().hashCode());
+        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         return result;
     }
 
@@ -108,12 +108,8 @@ public class UserRole extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public UserRole updateAt(Date value) {
-        this.updateAt = value;
+    public UserRole updatedAt(Date value) {
+        this.updatedAt = value;
         return this;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        
     }
 }

@@ -10,7 +10,7 @@
     <result column="is_use" property="isUse" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
-    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, parent_id, name, img, url, is_use, order_id, created_at, update_at
+    id, parent_id, name, img, url, is_use, order_id, created_at, updated_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.admin.SysModelConditions" >
     select
@@ -107,10 +107,10 @@
   <insert id="insert" parameterType="com.dreamy.domain.admin.SysModel" useGeneratedKeys="true" keyProperty="id" >
     insert into sys_model (parent_id, name, img, 
       url, is_use, order_id, 
-      created_at, update_at)
+      created_at, updated_at)
     values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{isUse,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.admin.SysModel" useGeneratedKeys="true" keyProperty="id" >
     insert into sys_model
@@ -136,8 +136,8 @@
       <if test="createdAt != null" >
         created_at,
       </if>
-      <if test="updateAt != null" >
-        update_at,
+      <if test="updatedAt != null" >
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -162,8 +162,8 @@
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -200,8 +200,8 @@
       <if test="record.createdAt != null" >
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateAt != null" >
-        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -218,7 +218,7 @@
       is_use = #{record.isUse,jdbcType=INTEGER},
       order_id = #{record.orderId,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      update_at = #{record.updateAt,jdbcType=TIMESTAMP}
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -247,8 +247,8 @@
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -262,7 +262,7 @@
       is_use = #{isUse,jdbcType=INTEGER},
       order_id = #{orderId,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >
@@ -270,7 +270,6 @@
       limit  #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
     </if>
   </sql>
-
   <select id="selectByRoles" resultMap="BaseResultMap" >
 
     select  DISTINCT sys_model.* from sys_model  LEFT JOIN admin_role_model  on sys_model.id=admin_role_model.model_id where

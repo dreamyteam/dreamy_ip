@@ -27,7 +27,7 @@ public class DashboardWebContentInterceptor extends WebContentInterceptor {
                 if (controller.enableUserSession() && controller.checkLogin()) {
                     UserSession userSession = controller.getUserSession(request);
                     if (userSession == null || !userSession.isLogin()) {
-                        response.sendRedirect("/admin/login?service="
+                        response.sendRedirect("/login?service="
                                 + HttpUtils.encodeUrl(HttpUtils.getFullUrl(request)));
                         return Boolean.FALSE;
                     }

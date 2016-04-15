@@ -17,7 +17,7 @@ public class BookCrawlerInfo extends BaseDomain<Integer> implements Serializable
 
     private Date createdAt;
 
-    private Date updateAt;
+    private Date updatedAt;
 
     private Integer remark;
 
@@ -71,12 +71,12 @@ public class BookCrawlerInfo extends BaseDomain<Integer> implements Serializable
         this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Integer getRemark() {
@@ -105,7 +105,7 @@ public class BookCrawlerInfo extends BaseDomain<Integer> implements Serializable
             && (this.getSource() == null ? other.getSource() == null : this.getSource().equals(other.getSource()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdateAt() == null ? other.getUpdateAt() == null : this.getUpdateAt().equals(other.getUpdateAt()))
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
             && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()));
     }
 
@@ -119,7 +119,7 @@ public class BookCrawlerInfo extends BaseDomain<Integer> implements Serializable
         result = prime * result + ((getSource() == null) ? 0 : getSource().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
-        result = prime * result + ((getUpdateAt() == null) ? 0 : getUpdateAt().hashCode());
+        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         return result;
     }
@@ -154,17 +154,13 @@ public class BookCrawlerInfo extends BaseDomain<Integer> implements Serializable
         return this;
     }
 
-    public BookCrawlerInfo updateAt(Date value) {
-        this.updateAt = value;
+    public BookCrawlerInfo updatedAt(Date value) {
+        this.updatedAt = value;
         return this;
     }
 
     public BookCrawlerInfo remark(Integer value) {
         this.remark = value;
         return this;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        
     }
 }

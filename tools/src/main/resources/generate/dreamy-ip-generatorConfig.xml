@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<classPathEntry location="/Users/wangyongxing/project/dreamy/mysql-connector-java-5.1.36.jar" />
+	<classPathEntry location="/Users/wangyongxing/project/dreamy_ip/mysql-connector-java-5.1.36.jar" />
 	<context id="context1" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
@@ -56,14 +56,14 @@
 
 		<!--</table>-->
 
-		<table tableName="ip_book" domainObjectName="ipcool.IpBook">
-		<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+		<!--<table tableName="ip_book" domainObjectName="ipcool.IpBook">-->
+		<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
-		</table>
-		<table tableName="book_crawler_info" domainObjectName="ipcool.BookCrawlerInfo">
-			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+		<!--</table>-->
+		<!--<table tableName="book_crawler_info" domainObjectName="ipcool.BookCrawlerInfo">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
-		</table>
+		<!--</table>-->
 
 
 	</context>

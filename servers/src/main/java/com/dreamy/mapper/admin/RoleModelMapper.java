@@ -7,7 +7,7 @@ import java.util.List;
 import com.dreamy.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface RoleModelMapper extends  BaseMapper<RoleModel,Integer,RoleModelConditions> {
+public interface RoleModelMapper extends BaseMapper<RoleModel,Integer,RoleModelConditions> {
     int countByExample(RoleModelConditions example);
 
     int deleteByExample(RoleModelConditions example);

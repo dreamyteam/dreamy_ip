@@ -63,7 +63,7 @@ public class Test extends BaseJunitTest {
     }
     @org.junit.Test
     public void  insertAdminUuser(){
-        AdminUser adminUser=new AdminUser().username("test");
+        AdminUser adminUser=new AdminUser().userName("test");
         adminUserDao.save(adminUser);
         commonService.getCacheService().put("1","1");
 

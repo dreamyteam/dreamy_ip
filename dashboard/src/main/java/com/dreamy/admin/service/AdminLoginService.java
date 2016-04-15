@@ -60,7 +60,7 @@ public class AdminLoginService {
         if (adminUser != null && StringUtils.isNotEmpty(sessionId)) {
             UserSession session = new UserSession();
             session.setUserId(adminUser.getId());
-            session.setUsername(adminUser.getUsername());
+            session.setUsername(adminUser.getUserName());
             if (session != null) {
                 userSessionContainer.set(sessionId, session);
             }

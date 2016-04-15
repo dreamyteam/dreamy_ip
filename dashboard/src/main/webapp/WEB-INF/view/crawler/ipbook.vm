@@ -60,7 +60,10 @@
                     </li>
                     <li onclick="deleteAll()"><span><img src="$!{staticPath}/static/images/t03.png"/></span>删除
                     </li>
-                    名称：<input name="name" value="$!{ipBook.name}" type="text" class="scinput-150"/>
+                    </li>
+                    标题：<input name="title" value="$!{ipBook.title}" type="text" class="scinput-150"/>
+
+                    书名：<input name="name" value="$!{ipBook.name}" type="text" class="scinput-150"/>
                     时间：<input type="text" name="startTime" id="startTime" value="" onclick="WdatePicker();"
                               class="scinput-150" readonly/>
                     <input type="text" name="endTime" id="endTime" value="" onclick="WdatePicker();"

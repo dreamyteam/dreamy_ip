@@ -6,7 +6,7 @@
     <result column="admin_id" property="adminId" jdbcType="INTEGER" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
-    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, admin_id, role_id, created_at, update_at
+    id, admin_id, role_id, created_at, updated_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.admin.UserRoleConditions" >
     select
@@ -102,9 +102,9 @@
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.admin.UserRole" useGeneratedKeys="true" keyProperty="id" >
     insert into admin_to_role (admin_id, role_id, created_at, 
-      update_at)
+      updated_at)
     values (#{adminId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP})
+      #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.admin.UserRole" useGeneratedKeys="true" keyProperty="id" >
     insert into admin_to_role
@@ -118,8 +118,8 @@
       <if test="createdAt != null" >
         created_at,
       </if>
-      <if test="updateAt != null" >
-        update_at,
+      <if test="updatedAt != null" >
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -132,8 +132,8 @@
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -158,8 +158,8 @@
       <if test="record.createdAt != null" >
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateAt != null" >
-        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,7 +172,7 @@
       admin_id = #{record.adminId,jdbcType=INTEGER},
       role_id = #{record.roleId,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      update_at = #{record.updateAt,jdbcType=TIMESTAMP}
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -189,8 +189,8 @@
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null" >
-        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -200,7 +200,7 @@
     set admin_id = #{adminId,jdbcType=INTEGER},
       role_id = #{roleId,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >

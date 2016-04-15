@@ -75,8 +75,14 @@ function checkAll(){
 			        #if ($!item.isSys==0)
 			        	<a href="/role/view.html?id=$!{item.id}" class="tablelink">查看</a>
 			        #else
-			        	<a href="/role/view.html?id=$!{item.id}" class="tablelink">修改</a>
-			        	<a href="/role/del.html?id=$!{item.id}" class="tablelink" onclick="return confirm('确定需要停用吗？')">停用</a>
+                        <a href="/role/view.html?id=$!{item.id}" class="tablelink">修改</a>
+						#if($item.status==1)
+                            |<a href="/role/disable.html?id=$!{item.id}" class="tablelink" onclick="return confirm('确定需要停用吗？')">停用</a>
+						#elseif($item.status==2)
+                            |<a href="/role/enable.html?id=$!{item.id}" class="tablelink" onclick="return confirm('确定需要启用吗？')">启用</a>
+						#end
+
+
 			        #end
 			        </td>
 		        </tr>

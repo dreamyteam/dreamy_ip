@@ -42,7 +42,7 @@
 <div class="formbody">
     <div class="rightinfo" style="overflow:auto;" id="contentDiv">
         <form action="/crawler/save.html" id="form1" method="post">
-            <input type="hidden" name="id" value="$!{entity.id}"/>
+            <input type="hidden" name="id" value="$!{book.id}"/>
 
             <div class="formtitle"><span class="sp">文学信息</span></div>
 
@@ -68,19 +68,19 @@
                 </li>
                 #elseif($item.source==2)
                 <li><label style="width:150px">京东书城</label>
-                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[1].id" value="$!{item.id}"/>
                     <input type="hidden" name="infos[1].source" value="2"/>
                     <textarea cols="3" rows="3" class="textinput" name="infos[1].url" >$!{item.url}</textarea>
                 </li>
                 #elseif($item.source==3)
                 <li><label style="width:150px">当当书城</label>
-                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[2].id" value="$!{item.id}"/>
                     <input type="hidden" name="infos[2].source" value="3"/>
                     <textarea cols="1" rows="1" class="textinput" name="infos[2].url">$!{item.url}</textarea>
                 </li>
                 #elseif($item.source==4)
                 <li><label style="width:150px">豆瓣平台</label>
-                    <input type="hidden" name="infos[0].id" value="$!{item.id}"/>
+                    <input type="hidden" name="infos[3].id" value="$!{item.id}"/>
                     <input type="hidden" name="infos[3].source" value="4"/>
                     <textarea cols="1" rows="1" class="textinput" name="infos[3].url" >$!{item.url}</textarea>
                 </li>

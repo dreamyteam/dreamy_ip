@@ -14,4 +14,8 @@ public interface UserRoleService {
     * @return
             */
     public List<UserRole> getUserToRoleList(Integer userId);
+
+    public void save(UserRole userRole);
+
+    public int updateRoleId(UserRole userRole);
 }

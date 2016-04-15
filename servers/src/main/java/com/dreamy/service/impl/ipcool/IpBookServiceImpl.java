@@ -57,7 +57,12 @@ public class IpBookServiceImpl implements IpBookService {
     }
 
     @Override
-    public int update(IpBook ipBook) {
+    public int update(IpBook ipBook,List<BookCrawlerInfo> list) {
+        for (BookCrawlerInfo bookCrawlerInfo : list) {
+            bookCrawlerInfo.status(1);
+            bookCrawlerInfo.setBookId(ipBook.getId());
+            bookCrawlerInfoDao.save(bookCrawlerInfo);
+        }
         return ipBookDao.update(ipBook);
     }
 

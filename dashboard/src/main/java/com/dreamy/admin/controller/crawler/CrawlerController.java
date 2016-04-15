@@ -88,7 +88,7 @@ public class CrawlerController extends DashboardController {
     public String update(IpBook ipBook, BookCrawlerModel infos) {
         List<BookCrawlerInfo> list = infos.getInfos();
         if (ipBook.getId() != null && ipBook.getId() > 0) {
-            ipBookService.update(ipBook);
+            ipBookService.update(ipBook,list);
         } else {
             ipBook.type(1);
             ipBook.status(1);

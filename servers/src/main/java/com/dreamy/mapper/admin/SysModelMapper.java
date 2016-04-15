@@ -31,4 +31,6 @@ public interface SysModelMapper extends BaseMapper<SysModel,Integer,SysModelCond
     int updateByPrimaryKey(SysModel record);
 
     List<SysModel> selectByRoles(@Param("roles") List<Integer> roles);
+
+
 }
