@@ -2,11 +2,16 @@ package com.dreamy.crawler;
 
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
+import com.mongodb.util.JSON;
+import com.rabbitmq.tools.json.JSONUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -216,6 +221,32 @@ public class TestMain {
 
                 }
             }
+            Element element = document.getElementById("pid_span");
+
+
+            if (element != null) {
+                String product_id = element.attr("product_id");
+                String url1 = " http://product.dangdang.com/pricestock/callback.php?type=getpublishbangv2&product_id=" + product_id;
+                String aa = HttpUtils.getHtmlGetBycharSet(url1,"gbk");
+                String str[]=aa.split(";");
+
+
+                String s=str[str.length-1];
+                String regex = "<span class=\"num\">1</span>位";
+                String newStr = "";
+                String s1 = s.replaceAll(regex, newStr);
+                System.out.println(s1);
+
+                String url11="http://product.dangdang.com/comment/comment.php?product_id="+product_id+"&datatype=1&page=1&filtertype=1&sysfilter=1";
+
+                String result = HttpUtils.getHtmlGetBycharSet(url11, "gbk");
+                Map<String,Object> map= JsonUtils.toMap(result);
+                Map<String,Object> map1=(Map<String,Object> )map.get("rateInfo");
+                System.out.println(map1.get("good_rate"));
+            }
+
+
+
 
         }
     }
@@ -279,8 +310,17 @@ public class TestMain {
 
             Element elements1 = document.select("div.rating_wrap>div.rating_self>strong").first();
             System.out.println(elements1.text());
+
+
+            }
         }
-    }
+
+
+
+
+
+
+
 }
 
 

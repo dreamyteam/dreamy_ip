@@ -1,7 +1,8 @@
 package com.dreamy.crawler;
 
-import com.dreamy.handler.AmazonCrawlerHandler;
 import com.dreamy.handler.CrawlerHandler;
+import com.dreamy.handler.DangDangCrawlerHandler;
+import com.dreamy.handler.DouBanCrawlerHandler;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.Member;
@@ -55,14 +56,23 @@ public class test extends BaseJunitTest {
 
     }
 
-
-    public void testLetvAlbum() {
-        String url="http://www.amazon.cn/gp/product/B00VWVAFAG/ref=s9_acsd_ri_bw_rw_r0_p8_i?pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=merchandised-search-5&pf_rd_r=0KFAPX9E42KMYPW0V164&pf_rd_t=101&pf_rd_p=261616452&pf_rd_i=658390051";
-        CrawlerHandler crawlerHandler = new AmazonCrawlerHandler();
-        BookInfo albumBean = (BookInfo) crawlerHandler.getByUrl(url);
-        if (albumBean != null) {
+    @Test
+    public void testDouban() {
+        String url = "https://book.douban.com/subject/1770782/";
+        CrawlerHandler crawlerHandler = new DouBanCrawlerHandler();
+        BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
+        if (bookInfo != null) {
 
         }
-        assertNotNull(albumBean);
+    }
+    @Test
+    public void testDangdang() {
+        String url = "http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0";
+        CrawlerHandler crawlerHandler = new DangDangCrawlerHandler();
+        BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
+        if (bookInfo != null) {
+
+        }
+        assertNotNull(bookInfo);
     }
 }

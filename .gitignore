@@ -8,8 +8,7 @@ build.sh
 /.DS_Store
 org.eclipse.wst.common.component
 dreamy.iml
-cramler.iml
-biz/biz.iml
-dashboard.iml
-servers.iml
-tools.iml
+crawler/crawler.iml
+dashboard/dashboard.iml
+servers/servers.iml
+tools/tools.iml
