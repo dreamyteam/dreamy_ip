@@ -36,7 +36,7 @@ function doSave(){
     </div>
     
     <form id="form1" action="/role/update.html" method="post">
-	    <input type="hidden" name="id" value="$!{entity.id}" />
+	    <input type="hidden" name="id" value="$!{role.id}" />
 	    <div class="formbody">
 	    <div class="formtitle"><span class="sp">基本信息</span></div>
 	    <div style="overflow:auto;height:500px" id="contentDiv">
