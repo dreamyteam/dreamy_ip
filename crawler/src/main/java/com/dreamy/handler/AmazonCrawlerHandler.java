@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return ConstUtil.CRAWLER_SOURCE_AMAZON;
     }
 

@@ -11,7 +11,6 @@ public abstract class AbstractCrawlerHandler implements CrawlerHandler {
 
 	@PostConstruct
 	public void init() {
-
 		crawlerManage.register(this);
 	}
 
@@ -19,5 +18,5 @@ public abstract class AbstractCrawlerHandler implements CrawlerHandler {
 	 * 处理类的Id
 	 * @return
 	 */
-	public abstract int getId();
+	public abstract Integer getId();
 }

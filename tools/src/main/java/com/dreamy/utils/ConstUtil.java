@@ -10,22 +10,22 @@ import java.util.Map;
 public class ConstUtil {
 
 
-    public static final int CRAWLER_SOURCE_AMAZON = 1;
-    public static final int CRAWLER_SOURCE_JD = 2;
-    public static final int CRAWLER_SOURCE_DD = 3;
-    public static final int CRAWLER_SOURCE_DB = 4;
+    public static final Integer CRAWLER_SOURCE_AMAZON = 1;
+    public static final Integer CRAWLER_SOURCE_JD = 2;
+    public static final Integer CRAWLER_SOURCE_DD = 3;
+    public static final Integer CRAWLER_SOURCE_DB = 4;
 
 
-    private static final Map<String, String> CRAWL_SOURCES = new LinkedHashMap<String, String>();
+    private static final Map<Integer, String> CRAWL_SOURCES = new LinkedHashMap<Integer, String>();
     static {
-        CRAWL_SOURCES.put("1", "亚马逊");
-        CRAWL_SOURCES.put("2", "京东");
-        CRAWL_SOURCES.put("3", "当当书城");
-        CRAWL_SOURCES.put("4", "豆瓣");
+        CRAWL_SOURCES.put(1, "亚马逊");
+        CRAWL_SOURCES.put(2, "京东");
+        CRAWL_SOURCES.put(3, "当当书城");
+        CRAWL_SOURCES.put(4, "豆瓣");
 
     }
 
-    public static Map<String, String> getCrawlSourcesMap() {
+    public static Map<Integer, String> getCrawlSourcesMap() {
         return CRAWL_SOURCES;
     }
 

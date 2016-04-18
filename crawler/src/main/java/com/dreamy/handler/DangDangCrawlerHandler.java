@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -14,12 +15,13 @@ import java.util.regex.Pattern;
 /**
  * Created by wangyongxing on 16/4/6.
  */
+@Component
 public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return ConstUtil.CRAWLER_SOURCE_DD;
     }
 

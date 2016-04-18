@@ -1,9 +1,7 @@
 package com.dreamy.admin.controller.crawler;
 
 import com.dreamy.admin.beans.BookCrawlerModel;
-import com.dreamy.admin.controller.DashboardBaseController;
 import com.dreamy.admin.controller.DashboardController;
-import com.dreamy.admin.controller.admin.MainController;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
@@ -116,6 +114,7 @@ public class CrawlerController extends DashboardController {
             Map<String,Object> map=new HashMap<>();
             map.put("type",info.getSource());
             map.put("url",info.getUrl());
+            map.put("code",info.getBookId());
             queueService.push(QueueRoutingKey.CRAWLER_EVENT,map);
         }
         return redirect("/crawler.html");

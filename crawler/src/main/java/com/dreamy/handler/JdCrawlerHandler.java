@@ -9,13 +9,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by wangyongxing on 16/4/6.
  */
+@Component
 public class JdCrawlerHandler extends AbstractCrawlerHandler {
     @Override
-    public int getId() {
+    public Integer getId() {
         return ConstUtil.CRAWLER_SOURCE_JD;
     }
 
