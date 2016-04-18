@@ -1,15 +1,13 @@
 package com.dreamy.handler;
 
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.utils.ConstUtil;
-import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.PatternUtils;
-import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,21 +25,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-//        SeleniumDownloader seleniumDownloader = new SeleniumDownloader(chromeDriverPath);
-//        seleniumDownloader.setSleepTime(10000);
-//        long time1 = System.currentTimeMillis();
-//        Page page = seleniumDownloader.download(new Request("http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0"), new Task() {
-//            @Override
-//            public String getUUID() {
-//                return "product.dangdang.com";
-//            }
-//
-//            @Override
-//            public Site getSite() {
-//                return Site.me();
-//            }
-//        });
-//        System.out.println(page.getHtml());
 
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         if (StringUtils.isNotEmpty(html)) {
@@ -76,6 +59,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 getType(bean, document);
                 getTitle(bean, document);
                 saleSort(bean, document);
+                getScore(bean,document);
                 return bean;
 
 
@@ -155,8 +139,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
      */
     public void saleSort(BookInfo bookInfo, Document document) {
         Element element = document.getElementById("pid_span");
-
-
         if (element != null) {
             String product_id = element.attr("product_id");
             String url = " http://product.dangdang.com/pricestock/callback.php?type=getpublishbangv2&product_id=" + product_id;
@@ -172,20 +154,21 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         }
     }
     /**
-     * 销售排名
+     * 评分
      * @param bookInfo
      * @param document
      */
-    public void score(BookInfo bookInfo, Document document) {
+    public void getScore(BookInfo bookInfo, Document document) {
         Element element = document.getElementById("pid_span");
-
-
         if (element != null) {
             String product_id = element.attr("product_id");
             String url="http://product.dangdang.com/comment/comment.php?product_id="+product_id+"&datatype=1&page=1&filtertype=1&sysfilter=1";
 
             String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
-            System.out.println(result);
+            Map<String,Object> map= JsonUtils.toMap(result);
+            Map<String,Object> map1=(Map<String,Object> )map.get("rateInfo");
+            String core=map1.get("good_rate").toString();
+            bookInfo.setScore(core);
 
 
         }

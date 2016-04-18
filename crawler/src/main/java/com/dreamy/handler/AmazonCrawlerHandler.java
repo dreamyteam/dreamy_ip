@@ -56,6 +56,9 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 //编辑评论
                 String comment = document.getElementsByTag("noscript").text();
                 bean.setComment(comment);
+                getScore(bean,document);
+                getSalesRank(bean,document);
+                getType(bean,document);
 
 
             }
