@@ -5,7 +5,27 @@ package com.dreamy.mogodb.beans;
  */
 public class Comment {
 
+    private Integer ipId;
+
+    private String url;
+
     private String content;
+
+    public Integer getIpId() {
+        return ipId;
+    }
+
+    public void setIpId(Integer ipId) {
+        this.ipId = ipId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getContent() {
         return content;

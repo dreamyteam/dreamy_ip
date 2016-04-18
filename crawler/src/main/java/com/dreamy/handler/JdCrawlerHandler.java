@@ -34,8 +34,6 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
                 Element image = document.getElementById("spec-n1").getElementsByTag("img").first();
                 bean.setImage(image.attr("src"));
                 bean.setTitle(image.attr("alt"));
-
-
             }
 
 

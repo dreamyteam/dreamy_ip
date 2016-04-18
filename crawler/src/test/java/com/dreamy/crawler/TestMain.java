@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * Created by wangyongxing on 16/4/6.
  */
 public class TestMain {
-    public static void main11(String[] args) {
+    public static void qiandian() {
         String url = "http://www.qidian.com/Book/3620214.aspx";
         String html = HttpUtils.getHtmlGet(url, "http://www.qidian.com/Book/3620214.aspx");
         if (StringUtils.isNotEmpty(html)) {
@@ -48,7 +48,7 @@ public class TestMain {
 
     }
 
-    public static void main111(String[] args) {
+    public static void amazon() {
         String url = "http://www.amazon.cn/gp/product/B00VWVAFAG/ref=s9_acsd_ri_bw_rw_r0_p8_i?pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=merchandised-search-5&pf_rd_r=0KFAPX9E42KMYPW0V164&pf_rd_t=101&pf_rd_p=261616452&pf_rd_i=658390051";
         String html = HttpUtils.getHtmlGet(url, "http://www.qidian.com/Book/3620214.aspx");
         if (StringUtils.isNotEmpty(html)) {
@@ -135,7 +135,7 @@ public class TestMain {
     }
 
 
-    public static void main222(String[] args) {
+    public static void jd() {
         String url = "http://item.jd.com/11678007.html";
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         System.out.println(html);
@@ -168,7 +168,7 @@ public class TestMain {
     }
 
 
-    public static void main(String[] args) {
+    public static void dangdang() {
         String url = "http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0";
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
         //System.out.println(html);
@@ -252,7 +252,7 @@ public class TestMain {
     }
 
 
-    public static void mainD(String[] args) {
+    public static void douban() {
         String url = "https://book.douban.com/subject/1770782/";
         String html = HttpUtils.getHtmlGetBycharSet(url, "utf-8");
 
@@ -311,13 +311,19 @@ public class TestMain {
             Element elements1 = document.select("div.rating_wrap>div.rating_self>strong").first();
             System.out.println(elements1.text());
 
+            Elements elementsssss = document.getElementsByClass("review-short");
+            System.out.println(elements1.text());
+
+
 
             }
         }
 
 
+    public static void main(String[] args) {
+        douban();
 
-
+    }
 
 
 
