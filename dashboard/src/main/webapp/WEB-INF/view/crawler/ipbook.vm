@@ -94,8 +94,6 @@
                                 启用中
                             #elseif($item.status==-1)
                                  删除
-
-
                             #end</td>
 
                         <td>
@@ -112,7 +110,7 @@
             </table>
         </form>
         <div class="pagin">
-            #page($!page,"/crawler.html")
+            #page($!page,"/crawler.html?currentPage=")
         </div>
     </div>
 </div>
