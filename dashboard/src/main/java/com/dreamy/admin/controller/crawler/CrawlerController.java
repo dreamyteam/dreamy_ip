@@ -1,6 +1,7 @@
 package com.dreamy.admin.controller.crawler;
 
 import com.dreamy.admin.beans.BookCrawlerModel;
+import com.dreamy.admin.beans.Constants;
 import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
@@ -8,6 +9,7 @@ import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
+import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.QueueRoutingKey;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -114,8 +116,11 @@ public class CrawlerController extends DashboardController {
             Map<String,Object> map=new HashMap<>();
             map.put("type",info.getSource());
             map.put("url",info.getUrl());
-            map.put("code",info.getBookId());
+            map.put("ipId",info.getBookId());
             queueService.push(QueueRoutingKey.CRAWLER_EVENT,map);
+            if(info.getSource().equals(ConstUtil.CRAWLER_SOURCE_DB)) {
+                queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+            }
         }
         return redirect("/crawler.html");
 

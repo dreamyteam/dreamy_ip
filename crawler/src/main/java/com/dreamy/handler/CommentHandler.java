@@ -10,6 +10,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by wangyongxing on 16/4/18.
@@ -18,17 +21,50 @@ import org.springframework.stereotype.Component;
 public class CommentHandler {
 
 
-    public Comment getByUrl(Integer ipId,String url) {
+    public List<Comment> getByUrl(String url) {
+        List<Comment> comments=new ArrayList<Comment>();
         String html = HttpUtils.getHtmlGet(url, "null");
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
-                Comment bean = new Comment();
-                Elements infos = document.select("div.content >ul>li");
-                return null;
+                Elements elements = document.getElementsByClass("review-short");
+                if(elements!=null&&elements.size()>0) {
+
+                    for (Element element : elements) {
+                        Comment bean = new Comment();
+                        List<Element> list = element.children();
+                        int size = list.size();
+                        if (size > 2) {
+
+                            bean.setContent(list.get(0).text());
+                            bean.setUrl(list.get(1).attr("href"));
+
+                            if (size > 4) {
+                                Elements spans = list.get(4).getElementsByTag("span");
+                                if (spans != null && spans.size() > 2) {
+                                    bean.setCreateTime(spans.get(1).text());
+
+                                }
+
+                            } else {
+                                Elements spans = list.get(3).getElementsByTag("span");
+                                if (spans != null && spans.size() > 2) {
+                                    bean.setCreateTime(spans.get(1).text());
+
+                                }
+
+
+                            }
+                            comments.add(bean);
+                        }
+
+                    }
+                }
             }
+
         }
-        return null;
+        return comments;
     }
+
 
 }

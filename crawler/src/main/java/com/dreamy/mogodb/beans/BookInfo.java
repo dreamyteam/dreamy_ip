@@ -1,10 +1,15 @@
 package com.dreamy.mogodb.beans;
 
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/5.
  */
+@Document(collection="bookInfo")
+@TypeAlias("bookInfo")
 public class BookInfo {
     /**
      * 作品名称
@@ -58,7 +63,9 @@ public class BookInfo {
 
     private String tags;
 
-    private List<Comment> commentList;
+    private Integer ipId;
+
+
 
     public String getPress() {
         return press;
@@ -66,14 +73,6 @@ public class BookInfo {
 
     public void setPress(String press) {
         this.press = press;
-    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
     }
 
     public String getTitle() {
@@ -179,5 +178,13 @@ public class BookInfo {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Integer getIpId() {
+        return ipId;
+    }
+
+    public void setIpId(Integer ipId) {
+        this.ipId = ipId;
     }
 }

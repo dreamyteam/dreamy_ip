@@ -5,20 +5,13 @@ package com.dreamy.mogodb.beans;
  */
 public class Comment {
 
-    private Integer ipId;
+
 
     private String url;
 
     private String content;
 
-    public Integer getIpId() {
-        return ipId;
-    }
-
-    public void setIpId(Integer ipId) {
-        this.ipId = ipId;
-    }
-
+    private String createTime;
     public String getUrl() {
         return url;
     }
@@ -33,5 +26,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }

@@ -169,8 +169,10 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
             Map<String,Object> map= JsonUtils.toMap(result);
             Map<String,Object> map1=(Map<String,Object> )map.get("rateInfo");
-            String core=map1.get("good_rate").toString();
-            bookInfo.setScore(core);
+            if(map!=null) {
+                String core = map1.get("good_rate").toString();
+                bookInfo.setScore(core);
+            }
 
 
         }

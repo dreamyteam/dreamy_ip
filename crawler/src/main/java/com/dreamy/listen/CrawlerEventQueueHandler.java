@@ -33,9 +33,11 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         //获取类型
         Integer type = jsonObject.getInteger("type");
         String url = jsonObject.getString("url");
+        Integer ipId=jsonObject.getInteger("ipId");
         CrawlerHandler handler = crawlerManage.getHandler(type);
         BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
         if (bookInfo != null) {
+            bookInfo.setIpId(ipId);
             bookInfoDao.save(bookInfo);
         } else {
             log.warn("crawler event failed: type:" + type + ",url:" + url);
