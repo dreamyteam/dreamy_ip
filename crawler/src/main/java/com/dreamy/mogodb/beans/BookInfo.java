@@ -71,6 +71,10 @@ public class BookInfo {
     private Map<String,String> categories;
 
     private String editorComment;
+    /**
+     * 抓取来源
+     */
+    private Integer source;
 
 
     public String getEditorComment() {
@@ -216,5 +220,13 @@ public class BookInfo {
 
     public void setIpId(Integer ipId) {
         this.ipId = ipId;
+    }
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
     }
 }
