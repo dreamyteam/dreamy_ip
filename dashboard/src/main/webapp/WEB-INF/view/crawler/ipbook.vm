@@ -75,6 +75,7 @@
                 <thead>
                 <tr>
                     <th><input name="allIds" type="checkbox" value="" onclick="checkAll();"/></th>
+                    <th>id</th>
                     <th>标题</th>
                     <th>书名</th>
                     <th>CODE</th>
@@ -86,6 +87,7 @@
                     #foreach($item in $list)
                     <tr title="$!{item.title}">
                         <td><input name="ids" type="checkbox" value="$!{item.id}"/></td>
+                        <td>$!{item.id}</td>
                         <td>$!{item.title}</td>
                         <td>$!{item.name}</td>
                         <td>$!{item.code}</td>

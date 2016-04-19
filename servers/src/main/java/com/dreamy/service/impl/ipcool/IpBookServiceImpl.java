@@ -23,8 +23,9 @@ public class IpBookServiceImpl implements IpBookService {
     private IpBookDao ipBookDao;
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
+
     @Override
-    public IpBook save(IpBook ipBook,List<BookCrawlerInfo> list) {
+    public IpBook save(IpBook ipBook, List<BookCrawlerInfo> list) {
         ipBookDao.save(ipBook);
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
@@ -40,24 +41,24 @@ public class IpBookServiceImpl implements IpBookService {
     }
 
     @Override
-    public List<IpBook> getIpBookList(IpBook ipBook, Page page)
-    {
-        Map<String,Object> params= BeanUtils.toQueryMap(ipBook);
-        IpBookConditions conditions=new IpBookConditions();
+    public List<IpBook> getIpBookList(IpBook ipBook, Page page) {
+        Map<String, Object> params = BeanUtils.toQueryMap(ipBook);
+        IpBookConditions conditions = new IpBookConditions();
 
         conditions.createCriteria().addByMap(params);
-        if(page!=null){
-            int row=ipBookDao.countByExample(conditions);
+        conditions.setOrderByClause("id desc");
+        if (page != null) {
+            int row = ipBookDao.countByExample(conditions);
             page.setTotalNum(row);
             conditions.setPage(page);
 
         }
-        List<IpBook> list=ipBookDao.selectByExample(conditions);
+        List<IpBook> list = ipBookDao.selectByExample(conditions);
         return list;
     }
 
     @Override
-    public int update(IpBook ipBook,List<BookCrawlerInfo> list) {
+    public int update(IpBook ipBook, List<BookCrawlerInfo> list) {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
@@ -68,11 +69,10 @@ public class IpBookServiceImpl implements IpBookService {
 
     @Override
     public int del(List<Integer> ids) {
-        for(Integer id:ids)
-        {
-            IpBook ipBook=new IpBook().status(-1).id(id);
+        for (Integer id : ids) {
+            IpBook ipBook = new IpBook().status(-1).id(id);
             ipBookDao.update(ipBook);
-            BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo().bookId(id).status(-1);
+            BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(id).status(-1);
             bookCrawlerInfoDao.update(bookCrawlerInfo);
 
         }
