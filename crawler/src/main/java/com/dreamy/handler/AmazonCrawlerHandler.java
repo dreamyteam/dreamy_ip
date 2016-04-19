@@ -31,37 +31,6 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
-//                Elements infos = document.select("div.content >ul>li");
-//                if (infos != null && infos.size() > 0) {
-//                    Element title = infos.first();
-//                    if (title != null) {
-//                        String content = title.text();
-//                        if (StringUtils.isNotEmpty(content)) {
-//                            String arr[] = content.split(";");
-//
-//                            bean.setPress(arr[0].replace("出版社:", ""));
-//                            bean.setPushTime(result(arr[1]));
-//                        }
-//                    }
-//                }
-//                Elements authos = document.getElementsByClass("author");
-//                if (authos != null && authos.size() > 0) {
-//                    String author = "";
-//                    for (Element element : authos) {
-//                        author = author + element.text();
-//                    }
-//                    bean.setAuthor(author);
-//                }
-//
-//
-//                getToClickNum(bean, document);
-//                //编辑评论
-//                String comment = document.getElementsByTag("noscript").text();
-//                bean.setComment(comment);
-//                getScore(bean, document);
-//                getSalesRank(bean, document);
-//                getType(bean, document);
-
                 getName(bean, document);
                 getAuthor(bean, document);
                 getPressAndPublishTime(bean, document);
