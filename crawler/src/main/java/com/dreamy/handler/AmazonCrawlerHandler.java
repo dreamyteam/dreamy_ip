@@ -165,7 +165,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     }
 
     private void getCategories(BookInfo bean, Document document) {
-        Map<String, String> categories = new HashMap<String, String>();
+        String categories = "";
         Element element = document.getElementById("SalesRank");
         if (element != null) {
             Elements elements = element.getElementsByClass("zg_hrsr_item");
@@ -177,8 +177,10 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
                     String parentCategory = elements.get(i).child(1).child(1).text();
                     String subParentCategory = elements.get(i).child(1).child(2).text();
-                    categories.put(parentCategory + "|" + subParentCategory, rank);
+                    categories += parentCategory + "|" + subParentCategory + ":" + rank + ",";
                 }
+
+                categories = categories.substring(0, categories.length() - 1);
             }
         }
 
@@ -201,34 +203,35 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     }
 
     private void getAuthorDescrition(BookInfo bean, Document document) {
-//        String authorInfo = "";
-//        Element element = document.getElementById("s_content_2");
-//        if (element != null) {
-//            authorInfo = element.child(1).text();
-//        }
-//
-//        bean.setAuthorInfo(authorInfo);
-    }
+        String authorDescription = "";
+        Element element = document.getElementById("detail_bullets_id");
+        if (element != null) {
+            Elements elements = element.select("div>ul>li");
+            String asin = "";
 
+            for (Element e : elements) {
+                if (e.text().contains("ASIN: ")) {
+                    asin = e.text().substring(6);
+                    String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin, "null");
+                    if (StringUtils.isNotEmpty(html)) {
+                        Document userInfoDocument = Jsoup.parse(html);
 
-    /**
-     * 作品类型
-     *
-     * @param bean
-     * @param document
-     */
-    private void getType(BookInfo bean, Document document) {
-        Elements types = document.select("ul.zg_hrsr>li");
-        StringBuffer typeInfo = new StringBuffer();
-        if (types != null && types.size() > 0) {
-
-            for (Element element : types) {
-                typeInfo.append(element.text() + ",");
+                        Elements es = userInfoDocument.getElementsByClass("s-content");
+                        for (Element one : es) {
+                            String text = one.text();
+                            if (text.contains("作者简介")) {
+                                authorDescription = one.child(1).text();
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
             }
 
-            bean.setType(typeInfo.toString());
         }
 
+        bean.setAuthorInfo(authorDescription);
     }
 
 
