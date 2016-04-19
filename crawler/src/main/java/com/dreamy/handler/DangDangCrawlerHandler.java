@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
-
     @Override
     public Integer getId() {
         return CrawlerSourceEnums.dangdang.getType();
@@ -35,43 +34,73 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
-                //作品内容
-                Elements contents = document.getElementById("content").getElementsByTag("textarea");
-                if (contents != null && contents.size() > 0) {
-                    Element content = contents.first();
-                    bean.setInfo(content.text());
-                }
-                //编辑评论
-                Elements infos = document.getElementById("abstract").getElementsByTag("textarea");
-                if (infos != null && infos.size() > 0) {
-                    Element content = infos.first();
-                    bean.setComment(content.text());
-                }
-                //作者信息
-                Elements authorintro = document.getElementById("authorintro").getElementsByTag("textarea");
-                if (authorintro != null && authorintro.size() > 0) {
-                    Element content = authorintro.first();
-                    bean.setAuthorInfo(content.text());
-                }
-                //图片
-                Element image = document.getElementById("largePic");
-                if (image != null) {
-                    bean.setImage(image.attr("src"));
-                }
+                info(bean,document);
+                image(bean,document);
+                authorInfo(bean,document);
+                comment(bean,document);
                 getAuthor(bean, document);
                 getClickNum(bean, document);
                 getCategories(bean, document);
                 getTitle(bean, document);
                 saleSort(bean, document);
                 getScore(bean, document);
-
-
             }
 
 
         }
         return bean;
 
+    }
+
+    /**
+     * 作品内容
+     * @param bean
+     * @param document
+     */
+    private void info(BookInfo bean,Document document){
+        Elements contents = document.getElementById("content").getElementsByTag("textarea");
+        if (contents != null && contents.size() > 0) {
+            Element content = contents.first();
+            bean.setInfo(content.text());
+        }
+    }
+
+    /**
+     * 图片
+     * @param bean
+     * @param document
+     */
+    private void image(BookInfo bean,Document document){
+        Element image = document.getElementById("largePic");
+        if (image != null) {
+            bean.setImage(image.attr("src"));
+        }
+    }
+
+    /**
+     * 作者信息
+     * @param bean
+     * @param document
+     */
+    private void authorInfo(BookInfo bean,Document document){
+        Elements authorintro = document.getElementById("authorintro").getElementsByTag("textarea");
+        if (authorintro != null && authorintro.size() > 0) {
+            Element content = authorintro.first();
+            bean.setAuthorInfo(content.text());
+        }
+    }
+
+    /**
+     * 编辑评论
+     * @param bean
+     * @param document
+     */
+    private void comment(BookInfo bean,Document document){
+        Elements comments = document.getElementById("abstract").getElementsByTag("textarea");
+        if (comments != null && comments.size() > 0) {
+            Element content = comments.first();
+            bean.setComment(content.text());
+        }
     }
 
     /**
@@ -111,7 +140,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         if (types != null && types.size() > 0) {
             for (Element element : types) {
                 infos.append(element.text() + ",");
-
             }
 
             String str=infos.toString();

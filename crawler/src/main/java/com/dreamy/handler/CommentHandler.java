@@ -1,6 +1,5 @@
 package com.dreamy.handler;
 
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.StringUtils;
@@ -9,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 

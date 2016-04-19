@@ -29,11 +29,8 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean= new BookInfo();
-                Element author = document.getElementById("p-author");
-                bean.setAuthor(author.text());
-                Element image = document.getElementById("spec-n1").getElementsByTag("img").first();
-                bean.setImage(image.attr("src"));
-                bean.setTitle(image.attr("alt"));
+                imageAndTitle(bean,document);
+                author(bean,document);
                 pushTime(bean,document);
                 comment(bean,document);
 
@@ -43,6 +40,26 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
         }
         return bean;
 
+    }
+
+    /**
+     * 解析 图片和标题
+     * @param bean
+     * @param document
+     */
+    private void imageAndTitle(BookInfo bean,Document document){
+        Element image = document.getElementById("spec-n1").getElementsByTag("img").first();
+        bean.setImage(image.attr("src"));
+        bean.setTitle(image.attr("alt"));
+    }
+    /**
+     * 解析作者
+     * @param bean
+     * @param document
+     */
+    private void author(BookInfo bean,Document document){
+        Element author = document.getElementById("p-author");
+        bean.setAuthor(author.text());
     }
 
     /**
@@ -70,11 +87,6 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
         Element comment = document.getElementsByClass("book-detail-content").first();
         bookInfo.setComment(comment.text());
     }
-
-
-
-
-
     @Override
     public String analyeUrl(String url) {
         return null;
