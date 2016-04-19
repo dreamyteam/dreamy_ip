@@ -1,5 +1,6 @@
 package com.dreamy.handler;
 
+import com.dreamy.beans.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.HttpUtils;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public Integer getId() {
-        return ConstUtil.CRAWLER_SOURCE_DB;
+        return CrawlerSourceEnums.douban.getType();
     }
 
     @Override

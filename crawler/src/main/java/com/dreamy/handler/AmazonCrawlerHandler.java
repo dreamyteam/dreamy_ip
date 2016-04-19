@@ -1,5 +1,6 @@
 package com.dreamy.handler;
 
+import com.dreamy.beans.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.HttpUtils;
@@ -18,7 +19,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public Integer getId() {
-        return ConstUtil.CRAWLER_SOURCE_AMAZON;
+        return CrawlerSourceEnums.amazon.getType();
     }
 
     @Override
@@ -56,9 +57,9 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 //编辑评论
                 String comment = document.getElementsByTag("noscript").text();
                 bean.setComment(comment);
-                getScore(bean,document);
-                getSalesRank(bean,document);
-                getType(bean,document);
+                getScore(bean, document);
+                getSalesRank(bean, document);
+                getType(bean, document);
 
 
             }
@@ -109,20 +110,20 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 作品类型
+     *
      * @param bean
      * @param document
      */
     private void getType(BookInfo bean, Document document) {
         Elements types = document.select("ul.zg_hrsr>li");
-        StringBuffer typeInfo=new StringBuffer();
+        StringBuffer typeInfo = new StringBuffer();
         if (types != null && types.size() > 0) {
 
             for (Element element : types) {
-                typeInfo.append(element.text()+",");
-
+                typeInfo.append(element.text() + ",");
             }
 
-        bean.setType(typeInfo.toString());
+            bean.setType(typeInfo.toString());
         }
 
     }

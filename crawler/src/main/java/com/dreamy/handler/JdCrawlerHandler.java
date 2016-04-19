@@ -1,8 +1,7 @@
 package com.dreamy.handler;
 
-import com.dreamy.handler.AbstractCrawlerHandler;
+import com.dreamy.beans.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class JdCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public Integer getId() {
-        return ConstUtil.CRAWLER_SOURCE_JD;
+        return CrawlerSourceEnums.jd.getType();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.dreamy.handler;
 
+import com.dreamy.beans.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
@@ -22,7 +23,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public Integer getId() {
-        return ConstUtil.CRAWLER_SOURCE_DD;
+        return CrawlerSourceEnums.dangdang.getType();
     }
 
     @Override
