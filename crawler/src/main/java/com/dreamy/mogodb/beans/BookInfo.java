@@ -2,9 +2,7 @@ package com.dreamy.mogodb.beans;
 
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
-import java.util.Map;
+ 
 
 /**
  * Created by wangyongxing on 16/4/5.
@@ -44,8 +42,6 @@ public class BookInfo {
      * 作品简介
      */
     private String info;
-
-    private String type;
     /**
      * 标签
      */
@@ -68,7 +64,7 @@ public class BookInfo {
 
     private Integer commentNum;
 
-    private Map<String,String> categories;
+    private String categories;
 
     private String editorComment;
     /**
@@ -85,11 +81,11 @@ public class BookInfo {
         this.editorComment = editorComment;
     }
 
-    public Map<String, String> getCategories() {
+    public String getCategories() {
         return categories;
     }
 
-    public void setCategories(Map<String, String> categories) {
+    public void setCategories(String categories) {
         this.categories = categories;
     }
 
@@ -173,13 +169,6 @@ public class BookInfo {
         this.info = info;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getLable() {
         return lable;

@@ -60,7 +60,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 }
                 getAuthor(bean, document);
                 getClickNum(bean, document);
-                getType(bean, document);
+                getCategories(bean, document);
                 getTitle(bean, document);
                 saleSort(bean, document);
                 getScore(bean, document);
@@ -105,7 +105,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
-    private void getType(BookInfo bookInfo, Document document) {
+    private void getCategories(BookInfo bookInfo, Document document) {
         Elements types = document.select("span.lie");
         StringBuffer infos = new StringBuffer();
         if (types != null && types.size() > 0) {
@@ -113,8 +113,9 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 infos.append(element.text() + ",");
 
             }
+
             String str=infos.toString();
-            bookInfo.setType(str.substring(0,str.length()-1));
+            bookInfo.setCategories(str.substring(0,str.length()-1)); 
         }
 
     }
