@@ -4,17 +4,12 @@ package com.dreamy.handler;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
 public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
@@ -82,6 +77,11 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
+    /**
+     * 出版社和出版时间
+     * @param bean
+     * @param document
+     */
     private void getPressAndPublishTime(BookInfo bean, Document document) {
         String press = "";
         String publishTime = "";
@@ -101,6 +101,11 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
+    /**
+     * 总的评论数和平台评分
+     * @param bean
+     * @param document
+     */
     private void getTotalCommentNumAndScore(BookInfo bean, Document document) {
         Element element = document.getElementById("summaryStars").getElementsByTag("a").first();
         String[] scoreAndComment = element.text().split("星");
@@ -109,6 +114,11 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setScore(scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1));
     }
 
+    /**
+     * 图书销售排名
+     * @param bean
+     * @param document
+     */
     private void getSaleSort(BookInfo bean, Document document) {
         Element sort = document.getElementById("SalesRank");
         String[] saleRank = sort.childNode(2).toString().split("第");
@@ -116,6 +126,11 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setSaleSort(saleRank[1].substring(0, saleRank[1].length() - 3));
     }
 
+    /**
+     * 封面
+     * @param bean
+     * @param document
+     */
     private void getCoverImg(BookInfo bean, Document document) {
         String imageUrl = "";
         Element element = document.getElementById("imgBlkFront");
@@ -124,6 +139,12 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setImage(imageUrl);
     }
 
+    /**
+     * 获取ip的描述
+     *
+     * @param bean
+     * @param document
+     */
     private void getIpDescription(BookInfo bean, Document document) {
         String description = "";
         Elements noscripts = document.getElementsByTag("noscript");
@@ -134,6 +155,12 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setInfo(description);
     }
 
+    /**
+     * 获取分类
+     *
+     * @param bean
+     * @param document
+     */
     private void getCategories(BookInfo bean, Document document) {
         String categories = "";
         Element element = document.getElementById("SalesRank");
@@ -157,6 +184,11 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setCategories(categories);
     }
 
+    /**
+     * 编辑评论
+     * @param bean
+     * @param document
+     */
     private void getEditorComments(BookInfo bean, Document document) {
         String comment = "";
         Element element = document.getElementById("s_content_0");
@@ -167,11 +199,22 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         bean.setEditorComment(comment);
     }
 
+
+    /**
+     * 标签
+     * @param bean
+     * @param document
+     */
     private void getTags(BookInfo bean, Document document) {
 
 
     }
 
+    /**
+     * 获取作者描述
+     * @param bean
+     * @param document
+     */
     private void getAuthorDescrition(BookInfo bean, Document document) {
         String authorDescription = "";
         Element element = document.getElementById("detail_bullets_id");
