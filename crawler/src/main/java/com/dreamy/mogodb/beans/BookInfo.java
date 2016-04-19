@@ -4,11 +4,12 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/5.
  */
-@Document(collection="bookInfo")
+@Document(collection = "bookInfo")
 @TypeAlias("bookInfo")
 public class BookInfo {
     /**
@@ -65,7 +66,36 @@ public class BookInfo {
 
     private Integer ipId;
 
+    private Integer commentNum;
 
+    private Map<String,String> categories;
+
+    private String editorComment;
+
+
+    public String getEditorComment() {
+        return editorComment;
+    }
+
+    public void setEditorComment(String editorComment) {
+        this.editorComment = editorComment;
+    }
+
+    public Map<String, String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Map<String, String> categories) {
+        this.categories = categories;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
 
     public String getPress() {
         return press;
