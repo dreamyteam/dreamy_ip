@@ -37,6 +37,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         CrawlerHandler handler = crawlerManage.getHandler(type);
         BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
         if (bookInfo != null) {
+            bookInfo.setSource(type);
             bookInfo.setIpId(ipId);
             bookInfoDao.save(bookInfo);
         } else {

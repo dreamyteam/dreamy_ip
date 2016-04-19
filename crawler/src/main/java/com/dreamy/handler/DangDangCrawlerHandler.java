@@ -84,12 +84,12 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         Elements content = document.select("div.messbox_info>span.t1");
         if (content != null && content.size() > 0) {
             int size = content.size();
-            if (size >= 1) {
-                bookInfo.setAuthor(content.get(0).text());
-            }
-            if (size >= 2) {
-                bookInfo.setPress(content.get(1).text());
-            }
+//            if (size >= 1) {
+//                bookInfo.setAuthor(content.get(0).text());
+//            }
+//            if (size >= 2) {
+//                bookInfo.setPress(content.get(1).text());
+//            }
             if (size >= 3) {
                 bookInfo.setPushTime(date(content.get(2).text()));
             }
@@ -113,14 +113,15 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 infos.append(element.text() + ",");
 
             }
-            bookInfo.setType(infos.toString());
+            String str=infos.toString();
+            bookInfo.setType(str.substring(0,str.length()-1));
         }
 
     }
 
 
     /**
-     * 解析作者 出版社 出版时间
+     * 解析作者 出版社 标题
      *
      * @param bookInfo
      * @param document
