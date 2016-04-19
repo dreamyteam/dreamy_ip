@@ -85,7 +85,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      */
     private void comment(BookInfo bookInfo, Document document) {
         Element comment = document.getElementsByClass("book-detail-content").first();
-        bookInfo.setComment(comment.text());
+        bookInfo.setEditorComment(comment.text());
     }
     @Override
     public String analyeUrl(String url) {

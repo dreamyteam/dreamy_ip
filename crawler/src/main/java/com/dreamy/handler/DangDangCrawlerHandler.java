@@ -38,6 +38,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 image(bean,document);
                 authorInfo(bean,document);
                 comment(bean,document);
+
                 getAuthor(bean, document);
                 getClickNum(bean, document);
                 getCategories(bean, document);
@@ -99,7 +100,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         Elements comments = document.getElementById("abstract").getElementsByTag("textarea");
         if (comments != null && comments.size() > 0) {
             Element content = comments.first();
-            bean.setComment(content.text());
+            bean.setEditorComment(content.text());
         }
     }
 
@@ -129,7 +130,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     private void getClickNum(BookInfo bookInfo, Document document) {
         Element content = document.getElementById("comm_num_down");
         if (content != null) {
-            bookInfo.setClickNum(content.text());
+            bookInfo.setCommentNum(Integer.parseInt(content.text()));
         }
     }
 
