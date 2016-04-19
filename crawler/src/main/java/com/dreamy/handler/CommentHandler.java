@@ -34,16 +34,15 @@ public class CommentHandler {
                         Comment bean = new Comment();
                         List<Element> list = element.children();
                         int size = list.size();
-                        if (size > 2) {
+                        if (size >= 2) {
 
                             bean.setContent(list.get(0).text());
                             bean.setUrl(list.get(1).attr("href"));
 
-                            if (size > 4) {
+                            if (size >=4) {
                                 Elements spans = list.get(4).getElementsByTag("span");
                                 if (spans != null && spans.size() > 2) {
                                     bean.setCreateTime(spans.get(1).text());
-
                                 }
 
                             } else {

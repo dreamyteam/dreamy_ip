@@ -30,10 +30,11 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     public BookInfo getByUrl(String url) {
 
         String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
-                BookInfo bean = new BookInfo();
+                bean = new BookInfo();
                 //作品内容
                 Elements contents = document.getElementById("content").getElementsByTag("textarea");
                 if (contents != null && contents.size() > 0) {
@@ -63,14 +64,13 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 getTitle(bean, document);
                 saleSort(bean, document);
                 getScore(bean, document);
-                return bean;
 
 
             }
 
 
         }
-        return null;
+        return bean;
 
     }
 
@@ -84,13 +84,13 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         Elements content = document.select("div.messbox_info>span.t1");
         if (content != null && content.size() > 0) {
             int size = content.size();
-            if(size>1) {
-                bookInfo.setAuthor(content.get(0).text());
-            }
-            if(size>2) {
-                bookInfo.setPress(content.get(1).text());
-            }
-            if(size>3) {
+//            if (size >= 1) {
+//                bookInfo.setAuthor(content.get(0).text());
+//            }
+//            if (size >= 2) {
+//                bookInfo.setPress(content.get(1).text());
+//            }
+            if (size >= 3) {
                 bookInfo.setPushTime(date(content.get(2).text()));
             }
 
@@ -113,14 +113,16 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 infos.append(element.text() + ",");
 
             }
-            bookInfo.setCategories(infos.toString());
+
+            String str=infos.toString();
+            bookInfo.setCategories(str.substring(0,str.length()-1)); 
         }
 
     }
 
 
     /**
-     * 解析作者 出版社 出版时间
+     * 解析作者 出版社 标题
      *
      * @param bookInfo
      * @param document
@@ -179,10 +181,12 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
             if (StringUtils.isNotEmpty(result)) {
                 Map<String, Object> map1 = JsonUtils.toMap(result);
-                Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
-                if (map2 != null) {
-                    String core = map1.get("good_rate").toString();
-                    bookInfo.setScore(core);
+                if (map1 != null) {
+                    Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
+                    if (map2 != null) {
+                        String core = map2.get("good_rate").toString();
+                        bookInfo.setScore(core);
+                    }
                 }
             }
 
