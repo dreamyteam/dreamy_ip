@@ -1,4 +1,4 @@
-package com.dreamy.beans.enums;
+package com.dreamy.enums;
 
 /**
  * Created with IntelliJ IDEA.

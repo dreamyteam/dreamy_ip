@@ -1,6 +1,6 @@
 package com.dreamy.handler;
 
-import com.dreamy.beans.enums.CrawlerSourceEnums;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.StringUtils;

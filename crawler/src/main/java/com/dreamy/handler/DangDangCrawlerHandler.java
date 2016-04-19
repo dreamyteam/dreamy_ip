@@ -1,6 +1,6 @@
 package com.dreamy.handler;
 
-import com.dreamy.beans.enums.CrawlerSourceEnums;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
@@ -62,7 +62,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 getType(bean, document);
                 getTitle(bean, document);
                 saleSort(bean, document);
-                getScore(bean,document);
+                getScore(bean, document);
                 return bean;
 
 
@@ -84,9 +84,15 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         Elements content = document.select("div.messbox_info>span.t1");
         if (content != null && content.size() > 0) {
             int size = content.size();
-            bookInfo.setAuthor(content.get(0).text());
-            bookInfo.setPress(content.get(1).text());
-            bookInfo.setPushTime(date(content.get(2).text()));
+            if(size>1) {
+                bookInfo.setAuthor(content.get(0).text());
+            }
+            if(size>2) {
+                bookInfo.setPress(content.get(1).text());
+            }
+            if(size>3) {
+                bookInfo.setPushTime(date(content.get(2).text()));
+            }
 
         }
     }
@@ -137,6 +143,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 销售排名
+     *
      * @param bookInfo
      * @param document
      */
@@ -156,8 +163,10 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
         }
     }
+
     /**
      * 评分
+     *
      * @param bookInfo
      * @param document
      */
@@ -165,14 +174,16 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         Element element = document.getElementById("pid_span");
         if (element != null) {
             String product_id = element.attr("product_id");
-            String url="http://product.dangdang.com/comment/comment.php?product_id="+product_id+"&datatype=1&page=1&filtertype=1&sysfilter=1";
+            String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
 
             String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
-            Map<String,Object> map= JsonUtils.toMap(result);
-            Map<String,Object> map1=(Map<String,Object> )map.get("rateInfo");
-            if(map!=null) {
-                String core = map1.get("good_rate").toString();
-                bookInfo.setScore(core);
+            if (StringUtils.isNotEmpty(result)) {
+                Map<String, Object> map1 = JsonUtils.toMap(result);
+                Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
+                if (map2 != null) {
+                    String core = map1.get("good_rate").toString();
+                    bookInfo.setScore(core);
+                }
             }
 
 

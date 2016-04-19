@@ -6,6 +6,7 @@ import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
@@ -118,7 +119,7 @@ public class CrawlerController extends DashboardController {
             map.put("url",info.getUrl());
             map.put("ipId",info.getBookId());
             queueService.push(QueueRoutingKey.CRAWLER_EVENT,map);
-            if(info.getSource().equals(ConstUtil.CRAWLER_SOURCE_DB)) {
+            if(info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
                 queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
             }
         }
