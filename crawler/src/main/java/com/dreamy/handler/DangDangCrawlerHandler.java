@@ -45,7 +45,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 Elements infos = document.getElementById("abstract").getElementsByTag("textarea");
                 if (infos != null && infos.size() > 0) {
                     Element content = infos.first();
-                    bean.setComment(content.text());
+                    bean.setEditorComment(content.text());
                 }
                 //作者信息
                 Elements authorintro = document.getElementById("authorintro").getElementsByTag("textarea");
@@ -64,8 +64,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 getTitle(bean, document);
                 saleSort(bean, document);
                 getScore(bean, document);
-
-
             }
 
 
@@ -100,7 +98,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     private void getClickNum(BookInfo bookInfo, Document document) {
         Element content = document.getElementById("comm_num_down");
         if (content != null) {
-            bookInfo.setClickNum(content.text());
+            bookInfo.setCommentNum(Integer.parseInt(content.text()));
         }
     }
 

@@ -30,8 +30,8 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
-                getAuthor(bean, document);
-                getClickNum(bean, document);
+                getAuthorAndPressAndPublishTime(bean, document);
+                getCommentNum(bean, document);
                 getImage(bean, document);
                 getAuthorInfo(bean, document);
                 getTags(bean, document);
@@ -52,7 +52,7 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
      * @param bookInfo
      * @param document
      */
-    private void getAuthor(BookInfo bookInfo, Document document) {
+    private void getAuthorAndPressAndPublishTime(BookInfo bookInfo, Document document) {
         Elements elements = document.getElementsByAttributeValue("name", "keywords");
         Element element = elements.first();
         String content = element.attr("content");
@@ -110,12 +110,12 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
      * @param bean
      * @param document
      */
-    private void getClickNum(BookInfo bean, Document document) {
+    private void getCommentNum(BookInfo bean, Document document) {
         Elements elements = document.getElementsByClass("rating_people");
         if (elements != null && elements.size() > 0) {
             Element element = elements.first();
             String str = element.text();
-            bean.setClickNum(PatternUtils.getNum(str));
+            bean.setCommentNum(Integer.parseInt(PatternUtils.getNum(str)));
         }
 
 
