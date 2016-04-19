@@ -24,7 +24,8 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-        String html = HttpUtils.getHtmlGet(url, "null");
+        url=HttpUtils.toUtf8String(url);
+        String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
