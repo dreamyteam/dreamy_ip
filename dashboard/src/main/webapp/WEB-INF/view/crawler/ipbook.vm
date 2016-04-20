@@ -112,7 +112,7 @@
                                     </td>
                                     <td class="center">$!{book.id}</td>
                                     <td>$!{book.title}</td>
-                                    <td class="center">  $!{book.title}</td>
+                                    <td class="center">  $!{book.name}</td>
                                     <td class="center">$!{book.status}</td>
                                     <td class="center">admin</td>
 

@@ -61,9 +61,9 @@ public class CrawlerController extends DashboardController {
         model.put("book", ipBook);
 
         for (BookCrawlerInfo info : list) {
-            model.put("url" + info.getSource(), info.getUrl());
+            model.put("url" + info.getSource(), info.getUrl().trim());
         }
-        return "/crawler/ipbook-view";
+        return "/crawler/ipbook_view";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class CrawlerController extends DashboardController {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
         model.put("book", ipBook);
         model.put("list", list);
-        return "/crawler/ipbook-edit";
+        return "/crawler/ipbook_edit";
     }
 
 
