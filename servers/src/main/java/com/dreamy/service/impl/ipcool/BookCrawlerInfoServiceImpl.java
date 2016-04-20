@@ -1,5 +1,6 @@
 package com.dreamy.service.impl.ipcool;
 
+import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookCrawlerInfoDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
@@ -30,6 +31,18 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
         Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
         BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
         conditions.createCriteria().addByMap(params);
+        return bookCrawlerInfoDao.selectByExample(conditions);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getList(BookCrawlerInfo bookCrawlerInfo, Page page) {
+        Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
+        BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
+        conditions.createCriteria().addByMap(params);
+        if(page!=null){
+            page.setTotalNum(bookCrawlerInfoDao.countByExample(conditions));
+            conditions.setPage(page);
+        }
         return bookCrawlerInfoDao.selectByExample(conditions);
     }
 

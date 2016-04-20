@@ -6,12 +6,13 @@ package com.dreamy.mogodb.beans;
 public class Comment {
 
 
-
     private String url;
 
     private String content;
 
     private String createTime;
+
+
     public String getUrl() {
         return url;
     }

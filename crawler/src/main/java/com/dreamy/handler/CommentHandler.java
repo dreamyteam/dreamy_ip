@@ -29,31 +29,36 @@ public class CommentHandler {
                 if(elements!=null&&elements.size()>0) {
 
                     for (Element element : elements) {
-                        Comment bean = new Comment();
-                        List<Element> list = element.children();
-                        int size = list.size();
-                        if (size >= 2) {
+                        try {
+                            Comment bean = new Comment();
+                            List<Element> list = element.children();
+                            int size = list.size();
+                            if (size >= 2) {
 
-                            bean.setContent(list.get(0).text());
-                            bean.setUrl(list.get(1).attr("href"));
+                                bean.setContent(list.get(0).text());
+                                bean.setUrl(list.get(1).attr("href"));
 
-                            if (size >=4) {
-                                Elements spans = list.get(4).getElementsByTag("span");
-                                if (spans != null && spans.size() > 2) {
-                                    bean.setCreateTime(spans.get(1).text());
+                                if (size >4) {
+                                    Elements spans = list.get(4).getElementsByTag("span");
+                                    if (spans != null && spans.size() > 2) {
+                                        bean.setCreateTime(spans.get(1).text());
+                                    }
+
+                                } else {
+                                    Elements spans = list.get(3).getElementsByTag("span");
+                                    if (spans != null && spans.size() > 2) {
+                                        bean.setCreateTime(spans.get(1).text());
+                                    }
+
                                 }
-
-                            } else {
-                                Elements spans = list.get(3).getElementsByTag("span");
-                                if (spans != null && spans.size() > 2) {
-                                    bean.setCreateTime(spans.get(1).text());
-
-                                }
-
-
+                                comments.add(bean);
                             }
-                            comments.add(bean);
                         }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            continue;
+                        }
+
 
                     }
                 }

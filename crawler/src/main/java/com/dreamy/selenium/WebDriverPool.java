@@ -1,5 +1,6 @@
 package com.dreamy.selenium;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -9,23 +10,22 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author code4crafter@gmail.com <br>
- *         Date: 13-7-26 <br>
- *         Time: 下午1:41 <br>
+ * Created by wangyongxing on 16/4/12.
  */
 class WebDriverPool {
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -46,13 +46,19 @@ class WebDriverPool {
 	private WebDriver mDriver = null;
 	private boolean mAutoQuitDriver = true;
 
-	private static final String CONFIG_FILE = "/Users/wangyongxing/webmagic/webmagic-selenium/config.ini";
+	public static final ResourcePatternResolver resoler = new PathMatchingResourcePatternResolver();//spring资源文件加载
+
+
+	private static final String CONFIG_FILE = "config.properties";
 	private static final String DRIVER_FIREFOX = "firefox";
 	private static final String DRIVER_CHROME = "chrome";
 	private static final String DRIVER_PHANTOMJS = "phantomjs";
 
 	protected static Properties sConfig;
 	protected static DesiredCapabilities sCaps;
+
+
+
 
 	/**
 	 * Configure the GhostDriver, and initialize a WebDriver instance. This part
@@ -64,9 +70,9 @@ class WebDriverPool {
 	 */
 	public void configure() throws IOException {
 		// Read config file
+		Resource[] resource = resoler.getResources(CONFIG_FILE);
 		sConfig = new Properties();
-		sConfig.load(new FileReader(CONFIG_FILE));
-
+		sConfig.load(new InputStreamReader(resource[0].getInputStream(), "utf-8"));
 		// Prepare capabilities
 		sCaps = new DesiredCapabilities();
 		sCaps.setJavascriptEnabled(true);
