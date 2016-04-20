@@ -5,12 +5,14 @@ import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/11.
  */
+@Service
 public class QueueServiceImpl implements QueueService {
     private static final Logger log = LoggerFactory.getLogger(QueueService.class);
 

@@ -14,4 +14,7 @@ public interface AlgorithmService {
 
     public  void save(Algorithm algorithm);
 
+    Algorithm getById(Integer id);
+
+
 }

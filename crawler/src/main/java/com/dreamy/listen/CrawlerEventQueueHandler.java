@@ -34,9 +34,11 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         Integer type = jsonObject.getInteger("type");
         String url = jsonObject.getString("url");
         Integer ipId=jsonObject.getInteger("ipId");
+        Integer crawlerId=jsonObject.getInteger("crawlerId");
         CrawlerHandler handler = crawlerManage.getHandler(type);
         BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
         if (bookInfo != null) {
+            bookInfo.setCrawlerId(crawlerId);
             bookInfo.setSource(type);
             bookInfo.setIpId(ipId);
             bookInfoDao.save(bookInfo);

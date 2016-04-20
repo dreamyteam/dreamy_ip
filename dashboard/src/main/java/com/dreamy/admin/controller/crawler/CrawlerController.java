@@ -12,6 +12,7 @@ import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.QueueRoutingKey;
+import com.dreamy.utils.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,13 +75,11 @@ public class CrawlerController extends DashboardController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String edit(@RequestParam(value = "id", required = true) Integer id, ModelMap model) {
-
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
         model.put("book", ipBook);
         model.put("list", list);
-
         return "/crawler/ipbook-edit";
     }
 
@@ -115,12 +114,15 @@ public class CrawlerController extends DashboardController {
         for(BookCrawlerInfo info:list)
         {
             Map<String,Object> map=new HashMap<>();
-            map.put("type",info.getSource());
-            map.put("url",info.getUrl());
-            map.put("ipId",info.getBookId());
-            queueService.push(QueueRoutingKey.CRAWLER_EVENT,map);
-            if(info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
-                queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+            if(StringUtils.isNotEmpty(info.getUrl())) {
+                map.put("type", info.getSource());
+                map.put("url", info.getUrl());
+                map.put("ipId", info.getBookId());
+                map.put("crawlerId",info.getId());
+                queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
+                if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
+                    queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+                }
             }
         }
         return redirect("/crawler.html");

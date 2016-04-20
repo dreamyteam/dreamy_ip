@@ -1,5 +1,6 @@
 package com.dreamy.mogodb.beans;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
  
@@ -10,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "bookInfo")
 @TypeAlias("bookInfo")
 public class BookInfo {
+    @Id
+    private Integer crawlerId;
     /**
      * 作品名称
      */
@@ -66,6 +69,13 @@ public class BookInfo {
      */
     private Integer source;
 
+    public Integer getCrawlerId() {
+        return crawlerId;
+    }
+
+    public void setCrawlerId(Integer crawlerId) {
+        this.crawlerId = crawlerId;
+    }
 
     public String getEditorComment() {
         return editorComment;

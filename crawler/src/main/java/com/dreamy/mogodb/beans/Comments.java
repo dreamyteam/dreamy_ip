@@ -1,5 +1,6 @@
 package com.dreamy.mogodb.beans;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Document(collection="comment")
 @TypeAlias("comment")
 public class Comments {
+    @Id
     private Integer ipId;
     private List<Comment> comments;
 

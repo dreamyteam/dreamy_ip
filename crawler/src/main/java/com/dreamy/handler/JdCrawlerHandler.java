@@ -2,19 +2,28 @@ package com.dreamy.handler;
 
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.selenium.SeleniumDownloader;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Request;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Task;
 
 /**
  * Created by wangyongxing on 16/4/6.
  */
 @Component
 public class JdCrawlerHandler extends AbstractCrawlerHandler {
+
+
     @Override
     public Integer getId() {
         return CrawlerSourceEnums.jd.getType();
@@ -22,8 +31,9 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
+        url=url+"#comment";
 
-        String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
         BookInfo bean=null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -33,7 +43,9 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
                 author(bean,document);
                 pushTime(bean,document);
                 comment(bean,document);
-
+                saleSort(bean,document);
+                score(bean,document);
+                commentNum(bean,document);
             }
 
 
@@ -43,14 +55,70 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     }
 
     /**
+     * 解析平台销售排名
+     * @param bean
+     * @param document
+     */
+    private void saleSort(BookInfo bean,Document document){
+        Element element=document.getElementById("summary-order");
+        if(element!=null)
+        {
+           String sort= PatternUtils.getNum(element.text());
+            bean.setSaleSort(sort);
+        }
+
+    }
+
+    /**
+     * 总评价数
+     * @param bean
+     * @param document
+     */
+    private void commentNum(BookInfo bean,Document document){
+        Element element=document.getElementById("comment-count");
+        if(element!=null)
+        {
+           String result= PatternUtils.getNum(element.text());
+            if(StringUtils.isNotEmpty(result))
+            {
+                bean.setCommentNum(Integer.valueOf(result));
+            }
+
+
+        }
+
+
+    }
+    /**
+     * 平台评分
+     * @param bean
+     * @param document
+     */
+    private void score(BookInfo bean,Document document){
+        Elements elements=document.getElementsByClass("rate");
+        if(elements!=null&&elements.size()>0)
+        {
+            Element element=elements.first();
+            String score= PatternUtils.getNum(element.text());
+            bean.setScore(score);
+        }
+
+
+    }
+    /**
+
+
+    /**
      * 解析 图片和标题
      * @param bean
      * @param document
      */
     private void imageAndTitle(BookInfo bean,Document document){
         Element image = document.getElementById("spec-n1").getElementsByTag("img").first();
-        bean.setImage(image.attr("src"));
-        bean.setTitle(image.attr("alt"));
+        if(image!=null) {
+            bean.setImage("http:" + image.attr("src"));
+            bean.setTitle(image.attr("alt"));
+        }
     }
     /**
      * 解析作者
@@ -58,8 +126,10 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void author(BookInfo bean,Document document){
-        Element author = document.getElementById("p-author");
-        bean.setAuthor(author.text());
+        Element element = document.getElementById("p-author");
+        if(element!=null) {
+            bean.setAuthor(element.text());
+        }
     }
 
     /**
@@ -85,8 +155,42 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      */
     private void comment(BookInfo bookInfo, Document document) {
         Element comment = document.getElementsByClass("book-detail-content").first();
-        bookInfo.setEditorComment(comment.text());
+        if(comment!=null){
+            bookInfo.setEditorComment(comment.text());
+        }
+
     }
+
+    private String seleniumDownloader(String url){
+        SeleniumDownloader seleniumDownloader = new SeleniumDownloader();
+        String html="";
+        try {
+            Page page = seleniumDownloader.download(new Request(url), new Task() {
+                @Override
+                public String getUUID() {
+                    return "http://item.jd.com/";
+                }
+
+                @Override
+                public Site getSite() {
+                    return Site.me();
+                }
+            });
+            html= page.getRawText();
+        }
+        catch (Exception e){
+        }
+        finally {
+            seleniumDownloader.close();
+        }
+
+
+      return html;
+
+    }
+
+
+
     @Override
     public String analyeUrl(String url) {
         return null;

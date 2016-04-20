@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -202,25 +203,31 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     public void getScore(BookInfo bookInfo, Document document) {
-        Element element = document.getElementById("pid_span");
-        if (element != null) {
-            String product_id = element.attr("product_id");
-            String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
-
-            String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
-            if (StringUtils.isNotEmpty(result)) {
-                Map<String, Object> map1 = JsonUtils.toMap(result);
-                if (map1 != null) {
-                    Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
-                    if (map2 != null) {
-                        String core = map2.get("good_rate").toString();
-                        bookInfo.setScore(core);
+        try {
+            Element element = document.getElementById("pid_span");
+            if (element != null) {
+                String product_id = element.attr("product_id");
+                String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
+                String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+                System.out.println(result+"url:"+url);
+                if (StringUtils.isNotEmpty(result)) {
+                    Map<String, Object> map1 = JsonUtils.toMap(result);
+                    if (CollectionUtils.isNotEmpty(map1)) {
+                        Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
+                        if (CollectionUtils.isNotEmpty(map1)) {
+                            String core = map2.get("good_rate").toString();
+                            bookInfo.setScore(core);
+                        }
                     }
                 }
+
+
             }
-
-
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 

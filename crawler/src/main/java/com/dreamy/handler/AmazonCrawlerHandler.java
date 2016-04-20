@@ -53,7 +53,10 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getName(BookInfo bean, Document document) {
-        bean.setTitle(document.getElementById("productTitle").text());
+       Element element= document.getElementById("productTitle");
+        if(element!=null){
+        bean.setTitle(element.text());
+        }
     }
 
     /**

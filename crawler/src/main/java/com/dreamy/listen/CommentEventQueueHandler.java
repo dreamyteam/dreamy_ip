@@ -29,7 +29,9 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
         //获取类型
         Integer type = jsonObject.getInteger("type");
         Integer ipId=jsonObject.getInteger("ipId");
+        Integer crawlerId=jsonObject.getInteger("crawlerId");
         String url=jsonObject.getString("url");
+
         List<Comment> commentList= commentHandler.getByUrl(url);
         if(CollectionUtils.isNotEmpty(commentList))
         {

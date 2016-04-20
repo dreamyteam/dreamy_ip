@@ -37,4 +37,9 @@ public class AlgorithmServiceImpl implements AlgorithmService {
         algorithmDao.save(algorithm);
 
     }
+
+    @Override
+    public Algorithm getById(Integer id) {
+        return algorithmDao.selectById(id);
+    }
 }
