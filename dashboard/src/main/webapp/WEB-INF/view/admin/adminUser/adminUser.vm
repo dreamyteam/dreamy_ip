@@ -1,127 +1,125 @@
+<div class="page-heading">
+    <h3>
+        系统管理
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">管理信息</a></li>
+        <li><a href="#">用户管理</a></li>
+    </ul>
+</div>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<link href="$!{staticPath}/static/css/admin_style.css" rel="stylesheet" type="text/css" />
-<link href="$!{staticPath}/static/css/select.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="$!{staticPath}/static/js/jquery-1.7.1.min.js"></script>
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    用户列表
+                    <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <a href="javascript:;" class="fa fa-times"></a>
+                 </span>
+                </header>
+                <div class="panel-body">
+                ##                    搜索框
+                    <div class="well searchBox">
+                        <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
+                              action="">
+                            <input type="hidden" name="source" value="$!source">
 
-<script type="text/javascript">
+                            <div class="searchContent">
+                                <div class="form-group">
+                                    <label for="exampleInputName2">用户名</label>
+                                    <input type="text" class="form-control textInput" id="exampleInputName2"
+                                           name="content_title"
+                                           placeholder="" value="$!contentTitle">
+                                </div>
+                                <button type="submit" class="btn btn-default dt-btn-submit">搜索</button>
+                            </div>
+                        </form>
+                    </div>
 
-function checkAll(){
-	var b = $("input[id='allIds']").attr('checked');
-	$("input[name='ids']").attr('checked', b == "checked");
-}
+                ##                    操作
+                    <div class="well operate-box">
 
-function doResetPwd(id){
-	if(confirm("确定需要进行密码重置么？")){
-		location.href='/adminUser/resetPwd.html?ids=' + id;
-	}
-}
+                        <button class="btn btn-danger dt-btn-batch dt-btn-batch"
+                                data-batch-submit-url="">批量删除
+                        </button>
+                    </div>
+                ##                    标记tab
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="#if(!$source) active #else #end"><a
+                                class="pjax-url " href="">全部</a></li>
+                    </ul>
 
-function resetAllPwd(){
-	var i = $("input[type='checkbox'][name='ids']:checked").length;
-	if(i <= 0){
-		addFieldError("请先选择需要密码重置的数据");
-	}else{
-		if(confirm("确定需要进行密码重置么？")){
-			var form1 = document.getElementById("form1");
-			form1.action = "adminUser-resetPwd.html";
-			form1.submit();
-		}
-	}
-}
-</script>
-</head>
+                ##                     展示表格
+                    <div id="albumListBox" class="adv-table">
+                        <table class="display table table-bordered table-striped dt-data-table" id="dynamic-table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <a class="dt-table-select-all">全选</a>
+                                </th>
+                                <th>id</th>
+                                <th>用户名</th>
+                                <th>真实姓名</th>
+                                <th>状态</th>
+                                <th>类型</th>
+                                <th>最近操作者</th>
+                                <th>修改时间</th>
+                                <th>创建时间</th>
+                                <th class="hidden-phone">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                #foreach($item in $list)
+                                <tr class="gradeC">
+                                    <td class="center dt-checkbox-td">
+                                        <input type="checkbox" value="$!{item.id}">
+                                    </td>
+                                    <td class="center">$!{item.id}</td>
+                                    <td>$!{item.userName}</td>
+                                    <td>$!{item.realName}</td>
+                                    <td class="center">
+                                        #if ($item.status == 1)
+                                            正常
+                                        #elseif ($item.status == 2)
+                                            <label style="color:red">停用</label>
+                                        #end
+                                    </td>
+                                    <td class="center">
+                                        #if ($!item.isSys==0)<label style="color:red">系统内置</label>
+                                        #else
+                                            用户创建
+                                        #end
+                                    </td>
+                                    <td class="center">admin</td>
+                                    <td class="center">$!{item.displayOrder}</td>
 
-<body>
-	<div class="place">
-	    <span>位置：</span>
-	    <ul class="placeul">
-		    <li><a href="#">首页</a></li>
-		    <li><a href="#">管理信息</a></li>
-		    <li><a href="#">用户管理</a></li>
-    	</ul>
+                                    <td class="center">$!dateUtils.toString(
+                                        "yyyy-MM-dd HH:mm:ss",$item.updatedAt)</td>
+                                    <td class="center">$!dateUtils.toString(
+                                        "yyyy-MM-dd HH:mm:ss",$item.createdAt)</td>
+                                    <td class="center hidden-phone">
+                                        #if($item.isSys ==0)
+                                            <a href="/adminUser/view.html?id=$!{item.id}" class="tablelink">查看</a>
+                                        #else
+                                            <a href="javascript:doResetPwd('$!{item.id}');" class="tablelink">密码重置</a> |
+                                            <a href="/adminUser/view.html?id=$!{item.id}" class="tablelink">修改</a> |
+                                            <a href="/adminUser/del.html?ids=$!{item.id}" class="tablelink"
+                                               onclick="return confirm('确定需要删除？')">删除</a>
+                                        #end
+                                    </td>
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                        <div class="dt-page" data-current-page="$!page.currentPage" data-view-page-count="6"
+                             data-page-total="$!page.getTotalPage()"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
-    <div class="formbody">
-	    <div id="usual1" class="usual">
-	    <div class="itab">
-	  	<ul>
-		    <li><a href="#tab1" class="selected">用户管理</a></li>
-	  	</ul>
-    </div>
+</div>
 
-    <div class="rightinfo"  style="overflow:auto;height:500px;"  id="contentDiv">
-    	<form action="/adminUser.html" method="post" name="form1" id="form1">
-		  	<div id="tab1" class="tabson">
-			    <div class="tools">
-			    	<ul class="seachform">
-			        	<li onclick="location.href='/adminUser/view.html'" class=".toolbar li"><span><img src="$!{staticPath}/static/images/t01.png" /></span>新增</li>
-			        	<li>
-			        		<label>用户名：</label><input name="userName" type="text" value="$!{adminUser.userName}" class="scinput-150" style="width: 130px"/>
-			        	</li>
-			        	<li><label>&nbsp;</label><input name="" type="submit" class="scbtn" value="查询"/></li>
-			        </ul>
-			    </div>
-
-			    <table class="tablelist">
-			    	<thead>
-				    	<tr>
-					        <th><input id="allIds" type="checkbox" value="" onclick="checkAll();"/></th>
-					        <th>用户名</th>
-					        <th>真实姓名</th>
-					        <th>状态</th>
-					        <th>类型</th>
-					        <th>创建时间<i class="sort"><img src="$!{staticPath}/static/images/px.gif" /></i></th>
-					        <th>操作</th>
-				        </tr>
-			        </thead>
-			        <tbody>
-                    #foreach($item in $list)
-			        <tr title="$!{item.value}">
-				        <td><input name="ids" type="checkbox" value="$!{item.id}" /></td>
-				        <td>$!{item.userName}</td>
-				        <td>$!{item.realName}</td>
-				        <td>#if ($item.status == 1)
-                        正常
-                        #elseif ($item.status == 2)
-                        <label style="color:red">停用</label>
-                        #end
-                        </td>
-				        <td>
-                            #if($item.isSys==0)
-                        <label style="color:red">系统内置</label>
-                        #else
-                            用户创建
-                        #end
-                        </td>
-                        <td>$dateUtils.toString(
-                            "yyyy-MM-dd HH:mm:ss",$item.createdAt)
-                        </td>
-                        <td>
-						#if($item.isSys ==0)
-                            <a href="/adminUser/view.html?id=$!{item.id}" class="tablelink">查看</a>
-						#else
-                            <a href="javascript:doResetPwd('$!{item.id}');" class="tablelink">密码重置</a>  |
-                            <a href="/adminUser/view.html?id=$!{item.id}" class="tablelink">修改</a>  |
-                            <a href="/adminUser/del.html?ids=$!{item.id}" class="tablelink" onclick="return confirm('确定需要删除？')">删除</a>
-						#end
-                        </td>
-			        </tr>
-			        #end
-			        </tbody>
-			    </table>
-			</div>
-		</form>
-	</div>
-
-    <script type="text/javascript">
-	    jQuery("#contentDiv").height(jQuery("#mainFrame", window.parent.parent.document).height() - 90);
-		$('.tablelist tbody tr:odd').addClass('odd');
-	</script>
-    </div>
-</body>
-
-</html>

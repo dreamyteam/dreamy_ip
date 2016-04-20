@@ -8,7 +8,8 @@ import java.util.*;
 /**
  * Created by wangyongxing on 16/4/6.
  */
-public interface SysModelService {
+public interface
+        SysModelService {
 
 
     public List<SysModel> getSysModelPage(SysModel sysModel, Page page);

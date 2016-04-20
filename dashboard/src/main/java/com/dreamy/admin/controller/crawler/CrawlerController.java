@@ -65,10 +65,10 @@ public class CrawlerController extends DashboardController {
         return "/crawler/ipbook-view";
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String insert(@RequestParam(value = "id", required = false, defaultValue = "0") Integer id, ModelMap model) {
 
-        return "/crawler/ipbook-insert";
+        return "/crawler/ipbook_create";
     }
 
 

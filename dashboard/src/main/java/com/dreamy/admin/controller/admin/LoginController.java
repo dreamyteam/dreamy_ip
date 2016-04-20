@@ -33,7 +33,7 @@ public class LoginController extends DashboardBaseController {
     {
         UserSession session = getUserSession(request);
         if (session.isLogin()) {
-            return redirect("/admin/index");
+            return redirect("/crawler");
         }
 
         return "/admin/main/login";
@@ -50,7 +50,7 @@ public class LoginController extends DashboardBaseController {
                 InterfaceBean bean = adminLoginService.doLogin(LoginParam.getNewInstance(userName, password, WebUtils.getRemoteAddress(request), getUserSessionId(request)));
                 if (bean.getErrorCode() == Constants.InterfacebBeanCode.SUCCESS) {
                     //重定向到指定页面
-                    return redirect("/admin/index", service);
+                    return redirect("/crawler", service);
                 } else {
                     model.put("error", bean.getErrorMsg());
                 }
