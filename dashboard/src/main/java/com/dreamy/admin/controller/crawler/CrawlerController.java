@@ -36,24 +36,22 @@ public class CrawlerController extends DashboardController {
     @Resource
     private BookCrawlerInfoService bookCrawlerInfoService;
     @Resource
-    private  QueueService queueService;
+    private QueueService queueService;
 
 
     /**
-     *
-     *
      * @return
      */
     @RequestMapping("")
-    public String role(IpBook ipBook, HttpServletRequest request, ModelMap model, Page page) {
+    public String role(IpBook ipBook, ModelMap model, Page page) {
         List<IpBook> list = ipBookService.getIpBookList(ipBook, page);
         model.put("list", list);
-        model.put("page",page);
+        model.put("page", page);
         return "/crawler/ipbook";
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String view(@RequestParam(value = "id", required = true) Integer id, ModelMap model) {
+    public String view(HttpServletRequest request, @RequestParam(value = "id", required = true) Integer id, ModelMap model) {
 
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
@@ -63,6 +61,9 @@ public class CrawlerController extends DashboardController {
         for (BookCrawlerInfo info : list) {
             model.put("url" + info.getSource(), info.getUrl().trim());
         }
+
+        model.put("currentSource", request.getParameter("source"));
+        model.put("sources", CrawlerSourceEnums.values());
         return "/crawler/ipbook_view";
     }
 
@@ -88,7 +89,7 @@ public class CrawlerController extends DashboardController {
     public String update(IpBook ipBook, BookCrawlerModel infos) {
         List<BookCrawlerInfo> list = infos.getInfos();
         if (ipBook.getId() != null && ipBook.getId() > 0) {
-            ipBookService.update(ipBook,list);
+            ipBookService.update(ipBook, list);
         } else {
             ipBook.type(1);
             ipBook.status(1);
@@ -104,21 +105,20 @@ public class CrawlerController extends DashboardController {
         ipBookService.del(ids);
         return redirect("/crawler.html");
     }
+
     @RequestMapping(value = "/crawling")
-    public String crawling(@RequestParam(value = "id", required = true)Integer id)
-    {
+    public String crawling(@RequestParam(value = "id", required = true) Integer id) {
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
 
-        for(BookCrawlerInfo info:list)
-        {
-            Map<String,Object> map=new HashMap<>();
-            if(StringUtils.isNotEmpty(info.getUrl())) {
+        for (BookCrawlerInfo info : list) {
+            Map<String, Object> map = new HashMap<>();
+            if (StringUtils.isNotEmpty(info.getUrl())) {
                 map.put("type", info.getSource());
                 map.put("url", info.getUrl());
                 map.put("ipId", info.getBookId());
-                map.put("crawlerId",info.getId());
+                map.put("crawlerId", info.getId());
                 queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
                 if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
                     queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);

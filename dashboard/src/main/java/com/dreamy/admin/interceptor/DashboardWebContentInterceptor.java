@@ -40,8 +40,11 @@ public class DashboardWebContentInterceptor extends WebContentInterceptor {
                                 + HttpUtils.encodeUrl(HttpUtils.getFullUrl(request)));
                         return Boolean.FALSE;
                     }
+
+                    String currentUrl = request.getRequestURI();
+
                     Map<String, Map<String, String>> leftNavs = roleNavService.getLeftNavsByRoleId(1);
-                    request.setAttribute("leftNavs",leftNavs);
+                    request.setAttribute("leftNavs", leftNavs);
                     request.setAttribute(RootController.REQUEST_ATTRIBUTE_USERSESSION, userSession);
                 }
 

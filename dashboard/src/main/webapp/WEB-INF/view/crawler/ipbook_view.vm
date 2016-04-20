@@ -14,16 +14,12 @@
         <div class="col-sm-12">
 
             <ul class="nav nav-tabs">
-                <li role="presentation" class="#if(!$source) active #else #end"><a
-                        class="pjax-url " href="">基本信息</a></li>
-                <li role="presentation" class="pjax-url #if($source==0) active #else #end"><a
-                        class="pjax-url " href="">亚马逊</a></li>
-                <li role="presentation" class="pjax-url #if($source==1) active #else #end"><a
-                        class="pjax-url " href="">京东</a></li>
-                <li role="presentation" class="pjax-url #if($source==2) active #else #end"><a
-                        class="pjax-url " href="">当当</a></li>
-                <li role="presentation" class="pjax-url #if($source==2) active #else #end"><a
-                        class="pjax-url " href="">豆瓣</a></li>
+                <li role="presentation" class="#if(!$currentSource) active #else #end"><a
+                        class="pjax-url " href="/crawler/view?id=$!book.id">基本信息</a></li>
+                #foreach($source in $sources)
+                    <li role="presentation" class="pjax-url #if($source.getType()==$currentSource) active #else #end">
+                        <a class="pjax-url " href="/crawler/view?id=$!book.id&source=$source.getType()">$source.getDescription()</a></li>
+                #end
             </ul>
 
             <section class="panel">
