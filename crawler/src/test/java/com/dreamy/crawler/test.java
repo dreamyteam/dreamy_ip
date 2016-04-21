@@ -3,6 +3,7 @@ package com.dreamy.crawler;
 import com.dreamy.handler.CrawlerHandler;
 import com.dreamy.handler.DangDangCrawlerHandler;
 import com.dreamy.handler.DouBanCrawlerHandler;
+import com.dreamy.handler.JdCrawlerHandler;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.Member;
@@ -76,6 +77,17 @@ public class test extends BaseJunitTest {
 
         }
         assertNotNull(bookInfo);
+    }
+
+
+    @Test
+    public void jd() {
+        String url = "http://item.jd.com/11425143.html";
+        CrawlerHandler crawlerHandler = new JdCrawlerHandler();
+        BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
+        if (bookInfo != null) {
+
+        }
     }
     @Test
     public void find(){
