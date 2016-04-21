@@ -7,12 +7,15 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
+import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +41,9 @@ public class CrawlerController extends DashboardController {
     private BookCrawlerInfoService bookCrawlerInfoService;
     @Resource
     private QueueService queueService;
+
+    @Autowired
+    private BookInfoService bookInfoService;
 
 
     /**
@@ -58,10 +65,16 @@ public class CrawlerController extends DashboardController {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
         model.put("book", ipBook);
 
+        List<BookInfo> bookInfos = new LinkedList<>();
         for (BookCrawlerInfo info : list) {
             model.put("url" + info.getSource(), info.getUrl().trim());
+            BookInfo bookInfo = (BookInfo) bookInfoService.queryById(info.getId());
+            if (bookInfo != null) {
+                bookInfos.add(bookInfo);
+            }
         }
 
+        model.put("crawlerInfos", bookInfos);
         model.put("currentSource", request.getParameter("source"));
         model.put("sources", CrawlerSourceEnums.values());
         return "/crawler/ipbook_view";
