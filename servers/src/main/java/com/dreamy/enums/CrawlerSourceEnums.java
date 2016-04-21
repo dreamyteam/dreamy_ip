@@ -7,18 +7,21 @@ package com.dreamy.enums;
  * Time: 下午7:18
  */
 public enum CrawlerSourceEnums {
-    amazon(1, "亚马逊"),
-    jd(2, "京东"),
-    dangdang(3, "当当"),
-    douban(4, "豆瓣");
+    amazon(1, "亚马逊","amazon"),
+    jd(2, "京东","jd"),
+    dangdang(3, "当当","dd"),
+    douban(4, "豆瓣","douban");
 
     private Integer type;
 
     private String description;
 
-    CrawlerSourceEnums(Integer type, String description) {
+    private String name;
+
+    CrawlerSourceEnums(Integer type, String description,String name) {
         this.type = type;
         this.description = description;
+        this.name = name;
     }
 
     public Integer getType() {
@@ -35,5 +38,13 @@ public enum CrawlerSourceEnums {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
