@@ -9,8 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by wangyongxing on 16/4/5.
  */
-@Document(collection="book")
-@TypeAlias("book")
+
 public class Book {
     private String title;
 
