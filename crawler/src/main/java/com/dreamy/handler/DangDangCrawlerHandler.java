@@ -60,10 +60,13 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void info(BookInfo bean,Document document){
-        Elements contents = document.getElementById("content").getElementsByTag("textarea");
-        if (contents != null && contents.size() > 0) {
-            Element content = contents.first();
-            bean.setInfo(content.text());
+        Element content = document.getElementById("content");
+        if (content != null) {
+            Elements contents=content.getElementsByTag("textarea");
+            if(contents!=null&&contents.size()>0) {
+                Element element = contents.first();
+                bean.setInfo(element.text());
+            }
         }
     }
 
@@ -209,8 +212,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 String product_id = element.attr("product_id");
                 String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
                 String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
-                System.out.println(result+"url:"+url);
-                if (StringUtils.isNotEmpty(result)) {
+                if (StringUtils.isNotEmpty(result)&&!result.equals("[]")) {
                     Map<String, Object> map1 = JsonUtils.toMap(result);
                     if (CollectionUtils.isNotEmpty(map1)) {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
