@@ -50,4 +50,10 @@ public interface IpBookService {
      * @return
      */
     int delByIds(List<Integer> ids);
+
+    /**
+     *
+     * @param bookCrawlerInfo
+     */
+    void doCrawler(BookCrawlerInfo bookCrawlerInfo);
 }

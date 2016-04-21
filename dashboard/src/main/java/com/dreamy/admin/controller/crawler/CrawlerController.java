@@ -38,8 +38,6 @@ public class CrawlerController extends DashboardController {
     private IpBookService ipBookService;
     @Resource
     private BookCrawlerInfoService bookCrawlerInfoService;
-    @Resource
-    private QueueService queueService;
 
     @Autowired
     private BookInfoService bookInfoService;
@@ -127,17 +125,7 @@ public class CrawlerController extends DashboardController {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
 
         for (BookCrawlerInfo info : list) {
-            Map<String, Object> map = new HashMap<>();
-            if (StringUtils.isNotEmpty(info.getUrl())) {
-                map.put("type", info.getSource());
-                map.put("url", info.getUrl());
-                map.put("ipId", info.getBookId());
-                map.put("crawlerId", info.getId());
-                queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
-                if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
-                    queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
-                }
-            }
+            ipBookService.doCrawler(info);
         }
         return redirect("/crawler.html");
 

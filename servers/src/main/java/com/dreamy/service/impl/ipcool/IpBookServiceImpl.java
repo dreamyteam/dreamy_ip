@@ -6,11 +6,19 @@ import com.dreamy.dao.iface.ipcool.IpBookDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.ipcool.IpBookConditions;
+import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.QueueRoutingKey;
+import com.dreamy.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +31,12 @@ public class IpBookServiceImpl implements IpBookService {
     private IpBookDao ipBookDao;
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
+
+    @Resource
+    private QueueService queueService;
+
+    @Autowired
+    private BookCrawlerInfoService bookCrawlerInfoService;
 
     @Override
     public IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
@@ -86,5 +100,27 @@ public class IpBookServiceImpl implements IpBookService {
     @Override
     public Integer updateByRecord(IpBook ipBook) {
         return ipBookDao.update(ipBook);
+    }
+
+    @Override
+    public void doCrawler(BookCrawlerInfo info) {
+        if (StringUtils.isNotEmpty(info.getUrl())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", info.getSource());
+            map.put("url", info.getUrl());
+            map.put("ipId", info.getBookId());
+            map.put("crawlerId", info.getId());
+            queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
+
+            if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
+                queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+            }
+
+            info.status(CrawlerTaskStatusEnums.starting.getStatus());
+            bookCrawlerInfoService.update(info);
+        } else {
+            info.status(CrawlerTaskStatusEnums.finished.getStatus());
+            bookCrawlerInfoService.update(info);
+        }
     }
 }

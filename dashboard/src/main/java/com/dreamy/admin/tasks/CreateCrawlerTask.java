@@ -3,6 +3,7 @@ package com.dreamy.admin.tasks;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
 import com.dreamy.enums.IpBookStatusEnums;
 import com.dreamy.mogodb.beans.BookInfo;
@@ -32,9 +33,6 @@ import java.util.Map;
  */
 @Component
 public class CreateCrawlerTask {
-    @Resource
-    private QueueService queueService;
-
     @Autowired
     private BookCrawlerInfoService bookCrawlerInfoService;
 
@@ -53,19 +51,9 @@ public class CreateCrawlerTask {
         List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
         if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
             for (BookCrawlerInfo info : bookCrawlerInfos) {
-                Map<String, Object> map = new HashMap<>();
-                if (StringUtils.isNotEmpty(info.getUrl())) {
-                    map.put("type", info.getSource());
-                    map.put("url", info.getUrl());
-                    map.put("ipId", info.getBookId());
-                    map.put("crawlerId", info.getId());
-                    queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
-                    info.status(CrawlerTaskStatusEnums.starting.getStatus());
-                    bookCrawlerInfoService.update(info);
-                }
+                ipBookService.doCrawler(info);
             }
         }
-
     }
 
     @Scheduled(fixedDelay = 6000)
