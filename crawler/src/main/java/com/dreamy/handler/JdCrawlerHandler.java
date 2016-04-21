@@ -34,6 +34,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
         url=url+"#comment";
 
         String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        System.out.println(html);
         BookInfo bean=null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -42,7 +43,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
                 imageAndTitle(bean,document);
                 author(bean,document);
                 pushTime(bean,document);
-                comment(bean,document);
+                infoAndAuthorInfo(bean,document);
                 saleSort(bean,document);
                 score(bean,document);
                 commentNum(bean,document);
@@ -149,14 +150,28 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     }
 
     /**
-     * 编辑评论
+     * 作品简介 作者信息
      * @param bookInfo
      * @param document
      */
-    private void comment(BookInfo bookInfo, Document document) {
-        Element comment = document.getElementsByClass("book-detail-content").first();
-        if(comment!=null){
-            bookInfo.setEditorComment(comment.text());
+    private void infoAndAuthorInfo(BookInfo bookInfo, Document document) {
+        Elements comments = document.getElementsByClass("book-detail-content");
+        if(comments!=null&&comments.size()>0){
+            int size=comments.size();
+            if(size>1) {
+                Element element=comments.get(0);
+                if(element!=null)
+                {
+                    bookInfo.setInfo(element.text());
+                }
+            }
+            if(size>=2) {
+                Element element=comments.get(1);
+                if(element!=null)
+                {
+                    bookInfo.setAuthorInfo(element.text());
+                }
+            }
         }
 
     }
@@ -179,6 +194,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
             html= page.getRawText();
         }
         catch (Exception e){
+            e.printStackTrace();
         }
         finally {
             seleniumDownloader.close();
