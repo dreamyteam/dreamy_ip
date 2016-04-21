@@ -26,7 +26,7 @@ public class CawlerTest extends BaseJunitTest {
 
     @Test
     public void test(){
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getList(new BookCrawlerInfo(),null);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo(), null);
 
         for(BookCrawlerInfo info:list)
         {

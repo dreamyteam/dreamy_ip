@@ -113,7 +113,13 @@
                                     <td class="center">$!{book.id}</td>
                                     <td>$!{book.title}</td>
                                     <td class="center">  $!{book.name}</td>
-                                    <td class="center">$!{book.status}</td>
+                                    <td class="center">
+                                        #foreach($st in $statuses)
+                                            #if($!{book.status} == $st.getStatus())
+                                                $st.getDescription()
+                                            #end
+                                        #end
+                                    </td>
                                     <td class="center">admin</td>
 
                                     <td class="center">$!dateUtils.toString(

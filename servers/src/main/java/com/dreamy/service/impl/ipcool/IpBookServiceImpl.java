@@ -25,7 +25,7 @@ public class IpBookServiceImpl implements IpBookService {
     private BookCrawlerInfoDao bookCrawlerInfoDao;
 
     @Override
-    public IpBook save(IpBook ipBook, List<BookCrawlerInfo> list) {
+    public IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         ipBookDao.save(ipBook);
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
@@ -58,7 +58,7 @@ public class IpBookServiceImpl implements IpBookService {
     }
 
     @Override
-    public int update(IpBook ipBook, List<BookCrawlerInfo> list) {
+    public int updateRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
@@ -72,7 +72,7 @@ public class IpBookServiceImpl implements IpBookService {
     }
 
     @Override
-    public int del(List<Integer> ids) {
+    public int delByIds(List<Integer> ids) {
         for (Integer id : ids) {
             IpBook ipBook = new IpBook().status(-1).id(id);
             ipBookDao.update(ipBook);
@@ -81,5 +81,10 @@ public class IpBookServiceImpl implements IpBookService {
         }
 
         return 0;
+    }
+
+    @Override
+    public Integer updateByRecord(IpBook ipBook) {
+        return ipBookDao.update(ipBook);
     }
 }

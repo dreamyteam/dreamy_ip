@@ -22,12 +22,12 @@ public class BookInfoServiceImpl implements BookInfoService {
     private BookInfoDao bookInfoDao;
 
     @Override
-    public void add(BookInfo bookInfo) {
+    public void saveByRecord(BookInfo bookInfo) {
         bookInfoDao.save(bookInfo);
     }
 
     @Override
-    public BookInfo queryById(Integer id) {
+    public BookInfo getById(Integer id) {
         return bookInfoDao.queryById(id);
     }
 }

@@ -3,19 +3,19 @@ package com.dreamy.enums;
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
- * Date: 16/4/18
- * Time: 下午7:22
+ * Date: 16/4/21
+ * Time: 下午7:21
  */
-public enum CrawlerTaskStatus {
+public enum IpBookStatusEnums {
     waitting(1, "等待抓取"),
     starting(2, "抓取中"),
-    finished(15, "抓取完成");
+    finished(3, "抓取完成");
 
     private Integer status;
 
     private String description;
 
-    CrawlerTaskStatus(Integer status, String description) {
+    IpBookStatusEnums(Integer status, String description) {
         this.status = status;
         this.description = description;
     }

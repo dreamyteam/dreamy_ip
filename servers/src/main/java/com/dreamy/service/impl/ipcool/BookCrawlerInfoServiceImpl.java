@@ -26,7 +26,7 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     }
 
     @Override
-    public List<BookCrawlerInfo> getBy(BookCrawlerInfo bookCrawlerInfo)
+    public List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo)
     {
         Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
         BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
@@ -35,7 +35,7 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     }
 
     @Override
-    public List<BookCrawlerInfo> getList(BookCrawlerInfo bookCrawlerInfo, Page page) {
+    public List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page) {
         Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
         BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
         conditions.createCriteria().addByMap(params);

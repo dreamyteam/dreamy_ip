@@ -10,10 +10,26 @@ import java.util.List;
  */
 public interface AlgorithmService {
 
+    /**
+     *
+     * @param algorithm
+     * @param page
+     * @return
+     */
     List<Algorithm> getList(Algorithm algorithm, Page page);
 
+    /**
+     *
+     * @param algorithm
+     */
     public  void save(Algorithm algorithm);
 
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     Algorithm getById(Integer id);
 
 

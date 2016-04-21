@@ -16,13 +16,13 @@ public interface BookInfoService {
      *
      * @param bookInfo
      */
-    void add(BookInfo bookInfo);
+    void saveByRecord(BookInfo bookInfo);
 
     /**
      * @param id
      * @return
      */
-    BookInfo queryById(Integer id);
+    BookInfo getById(Integer id);
 
 
 }

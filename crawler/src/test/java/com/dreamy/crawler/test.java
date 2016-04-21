@@ -50,8 +50,7 @@ public class test extends BaseJunitTest {
 
     public void insertBookInfo() {
         BookInfo bookInfo = new BookInfo();
-        bookInfo.setTitle("c" +
-                "");
+        bookInfo.setTitle("c" + "");
 
     }
 
@@ -100,7 +99,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testGetMongo() {
-        Object object = bookInfoService.queryById(218);
+        Object object = bookInfoService.getById(218);
         if (object != null) {
 
         }

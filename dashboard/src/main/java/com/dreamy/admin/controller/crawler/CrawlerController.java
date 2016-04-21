@@ -1,18 +1,17 @@
 package com.dreamy.admin.controller.crawler;
 
 import com.dreamy.admin.beans.BookCrawlerModel;
-import com.dreamy.admin.beans.Constants;
 import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.CrawlerTaskStatusEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
-import com.dreamy.utils.ConstUtil;
 import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +51,10 @@ public class CrawlerController extends DashboardController {
     @RequestMapping("")
     public String role(IpBook ipBook, ModelMap model, Page page) {
         List<IpBook> list = ipBookService.getIpBookList(ipBook, page);
+
         model.put("list", list);
         model.put("page", page);
+        model.put("statuses", CrawlerTaskStatusEnums.values());
         return "/crawler/ipbook";
     }
 
@@ -62,13 +63,13 @@ public class CrawlerController extends DashboardController {
 
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
         model.put("book", ipBook);
 
         List<BookInfo> bookInfos = new LinkedList<>();
         for (BookCrawlerInfo info : list) {
             model.put("url" + info.getSource(), info.getUrl().trim());
-            BookInfo bookInfo = (BookInfo) bookInfoService.queryById(info.getId());
+            BookInfo bookInfo = (BookInfo) bookInfoService.getById(info.getId());
             if (bookInfo != null) {
                 bookInfos.add(bookInfo);
             }
@@ -91,7 +92,7 @@ public class CrawlerController extends DashboardController {
     public String edit(@RequestParam(value = "id", required = true) Integer id, ModelMap model) {
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
         model.put("book", ipBook);
         model.put("list", list);
         return "/crawler/ipbook_edit";
@@ -102,11 +103,11 @@ public class CrawlerController extends DashboardController {
     public String update(IpBook ipBook, BookCrawlerModel infos) {
         List<BookCrawlerInfo> list = infos.getInfos();
         if (ipBook.getId() != null && ipBook.getId() > 0) {
-            ipBookService.update(ipBook, list);
+            ipBookService.updateRecordAndCrawlerInfo(ipBook, list);
         } else {
             ipBook.type(1);
             ipBook.status(1);
-            ipBookService.save(ipBook, list);
+            ipBookService.saveRecordAndCrawlerInfo(ipBook, list);
 
 
         }
@@ -115,7 +116,7 @@ public class CrawlerController extends DashboardController {
 
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public String del(@RequestParam(value = "ids", required = true) List<Integer> ids) {
-        ipBookService.del(ids);
+        ipBookService.delByIds(ids);
         return redirect("/crawler.html");
     }
 
@@ -123,7 +124,7 @@ public class CrawlerController extends DashboardController {
     public String crawling(@RequestParam(value = "id", required = true) Integer id) {
         IpBook ipBook = ipBookService.getById(id);
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getBy(bookCrawlerInfo);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
 
         for (BookCrawlerInfo info : list) {
             Map<String, Object> map = new HashMap<>();

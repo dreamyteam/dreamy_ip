@@ -11,11 +11,28 @@ import java.util.List;
  */
 public interface BookCrawlerInfoService {
 
+    /**
+     * @param info
+     * @return
+     */
     BookCrawlerInfo save(BookCrawlerInfo info);
 
-    List<BookCrawlerInfo> getBy(BookCrawlerInfo bookCrawlerInfo);
+    /**
+     * @param bookCrawlerInfo
+     * @return
+     */
+    List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo);
 
-    List<BookCrawlerInfo> getList(BookCrawlerInfo bookCrawlerInfo, Page page);
+    /**
+     * @param bookCrawlerInfo
+     * @param page
+     * @return
+     */
+    List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page);
 
+    /**
+     * @param info
+     * @return
+     */
     int update(BookCrawlerInfo info);
 }
