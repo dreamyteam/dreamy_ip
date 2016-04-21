@@ -1,5 +1,6 @@
 package com.dreamy.crawler;
 
+
 import com.dreamy.handler.*;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
@@ -88,12 +89,13 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testJd() {
-        String url = "http://item.jd.com/11452840.html";
+        String url = "http://item.jd.com/11425143.html";
         CrawlerHandler crawlerHandler = new JdCrawlerHandler();
         BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
         if (bookInfo != null) {
 
         }
+
         assertNotNull(bookInfo);
     }
 
@@ -104,10 +106,11 @@ public class test extends BaseJunitTest {
 
         }
     }
+
     @Test
-    public void find(){
+    public void find() {
         Criteria criteria = Criteria.where("source").is(4);
-        Query query=new Query(criteria);
+        Query query = new Query(criteria);
 //        BookInfo bookInfo= bookInfoDao.queryOne(query);
 //        System.out.println(111);
     }

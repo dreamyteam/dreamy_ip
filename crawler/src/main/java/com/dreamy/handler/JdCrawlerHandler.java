@@ -32,9 +32,8 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
         url = url + "#comment";
-
-        String html = seleniumDownloader(url);
-//        String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        System.out.println(html);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -43,10 +42,11 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
                 imageAndTitle(bean, document);
                 author(bean, document);
                 pushTime(bean, document);
-                comment(bean, document);
+                infoAndAuthorInfo(bean, document);
                 saleSort(bean, document);
                 score(bean, document);
                 commentNum(bean, document);
+
             }
 
 
@@ -153,18 +153,29 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     }
 
     /**
-     * 编辑评论
+     * 作品简介 作者信息
      *
      * @param bookInfo
      * @param document
      */
-    private void comment(BookInfo bookInfo, Document document) {
-        Element comment = document.getElementsByClass("book-detail-content").first();
-        if (comment != null) {
-            bookInfo.setEditorComment(comment.text());
+    private void infoAndAuthorInfo(BookInfo bookInfo, Document document) {
+        Elements comments = document.getElementsByClass("book-detail-item");
+        if (comments != null && comments.size() > 0) {
+            for(Element element:comments){
+               String name=element.attr("text");
+                if(name.equals("编辑推荐")){
+                    bookInfo.setEditorComment(element.text().replace(name,""));
+                }
+                else if(name.equals("内容简介")){
+                    bookInfo.setInfo(element.text().replace(name,""));
+                }
+                else if(name.equals("作者简介")){
+                    bookInfo.setAuthorInfo(element.text().replace(name,""));
+                }
+            }
         }
-
     }
+
 
     private String seleniumDownloader(String url) {
         SeleniumDownloader seleniumDownloader = new SeleniumDownloader();
@@ -181,14 +192,17 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
                     return Site.me();
                 }
             });
+
             html = page.getRawText();
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             seleniumDownloader.close();
+            return html;
         }
 
 
-        return html;
+
 
     }
 
