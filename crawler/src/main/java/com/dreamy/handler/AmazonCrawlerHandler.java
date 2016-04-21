@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
+
 @Component
 public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
@@ -20,7 +21,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-        url=HttpUtils.toUtf8String(url);
+        url = HttpUtils.toUtf8String(url);
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -53,9 +54,9 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getName(BookInfo bean, Document document) {
-       Element element= document.getElementById("productTitle");
-        if(element!=null){
-        bean.setTitle(element.text());
+        Element element = document.getElementById("productTitle");
+        if (element != null) {
+            bean.setTitle(element.text());
         }
     }
 
@@ -82,6 +83,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 出版社和出版时间
+     *
      * @param bean
      * @param document
      */
@@ -106,6 +108,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 总的评论数和平台评分
+     *
      * @param bean
      * @param document
      */
@@ -119,6 +122,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 图书销售排名
+     *
      * @param bean
      * @param document
      */
@@ -131,6 +135,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 封面
+     *
      * @param bean
      * @param document
      */
@@ -189,6 +194,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 编辑评论
+     *
      * @param bean
      * @param document
      */
@@ -205,6 +211,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 标签
+     *
      * @param bean
      * @param document
      */
@@ -215,6 +222,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 获取作者描述
+     *
      * @param bean
      * @param document
      */
