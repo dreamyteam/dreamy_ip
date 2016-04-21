@@ -1,1 +1,119 @@
-jd
+#foreach($info in $crawlerInfos)
+    #if($info.getSource() == 2)
+    <input type="hidden" name="id" value="">
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">ip编号</label>
+
+        <div class="col-lg-10">
+            <label for="inputEmail1" class=" control-label" style="text-align: left">$!info.ipId</label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">书名</label>
+
+        <div class="col-lg-10">
+            <label for="inputEmail1" class=" control-label" style="text-align: left">$!info.title</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">图片</label>
+
+        <div class="col-lg-10">
+            <div class="col-md-10">
+                <!-- 图片上传控件 S-->
+                <img src="$info.image">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">作者</label>
+
+        <div class="col-lg-10">
+            <label for="inputEmail1" class="control-label" style="text-align: left">$!info.author</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">作者简介</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.authorInfo</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">作品简介</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.info</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">编辑评论</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.editorComment</p>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">出版社</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.press</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">销售排名</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.saleSort</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">评论总数</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.commentNum</p>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">所属分类</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.categories</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">出版时间</label>
+
+        <div class="col-lg-10">
+            <p for="inputEmail1" class=" control-label" style="text-align: left">$!info.pushTime</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+        ##        <a class="btn btn-default" href="javascript:history.back(-1)" type="button">返回</a>
+            <a class="btn btn-default" href="/crawler" type="button">返回</a>
+        </div>
+    </div>
+    #end
+#end

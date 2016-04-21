@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.dreamy.handler.CrawlerHandler;
 import com.dreamy.handler.CrawlerManage;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.MemberDao;
+import com.dreamy.service.iface.mongo.BookInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
     private static final Logger log = LoggerFactory.getLogger(CrawlerEventQueueHandler.class);
 
     @Autowired
-    private BookInfoDao bookInfoDao;
+    private BookInfoService bookInfoService;
 
     @Autowired
     private CrawlerManage crawlerManage;
@@ -41,7 +41,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
             bookInfo.setCrawlerId(crawlerId);
             bookInfo.setSource(type);
             bookInfo.setIpId(ipId);
-            bookInfoDao.save(bookInfo);
+            bookInfoService.add(bookInfo);
         } else {
             log.warn("crawler event failed: type:" + type + ",url:" + url);
         }
