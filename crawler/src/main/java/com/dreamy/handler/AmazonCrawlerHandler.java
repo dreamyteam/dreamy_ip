@@ -176,13 +176,18 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             Elements elements = element.getElementsByClass("zg_hrsr_item");
             Integer size = elements.size();
             if (size > 0) {
-                for (int i = 0; i < size - 1; i++) {
-                    String[] rankString = elements.get(i).child(0).text().split("第");
+                for (int i = 0; i < size; i++) {
+                    Element currentElement = elements.get(i);
+                    String[] rankString = currentElement.child(0).text().split("第");
                     String rank = rankString[1].substring(0, rankString[1].length() - 1);
 
-                    String parentCategory = elements.get(i).child(1).child(1).text();
-                    String subParentCategory = elements.get(i).child(1).child(2).text();
-                    categories += parentCategory + "|" + subParentCategory + ":" + rank + ",";
+                    String parentCategory = currentElement.child(1).child(1).text();
+                    if (currentElement.child(1).childNodes().size() > 5) {
+                        String subParentCategory = currentElement.child(1).child(2).text();
+                        categories += parentCategory + "|" + subParentCategory + ":" + rank + ",";
+                    } else {
+                        categories += parentCategory + ":" + rank + ",";
+                    }
                 }
 
                 categories = categories.substring(0, categories.length() - 1);
