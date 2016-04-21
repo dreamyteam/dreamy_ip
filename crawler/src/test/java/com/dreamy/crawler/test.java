@@ -10,6 +10,8 @@ import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.MemberDao;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +76,12 @@ public class test extends BaseJunitTest {
 
         }
         assertNotNull(bookInfo);
+    }
+    @Test
+    public void find(){
+        Criteria criteria = Criteria.where("source").is(4);
+        Query query=new Query(criteria);
+        BookInfo bookInfo= bookInfoDao.queryOne(query);
+        System.out.println(111);
     }
 }
