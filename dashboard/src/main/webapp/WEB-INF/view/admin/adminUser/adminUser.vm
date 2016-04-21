@@ -94,7 +94,6 @@
                                         #end
                                     </td>
                                     <td class="center">admin</td>
-                                    <td class="center">$!{item.displayOrder}</td>
 
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$item.updatedAt)</td>

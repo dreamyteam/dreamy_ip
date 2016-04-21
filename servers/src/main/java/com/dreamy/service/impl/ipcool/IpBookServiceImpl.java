@@ -62,7 +62,11 @@ public class IpBookServiceImpl implements IpBookService {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
-            bookCrawlerInfoDao.save(bookCrawlerInfo);
+            if (bookCrawlerInfo.getId() > 0) {
+                bookCrawlerInfoDao.update(bookCrawlerInfo);
+            } else {
+                bookCrawlerInfoDao.save(bookCrawlerInfo);
+            }
         }
         return ipBookDao.update(ipBook);
     }
@@ -74,8 +78,8 @@ public class IpBookServiceImpl implements IpBookService {
             ipBookDao.update(ipBook);
             BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(id).status(-1);
             bookCrawlerInfoDao.update(bookCrawlerInfo);
-
         }
+
         return 0;
     }
 }
