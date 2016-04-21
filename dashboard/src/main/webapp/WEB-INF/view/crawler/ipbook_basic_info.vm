@@ -1,0 +1,69 @@
+<input type="hidden" name="id" value="">
+
+<div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">标题</label>
+
+    <div class="col-lg-10">
+        <input type="text" class="required validate[required] form-control"
+               value="$!book.title"
+               name="title" placeholder="标题">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">书名</label>
+
+    <div class="col-lg-10">
+        <input type="text" class="required validate[required] form-control"
+               value="$!book.name" name="name"
+               placeholder="书名">
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">亚马逊</label>
+    <input type="hidden" name="infos[0].source" value="1"/>
+
+    <div class="col-sm-10">
+                                <textarea rows="6" class="form-control textInput" name="infos[0].url"
+                                          required="required">$!url1</textarea>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">京东</label>
+    <input type="hidden" name="infos[1].source" value="2"/>
+
+    <div class="col-sm-10">
+                                <textarea rows="6" class="form-control textInput" name="infos[1].url"
+                                          required="required">$!url2</textarea>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">当当</label>
+    <input type="hidden" name="infos[2].source" value="3"/>
+
+    <div class="col-sm-10">
+                                <textarea rows="6" class="form-control textInput" name="infos[2].url"
+                                          required="required">$!url3</textarea>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">豆瓣</label>
+    <input type="hidden" name="infos[3].source" value="4"/>
+
+    <div class="col-sm-10">
+                                <textarea rows="6" class="form-control textInput" name="infos[3].url"
+                                          required="required">$!url4</textarea>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+    ##        <a class="btn btn-default" href="javascript:history.back(-1)" type="button">返回</a>
+        <a class="btn btn-default" href="/crawler" type="button">返回</a>
+    </div>
+</div>
