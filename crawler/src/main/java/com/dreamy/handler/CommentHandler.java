@@ -21,7 +21,7 @@ public class CommentHandler {
 
     public List<Comment> getByUrl(String url) {
         List<Comment> comments=new ArrayList<Comment>();
-        String html = HttpUtils.getHtmlGet(url, "null");
+        String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {

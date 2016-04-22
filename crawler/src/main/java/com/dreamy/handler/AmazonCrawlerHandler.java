@@ -267,7 +267,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             for (Element e : elements) {
                 if (e.text().contains("ASIN: ")) {
                     asin = e.text().substring(6);
-                    String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin, "null");
+                    String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin);
                     if (StringUtils.isNotEmpty(html)) {
                         Document userInfoDocument = Jsoup.parse(html);
 

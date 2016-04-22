@@ -29,7 +29,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
 
-        String html = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -187,7 +187,8 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         if (element != null) {
             String product_id = element.attr("product_id");
             String url = " http://product.dangdang.com/pricestock/callback.php?type=getpublishbangv2&product_id=" + product_id;
-            String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+            String result = HttpUtils.getHtmlGet(url, "gbk");
+            System.out.println(result);
             String str[] = result.split(";");
             if (str != null && str.length > 1) {
                 String s = str[str.length - 1];
@@ -211,7 +212,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             if (element != null) {
                 String product_id = element.attr("product_id");
                 String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
-                String result = HttpUtils.getHtmlGetBycharSet(url, "gbk");
+                String result = HttpUtils.getHtmlGet(url, "gbk");
                 if (StringUtils.isNotEmpty(result)&&!result.equals("[]")) {
                     Map<String, Object> map1 = JsonUtils.toMap(result);
                     if (CollectionUtils.isNotEmpty(map1)) {
