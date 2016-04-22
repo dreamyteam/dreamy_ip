@@ -30,4 +30,9 @@ public class BookInfoServiceImpl implements BookInfoService {
     public BookInfo getById(Integer id) {
         return bookInfoDao.queryById(id);
     }
+
+    @Override
+    public void delById(Integer id) {
+        bookInfoDao.deleteById(id);
+    }
 }

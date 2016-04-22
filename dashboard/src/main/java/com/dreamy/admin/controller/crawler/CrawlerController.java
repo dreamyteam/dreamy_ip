@@ -7,6 +7,7 @@ import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.enums.IpBookStatusEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
@@ -52,7 +53,7 @@ public class CrawlerController extends DashboardController {
 
         model.put("list", list);
         model.put("page", page);
-        model.put("statuses", CrawlerTaskStatusEnums.values());
+        model.put("statuses", IpBookStatusEnums.values());
         return "/crawler/ipbook";
     }
 
@@ -100,14 +101,13 @@ public class CrawlerController extends DashboardController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String update(IpBook ipBook, BookCrawlerModel infos) {
         List<BookCrawlerInfo> list = infos.getInfos();
+        ipBook.status(IpBookStatusEnums.waitting.getStatus());
+
         if (ipBook.getId() != null && ipBook.getId() > 0) {
             ipBookService.updateRecordAndCrawlerInfo(ipBook, list);
         } else {
             ipBook.type(1);
-            ipBook.status(1);
             ipBookService.saveRecordAndCrawlerInfo(ipBook, list);
-
-
         }
         return redirect("/crawler.html");
     }

@@ -8,10 +8,12 @@ import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.ipcool.IpBookConditions;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +32,6 @@ import java.util.Map;
 public class IpBookServiceImpl implements IpBookService {
     @Resource
     private IpBookDao ipBookDao;
-    @Resource
-    private BookCrawlerInfoDao bookCrawlerInfoDao;
 
     @Resource
     private QueueService queueService;
@@ -44,7 +45,7 @@ public class IpBookServiceImpl implements IpBookService {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
-            bookCrawlerInfoDao.save(bookCrawlerInfo);
+            bookCrawlerInfoService.save(bookCrawlerInfo);
         }
         return ipBook;
     }
@@ -74,12 +75,17 @@ public class IpBookServiceImpl implements IpBookService {
     @Override
     public int updateRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
-            bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
-            if (bookCrawlerInfo.getId() > 0) {
-                bookCrawlerInfoDao.update(bookCrawlerInfo);
+            bookCrawlerInfo.status(CrawlerTaskStatusEnums.waitting.getStatus());
+
+            Integer id = bookCrawlerInfo.getId();
+            if (id > 0) {
+                BookCrawlerInfo info = bookCrawlerInfoService.getById(id);
+                if (info != null && !info.getUrl().equals(bookCrawlerInfo.getUrl())) {
+                    bookCrawlerInfoService.update(bookCrawlerInfo);
+                }
             } else {
-                bookCrawlerInfoDao.save(bookCrawlerInfo);
+                bookCrawlerInfoService.save(bookCrawlerInfo);
             }
         }
         return ipBookDao.update(ipBook);
@@ -91,7 +97,7 @@ public class IpBookServiceImpl implements IpBookService {
             IpBook ipBook = new IpBook().status(-1).id(id);
             ipBookDao.update(ipBook);
             BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(id).status(-1);
-            bookCrawlerInfoDao.update(bookCrawlerInfo);
+            bookCrawlerInfoService.update(bookCrawlerInfo);
         }
 
         return 0;

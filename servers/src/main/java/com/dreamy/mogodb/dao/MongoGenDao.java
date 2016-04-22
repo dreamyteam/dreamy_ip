@@ -89,7 +89,7 @@ public abstract class  MongoGenDao<T> {
         log.info("[Mongo Dao ]queryPageCount:" + query);
         return this.mongoTemplate.count(query, this.getEntityClass());
     }
-    public void deleteById(String id) {
+    public void deleteById(Integer id) {
         Criteria criteria = Criteria.where("_id").in(id);
         if(null!=criteria){
             Query query = new Query(criteria);
