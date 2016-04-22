@@ -3,44 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/mvc
-           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-		    http://www.springframework.org/schema/task
-		    http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
            >
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:rabbitmq_develop.properties</value>
-                <value>classpath:jdbc_develop.properties</value>
-                <value>classpath:redis-develop.properties</value>
-                <value>classpath:mongodb.properties</value>
-            </list>
-        </property>
-    </bean>
-    <task:annotation-driven/>
     <context:component-scan base-package="com.dreamy.admin"/>
 
-    <bean id="jacksonMessageConverter"
-          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
-
-    <bean id="stringHttpMessageConverter"
-          class="org.springframework.http.converter.StringHttpMessageConverter">
-        <property name="supportedMediaTypes">
-            <list>
-                <value>text/plain;charset=UTF-8</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean
-            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <bean  class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
                 <ref bean="stringHttpMessageConverter"/>
@@ -62,35 +35,6 @@
 
     <bean
             class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
-
-    <!-- Error handling -->
-    <bean id="exceptionResolver"
-          class="com.dreamy.admin.handler.CustomSimpleMappingExceptionResolver">
-        <property name="defaultErrorView">
-            <value>/error/404</value>
-        </property>
-        <property name="defaultStatusCode">
-            <value>404</value>
-        </property>
-    </bean>
-    <!-- 返回值转换成json -->
-    <bean
-            class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"/>
-        <property name="favorParameter" value="true"/>
-        <property name="favorPathExtension" value="false"/>
-        <property name="defaultContentType" value="text/html"/>
-        <!-- 设置为true以忽略对Accept Header的支持 -->
-        <property name="ignoreAcceptHeader" value="true"></property>
-        <property name="mediaTypes">
-            <map>
-                <entry key="json" value="application/json"/>
-                <entry key="xml" value="application/xml"/>
-                <entry key="html" value="text/html"/>
-            </map>
-        </property>
-
-    </bean>
 
     <bean id="velocityConfig"
           class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
@@ -125,39 +69,6 @@
                   value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
     </bean>
 
-
-    <!--<bean id="freemarkerResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">-->
-    <!--<property name="order" value="1" />-->
-    <!--<property name="suffix" value=".ftl" />-->
-    <!--<property name="contentType" value="text/html;charset=utf-8" />-->
-    <!--<property name="viewClass">-->
-    <!--<value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>-->
-    <!--</property>-->
-    <!--</bean>-->
-    <!--&lt;!&ndash; ===================================================== &ndash;&gt;-->
-    <!--&lt;!&ndash; ViewResolver For FreeMarkerConfigurer &ndash;&gt;-->
-    <!--&lt;!&ndash; ===================================================== &ndash;&gt;-->
-    <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
-    <!--<property name="templateLoaderPath">-->
-    <!--<value>/view/</value>-->
-    <!--</property>-->
-    <!--<property name="freemarkerSettings">&lt;!&ndash; 设置FreeMarker环境属性 &ndash;&gt;-->
-    <!--<props>-->
-    <!--<prop key="template_update_delay">5</prop>&lt;!&ndash;刷新模板的周期，单位为秒 &ndash;&gt;-->
-    <!--<prop key="default_encoding">UTF-8</prop>&lt;!&ndash;模板的编码格式 &ndash;&gt;-->
-    <!--<prop key="locale">UTF-8</prop>&lt;!&ndash; 本地化设置 &ndash;&gt;-->
-    <!--<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>-->
-    <!--<prop key="time_format">HH:mm:ss</prop>-->
-    <!--<prop key="number_format">0.####</prop>-->
-    <!--<prop key="boolean_format">true,false</prop>-->
-    <!--<prop key="whitespace_stripping">true</prop>-->
-    <!--<prop key="tag_syntax">auto_detect</prop>-->
-    <!--<prop key="url_escaping_charset">UTF-8</prop>-->
-    <!--<prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>-->
-    <!--</props>-->
-    <!--</property>-->
-    <!--</bean>-->
-
     <mvc:resources location="/static/" mapping="/static/**"/>
 
     <mvc:interceptors>
@@ -170,21 +81,6 @@
 
     </mvc:interceptors>
 
-    <bean id="userSessionContainer"
-          class="com.dreamy.admin.container.UserSessionContainerCacheImpl">
-        <property name="prefix" value="ipcool_sso_sid_"/>
-    </bean>
 
-    <bean id="sessionCookieHandler" class="com.dreamy.admin.handler.CookieHandler">
-        <property name="cookieName" value="IPCOOL_SSO_SESSIONID"/>
-        <!--<property name="cookieDomain" value="/"/>-->
-        <property name="cookiePath" value="/"/>
-        <property name="httpOnly" value="true"/>
-    </bean>
-
-
-    <import resource="classpath:applicationContext-dao.xml"/>
-    <import resource="applicationContext-rabbitmq.xml"/>
-    <import resource="classpath:mongodb.xml"/>
 
 </beans>

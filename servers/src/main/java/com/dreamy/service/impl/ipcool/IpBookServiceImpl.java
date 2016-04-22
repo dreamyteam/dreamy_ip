@@ -119,7 +119,7 @@ public class IpBookServiceImpl implements IpBookService {
             info.status(CrawlerTaskStatusEnums.starting.getStatus());
             bookCrawlerInfoService.update(info);
         } else {
-            info.status(CrawlerTaskStatusEnums.finished.getStatus());
+            info.status(CrawlerTaskStatusEnums.success.getStatus());
             bookCrawlerInfoService.update(info);
         }
     }

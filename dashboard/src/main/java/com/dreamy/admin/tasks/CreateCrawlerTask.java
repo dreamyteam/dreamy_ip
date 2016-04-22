@@ -3,21 +3,16 @@ package com.dreamy.admin.tasks;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
 import com.dreamy.enums.IpBookStatusEnums;
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -41,6 +36,8 @@ public class CreateCrawlerTask {
 
     @Scheduled(fixedDelay = 5000)
     public void checkBookCrawlerWaittingStatus() {
+        System.out.printf("1111");
+
         Page page = new Page();
         page.setPageSize(1000);
 
@@ -83,7 +80,7 @@ public class CreateCrawlerTask {
                 bookStatus = IpBookStatusEnums.exception.getStatus();
             } else if (allStatus.contains(CrawlerTaskStatusEnums.starting.getStatus())) {
                 bookStatus = IpBookStatusEnums.starting.getStatus();
-            } else if (allStatus.contains(CrawlerTaskStatusEnums.finished.getStatus())) {
+            } else if (allStatus.contains(CrawlerTaskStatusEnums.success.getStatus())) {
                 bookStatus = IpBookStatusEnums.finished.getStatus();
             }
 

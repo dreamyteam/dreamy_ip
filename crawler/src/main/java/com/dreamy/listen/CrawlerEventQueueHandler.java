@@ -6,7 +6,6 @@ import com.dreamy.enums.CrawlerTaskStatusEnums;
 import com.dreamy.handler.CrawlerHandler;
 import com.dreamy.handler.CrawlerManage;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.dao.MemberDao;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import org.slf4j.Logger;
@@ -42,26 +41,27 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         Integer ipId = jsonObject.getInteger("ipId");
         Integer crawlerId = jsonObject.getInteger("crawlerId");
 
-        BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
-
-        try {
-            CrawlerHandler handler = crawlerManage.getHandler(type);
-            BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
-            if (bookInfo != null) {
-                bookInfo.setCrawlerId(crawlerId);
-                bookInfo.setSource(type);
-                bookInfo.setIpId(ipId);
-                bookInfoService.saveByRecord(bookInfo);
-
-                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.finished.getStatus());
-            } else {
-                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-                log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
-            }
-
-            bookCrawlerInfoService.update(bookCrawlerInfo);
-        } catch (Exception e) {
-            log.error("crawler event exception", e);
-        }
+//        BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
+//
+//        try {
+//            CrawlerHandler handler = crawlerManage.getHandler(type);
+//            BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
+//            if (bookInfo != null) {
+//                bookInfo.setCrawlerId(crawlerId);
+//                bookInfo.setSource(type);
+//                bookInfo.setIpId(ipId);
+//                bookInfoService.saveByRecord(bookInfo);
+//
+//                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
+//            } else {
+//                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
+//                log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
+//            }
+//
+//            bookCrawlerInfoService.update(bookCrawlerInfo);
+//        } catch (Exception e) {
+//            bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
+//            log.error("crawler event exception", e);
+//        }
     }
 }
