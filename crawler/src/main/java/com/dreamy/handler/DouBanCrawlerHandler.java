@@ -28,7 +28,7 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
 
-        String html = HttpUtils.getHtmlGet(url, "utf-8");
+        String html = HttpUtils.getHtmlGet(url);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -98,8 +98,6 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
      */
     public void getAuthorInfo(BookInfo bookInfo, Document document) {
         try {
-
-
             Elements elements = document.select("div.intro");
             if (elements != null && elements.size() > 0) {
                 Element element = elements.get(0);
