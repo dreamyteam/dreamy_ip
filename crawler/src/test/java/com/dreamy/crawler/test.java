@@ -135,9 +135,14 @@ public class test extends BaseJunitTest {
 //            i++;
 //        }
 
+        BookInfo old = bookInfoService.getById(410);
+        if (old != null) {
+            bookInfoService.delById(410);
+        }
+
         Random random = new Random();
         long t1 = System.nanoTime();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(random.nextInt(1000));
         }
         long   t2 = System.nanoTime();
