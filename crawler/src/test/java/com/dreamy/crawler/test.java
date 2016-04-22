@@ -6,14 +6,14 @@ import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.Member;
 import com.dreamy.mogodb.dao.MemberDao;
+import com.dreamy.mogodb.dao.UserAgentDao;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wangyongxing on 16/4/5.
@@ -21,6 +21,9 @@ import java.util.List;
 public class test extends BaseJunitTest {
     @Autowired
     private MemberDao memberDao;
+
+    @Autowired
+    private UserAgentDao userAgentDao;
 
     @Autowired
     private BookInfoService bookInfoService;
@@ -113,5 +116,31 @@ public class test extends BaseJunitTest {
         Query query = new Query(criteria);
 //        BookInfo bookInfo= bookInfoDao.queryOne(query);
 //        System.out.println(111);
+    }
+
+    @Test
+    public void userAgents() {
+//        String html = HttpUtils.getHtmlGet("http://ua.theafh.net/");
+//        Document document = Jsoup.parse(html);
+//        Element element = document.getElementById("result");
+//
+//        Integer i=1;
+//        UserAgents userAgents1 = new UserAgents();
+//        for (Node node : element.childNodes().get(0).childNodes()) {
+//            String tmp = node.childNodes().get(1).childNode(0).toString();
+//            userAgents1.setId(i);
+//            userAgents1.setUserAgent(tmp);
+//            userAgentDao.save(userAgents1);
+//            i++;
+//        }
+
+        Random random = new Random();
+        long t1 = System.nanoTime();
+        for (int i = 0; i < 100; i++) {
+            System.out.println(random.nextInt(1000));
+        }
+        long   t2 = System.nanoTime();
+        System.out.println(t2 - t1);
+
     }
 }
