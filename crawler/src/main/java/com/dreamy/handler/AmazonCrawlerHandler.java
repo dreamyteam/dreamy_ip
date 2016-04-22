@@ -9,10 +9,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
+    private static final Logger log = LoggerFactory.getLogger(AmazonCrawlerHandler.class);
 
     @Override
     public Integer getId() {
@@ -88,21 +91,27 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getPressAndPublishTime(BookInfo bean, Document document) {
-        String press = "";
-        String publishTime = "";
-        Element element = document.getElementById("detail_bullets_id");
-        if (element != null) {
-            Elements elements = element.select("div>ul>li");
-            String[] data = elements.get(0).text().substring(4).split(";");
-            press = data[0];
-            String pressInfo = (data[1].split("\\("))[1];
-            publishTime = pressInfo.substring(0, pressInfo.length() - 2);
-            publishTime = publishTime.replaceFirst("年", "-");
-            publishTime = publishTime.replaceFirst("月", "-");
+        try {
+            String press = "";
+            String publishTime = "";
+            Element element = document.getElementById("detail_bullets_id");
+            if (element != null) {
+                Elements elements = element.select("div>ul>li");
+                String[] data = elements.get(0).text().substring(4).split(";");
+                press = data[0];
+                String pressInfo = (data[1].split("\\("))[1];
+                publishTime = pressInfo.substring(0, pressInfo.length() - 2);
+                publishTime = publishTime.replaceFirst("年", "-");
+                publishTime = publishTime.replaceFirst("月", "-");
 
+            }
+            bean.setPushTime(publishTime);
+            bean.setPress(press);
         }
-        bean.setPushTime(publishTime);
-        bean.setPress(press);
+        catch (Exception e)
+        {
+            log.error("解析 出版社和出版时间 异常", e);
+        }
     }
 
 
@@ -127,10 +136,16 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getSaleSort(BookInfo bean, Document document) {
-        Element sort = document.getElementById("SalesRank");
-        String[] saleRank = sort.childNode(2).toString().split("第");
+        try {
+            Element sort = document.getElementById("SalesRank");
+            String[] saleRank = sort.childNode(2).toString().split("第");
 
-        bean.setSaleSort(saleRank[1].substring(0, saleRank[1].length() - 3));
+            bean.setSaleSort(saleRank[1].substring(0, saleRank[1].length() - 3));
+        }
+        catch (Exception e){
+            log.error("解析 图书销售排名 异常", e);
+        }
+
     }
 
     /**
@@ -140,11 +155,16 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getCoverImg(BookInfo bean, Document document) {
-        String imageUrl = "";
-        Element element = document.getElementById("imgBlkFront");
-        String dynamicImages = element.attr("data-a-dynamic-image");
-        imageUrl = (dynamicImages.split("\""))[1];
-        bean.setImage(imageUrl);
+        try {
+            String imageUrl = "";
+            Element element = document.getElementById("imgBlkFront");
+            String dynamicImages = element.attr("data-a-dynamic-image");
+            imageUrl = (dynamicImages.split("\""))[1];
+            bean.setImage(imageUrl);
+        }
+        catch (Exception e){
+            log.error("解析 封面 异常", e);
+        }
     }
 
     /**
@@ -156,7 +176,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     private void getIpDescription(BookInfo bean, Document document) {
         String description = "";
         Elements noscripts = document.getElementsByTag("noscript");
-        if (noscripts.size() > 2) {
+        if (noscripts!=null&&noscripts.size() > 2) {
             description = noscripts.get(1).text();
         }
 
@@ -170,31 +190,36 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getCategories(BookInfo bean, Document document) {
-        String categories = "";
-        Element element = document.getElementById("SalesRank");
-        if (element != null) {
-            Elements elements = element.getElementsByClass("zg_hrsr_item");
-            Integer size = elements.size();
-            if (size > 0) {
-                for (int i = 0; i < size; i++) {
-                    Element currentElement = elements.get(i);
-                    String[] rankString = currentElement.child(0).text().split("第");
-                    String rank = rankString[1].substring(0, rankString[1].length() - 1);
+        try {
+            String categories = "";
+            Element element = document.getElementById("SalesRank");
+            if (element != null) {
+                Elements elements = element.getElementsByClass("zg_hrsr_item");
+                Integer size = elements.size();
+                if (size > 0) {
+                    for (int i = 0; i < size; i++) {
+                        Element currentElement = elements.get(i);
+                        String[] rankString = currentElement.child(0).text().split("第");
+                        String rank = rankString[1].substring(0, rankString[1].length() - 1);
 
-                    String parentCategory = currentElement.child(1).child(1).text();
-                    if (currentElement.child(1).childNodes().size() > 5) {
-                        String subParentCategory = currentElement.child(1).child(2).text();
-                        categories += parentCategory + "|" + subParentCategory + ":" + rank + ",";
-                    } else {
-                        categories += parentCategory + ":" + rank + ",";
+                        String parentCategory = currentElement.child(1).child(1).text();
+                        if (currentElement.child(1).childNodes().size() > 5) {
+                            String subParentCategory = currentElement.child(1).child(2).text();
+                            categories += parentCategory + "|" + subParentCategory + ":" + rank + ",";
+                        } else {
+                            categories += parentCategory + ":" + rank + ",";
+                        }
                     }
+
+                    categories = categories.substring(0, categories.length() - 1);
                 }
-
-                categories = categories.substring(0, categories.length() - 1);
             }
-        }
 
-        bean.setCategories(categories);
+            bean.setCategories(categories);
+        }
+        catch (Exception e){
+            log.error("解析 获取分类 异常", e);
+        }
     }
 
     /**
@@ -232,6 +257,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getAuthorDescrition(BookInfo bean, Document document) {
+        try {
         String authorDescription = "";
         Element element = document.getElementById("detail_bullets_id");
         if (element != null) {
@@ -261,6 +287,10 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         }
 
         bean.setAuthorInfo(authorDescription);
+        }
+        catch (Exception e){
+            log.error("解析 作者描述 异常", e);
+        }
     }
 
 

@@ -9,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(DouBanCrawlerHandler.class);
     @Override
     public Integer getId() {
         return CrawlerSourceEnums.douban.getType();
@@ -92,13 +96,23 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
      * @param bookInfo
      * @param document
      */
-    private void getAuthorInfo(BookInfo bookInfo, Document document) {
-        Elements elements = document.select("div.intro");
-        if (elements != null && elements.size() > 0) {
-            Element element = elements.get(0);
-            bookInfo.setInfo(element.text());
-            element = elements.get(1);
-            bookInfo.setAuthorInfo(element.text());
+    public void getAuthorInfo(BookInfo bookInfo, Document document) {
+        try {
+
+
+            Elements elements = document.select("div.intro");
+            if (elements != null && elements.size() > 0) {
+                Element element = elements.get(0);
+                bookInfo.setInfo(element.text());
+                if(elements.size()>1) {
+                    element = elements.get(1);
+                    bookInfo.setAuthorInfo(element.text());
+                }
+            }
+        }catch (Exception e){
+            log.error("解析 作者简介 内容简介 异常", e);
+
+
         }
 
 
