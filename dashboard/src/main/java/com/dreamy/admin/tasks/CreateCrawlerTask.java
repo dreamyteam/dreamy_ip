@@ -20,10 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,31 +53,6 @@ public class CreateCrawlerTask {
         }
     }
 
-    @Scheduled(fixedDelay = 6000)
-    public void checkBookCrawlerFinishedStatus() {
-        Page page = new Page();
-        page.setPageSize(1000);
-
-        BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().status(CrawlerTaskStatusEnums.starting.getStatus());
-        List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
-        if (CollectionUtils.isEmpty(bookCrawlerInfos)) {
-            return;
-        }
-        for (BookCrawlerInfo info : bookCrawlerInfos) {
-            if (StringUtils.isNotEmpty(info.getUrl())) {
-                BookInfo bookInfo = bookInfoService.getById(info.getId());
-                if (bookInfo == null) {
-                    continue;
-                } else {
-                    info.status(CrawlerTaskStatusEnums.finished.getStatus());
-                    bookCrawlerInfoService.update(info);
-                }
-            }
-        }
-
-    }
-
-
     @Scheduled(fixedDelay = 7000)
     public void checkIpBookStatus() {
         Page page = new Page();
@@ -100,15 +72,17 @@ public class CreateCrawlerTask {
             bookCrawlerInfo.setBookId(book.getId());
             List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, bookCrawlerPage);
 
-            List<Integer> allStatus = new LinkedList<>();
+            Set<Integer> allStatus = new HashSet<>();
             for (BookCrawlerInfo crawlerInfo : bookCrawlerInfos) {
                 if (StringUtils.isNotEmpty(crawlerInfo.getUrl())) {
                     allStatus.add(crawlerInfo.getStatus());
                 }
             }
 
-            if (allStatus.contains(CrawlerTaskStatusEnums.waitting.getStatus())) {
-                bookStatus = IpBookStatusEnums.waitting.getStatus();
+            if (allStatus.contains(CrawlerTaskStatusEnums.failed.getStatus())) {
+                bookStatus = IpBookStatusEnums.exception.getStatus();
+            } else if (allStatus.contains(CrawlerTaskStatusEnums.starting.getStatus())) {
+                bookStatus = IpBookStatusEnums.starting.getStatus();
             } else if (allStatus.contains(CrawlerTaskStatusEnums.finished.getStatus())) {
                 bookStatus = IpBookStatusEnums.finished.getStatus();
             }

@@ -30,6 +30,14 @@ public interface BookCrawlerInfoService {
      */
     List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page);
 
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    BookCrawlerInfo getById(Integer id);
+
     /**
      * @param info
      * @return

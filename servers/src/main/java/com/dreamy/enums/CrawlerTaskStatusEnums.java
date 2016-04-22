@@ -9,7 +9,9 @@ package com.dreamy.enums;
 public enum CrawlerTaskStatusEnums {
     waitting(1, "等待抓取"),
     starting(2, "抓取中"),
-    finished(3, "抓取完成");
+    finished(3, "任务已经运行"),
+    success(4, "抓取成功"),
+    failed(5, "抓取失败");
 
     private Integer status;
 

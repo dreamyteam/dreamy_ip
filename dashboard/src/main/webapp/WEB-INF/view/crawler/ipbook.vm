@@ -116,7 +116,12 @@
                                     <td class="center">
                                         #foreach($st in $statuses)
                                             #if($!{book.status} == $st.getStatus())
-                                                $st.getDescription()
+                                                #if($!{book.status} == 4)
+                                                    <span style="color: #ff0000"> $st.getDescription()</span>
+                                                #else
+                                                    $st.getDescription()
+                                                #end
+
                                             #end
                                         #end
                                     </td>

@@ -19,6 +19,7 @@ import java.util.Map;
 public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
+
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
         bookCrawlerInfoDao.save(info);
@@ -26,20 +27,19 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     }
 
     @Override
-    public List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo)
-    {
-        Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
-        BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
+    public List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo) {
+        Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
         conditions.createCriteria().addByMap(params);
         return bookCrawlerInfoDao.selectByExample(conditions);
     }
 
     @Override
     public List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page) {
-        Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
-        BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
+        Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
         conditions.createCriteria().addByMap(params);
-        if(page!=null){
+        if (page != null) {
             page.setTotalNum(bookCrawlerInfoDao.countByExample(conditions));
             conditions.setPage(page);
         }
@@ -49,5 +49,10 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Override
     public int update(BookCrawlerInfo info) {
         return bookCrawlerInfoDao.update(info);
+    }
+
+    @Override
+    public BookCrawlerInfo getById(Integer id) {
+        return bookCrawlerInfoDao.selectById(id);
     }
 }
