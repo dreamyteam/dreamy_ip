@@ -44,6 +44,12 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
 
         try {
+
+            BookInfo old = bookInfoService.getById(crawlerId);
+            if (old != null) {
+                bookInfoService.delById(crawlerId);
+            }
+
             CrawlerHandler handler = crawlerManage.getHandler(type);
             BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
             if (bookInfo != null) {
@@ -58,10 +64,11 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
                 log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
             }
 
-            bookCrawlerInfoService.update(bookCrawlerInfo);
         } catch (Exception e) {
             bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
             log.error("crawler event exception", e);
         }
+
+        bookCrawlerInfoService.update(bookCrawlerInfo);
     }
 }

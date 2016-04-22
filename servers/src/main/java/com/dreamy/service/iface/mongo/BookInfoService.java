@@ -25,4 +25,11 @@ public interface BookInfoService {
     BookInfo getById(Integer id);
 
 
+    /**
+     *
+     * @param id
+     */
+    void delById(Integer id);
+
+
 }

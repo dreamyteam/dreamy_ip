@@ -101,14 +101,13 @@ public class CrawlerController extends DashboardController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String update(IpBook ipBook, BookCrawlerModel infos) {
         List<BookCrawlerInfo> list = infos.getInfos();
+        ipBook.status(IpBookStatusEnums.waitting.getStatus());
+
         if (ipBook.getId() != null && ipBook.getId() > 0) {
             ipBookService.updateRecordAndCrawlerInfo(ipBook, list);
         } else {
             ipBook.type(1);
-            ipBook.status(1);
             ipBookService.saveRecordAndCrawlerInfo(ipBook, list);
-
-
         }
         return redirect("/crawler.html");
     }
