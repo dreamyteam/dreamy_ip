@@ -66,7 +66,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
             bookCrawlerInfoService.update(bookCrawlerInfo);
         } catch (Exception e) {
             bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-            log.error("crawler event exception", e);
+            log.error("crawler event exception" + type + ",url:" + url + ",id:" + crawlerId, e);
             bookCrawlerInfoService.update(bookCrawlerInfo);
         }
 
