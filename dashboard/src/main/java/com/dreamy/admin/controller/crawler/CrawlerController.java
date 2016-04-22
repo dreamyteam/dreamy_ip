@@ -7,6 +7,7 @@ import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.enums.IpBookStatusEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
@@ -52,7 +53,7 @@ public class CrawlerController extends DashboardController {
 
         model.put("list", list);
         model.put("page", page);
-        model.put("statuses", CrawlerTaskStatusEnums.values());
+        model.put("statuses", IpBookStatusEnums.values());
         return "/crawler/ipbook";
     }
 

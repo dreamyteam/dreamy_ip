@@ -10,7 +10,7 @@ public enum IpBookStatusEnums {
     waitting(1, "等待抓取"),
     starting(2, "抓取中"),
     finished(3, "抓取完成"),
-    exception(4, "抓取异常");
+    exception(4, "异常");
 
     private Integer status;
 

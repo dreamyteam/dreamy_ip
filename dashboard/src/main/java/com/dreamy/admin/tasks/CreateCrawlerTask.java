@@ -36,8 +36,6 @@ public class CreateCrawlerTask {
 
     @Scheduled(fixedDelay = 5000)
     public void checkBookCrawlerWaittingStatus() {
-        System.out.printf("1111");
-
         Page page = new Page();
         page.setPageSize(1000);
 
@@ -58,7 +56,11 @@ public class CreateCrawlerTask {
         IpBook ipBook = new IpBook().status(IpBookStatusEnums.waitting.getStatus());
         List<IpBook> ipBooks = ipBookService.getIpBookList(ipBook, page);
         if (CollectionUtils.isEmpty(ipBooks)) {
-            return;
+            ipBook.setStatus(IpBookStatusEnums.starting.getStatus());
+            ipBooks = ipBookService.getIpBookList(ipBook, page);
+            if (CollectionUtils.isEmpty(ipBooks)) {
+                return;
+            }
         }
 
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
