@@ -12,19 +12,19 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -39,6 +39,9 @@ public class HttpUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
 
+    public static final Pattern REF_REG = Pattern
+            .compile("(^[a-zA-Z]+://[^/]+)[/]?");
+
     /**
      * get方法获取网页
      *
@@ -47,37 +50,57 @@ public class HttpUtils {
      * @return
      */
     public static String getHtmlGet(String tempurl) {
-        return getHtmlGet(tempurl, "utf-8", null, 0, null, null, null, null);
+        return getHtmlGet(tempurl,CHARSET, null, 0, null, null, null, null);
     }
 
-
-    public static String getHtmlGetBycharSet(String tempurl,String charSet ) {
+    public static String getHtmlGet(String tempurl,String charSet ) {
         return getHtmlGet(tempurl,charSet, null, 0, null, null, null, null);
     }
 
+    public static String refer(String url) {
+        Matcher matcher = REF_REG.matcher(url);
+        while (matcher.find()) {
+            return matcher.group();
+        }
+        return "";
+    }
 
     /**
-     * get方法获取网页
-     *
+     * 配置代理 get方法获取网页
      * @param tempurl
+     * @param proxyHost
+     * @param proxyPort
+     * @param userAgent
+     * @return
+     */
+    public static String getHtmlGetByProxy(String tempurl,String proxyHost, int proxyPort ,String userAgent) {
+        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, userAgent, null, null, null);
+    }
+
+
+    /***
+     * get方法获取网页
+     * @param tempurl
+     * @param charSet
      * @param referer
      * @return
      */
-    public static String getHtmlGet(String tempurl, String referer) {
-        return getHtmlGet(tempurl, "utf-8", null, 0, null, null, referer, null);
+    public static String getHtmlGet(String tempurl,String charSet,String referer) {
+        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, null);
     }
 
     /**
      * 配置请求头,get方法获取网页
-     *
      * @param tempurl
+     * @param charSet
      * @param referer
      * @param XRequestedWith
      * @return
      */
-    public static String getHtmlGet(String tempurl, String referer, String XRequestedWith) {
-        return getHtmlGet(tempurl, "utf-8", null, 0, null, null, referer, XRequestedWith);
+    public static String getHtmlGet(String tempurl,String charSet, String referer, String XRequestedWith) {
+        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, XRequestedWith);
     }
+
 
     /**
      * get方法获取网页
@@ -109,7 +132,13 @@ public class HttpUtils {
         StringBuilder sb = new StringBuilder();
         GetMethod method = new GetMethod(tempurl);
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
-        method.getParams().setContentCharset(charSet);
+        if (StringUtils.isNotEmpty(charSet)) {
+            method.getParams().setContentCharset(charSet);
+        }
+        else{
+            method.getParams().setContentCharset(CHARSET);
+        }
+
         method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         method.setRequestHeader("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
         method.setRequestHeader("Connection", "close");
@@ -119,15 +148,18 @@ public class HttpUtils {
         if (StringUtils.isNotEmpty(userAgent)) {
             method.setRequestHeader("User-Agent", userAgent);
         } else {
-            method.setRequestHeader("User-Agent",
-                    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:20.0) Gecko/20100101 Firefox/20.0");
+            method.setRequestHeader("User-Agent",USER_AGENT);
         }
+
         if (StringUtils.isNotEmpty(cookie)) {
             method.setRequestHeader("Cookie", cookie);
         }
 
         if (StringUtils.isNotEmpty(referer)) {
             method.setRequestHeader("Referer", referer);
+        }
+        else{
+            method.setRequestHeader("Referer", refer(tempurl));
         }
 
         try {
@@ -396,6 +428,73 @@ public class HttpUtils {
         }
         return sb.toString();
     }
+
+    public static String toGbkString(String s) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 0 && c <= 255) {
+                sb.append(c);
+            } else {
+                byte[] b;
+                try {
+                    b = String.valueOf(c).getBytes("GBK");
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    b = new byte[0];
+                }
+                for (int j = 0; j < b.length; j++) {
+                    int k = b[j];
+                    if (k < 0)
+                        k += 256;
+                    sb.append("%" + Integer.toHexString(k).toUpperCase());
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    public static String getSsl(String url,int timeOut){
+        String coment="";
+        try {
+            URL u = new URL(url);
+            if("https".equalsIgnoreCase(u.getProtocol())){
+                SslUtils.ignoreSsl();
+            }
+            URLConnection conn = u.openConnection();
+            conn.setConnectTimeout(timeOut);
+            conn.setReadTimeout(timeOut);
+            coment=IOUtils.toString(conn.getInputStream());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            return coment;
+        }
+
+    }
+    public String postSsl(String urlAddress,String args,int timeOut) throws Exception{
+        URL url = new URL(urlAddress);
+        if("https".equalsIgnoreCase(url.getProtocol())){
+            SslUtils.ignoreSsl();
+        }
+        URLConnection u = url.openConnection();
+        u.setDoInput(true);
+        u.setDoOutput(true);
+        u.setConnectTimeout(timeOut);
+        u.setReadTimeout(timeOut);
+        OutputStreamWriter osw = new OutputStreamWriter(u.getOutputStream(), "UTF-8");
+        osw.write(args);
+        osw.flush();
+        osw.close();
+        u.getOutputStream();
+        return IOUtils.toString(u.getInputStream());
+    }
+    public static final String CHARSET = "UTF-8";
+
+    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36 AlexaToolbar/alxg-3.1";
 
     /**
      * chrome agent代理
