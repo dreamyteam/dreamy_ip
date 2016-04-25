@@ -125,8 +125,11 @@ public class CrawlerController extends DashboardController {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
 
         for (BookCrawlerInfo info : list) {
-            ipBookService.doCrawler(info);
+            if (info.getStatus().equals(CrawlerTaskStatusEnums.failed.getStatus())) {
+                ipBookService.doCrawler(info);
+            }
         }
+
         return redirect("/crawler.html");
     }
 
