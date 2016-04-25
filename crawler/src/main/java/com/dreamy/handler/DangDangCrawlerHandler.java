@@ -26,6 +26,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
 
     private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
+
     @Override
     public Integer getId() {
         return CrawlerSourceEnums.dangdang.getType();
@@ -40,10 +41,10 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
-                info(bean,document);
-                image(bean,document);
-                authorInfo(bean,document);
-                comment(bean,document);
+                info(bean, document);
+                image(bean, document);
+                authorInfo(bean, document);
+                comment(bean, document);
 
                 getAuthor(bean, document);
                 getClickNum(bean, document);
@@ -61,14 +62,15 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 作品内容
+     *
      * @param bean
      * @param document
      */
-    private void info(BookInfo bean,Document document){
+    private void info(BookInfo bean, Document document) {
         Element content = document.getElementById("content");
         if (content != null) {
-            Elements contents=content.getElementsByTag("textarea");
-            if(contents!=null&&contents.size()>0) {
+            Elements contents = content.getElementsByTag("textarea");
+            if (contents != null && contents.size() > 0) {
                 Element element = contents.first();
                 bean.setInfo(element.text());
             }
@@ -77,10 +79,11 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 图片
+     *
      * @param bean
      * @param document
      */
-    private void image(BookInfo bean,Document document){
+    private void image(BookInfo bean, Document document) {
         Element image = document.getElementById("largePic");
         if (image != null) {
             bean.setImage(image.attr("src"));
@@ -89,10 +92,11 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 作者信息
+     *
      * @param bean
      * @param document
      */
-    private void authorInfo(BookInfo bean,Document document){
+    private void authorInfo(BookInfo bean, Document document) {
         try {
 
 
@@ -104,8 +108,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                     bean.setAuthorInfo(content.text());
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("解析 作者信息 异常", e);
         }
 
@@ -113,15 +116,24 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     /**
      * 编辑评论
+     *
      * @param bean
      * @param document
      */
-    private void comment(BookInfo bean,Document document){
-        Elements comments = document.getElementById("abstract").getElementsByTag("textarea");
-        if (comments != null && comments.size() > 0) {
-            Element content = comments.first();
-            bean.setEditorComment(content.text());
+    private void comment(BookInfo bean, Document document) {
+        String editorComment = "";
+        try {
+            Elements comments = document.getElementById("abstract").getElementsByTag("textarea");
+            if (comments != null && comments.size() > 0) {
+                Element content = comments.first();
+                editorComment = content.text();
+            }
+        } catch (Exception e) {
+            log.error("解析 编辑推荐 异常", e);
+        } finally {
+            bean.setEditorComment(editorComment);
         }
+
     }
 
     /**
@@ -163,8 +175,8 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 infos.append(element.text() + ",");
             }
 
-            String str=infos.toString();
-            bookInfo.setCategories(str.substring(0,str.length()-1)); 
+            String str = infos.toString();
+            bookInfo.setCategories(str.substring(0, str.length() - 1));
         }
 
     }
@@ -229,7 +241,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 String product_id = element.attr("product_id");
                 String url = "http://product.dangdang.com/comment/comment.php?product_id=" + product_id + "&datatype=1&page=1&filtertype=1&sysfilter=1";
                 String result = HttpUtils.getHtmlGet(url, "gbk");
-                if (StringUtils.isNotEmpty(result)&&!result.equals("[]")) {
+                if (StringUtils.isNotEmpty(result) && !result.equals("[]")) {
                     Map<String, Object> map1 = JsonUtils.toMap(result);
                     if (CollectionUtils.isNotEmpty(map1)) {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
@@ -242,8 +254,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
 
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("解析 评分 异常", e);
         }
 
