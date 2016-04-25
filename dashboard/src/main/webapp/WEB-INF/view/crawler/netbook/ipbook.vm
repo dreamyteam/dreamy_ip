@@ -24,7 +24,7 @@
                 ##                    搜索框
                     <div class="well searchBox">
                         <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
-                              action="">
+                              action="/crawler/netbook">
                             <input type="hidden" name="source" value="$!source">
 
                             <div class="searchContent">
@@ -61,7 +61,7 @@
 
                 ##                    操作
                     <div class="well operate-box">
-                        <a class="btn btn-default" href="/crawler/create">
+                        <a class="btn btn-default" href="/crawler/netbook/create">
                             添加
                         </a>
 
@@ -133,11 +133,11 @@
                                         "yyyy-MM-dd HH:mm:ss",$book.createdAt)</td>
                                     <td class="center hidden-phone">
 
-                                        <a href="/crawler/view?id=$!{book.id}" class="tablelink"><i
+                                        <a href="/crawler/netbook/view?id=$!{book.id}" class="tablelink"><i
                                                 class="fa fa-eye"></i></a> |
-                                        <a href="/crawler/edit?id=$!{book.id}" class="tablelink"><i
+                                        <a href="/crawler/netbook/edit?id=$!{book.id}" class="tablelink"><i
                                                 class="fa fa-edit"></i></a> |
-                                        <a href="/crawler/crawling?id=$!{book.id}" class="tablelink">爬取</a>
+##                                        <a href="/crawler/crawling?id=$!{book.id}" class="tablelink">爬取</a>
                                         #if($book.status==1)
                                             |<a href="javascript:doDelete('$!{book.id}')" class="tablelink"><i
                                                 class="fa fa-trash-o"></i></a>
