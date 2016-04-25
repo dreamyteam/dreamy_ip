@@ -5,9 +5,11 @@ import com.dreamy.handler.*;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.Member;
+import com.dreamy.mogodb.beans.UserAgents;
 import com.dreamy.mogodb.dao.MemberDao;
 import com.dreamy.mogodb.dao.UserAgentDao;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.utils.TimeUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,6 +21,9 @@ import java.util.*;
  * Created by wangyongxing on 16/4/5.
  */
 public class test extends BaseJunitTest {
+
+    private Date lastRuntime = null;
+
     @Autowired
     private MemberDao memberDao;
 
@@ -82,7 +87,7 @@ public class test extends BaseJunitTest {
     @Test
     public void testAm() {
         String url = "https://www.amazon.cn/%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE-%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97-%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE/dp/B00JZ96ZI8/ref=sr_1_1?ie=UTF8&qid=1460946961&sr=8-1&keywords=%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97";
-        url="https://www.amazon.cn/乌合之众-大众心理研究-古斯塔夫•勒庞/dp/B0035RP348/ref=sr_1_3?ie=UTF8&qid=1461222311&sr=8-3";
+        url = "https://www.amazon.cn/dp/B00MGKFQ6U/ref=tmm_hrd_swatch_0?_encoding=UTF8&qid=1461228641&sr=1-1";
         CrawlerHandler crawlerHandler = new AmazonCrawlerHandler();
         BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
         if (bookInfo != null) {
@@ -134,19 +139,42 @@ public class test extends BaseJunitTest {
 //            userAgentDao.save(userAgents1);
 //            i++;
 //        }
-
-        BookInfo old = bookInfoService.getById(410);
-        if (old != null) {
-            bookInfoService.delById(410);
-        }
-
-        Random random = new Random();
-        long t1 = System.nanoTime();
-        for (int i = 0; i < 10; i++) {
-            System.out.println(random.nextInt(1000));
-        }
-        long   t2 = System.nanoTime();
-        System.out.println(t2 - t1);
+        UserAgents userAgents1 = userAgentDao.queryById(933);
+        BookInfo bookInfo = bookInfoService.getById(398);
+//        BookInfo old = bookInfoService.getById(410);
+//        if (old != null) {
+//            bookInfoService.delById(410);
+//        }
+//
+//        Random random = new Random();
+//        long t1 = System.nanoTime();
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(random.nextInt(1000));
+//        }
+//        long   t2 = System.nanoTime();
+        System.out.println(11);
 
     }
+
+    @Test
+    public void tt() {
+//        Date currentTime = new Date();
+//        if (lastRuntime == null) {
+//            lastRuntime = currentTime;
+//        }
+//        try {
+//            Thread.currentThread().sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        currentTime = new Date();
+//        long time = TimeUtils.diff(lastRuntime, currentTime);
+
+        long aa = 1000;
+        Random random = new Random();
+        Integer timeRange = random.nextInt(3000);
+        long bb = aa + (long) timeRange;
+        System.out.print(bb);
+    }
+
 }

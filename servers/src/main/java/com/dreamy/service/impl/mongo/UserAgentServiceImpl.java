@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
-import com.dreamy.mogodb.beans.UserAgent;
+import com.dreamy.mogodb.beans.UserAgents;
 import com.dreamy.mogodb.dao.UserAgentDao;
 import com.dreamy.service.iface.mongo.UserAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,15 @@ public class UserAgentServiceImpl implements UserAgentService {
     private UserAgentDao userAgentDao;
 
     @Override
-    public UserAgent getById(Integer id) {
+    public UserAgents getById(Integer id) {
         return userAgentDao.queryById(id);
     }
 
     @Override
-    public UserAgent getOneByRandom() {
+    public UserAgents getOneByRandom() {
         Random random = new Random();
         Integer id = 2 + random.nextInt(999);
-        return getById(id);
+        UserAgents userAgents = getById(id);
+        return userAgents;
     }
 }

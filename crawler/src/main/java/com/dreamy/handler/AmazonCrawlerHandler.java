@@ -25,7 +25,8 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
         url = HttpUtils.toUtf8String(url);
-        String html = HttpUtils.getHtmlGetByProxy(url,"119.29.149.105",16816,HttpUtils.USER_AGENT);
+        String html = HttpUtils.getHtmlGetByProxy(url, "119.29.149.105", 16816, userAgentService.getOneByRandom().getUserAgent());
+//        html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
@@ -130,10 +131,13 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         String score = "0";
 
         try {
-            Element element = document.getElementById("summaryStars").getElementsByTag("a").first();
-            String[] scoreAndComment = element.text().split("星");
-            commentNumString = Integer.parseInt(scoreAndComment[1].replaceFirst(",", "").substring(1));
-            score = scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1);
+            Element star = document.getElementById("summaryStars");
+            if (star != null) {
+                Element element = star.getElementsByTag("a").first();
+                String[] scoreAndComment = element.text().split("星");
+                commentNumString = Integer.parseInt(scoreAndComment[1].replaceFirst(",", "").substring(1));
+                score = scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1);
+            }
         } catch (NumberFormatException e) {
             log.error("解析am评论总数和评分异常", e);
         } finally {

@@ -8,10 +8,14 @@ import com.dreamy.handler.CrawlerManage;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +28,8 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
 
     private static final Logger log = LoggerFactory.getLogger(CrawlerEventQueueHandler.class);
 
+    private Date lastRuntime = null;
+
     @Autowired
     private BookInfoService bookInfoService;
 
@@ -35,6 +41,18 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
+        //@todo 延时机制
+        Date currentTime = new Date();
+        if (lastRuntime == null) {
+            lastRuntime = currentTime;
+        }
+
+        Random random = new Random();
+        Integer timeRange = 2000 + random.nextInt(2000);
+        if (TimeUtils.diff(lastRuntime, currentTime) < (long) timeRange) {
+            return;
+        }
+
         //获取类型
         Integer type = jsonObject.getInteger("type");
         String url = jsonObject.getString("url");
@@ -43,7 +61,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
 
         BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
 
-        try { 
+        try {
             CrawlerHandler handler = crawlerManage.getHandler(type);
             BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
             if (bookInfo != null) {

@@ -1,6 +1,6 @@
 package com.dreamy.mogodb.dao;
 
-import com.dreamy.mogodb.beans.UserAgent;
+import com.dreamy.mogodb.beans.UserAgents;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * Time: 下午6:18
  */
 @Repository("UserAgentDao")
-public class UserAgentDao extends MongoGenDao<UserAgent>{
+public class UserAgentDao extends MongoGenDao<UserAgents>{
     @Override
-    protected Class<UserAgent> getEntityClass() {
-        return UserAgent.class;
+    protected Class<UserAgents> getEntityClass() {
+        return UserAgents.class;
     }
 }
