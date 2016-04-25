@@ -128,7 +128,32 @@ public class CrawlerController extends DashboardController {
             ipBookService.doCrawler(info);
         }
         return redirect("/crawler.html");
+    }
 
+    @RequestMapping(value = "/crawling/batch")
+    public String crawlingBatch(@RequestParam(value = "id[]", required = true) List<Integer> ids) {
+        if (ids.size() > 0) {
+            for (Integer id : ids) {
+                IpBook ipBook = ipBookService.getById(id);
+                BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
+                List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
+
+                for (BookCrawlerInfo info : list) {
+                    ipBookService.doCrawler(info);
+                }
+            }
+        }
+
+        return redirect("/crawler.html");
+    }
+
+    @RequestMapping(value = "/del/batch")
+    public String delBatch(@RequestParam(value = "id[]", required = true) List<Integer> ids) {
+        if (ids.size() > 0) {
+            ipBookService.delByIds(ids);
+        }
+
+        return redirect("/crawler.html");
     }
 
 
