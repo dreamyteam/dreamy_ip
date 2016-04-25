@@ -42,51 +42,53 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
         //@todo 延时机制
-        Date currentTime = new Date();
         if (lastRuntime == null) {
-            lastRuntime = currentTime;
+            lastRuntime = new Date();
         }
 
         Random random = new Random();
         Integer timeRange = 2000 + random.nextInt(2000);
-        if (TimeUtils.diff(lastRuntime, currentTime) < (long) timeRange) {
-            return;
-        }
+        while (true) {
+            Date currentTime = new Date();
+            if (TimeUtils.diff(lastRuntime, currentTime) > (long) timeRange) {
+                lastRuntime = currentTime;
+                //获取类型
+                Integer type = jsonObject.getInteger("type");
+                String url = jsonObject.getString("url");
+                Integer ipId = jsonObject.getInteger("ipId");
+                Integer crawlerId = jsonObject.getInteger("crawlerId");
 
-        //获取类型
-        Integer type = jsonObject.getInteger("type");
-        String url = jsonObject.getString("url");
-        Integer ipId = jsonObject.getInteger("ipId");
-        Integer crawlerId = jsonObject.getInteger("crawlerId");
+                BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
+                try {
+                    CrawlerHandler handler = crawlerManage.getHandler(type);
+                    BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
+                    if (bookInfo != null) {
 
-        BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
+                        BookInfo old = bookInfoService.getById(crawlerId);
+                        if (old != null) {
+                            bookInfoService.delById(crawlerId);
+                        }
 
-        try {
-            CrawlerHandler handler = crawlerManage.getHandler(type);
-            BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
-            if (bookInfo != null) {
+                        bookInfo.setCrawlerId(crawlerId);
+                        bookInfo.setSource(type);
+                        bookInfo.setIpId(ipId);
+                        bookInfoService.saveByRecord(bookInfo);
 
-                BookInfo old = bookInfoService.getById(crawlerId);
-                if (old != null) {
-                    bookInfoService.delById(crawlerId);
+                        bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
+                    } else {
+                        bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
+                        log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
+                    }
+                    bookCrawlerInfoService.update(bookCrawlerInfo);
+                } catch (Exception e) {
+                    bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
+                    log.error("crawler event exception" + type + ",url:" + url + ",id:" + crawlerId, e);
+                    bookCrawlerInfoService.update(bookCrawlerInfo);
                 }
-
-                bookInfo.setCrawlerId(crawlerId);
-                bookInfo.setSource(type);
-                bookInfo.setIpId(ipId);
-                bookInfoService.saveByRecord(bookInfo);
-
-                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
-            } else {
-                bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-                log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
+                break;
             }
-            bookCrawlerInfoService.update(bookCrawlerInfo);
-        } catch (Exception e) {
-            bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-            log.error("crawler event exception" + type + ",url:" + url + ",id:" + crawlerId, e);
-            bookCrawlerInfoService.update(bookCrawlerInfo);
         }
+
 
     }
 }
