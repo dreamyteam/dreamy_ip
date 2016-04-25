@@ -44,6 +44,7 @@ public class CrawlerController extends DashboardController {
      */
     @RequestMapping("")
     public String role(IpBook ipBook, ModelMap model, Page page) {
+        ipBook.setType(1);
         List<IpBook> list = ipBookService.getIpBookList(ipBook, page);
 
         model.put("list", list);
