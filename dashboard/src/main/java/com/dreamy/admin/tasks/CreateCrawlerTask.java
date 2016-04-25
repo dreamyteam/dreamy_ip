@@ -59,7 +59,11 @@ public class CreateCrawlerTask {
             ipBook.setStatus(IpBookStatusEnums.starting.getStatus());
             ipBooks = ipBookService.getIpBookList(ipBook, page);
             if (CollectionUtils.isEmpty(ipBooks)) {
-                return;
+                ipBook.setStatus(IpBookStatusEnums.exception.getStatus());
+                ipBooks = ipBookService.getIpBookList(ipBook, page);
+                if (CollectionUtils.isEmpty(ipBooks)) {
+                    return;
+                }
             }
         }
 
