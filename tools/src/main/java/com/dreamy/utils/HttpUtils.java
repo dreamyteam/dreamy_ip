@@ -173,16 +173,16 @@ public class HttpUtils {
                     sb.append("\r\n");
                 }
             } else {
-                System.err.println("Response Code: " + statusCode);
+                sb.append(statusCode);
+                LOGGER.error("Response Code: " + statusCode);
             }
         } catch (HttpException e) {
-            e.printStackTrace();
+            LOGGER.error("HttpException error: " + e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("IOException error: " + e);
         } finally {
             method.releaseConnection();
         }
-
         return sb.toString();
     }
 
