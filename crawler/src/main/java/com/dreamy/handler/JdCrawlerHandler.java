@@ -33,6 +33,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     public BookInfo getByUrl(String url) {
         url = url + "#comment";
         String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
+        System.out.println(html);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -144,11 +145,29 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
 
         Elements types = document.select("ul.p-parameter-list>li");
         if (types != null && types.size() > 0) {
-            bookInfo.setPress(types.get(0).attr("title"));
-            if (types.size() >= 7) {
-                bookInfo.setPushTime(types.get(7).attr("title"));
+            for(Element element:types){
+                String coment=element.text().replace("：",":");
+                String arr[]=coment.split(":");
+                if(arr.length>1)
+                    if(arr[0].equals("出版社")){
+                        bookInfo.setPress(arr[1]);
+                    }
+                    else if(arr[0].equals("ISBN")){
+                        bookInfo.setISBN(arr[1]);
+                    }
+                    else if(arr[0].equals("出版时间")){
+                        bookInfo.setPushTime(arr[1]);
+                    }
+                }
+
+
             }
-        }
+
+//            bookInfo.setPress(types.get(0).attr("title"));
+//            if (types.size() >7) {
+//                bookInfo.setPushTime(types.get(7).attr("title"));
+//            }
+
     }
 
     /**
