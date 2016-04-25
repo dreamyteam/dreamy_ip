@@ -82,7 +82,7 @@ public class test extends BaseJunitTest {
     @Test
     public void testAm() {
         String url = "https://www.amazon.cn/%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE-%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97-%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE/dp/B00JZ96ZI8/ref=sr_1_1?ie=UTF8&qid=1460946961&sr=8-1&keywords=%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97";
-        url="https://www.amazon.cn/乌合之众-大众心理研究-古斯塔夫•勒庞/dp/B0035RP348/ref=sr_1_3?ie=UTF8&qid=1461222311&sr=8-3";
+        url="https://www.amazon.cn/dp/B00MGKFQ6U/ref=tmm_hrd_swatch_0?_encoding=UTF8&qid=1461228641&sr=1-1";
         CrawlerHandler crawlerHandler = new AmazonCrawlerHandler();
         BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
         if (bookInfo != null) {

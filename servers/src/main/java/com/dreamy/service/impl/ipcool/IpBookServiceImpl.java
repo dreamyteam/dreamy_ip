@@ -82,6 +82,7 @@ public class IpBookServiceImpl implements IpBookService {
             if (id > 0) {
                 BookCrawlerInfo info = bookCrawlerInfoService.getById(id);
                 if (info != null && !info.getUrl().equals(bookCrawlerInfo.getUrl())) {
+                    bookCrawlerInfo.status(CrawlerTaskStatusEnums.starting.getStatus());
                     bookCrawlerInfoService.update(bookCrawlerInfo);
                 }
             } else {
