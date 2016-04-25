@@ -7,6 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -19,6 +21,9 @@ import java.util.regex.Pattern;
  */
 @Component
 public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(DangDangCrawlerHandler.class);
+
 
     private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
     @Override
@@ -88,11 +93,22 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void authorInfo(BookInfo bean,Document document){
-        Elements authorintro = document.getElementById("authorintro").getElementsByTag("textarea");
-        if (authorintro != null && authorintro.size() > 0) {
-            Element content = authorintro.first();
-            bean.setAuthorInfo(content.text());
+        try {
+
+
+            Element authorintro = document.getElementById("authorintro");
+            if (authorintro != null) {
+                Elements elements = authorintro.getElementsByTag("textarea");
+                if (elements != null && elements.size() > 0) {
+                    Element content = elements.first();
+                    bean.setAuthorInfo(content.text());
+                }
+            }
         }
+        catch (Exception e){
+            log.error("解析 作者信息 异常", e);
+        }
+
     }
 
     /**
@@ -228,7 +244,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             }
         }
         catch (Exception e){
-            e.printStackTrace();
+            log.error("解析 评分 异常", e);
         }
 
     }
