@@ -2,6 +2,7 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
@@ -36,9 +37,9 @@ public class CawlerTest extends BaseJunitTest {
                 map.put("url", info.getUrl());
                 map.put("ipId", info.getBookId());
                 map.put("crawlerId",info.getId());
-                queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
+                queueService.push(QueueRoutingKeyEnums.publish_book.getKey(), map);
                 if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
-                    queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+                    queueService.push(QueueRoutingKeyEnums.publish_book_comment.getKey(), map);
                 }
             }
         }

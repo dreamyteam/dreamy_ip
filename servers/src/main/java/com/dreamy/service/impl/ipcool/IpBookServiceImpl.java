@@ -1,27 +1,23 @@
 package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
-import com.dreamy.dao.iface.ipcool.BookCrawlerInfoDao;
 import com.dreamy.dao.iface.ipcool.IpBookDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.ipcool.IpBookConditions;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
-import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
-import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,10 +113,11 @@ public class IpBookServiceImpl implements IpBookService {
             map.put("url", info.getUrl());
             map.put("ipId", info.getBookId());
             map.put("crawlerId", info.getId());
-            queueService.push(QueueRoutingKey.CRAWLER_EVENT, map);
+
+            queueService.push(QueueRoutingKeyEnums.publish_book.getKey(), map);
 
             if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
-                queueService.push(QueueRoutingKey.CRAWLER_COMMENT, map);
+                queueService.push(QueueRoutingKeyEnums.publish_book_comment.getKey(), map);
             }
 
             info.status(CrawlerTaskStatusEnums.starting.getStatus());

@@ -6,7 +6,7 @@ package com.dreamy.mogodb.beans;
  * Date: 16/4/22
  * Time: 下午6:14
  */
-public class UserAgent {
+public class UserAgents {
     private  Integer id;
 
     private String userAgent;

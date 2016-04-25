@@ -1,6 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.UserAgent;
+import com.dreamy.mogodb.beans.UserAgents;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,11 +13,11 @@ public interface UserAgentService {
      * @param id
      * @return
      */
-    UserAgent getById(Integer id);
+    UserAgents getById(Integer id);
 
     /**
      *
      * @return
      */
-    UserAgent getOneByRandom();
+    UserAgents getOneByRandom();
 }
