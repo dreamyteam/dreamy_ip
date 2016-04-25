@@ -69,6 +69,9 @@ public class BookInfo {
      */
     private Integer source;
 
+
+    private String ISBN;
+
     public Integer getCrawlerId() {
         return crawlerId;
     }
@@ -204,5 +207,13 @@ public class BookInfo {
 
     public void setSource(Integer source) {
         this.source = source;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 }
