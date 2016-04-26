@@ -106,10 +106,10 @@
             </div>
             <img src="../../assets/images/pic.png">
             <div class="content">
-                <h1 class="name">奇葩说（2016）<span class="type">小说</span></h1>
+                <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
                 <h6 class="genre">类型：脱口秀</h6>
                 <p class="info">
-                    导演：周星驰 / 主演：林允 章鱼怪 螃蟹精 小顺子 土豆
+                    作者：$!{view.author}
                 </p>
                 <div class="tags">
                     <span><a href="#">搞笑</a></span>
@@ -149,7 +149,7 @@
                         这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">72,622</h5>
+                <h5 class="number">$!{view.compositeIndex}</h5>
                 <em class="warning">数据异常偏大，仅供基本参考</em>
                 <h6>在<span class="program_type">小说</span>中排<span class="ranking">12</span>名</h6>
             </div>
@@ -162,7 +162,7 @@
                         这是一段开发潜力指数的提示信息
                     </div>
                 </div>
-                <h5 class="number">762 <span class="rank">15</span></h5>
+                <h5 class="number">$!{view.hotIndex} <span class="rank">15</span></h5>
                 <h2 class="program_title" style="margin-top: 25px;">热度趋势指数</h2>
                 <div class="tooltip">
                     ?

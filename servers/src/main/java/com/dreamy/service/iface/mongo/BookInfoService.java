@@ -34,7 +34,7 @@ public interface BookInfoService {
     void delById(Integer id);
 
 
-    List<BookInfo> getList();
+    public List<BookInfo> getList(int ipId);
 
 
 }

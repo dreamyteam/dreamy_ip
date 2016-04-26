@@ -41,7 +41,11 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public List<BookInfo> getList() {
-return null;
+    public List<BookInfo> getList(int ipId) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("ipId").is(ipId);
+        query.addCriteria(criteria);
+        return bookInfoDao.queryList(query);
+
     }
 }

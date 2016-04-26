@@ -25,6 +25,11 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
+    public Integer update(BookView bookView) {
+        return bookViewDao.update(bookView);
+    }
+
+    @Override
     public List<BookView> getList(BookView bookView, Page page) {
         Map<String,Object> params= BeanUtils.toQueryMap(bookView);
         BookViewConditions conditions=new BookViewConditions();
@@ -34,5 +39,10 @@ public class BookViewServiceImpl implements BookViewService {
             conditions.setPage(page);
         }
         return bookViewDao.selectByExample(conditions);
+    }
+
+    @Override
+    public BookView getById(Integer id) {
+        return bookViewDao.selectById(id);
     }
 }

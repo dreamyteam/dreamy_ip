@@ -1,7 +1,13 @@
 package com.dreamy.ipcool.controllers;
 
+import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.service.iface.ipcool.BookViewService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Time: 下午4:30
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = {"/login", "/"})
 public class IndexController extends IpcoolController {
+
+    @Resource
+    private BookViewService bookViewService;
 
     @RequestMapping("")
     public String index() {
@@ -38,8 +47,16 @@ public class IndexController extends IpcoolController {
         return "/index/introduction";
     }
 
-    @RequestMapping("/sum")
-    public String base() {
+    /**
+     * 详情页
+     *
+     * @param ipId
+     * @return
+     */
+    @RequestMapping("/detail")
+    public String detail(@RequestParam(value = "ipId", required = true, defaultValue = "0") Integer ipId, ModelMap model) {
+        BookView bookView = bookViewService.getById(ipId);
+        model.put("view",bookView);
         return "/index/sum";
     }
 

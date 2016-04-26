@@ -11,7 +11,6 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:rabbitmq_develop.properties</value>
                 <value>classpath:jdbc_develop.properties</value>
                 <value>classpath:redis-develop.properties</value>
                 <value>classpath:mongodb.properties</value>

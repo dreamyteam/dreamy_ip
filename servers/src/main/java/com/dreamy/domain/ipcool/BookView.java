@@ -31,6 +31,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     private Date updatedAt;
 
+    private String imageUrl;
+
     private String introduction;
 
     private static final long serialVersionUID = 1L;
@@ -139,6 +141,14 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getIntroduction() {
         return introduction;
     }
@@ -172,6 +182,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
             && (this.getDevelopIndex() == null ? other.getDevelopIndex() == null : this.getDevelopIndex().equals(other.getDevelopIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
+            && (this.getImageUrl() == null ? other.getImageUrl() == null : this.getImageUrl().equals(other.getImageUrl()))
             && (this.getIntroduction() == null ? other.getIntroduction() == null : this.getIntroduction().equals(other.getIntroduction()));
     }
 
@@ -192,6 +203,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getDevelopIndex() == null) ? 0 : getDevelopIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
+        result = prime * result + ((getImageUrl() == null) ? 0 : getImageUrl().hashCode());
         result = prime * result + ((getIntroduction() == null) ? 0 : getIntroduction().hashCode());
         return result;
     }
@@ -258,6 +270,11 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     public BookView updatedAt(Date value) {
         this.updatedAt = value;
+        return this;
+    }
+
+    public BookView imageUrl(String value) {
+        this.imageUrl = value;
         return this;
     }
 
