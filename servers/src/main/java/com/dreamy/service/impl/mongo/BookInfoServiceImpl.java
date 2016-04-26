@@ -5,7 +5,11 @@ import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.MemberDao;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,5 +38,10 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Override
     public void delById(Integer id) {
         bookInfoDao.deleteById(id);
+    }
+
+    @Override
+    public List<BookInfo> getList() {
+return null;
     }
 }

@@ -2,6 +2,8 @@ package com.dreamy.service.iface.mongo;
 
 import com.dreamy.mogodb.beans.BookInfo;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
@@ -30,6 +32,9 @@ public interface BookInfoService {
      * @param id
      */
     void delById(Integer id);
+
+
+    List<BookInfo> getList();
 
 
 }
