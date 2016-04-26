@@ -1,10 +1,10 @@
-package com.dreamy.admin.interceptor;
+package com.dreamy.ipcool.interceptors;
 
-import com.dreamy.admin.controller.RootController;
-import com.dreamy.handlers.CSRFTokenManager;
-import com.dreamy.handlers.CookieHandler;
 import com.dreamy.beans.CanonicalSession;
 import com.dreamy.beans.UserSessionContainer;
+import com.dreamy.handlers.CSRFTokenManager;
+import com.dreamy.handlers.CookieHandler;
+import com.dreamy.ipcool.controllers.RootController;
 import com.dreamy.utils.StringUtils;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;

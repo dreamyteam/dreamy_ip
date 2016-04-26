@@ -1,4 +1,4 @@
-package com.dreamy.admin.container;
+package com.dreamy.service.container;
 
 import com.dreamy.beans.CanonicalSession;
 import com.dreamy.beans.UserSessionContainer;

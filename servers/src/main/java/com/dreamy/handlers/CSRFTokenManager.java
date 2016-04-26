@@ -1,4 +1,4 @@
-package com.dreamy.admin.handler;
+package com.dreamy.handlers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

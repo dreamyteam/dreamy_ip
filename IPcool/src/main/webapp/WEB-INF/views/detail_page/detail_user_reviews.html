@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IP库 | IPCool</title>
+    <link rel="stylesheet" type="text/css" href="../../dist/program_detail_page.css">
+</head>
+
+<body>
+    <div class="popup_mask" id="popup_mask"></div>
+    <div class="popup_box sign" id="popup_register">
+        <button class="close"></button>
+        <span class="logo"></span>
+        <form>
+            <span class="err_msg">手机号码格式错误</span>
+            <div class="sign_container">
+                <label class="icon_phone_number"></label>
+                <input type="text" placeholder="手机号码" />
+            </div>
+            <div class="sign_container">
+                <label class="icon_password"></label>
+                <input type="password" placeholder="密码" />
+            </div>
+            <div class="sign_container verify">
+                <label class="icon_verify"></label>
+                <input type="text" placeholder="验证码" />
+                <button class="btn_send_verify_code">发送验证码</button>
+            </div>
+            <button class="solid">登录</button>
+            <input class="hollow" type="submit" value="创建帐号" />
+        </form>
+        <div class="infos">
+            <a href="#" target="_blank">用户协议</a>
+            <a href="#" target="_blank">隐私政策</a>
+            <a href="#" target="_blank">帮助文档</a>
+        </div>
+    </div>
+    <div class="popup_box sign" id="popup_login">
+        <button class="close"></button>
+        <span class="logo"></span>
+        <form>
+            <div class="sign_container">
+                <label class="icon_phone_number"></label>
+                <input type="text" placeholder="手机号码" />
+            </div>
+            <div class="sign_container">
+                <label class="icon_password"></label>
+                <input type="password" placeholder="密码" />
+            </div>
+            <div class="remember_pwd_container clearfix">
+                <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked" />
+                <label>记住密码</label>
+                <a href="#">忘记密码</a>
+            </div>
+            <input class="solid" type="submit" value="登录" />
+            <button class="hollow">创建帐号</button>
+        </form>
+        <div class="infos">
+            <a href="#" target="_blank">用户协议</a>
+            <a href="#" target="_blank">隐私政策</a>
+            <a href="#" target="_blank">帮助文档</a>
+        </div>
+    </div>
+    <header class="ipcool_hearder clearfix">
+        <div class="inner">
+            <a href="/" class="logo"></a>
+            <!--搜索框 用户中心显示-->
+            <!--                <div class="form_search">
+                    <input type="text" class="search" placeholder="试试搜索美人鱼">
+                    <input class="submit" type="submit" value="">
+                </div> -->
+            <!-- 搜索框 结束 -->
+            <!--注册 登录按钮-->
+            <nav>
+                <button class="register" id="register">注册</button>
+                <button class="login" id="login">登录</button>
+            </nav>
+            <!--登录后用户id-->
+            <!-- <div class="user">
+                <h2 class="user_name">土豆</h2>
+                <div class="user_menu">
+                    <div class="arrow">
+                        <span></span><em></em>
+                    </div>  
+                    <ul>        
+                        <li><a href="#">我关注的</a></li>
+                        <li><a href="#">历史记录</a></li>
+                        <li><a href="#">个人信息</a></li>
+                        <li><a href="#">账号设置</a></li>
+                        <li><a href="#">修改密码</a></li>
+                        <li><a href="#">退出登录</a></li>
+                    </ul>
+                </div>
+            </div>   -->
+        </div>
+    </header>
+    <div class="container">
+        <!--搜索框-->
+        <div class="searchbar">
+            <div class="form_search">
+                <from>
+                    <input type="text" class="search" placeholder="试试搜索美人鱼">
+                    <input class="submit" type="submit" value="">
+                </from>
+            </div>
+        </div>
+        <!--program_info-->
+        <section class="program_info clearfix">
+            <!-- TOP100 形状 -->
+            <div class="level_flag">
+                TOP100
+            </div>
+            <img src="../../assets/images/pic.png">
+            <div class="content">
+                <h1 class="name">奇葩说（2016）<span class="type">小说</span></h1>
+                <h6 class="genre">类型：脱口秀</h6>
+                <p class="info">
+                    导演：周星驰 / 主演：林允 章鱼怪 螃蟹精 小顺子 土豆
+                </p>
+                <div class="tags">
+                    <span><a href="#">搞笑</a></span>
+                    <span><a href="#">星爷</a></span>
+                    <span><a href="#">2016</a></span>
+                    <span><a href="#">环保</a></span>
+                </div>
+            </div>
+            <div class="update_time">
+                <h6>数据更新时间</h6>
+                <span>2016-04-23</span>
+            </div>
+        </section>
+        <!--program_nav -->
+        <section class="program_nav" id="program_nav">
+            <div class="inner clearfix">
+                <ul>
+                    <li><a href="">综合评价</a></li>
+                    <li><a href="">开发意向</a></li>
+                    <li class="active"><a href="">用户点评</a></li>
+                    <li><a href="">简介</a></li>
+                </ul>
+                <div class="follow_download">
+                    <span class="follow">关注</span>
+                    <span class="download">下载完整报告</span>
+                </div>
+            </div>
+        </section>
+        <section class="user_reviews">
+            <h1 class="title">用户口碑</h1>
+            <div class="review_container">
+                <div class="review_value">
+                    <h2>综合口碑</h2>
+                    <h5>8.6</h5>
+                    <h6>大多数人觉得很好</h6>
+                </div>
+                <div class="review_chart">
+                    <button>写点评</button>
+                    <div id="chart_reviews"></div>
+                </div>
+            </div>
+            <ul class="comments_container">
+                <li class="comment">
+                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
+                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
+                    <p class="comment_content">
+                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
+                        <p>
+                            <a class="comment_more" href="#">查看全文>></a>
+                </li>
+                <li class="comment">
+                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
+                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
+                    <p class="comment_content">
+                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
+                        <p>
+                            <a class="comment_more" href="#">查看全文>></a>
+                </li>
+                <li class="comment">
+                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
+                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
+                    <p class="comment_content">
+                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
+                        <p>
+                            <a class="comment_more" href="#">查看全文>></a>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h1 class="title">用户点评</h1>
+            <ul class="comments_container">
+                <li class="comment">
+                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
+                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                    <h4 class="comment_author">旺财大爷 导演 有100种方式拍电影</h4>
+                    <p class="comment_content">
+                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
+                        <p>
+                        <span class="comment_like">赞</span>
+                        <a class="comment_more" href="#">查看全文>></a> 
+                </li>
+                 <li class="comment">
+                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
+                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                    <h4 class="comment_author">旺财大爷 导演 有100种方式拍电影</h4>
+                    <p class="comment_content">
+                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
+                        <p>
+                        <span class="comment_like liked">已赞</span>
+                        <a class="comment_more" href="#">查看全文>></a> 
+                </li>
+            </ul>
+        </section>
+        <!-- 发表点评 -->
+        <section class="write_comment_container">
+            <h1 class="title">发表点评</h1>
+            <form class="write_comment clearfix">
+                <h6 class="welfare">写点评赢iPhone7</h6>
+                <textarea name="comment"></textarea>
+                <input class="verify_code" type="text" placeholder="输入验证码">
+                <input class="submit" type="submit" value="发布">
+            </form>
+        </section>
+    </div>
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="">网站首页</a></li>
+                <li><a href="">排行榜</a></li>
+                <li><a href="">关于我们</a></li>
+                <li><a href="">意见反馈</a></li>
+                <li><a href="">用户协议</a></li>
+                <li><a href="">隐私政策</a></li>
+                <li><a href="">官方微信</a></li>
+            </ul>
+            <div class="copyright">
+                <a href="/" class="logo"></a>
+                <p>杭州追米文化创意有限公司 Copyright 2006-2016 IP100.club Inc. All rights reserved.</p>
+            </div>
+        </nav>
+    </footer>
+    <script src="../../src/jquery-2.2.3.min.js"></script>
+    <script src="../../src/echarts.min.js"></script>
+    <script src="../../src/alert.js"></script>
+    <script>
+    var hdr = $('#program_nav').offset().top;
+    $(window).on('scroll', function() {
+        if ($(this).scrollTop() > hdr) {
+            $('#program_nav').addClass('program_nav_scroll');
+        } else {
+            $('#program_nav').removeClass('program_nav_scroll');
+        }
+    })
+    </script>
+    <script>
+    var chartReviews = echarts.init(document.getElementById('chart_reviews'));
+
+
+    optionReviews = {
+        grid: {
+            left: 65,
+            top: 27,
+            right: '10%',
+            bottom: 0,
+            show: false,
+        },
+        yAxis: {
+            type: 'category',
+            data: ['豆瓣评分', '起点评分', '纵横评分', '17k评分'],
+            splitLine: {
+                show: false,
+            },
+            axisTick: {
+                show: false,
+            },
+            axisLine: {
+                show: false,
+                onZero: true,
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#979797',
+                    fontFamily: 'pingfang SC',
+                    fontSize: 14
+                }
+            }
+        },
+        xAxis: {
+            type: 'value',
+            axisLine: {
+                show: false,
+            },
+            splitLine: {
+                show: false,
+            },
+            axisTick: {
+                show: false,
+            }
+        },
+        series: [{
+            name: '斗破苍穹',
+            type: 'bar',
+            data: [8.8, 9.2, 8.5, 9.6],
+            barWidth: 16,
+            label: {
+                normal: {
+                    show: true,
+                    position: 'right',
+                    textStyle: {
+                        color: '#979797',
+                        fontFamily: 'pingfang SC',
+                        fontSize: 14
+                    }
+                }
+            }
+        }],
+        color: ['#84D2CD']
+    }
+    chartReviews.setOption(optionReviews);
+    </script>
+</body>
+
+</html>
