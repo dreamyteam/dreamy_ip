@@ -1,4 +1,4 @@
-package com.dreamy.ipcool.interceptors;
+package com.dreamy.ipcool.interceptor;
 
 import com.dreamy.beans.CanonicalSession;
 import com.dreamy.beans.UserSessionContainer;

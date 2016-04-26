@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>IP库 | IPCool</title>
-    <link rel="stylesheet" type="text/css" href="../dist/index.css">
+    <link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/index.css">
 </head>
 
 <body>
     <div class="index_head">
         <div class="head_bg">
             <video autoplay muted loop id="bg-video">
-                <source src="../assets/video/33.mp4">
+                <source src="http://ipcool.me/assets/video/33.mp4">
             </video>
             <div class="color_mask"></div>
         </div>
@@ -44,7 +44,7 @@
         <div class="inner">
             <h2 class="title">一站式IP全收录 商业价值全面分析平台</h2>
             <h3 class="sub_title">影视、文创、角色、机构多维度评估预测价值，包罗最全IP数据</h3>
-            <img class="pic" src="../assets/images/index/frontp1.png">
+            <img class="pic" src="http://ipcool.me/assets/images/index/frontp1.png">
         </div>
     </div>
     <div class="ip_section literature">
@@ -56,11 +56,11 @@
                 <h2 class="title"> 文学IP <span>网络文学 出版文学 热门小说</span></h2>
             </div>
             <div class="content clearfix">
-                <img src="../assets/images/index/dpcq.png">
+                <img src="http://ipcool.me/assets/images/index/dpcq.png">
                 <div class="ip_info">
                     <div class="rank_container">
                         <h5 class="rank_now">IP当前排名</h5>
-                        <!-- 
+                        <!--
 							rise 上升趋势
 							drop 下降趋势
 							impartial 持平趋势
@@ -107,11 +107,11 @@
                 <h2 class="title"> 影视IP <span>电影剧集 综艺节目 网络节目</span></h2>
             </div>
             <div class="content clearfix">
-                <img src="../assets/images/index/dpcq.png">
+                <img src="http://ipcool.me/assets/images/index/dpcq.png">
                 <div class="ip_info">
                     <div class="rank_container">
                         <h5 class="rank_now">IP当前排名</h5>
-                        <!-- 
+                        <!--
 							rise 上升趋势
 							drop 下降趋势
 							impartial 持平趋势
@@ -159,11 +159,11 @@
                 <h2 class="title"> 人物IP <span>明星 角色 网红 职能人物</span></h2>
             </div>
             <div class="content clearfix">
-                <img src="../assets/images/index/dpcq.png">
+                <img src="http://ipcool.me/assets/images/index/dpcq.png">
                 <div class="ip_info">
                     <div class="rank_container">
                         <h5 class="rank_now">IP当前排名</h5>
-                        <!-- 
+                        <!--
 							rise 上升趋势
 							drop 下降趋势
 							impartial 持平趋势
@@ -211,11 +211,11 @@
                 <h2 class="title"> 机构IP <span>开发 投资 执行</span></h2>
             </div>
             <div class="content clearfix">
-                <img src="../assets/images/index/dpcq.png">
+                <img src="http://ipcool.me/assets/images/index/dpcq.png">
                 <div class="ip_info">
                     <div class="rank_container">
                         <h5 class="rank_now">IP当前排名</h5>
-                        <!-- 
+                        <!--
 							rise 上升趋势
 							drop 下降趋势
 							impartial 持平趋势
@@ -258,7 +258,7 @@
         <div class="inner">
             <h2 class="title">权威的数据来源</h2>
             <h3 class="sub_title">布控各大公信网站，全网社交舆论监控，真实信息准确同步，最新动态一手掌握</h3>
-            <img class="pic" src="../assets/images/index/frontp2.png">
+            <img class="pic" src="http://ipcool.me/assets/images/index/frontp2.png">
             <div class="p2_titles">
                 <h3>全网流量统计</h3>
                 <h3>多端监控布局</h3>

@@ -6,7 +6,6 @@ import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
-import com.dreamy.utils.QueueRoutingKey;
 import com.dreamy.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
