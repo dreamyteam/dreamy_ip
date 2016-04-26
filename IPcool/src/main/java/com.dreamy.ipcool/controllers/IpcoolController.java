@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class IpcoolController extends IpcoolBaseController {
     @Override
     public boolean checkLogin() {
-        return Boolean.TRUE;
+        return Boolean.FALSE;
     }
 
 

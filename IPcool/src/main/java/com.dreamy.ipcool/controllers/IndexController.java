@@ -11,10 +11,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/")
-public class IndexController{
+public class IndexController extends IpcoolController {
 
     @RequestMapping("")
-    public String index(){
+    public String index() {
         return "/index";
     }
+
+    @RequestMapping("/comprehensive")
+    public String comprehensive() {
+        return "/index/comprehensive";
+    }
+
+    @RequestMapping("/potential")
+    public String potential() {
+        return "/index/potential";
+    }
+
+    @RequestMapping("/heat")
+    public String heat() {
+        return "/index/heat";
+    }
+
+    @RequestMapping("/introduction")
+    public String introduction() {
+        return "/index/introduction";
+    }
+
+    @RequestMapping("/sum")
+    public String base() {
+        return "/index/sum";
+    }
+
+    @RequestMapping("/persona")
+    public String personal() {
+        return "/index/persona";
+    }
+
+    @RequestMapping("/propagation")
+    public String propagation() {
+        return "/index/propagation";
+    }
+
+    @RequestMapping("/user/reviews")
+    public String userReviews() {
+        return "/index/user_reviews";
+    }
+
+
 }
