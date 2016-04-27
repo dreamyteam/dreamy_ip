@@ -49,7 +49,6 @@ public interface BookInfoService {
      * @return
      */
     public List<BookInfo> getListByOrderAndPage(Page page,String order);
-
-
+ 
 
 }

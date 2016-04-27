@@ -18,11 +18,11 @@
                 <h1 class="main_title">让IP有序 让文创有依</h1>
                 <h6 class="sub_text">已分析文学 IP 10000+</h6>
                 <form class="search_bar_container" action="/search.html">
-                    <input type="radio" name="type" value="all" checked="checked" />
-                    <input type="radio" name="type" value="literature" />
-                    <input type="radio" name="type" value="film" />
-                    <input type="radio" name="type" value="character" />
-                    <input type="radio" name="type" value="mechanism" />
+##                    <input type="radio" name="type" value="all" checked="checked" />
+##                    <input type="radio" name="type" value="literature" />
+##                    <input type="radio" name="type" value="film" />
+##                    <input type="radio" name="type" value="character" />
+##                    <input type="radio" name="type" value="mechanism" />
                     <div class="serarch_bar_container">
                         <input type="text" name="content" placeholder="输入关键词查询" />
                         <input type="submit" value="搜索" />

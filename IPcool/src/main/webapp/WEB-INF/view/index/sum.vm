@@ -90,21 +90,14 @@
     </header>
     <div class="container">
         <!--搜索框-->
-        <div class="searchbar">
-            <div class="form_search">
-                <from>
-                    <input type="text" class="search" placeholder="试试搜索美人鱼">
-                    <input class="submit" type="submit" value="">
-                </from>
-            </div>
-        </div>
+        #parse("/common/search.vm")
         <!--program_info-->
         <section class="program_info clearfix">
             <!-- TOP100 形状 -->
             <div class="level_flag">
                 TOP100
             </div>
-            <img src="../../assets/images/pic.png">
+            <img src="$!{view.imageUrl}">
             <div class="content">
                 <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
                 <h6 class="genre">类型：脱口秀</h6>
@@ -120,7 +113,7 @@
             </div>
             <div class="update_time">
                 <h6>数据更新时间</h6>
-                <span>2016-04-23</span>
+                <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
             </div>
         </section>
         <!--program_nav -->
@@ -128,9 +121,9 @@
             <div class="inner clearfix">
                 <ul>
                     <li class="active"><a href="">综合评价</a></li>
-                    <li><a href="">开发意向</a></li>
-                    <li><a href="">用户点评</a></li>
-                    <li><a href="">简介</a></li>
+                    <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
+                    <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
+                    <li><a href="/introduction.html?ip=$!{view.id}">简介</a></li>
                 </ul>
                 <div class="follow_download">
                     <span class="follow">关注</span>
@@ -151,7 +144,7 @@
                 </div>
                 <h5 class="number">$!{view.compositeIndex}</h5>
                 <em class="warning">数据异常偏大，仅供基本参考</em>
-                <h6>在<span class="program_type">小说</span>中排<span class="ranking">12</span>名</h6>
+                <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
             </div>
             <!-- 开发潜力 热度趋势 -->
             <div class="values_content potential_trend">
@@ -162,7 +155,8 @@
                         这是一段开发潜力指数的提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.hotIndex} <span class="rank">15</span></h5>
+                <h5 class="number">$!{view.developIndex}  <span class="rank">$!{drank}</span></h5>
+
                 <h2 class="program_title" style="margin-top: 25px;">热度趋势指数</h2>
                 <div class="tooltip">
                     ?
@@ -170,7 +164,7 @@
                         这是一段热度趋势指数的提示信息
                     </div>
                 </div>
-                <h5 class="number">3,485 <span class="rank">15</span></h5>
+                <h5 class="number">$!{view.hotIndex}  <span class="rank">$!{hrank}</span></h5>
             </div>
             <!-- 传播能力 用户活跃 -->
             <div class="values_content propagation_liveness">
@@ -178,18 +172,18 @@
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段开发潜力指数的提示信息
+                        这是一段传播能力指数的提示信息
                     </div>
                 </div>
-                <h5 class="number">762 <span class="rank">15</span></h5>
+                <h5 class="number">$!{view.propagateIndex} <span class="rank">$!{prank}</span></h5>
                 <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段热度趋势指数的提示信息
+                        这是一段用户活跃指数的提示信息
                     </div>
                 </div>
-                <h5 class="number">3,485 <span class="rank">15</span></h5>
+                <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
                 <div>
         </section>
         <!--综合价值-->
@@ -205,17 +199,17 @@
                             这是一段提示信息
                         </div>
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                    <h5 class="number">$!{view.compositeIndex}<span class="arrow">↑</span></h5>
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
                     <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h5 class="number">$!{history.compositeIndex}</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">
                     <h2 class="program_title">小说排名</h2>
-                    <h5 class="number">33</h5>
+                    <h5 class="number">$!{crank}</h5>
                 </div>
             </div>
             <!--综合价值 图表 -->
@@ -224,8 +218,8 @@
                 <h3 class="title">市场地位</h3>
                 <ul class="tab_tags">
                     <li class="active">全部</li>
-                    <li>同类</li>
-                    <li>同期</li>
+##                    <li>同类</li>
+##                    <li>同期</li>
                 </ul>
                 <ul class="tab_contents">
                     <li class="clearfix show">
@@ -250,7 +244,7 @@
                         </div>
                         <div class="iprank clearfix">
                             <h3>在全部文学中的排名</h3>
-                            <a class="show_rank_list" href="#">查看排行榜 ></a>
+                            <a class="show_rank_list" href="/rank/list.html">查看排行榜 ></a>
                             <table>
                                 <tr>
                                     <th>排名</th>
@@ -296,7 +290,7 @@
             </div>
             <!-- 查看全部 -->
             <div class="program_showMore">
-                <a href="">查看全部</a>
+                <a href="/comprehensive.html?ip=$!{view.id}">查看全部</a>
             </div>
         </section>
         <!-- 开发潜力 -->
@@ -313,17 +307,17 @@
                             这是一段提示信息
                         </div>
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                    <h5 class="number">$!{view.developIndex}<span class="arrow">↑</span></h5>
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h2 class="program_title">历史最高</h2>
+                    <h5 class="number">$!{history.developIndex}</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">
                     <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">33</h5>
+                    <h5 class="number">$!{drank}</h5>
                 </div>
             </div>
             <!-- 潜力模型图表 -->
@@ -402,24 +396,24 @@
                             这是一段提示信息
                         </div>
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                    <h5 class="number">$!{view.hotIndex} <span class="arrow">↑</span></h5>
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
                     <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h5 class="number">$!{history.hotIndex}</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">
                     <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">33</h5>
+                    <h5 class="number">$!{hrank}</h5>
                 </div>
             </div>
             <!-- 热度趋势图表 -->
             <div id="chart_heat_trend"></div>
             <!-- 查看全部 -->
             <div class="program_showMore">
-                <a href="">查看全部</a>
+                <a href="/heat.html?ip=$!{view.id}">查看全部</a>
             </div>
         </section>
         <!-- 传播能力 -->
@@ -436,17 +430,17 @@
                             这是一段提示信息
                         </div>
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                    <h5 class="number">$!{view.developIndex} <span class="arrow">↑</span></h5>
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
                     <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h5 class="number">$!{history.developIndex}</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">
                     <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">33</h5>
+                    <h5 class="number">$!{prank}</h5>
                 </div>
             </div>
             <!-- 传播指数图表 -->
@@ -473,24 +467,24 @@
                             这是一段提示信息
                         </div>
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                    <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
                     <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h5 class="number">$!{history.activityIndex}</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">
                     <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">33</h5>
+                    <h5 class="number">$!{arank}</h5>
                 </div>
             </div>
             <!-- 用户活跃度图表 -->
             <div id="chart_user_vitalty"></div>
             <!-- 查看全部 -->
             <div class="program_showMore">
-                <a href="">查看全部</a>
+                <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
             </div>
         </section>
         <!--用户分析-->
@@ -505,7 +499,7 @@
             </div>
             <!-- 查看全部 -->
             <div class="program_showMore">
-                <a href="">查看全部</a>
+                <a href="/persona.html">查看全部</a>
             </div>
         </section>
         <!-- 点评 -->
@@ -524,33 +518,17 @@
                 </div>
             </div>
             <ul class="comments_container">
+        #foreach($coment in $comments)
                 <li class="comment">
-                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
-                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
-                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
+                    <img class="comment_avatar" src="$!{coment.image}">
+                    <h3 class="comment_title">$!{coment.title}</h3>
+                    <h4 class="comment_author">$!{coment.author} -- 来自豆瓣</h4>
                     <p class="comment_content">
-                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
-                        <p>
-                            <a class="comment_more" href="#">查看全文>></a>
+                        $!{coment.content}
+                    <p>
+                            <a class="comment_more" target="_blank" href="$!{coment.url}">查看全文>></a>
                 </li>
-                <li class="comment">
-                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
-                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
-                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
-                    <p class="comment_content">
-                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
-                        <p>
-                            <a class="comment_more" href="#">查看全文>></a>
-                </li>
-                <li class="comment">
-                    <img class="comment_avatar" src="../../assets/images/authorpic.png">
-                    <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
-                    <h4 class="comment_author">旺财大爷 -- 来自豆瓣</h4>
-                    <p class="comment_content">
-                        其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。 最重要的是，作为一个有美人鱼情节...
-                        <p>
-                            <a class="comment_more" href="#">查看全文>></a>
-                </li>
+            #end
             </ul>
             <!-- 查看全部 -->
             <div class="program_showMore" style="margin-top: 10px;">

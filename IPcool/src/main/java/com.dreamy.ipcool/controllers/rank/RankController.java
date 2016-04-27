@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Date: 16/4/26
  * Time: 下午7:06
  */
-@RequestMapping("rank")
+@RequestMapping("/rank")
 @Controller
 public class RankController extends IpcoolController {
 

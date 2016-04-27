@@ -22,4 +22,9 @@ public class BookIndexHistoryDaoImpl extends BaseDaoImpl<BookIndexHistory,Intege
     public void setBaseMapper() {
        super.setBaseMapper(bookIndexHistoryMapper);
     }
+
+    @Override
+    public BookIndexHistory selectMaxByBookId(Integer bookId) {
+        return bookIndexHistoryMapper.selectMaxByBookId(bookId);
+    }
 }

@@ -128,5 +128,5 @@ public class BookViewCreateTask {
         }
 
         return res;
-    } 
+    }
 }

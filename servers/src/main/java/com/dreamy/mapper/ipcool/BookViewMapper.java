@@ -7,7 +7,7 @@ import java.util.List;
 import com.dreamy.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface BookViewMapper extends BaseMapper<BookView,Integer,BookViewConditions> {
+public interface BookViewMapper  extends BaseMapper<BookView,Integer,BookViewConditions>{
     int countByExample(BookViewConditions example);
 
     int deleteByExample(BookViewConditions example);

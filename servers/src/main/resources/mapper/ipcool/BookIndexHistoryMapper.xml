@@ -288,4 +288,11 @@
       limit  #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
     </if>
   </sql>
+  <select id="selectMaxByBookId" resultMap="BaseResultMap" >
+
+    select book_id,max(composite_index) AS compositeIndex,max(hot_index) AS hot_index,max(activity_index) AS  activity_index,
+    max(propagate_index) AS  propagate_index,max(develop_index) AS develop_index FROM ip_book_index_history where book_id=#{bookId}
+
+  </select>
+
 </mapper>
