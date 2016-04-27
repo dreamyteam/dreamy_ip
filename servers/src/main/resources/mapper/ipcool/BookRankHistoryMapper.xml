@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.BookRankHistory" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
-    <result column="rank_id" property="rankId" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="rank_index" property="rankIndex" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, book_id, rank_id, type, rank_index, created_at, updated_at
+    id, book_id, rank, type, rank_index, created_at, updated_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.BookRankHistoryConditions" >
     select
@@ -103,10 +103,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookRankHistory" useGeneratedKeys="true" keyProperty="id" >
-    insert into ip_book_rank_history (book_id, rank_id, type, 
+    insert into ip_book_rank_history (book_id, rank, type, 
       rank_index, created_at, updated_at
       )
-    values (#{bookId,jdbcType=INTEGER}, #{rankId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+    values (#{bookId,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{rankIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -116,8 +116,8 @@
       <if test="bookId != null" >
         book_id,
       </if>
-      <if test="rankId != null" >
-        rank_id,
+      <if test="rank != null" >
+        rank,
       </if>
       <if test="type != null" >
         type,
@@ -136,8 +136,8 @@
       <if test="bookId != null" >
         #{bookId,jdbcType=INTEGER},
       </if>
-      <if test="rankId != null" >
-        #{rankId,jdbcType=INTEGER},
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -168,8 +168,8 @@
       <if test="record.bookId != null" >
         book_id = #{record.bookId,jdbcType=INTEGER},
       </if>
-      <if test="record.rankId != null" >
-        rank_id = #{record.rankId,jdbcType=INTEGER},
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
@@ -192,7 +192,7 @@
     update ip_book_rank_history
     set id = #{record.id,jdbcType=INTEGER},
       book_id = #{record.bookId,jdbcType=INTEGER},
-      rank_id = #{record.rankId,jdbcType=INTEGER},
+      rank = #{record.rank,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       rank_index = #{record.rankIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
@@ -207,8 +207,8 @@
       <if test="bookId != null" >
         book_id = #{bookId,jdbcType=INTEGER},
       </if>
-      <if test="rankId != null" >
-        rank_id = #{rankId,jdbcType=INTEGER},
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
@@ -228,7 +228,7 @@
   <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.BookRankHistory" >
     update ip_book_rank_history
     set book_id = #{bookId,jdbcType=INTEGER},
-      rank_id = #{rankId,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       rank_index = #{rankIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},

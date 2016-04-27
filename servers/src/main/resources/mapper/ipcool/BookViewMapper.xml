@@ -16,6 +16,7 @@
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.dreamy.domain.ipcool.BookView" extends="BaseResultMap" >
     <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
@@ -80,7 +81,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, book_id, name, author, status, type, composite_index, hot_index, activity_index, 
-    propagate_index, develop_index, created_at, updated_at, image_url
+    propagate_index, develop_index, created_at, updated_at, image_url, remark
   </sql>
   <sql id="Blob_Column_List" >
     introduction
@@ -140,12 +141,14 @@
       status, type, composite_index, 
       hot_index, activity_index, propagate_index, 
       develop_index, created_at, updated_at, 
-      image_url, introduction)
+      image_url, remark, introduction
+      )
     values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{compositeIndex,jdbcType=INTEGER}, 
       #{hotIndex,jdbcType=INTEGER}, #{activityIndex,jdbcType=INTEGER}, #{propagateIndex,jdbcType=INTEGER}, 
       #{developIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{imageUrl,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR})
+      #{imageUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookView" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_view
@@ -188,6 +191,9 @@
       </if>
       <if test="imageUrl != null" >
         image_url,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
       <if test="introduction != null" >
         introduction,
@@ -232,6 +238,9 @@
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="introduction != null" >
         #{introduction,jdbcType=LONGVARCHAR},
@@ -289,6 +298,9 @@
       <if test="record.imageUrl != null" >
         image_url = #{record.imageUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
       <if test="record.introduction != null" >
         introduction = #{record.introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -313,6 +325,7 @@
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
       introduction = #{record.introduction,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -333,7 +346,8 @@
       develop_index = #{record.developIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      image_url = #{record.imageUrl,jdbcType=VARCHAR}
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -380,6 +394,9 @@
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=VARCHAR},
       </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="introduction != null" >
         introduction = #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -401,6 +418,7 @@
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       image_url = #{imageUrl,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -418,7 +436,8 @@
       develop_index = #{developIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      image_url = #{imageUrl,jdbcType=VARCHAR}
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >

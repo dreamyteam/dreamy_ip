@@ -35,6 +35,8 @@ public class BookIndexData {
 
     private  OverviewJson overviewJson;
 
+    private String lastDate;
+
     public String[] getAge() {
         return age;
     }
@@ -113,5 +115,13 @@ public class BookIndexData {
 
     public void setOverviewJson(OverviewJson overviewJson) {
         this.overviewJson = overviewJson;
+    }
+
+    public String getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(String lastDate) {
+        this.lastDate = lastDate;
     }
 }

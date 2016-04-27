@@ -36,4 +36,9 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
         }
         return bookIndexHistoryDao.selectByExample(conditions);
     }
+
+    @Override
+    public BookIndexHistory getMaxByBookId(Integer bookId) {
+       return bookIndexHistoryDao.selectMaxByBookId(bookId);
+    }
 }

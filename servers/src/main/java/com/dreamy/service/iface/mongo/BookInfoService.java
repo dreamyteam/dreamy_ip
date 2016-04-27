@@ -1,5 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
+import com.dreamy.beans.Page;
 import com.dreamy.mogodb.beans.BookInfo;
 
 import java.util.List;
@@ -33,8 +34,6 @@ public interface BookInfoService {
      */
     void delById(Integer id);
 
-
-    public List<BookInfo> getList(int ipId);
 
 
 }

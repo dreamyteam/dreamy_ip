@@ -33,6 +33,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     private String imageUrl;
 
+    private String remark;
+
     private String introduction;
 
     private static final long serialVersionUID = 1L;
@@ -149,6 +151,14 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public String getIntroduction() {
         return introduction;
     }
@@ -183,6 +193,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
             && (this.getImageUrl() == null ? other.getImageUrl() == null : this.getImageUrl().equals(other.getImageUrl()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
             && (this.getIntroduction() == null ? other.getIntroduction() == null : this.getIntroduction().equals(other.getIntroduction()));
     }
 
@@ -204,6 +215,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         result = prime * result + ((getImageUrl() == null) ? 0 : getImageUrl().hashCode());
+        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         result = prime * result + ((getIntroduction() == null) ? 0 : getIntroduction().hashCode());
         return result;
     }
@@ -275,6 +287,11 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     public BookView imageUrl(String value) {
         this.imageUrl = value;
+        return this;
+    }
+
+    public BookView remark(String value) {
+        this.remark = value;
         return this;
     }
 

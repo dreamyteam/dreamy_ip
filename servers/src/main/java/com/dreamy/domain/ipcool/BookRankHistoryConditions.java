@@ -237,63 +237,63 @@ public class BookRankHistoryConditions {
             return (Criteria) this;
         }
 
-        public Criteria andRankIdIsNull() {
-            addCriterion("rank_id is null");
+        public Criteria andRankIsNull() {
+            addCriterion("rank is null");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdIsNotNull() {
-            addCriterion("rank_id is not null");
+        public Criteria andRankIsNotNull() {
+            addCriterion("rank is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdEqualTo(Integer value) {
-            addCriterion("rank_id =", value, "rankId");
+        public Criteria andRankEqualTo(Integer value) {
+            addCriterion("rank =", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdNotEqualTo(Integer value) {
-            addCriterion("rank_id <>", value, "rankId");
+        public Criteria andRankNotEqualTo(Integer value) {
+            addCriterion("rank <>", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdGreaterThan(Integer value) {
-            addCriterion("rank_id >", value, "rankId");
+        public Criteria andRankGreaterThan(Integer value) {
+            addCriterion("rank >", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("rank_id >=", value, "rankId");
+        public Criteria andRankGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rank >=", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdLessThan(Integer value) {
-            addCriterion("rank_id <", value, "rankId");
+        public Criteria andRankLessThan(Integer value) {
+            addCriterion("rank <", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdLessThanOrEqualTo(Integer value) {
-            addCriterion("rank_id <=", value, "rankId");
+        public Criteria andRankLessThanOrEqualTo(Integer value) {
+            addCriterion("rank <=", value, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdIn(List<Integer> values) {
-            addCriterion("rank_id in", values, "rankId");
+        public Criteria andRankIn(List<Integer> values) {
+            addCriterion("rank in", values, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdNotIn(List<Integer> values) {
-            addCriterion("rank_id not in", values, "rankId");
+        public Criteria andRankNotIn(List<Integer> values) {
+            addCriterion("rank not in", values, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdBetween(Integer value1, Integer value2) {
-            addCriterion("rank_id between", value1, value2, "rankId");
+        public Criteria andRankBetween(Integer value1, Integer value2) {
+            addCriterion("rank between", value1, value2, "rank");
             return (Criteria) this;
         }
 
-        public Criteria andRankIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("rank_id not between", value1, value2, "rankId");
+        public Criteria andRankNotBetween(Integer value1, Integer value2) {
+            addCriterion("rank not between", value1, value2, "rank");
             return (Criteria) this;
         }
 

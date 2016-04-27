@@ -1,7 +1,5 @@
 package com.dreamy.mapper.ipcool;
 
-import com.dreamy.domain.ipcool.BookRank;
-import com.dreamy.domain.ipcool.BookRankConditions;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookRankHistoryConditions;
 import java.util.List;

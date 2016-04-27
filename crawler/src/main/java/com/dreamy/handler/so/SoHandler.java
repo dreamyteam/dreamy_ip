@@ -25,33 +25,58 @@ import java.util.Map;
 public class SoHandler {
 
 
-    public BookIndexData getByUrl(String name,String area) throws UnsupportedEncodingException {
-        BookIndexData data=new BookIndexData();
-        String q = java.net.URLEncoder.encode(name, "UTF-8");
-        area = java.net.URLEncoder.encode(area, "GBK");
-        drawAreaJson(data,q);
-        soMediaJson(data,name,q,area);
-        soIndexJson(data,name,q,area);
-        portrayalJson(data,q);
-        overviewJson(data,q,area);
-        return data;
+    public BookIndexData getByUrl(String name, String area) throws UnsupportedEncodingException {
+
+        BookIndexData data = null;
+        try {
+            name = name.replace(" ", "");
+            String q = java.net.URLEncoder.encode(name, "UTF-8");
+            area = java.net.URLEncoder.encode(area, "GBK");
+            data = new BookIndexData();
+            check(q);
+            drawAreaJson(data, q);
+            soMediaJson(data, name, q, area);
+            soIndexJson(data, name, q, area);
+            portrayalJson(data, q);
+            overviewJson(data, q, area);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return data;
+        }
+
+
+    }
+
+    private void check(String q) {
+        String url =  "http://index.so.com/index.php?a=indexQuery&q="+q;
+        String json = HttpUtils.getHtmlGet(url);
+        json = decodeUnicode(json);
+        if (StringUtils.isNotEmpty(json)) {
+            Map<String, Object> map = JsonUtils.toMap(json);
+            Map<String, Object> map1 = (Map<String, Object>) map.get("data");
+            System.out.println(111);
+        }
 
 
     }
 
 
+
     /**
      * 地域分布
+     *
      * @param q
      */
-    private void drawAreaJson(BookIndexData data,String q) {
+    private void drawAreaJson(BookIndexData data, String q) {
         String url = "http://index.so.com/index.php?a=drawAreaJson&&t=30&q=" + q;
         String json = HttpUtils.getHtmlGet(url);
         json = decodeUnicode(json);
-        Map<String, Object> map = JsonUtils.toMap(json);
-        So so=JsonUtils.toObject(So.class,json);
-        if(so.getStatus()==0){
-            data.setAreaList(so.getData().getList());
+        if (StringUtils.isNotEmpty(json)) {
+            So so = JsonUtils.toObject(So.class, json);
+            if (so != null && so.getStatus() == 0) {
+                data.setAreaList(so.getData().getList());
+            }
         }
 
 
@@ -59,63 +84,93 @@ public class SoHandler {
 
     /**
      * 媒体关注度
+     *
      * @param name
      * @param q
      * @param area
      */
-    public static void soMediaJson(BookIndexData data,String name,String q, String area) {
-        String url = "http://index.so.com/index.php?a=soMediaJson&q=" + q;
-        String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
-        Map<String, Object> map = JsonUtils.toMap(json);
-        Map<String, Object> map1 = (Map<String, Object>) map.get("data");
-        Map<String, Object> map2 = (Map<String, Object>) map1.get("media");
-        Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
-        String str = (String) map2.get(name);
-        String arr[]=str.split("\\|");
-        data.setMedia(arr);
+    public static void soMediaJson(BookIndexData data, String name, String q, String area) {
+        try {
+            String url = "http://index.so.com/index.php?a=soMediaJson&q=" + q;
+            String json = HttpUtils.getHtmlGet(url);
+            json = decodeUnicode(json);
+            Map<String, Object> map = JsonUtils.toMap(json);
+            int status = (Integer) map.get("status");
+            if (status == 0) {
+                Map<String, Object> map1 = (Map<String, Object>) map.get("data");
+                Map<String, Object> map2 = (Map<String, Object>) map1.get("media");
+                Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
+                String str = (String) map2.get(name);
+                String arr[] = str.split("\\|");
+                data.setMedia(arr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
 
-    public static void soIndexJson(BookIndexData data,String name,String q, String area) {
-        String url = "http://index.so.com/index.php?a=soIndexJson&q=" + q + "&area" + area;
-        String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
-        Map<String, Object> map = JsonUtils.toMap(json);
-        Map<String, Object> map1 = (Map<String, Object>) map.get("data");
-        Map<String, Object> map2 = (Map<String, Object>) map1.get("index");
-        Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
-        System.out.println(map3.get("from"));
-        System.out.println(map3.get("to"));
-        String str = (String) map2.get(name);
-        String arr[]=str.split("\\|");
-        data.setIndex(arr);
+    public static void soIndexJson(BookIndexData data, String name, String q, String area) {
+        try {
+            String url = "http://index.so.com/index.php?a=soIndexJson&q=" + q + "&area" + area;
+            String json = HttpUtils.getHtmlGet(url);
+            json = decodeUnicode(json);
+            Map<String, Object> map = JsonUtils.toMap(json);
+            Map<String, Object> map1 = (Map<String, Object>) map.get("data");
+            Map<String, Object> map2 = (Map<String, Object>) map1.get("index");
+            Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
+            data.setLastDate(map3.get("to")+"");
+//            System.out.println(map3.get("from"));
+//            System.out.println(map3.get("to"));
+            String str = (String) map2.get(name);
+            String arr[] = str.split("\\|");
+            data.setIndex(arr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    public static void portrayalJson(BookIndexData data,String q) {
-        String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + q;
-        String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
-        So so=JsonUtils.toObject(So.class,json);
-        data.setTags(so.getData().getTags());
-        data.setAge(so.getData().getAge().split(","));
-        data.setMale(so.getData().getMale());
-        data.setFemale(so.getData().getFemale());
+    public static void portrayalJson(BookIndexData data, String q) {
+        try {
+            String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + q;
+            String json = HttpUtils.getHtmlGet(url);
+            json = decodeUnicode(json);
+            if (StringUtils.isNotEmpty(json)) {
+                So so = JsonUtils.toObject(So.class, json);
+                if (so != null) {
+                    data.setTags(so.getData().getTags());
+                    data.setAge(so.getData().getAge().split(","));
+                    data.setMale(so.getData().getMale());
+                    data.setFemale(so.getData().getFemale());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public static void overviewJson(BookIndexData data,String q, String area) {
-        String url = "http://index.so.com/index.php?a=overviewJson&q=" + q + "&area" + area;
-        String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
-        json=json.replace("[","").replace("]","");
-        So so=JsonUtils.toObject(So.class,json);
-        data.setOverviewJson(so.getData().getData());
+    public static void overviewJson(BookIndexData data, String q, String area) {
+        try {
+            String url = "http://index.so.com/index.php?a=overviewJson&q=" + q + "&area" + area;
+            String json = HttpUtils.getHtmlGet(url);
+            json = decodeUnicode(json);
+            if (StringUtils.isNotEmpty(json)) {
+                json = json.replace("[", "").replace("]", "");
+                So so = JsonUtils.toObject(So.class, json);
+                if (so != null) {
+                    data.setOverviewJson(so.getData().getData());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+
     public static String decodeUnicode(String theString) {
         char aChar;
         int len = theString.length();

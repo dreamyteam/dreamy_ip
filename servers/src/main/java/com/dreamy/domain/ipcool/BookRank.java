@@ -9,7 +9,7 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
 
     private Integer bookId;
 
-    private Integer rankId;
+    private Integer rank;
 
     private Integer type;
 
@@ -37,12 +37,12 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         this.bookId = bookId;
     }
 
-    public Integer getRankId() {
-        return rankId;
+    public Integer getRank() {
+        return rank;
     }
 
-    public void setRankId(Integer rankId) {
-        this.rankId = rankId;
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     public Integer getType() {
@@ -91,7 +91,7 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         BookRank other = (BookRank) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getBookId() == null ? other.getBookId() == null : this.getBookId().equals(other.getBookId()))
-            && (this.getRankId() == null ? other.getRankId() == null : this.getRankId().equals(other.getRankId()))
+            && (this.getRank() == null ? other.getRank() == null : this.getRank().equals(other.getRank()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getRankIndex() == null ? other.getRankIndex() == null : this.getRankIndex().equals(other.getRankIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
@@ -104,7 +104,7 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getBookId() == null) ? 0 : getBookId().hashCode());
-        result = prime * result + ((getRankId() == null) ? 0 : getRankId().hashCode());
+        result = prime * result + ((getRank() == null) ? 0 : getRank().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getRankIndex() == null) ? 0 : getRankIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
@@ -122,8 +122,8 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public BookRank rankId(Integer value) {
-        this.rankId = value;
+    public BookRank rank(Integer value) {
+        this.rank = value;
         return this;
     }
 

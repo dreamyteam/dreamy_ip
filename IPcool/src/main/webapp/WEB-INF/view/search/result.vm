@@ -38,19 +38,14 @@
 <!--main-->
 <div class="container">
     <!--搜索框-->
-    <div class="searchbar">
-        <form class="search_bar_container" action="/search.html">
-            <div class="form_search">
-
-                <input type="text" name="content" value="$!{content}" class="search" placeholder="试试搜索美人鱼">
-                <input class="submit" type="submit" value="">
-
-            </div>
-        </form>
-    </div>
+    #parse("/common/search.vm")
     <!--搜索框 end-->
     <section class="search_count">
-        <p>找到<span class="count">324</span>个与[<span class="name">霸道总裁爱上我</span>]相关的内容</p>
+        #if ($!{content.length()} > 0)
+            <p>找到<span class="count">$!{page.totalNum}</span>个与[<span class="name">$!{content}</span>]相关的内容</p>
+       #else
+           <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
+        #end
     </section>
     <section class="search_result">
         <!--搜索结果为0时 显示-->
@@ -67,7 +62,7 @@
             <div class="sresult_ip clearfix">
                 <img src="$!{view.imageUrl}">
                 <div class="sresult_content">
-                    <h2>$!{view.name} <span class="type">出版文学</span></h2>
+                    <h2><a href="/detail.html?ip=${view.id}">$!{view.name} </a> <span class="type">出版文学</span></h2>
                     <h6>作者: 琼瑶</h6>
                     <ul class="quotient">
                         <li>

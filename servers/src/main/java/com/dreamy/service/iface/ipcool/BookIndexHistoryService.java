@@ -13,4 +13,10 @@ public interface BookIndexHistoryService {
     public void save(BookIndexHistory bookIndexHistory);
 
     public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page);
+
+    /**
+     * 获取指数最高纪录
+     * @param bookId
+     */
+    public BookIndexHistory getMaxByBookId(Integer bookId);
 }

@@ -29,4 +29,8 @@ public interface BookIndexHistoryMapper extends BaseMapper<BookIndexHistory,Inte
     int updateByPrimaryKeySelective(BookIndexHistory record);
 
     int updateByPrimaryKey(BookIndexHistory record);
+
+    BookIndexHistory selectMaxByBookId(@Param("bookId") Integer BookId);
+
+
 }

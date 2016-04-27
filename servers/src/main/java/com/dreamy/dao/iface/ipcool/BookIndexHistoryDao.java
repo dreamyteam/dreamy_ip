@@ -9,4 +9,6 @@ import com.dreamy.domain.ipcool.BookIndexHistoryConditions;
  *  指数历史记录
  */
 public interface BookIndexHistoryDao extends BaseDao<BookIndexHistory,Integer, BookIndexHistoryConditions> {
+
+    BookIndexHistory selectMaxByBookId(Integer bookId);
 }
