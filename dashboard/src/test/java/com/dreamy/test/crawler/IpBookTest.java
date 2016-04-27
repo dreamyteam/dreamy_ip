@@ -6,10 +6,13 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.test.BaseJunitTest;
+import com.dreamy.utils.CollectionUtils;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/26.
@@ -21,7 +24,7 @@ public class IpBookTest extends BaseJunitTest{
     BookViewService bookViewService;
     @Test
     public void insert(){
-       List<BookInfo> list= bookInfoService.getList(151);
+       List<BookInfo> list= bookInfoService.getListByIpId(151);
         BookView view=null;
         for(BookInfo bookInfo:list)
         {
@@ -59,5 +62,25 @@ public class IpBookTest extends BaseJunitTest{
         bookView.propagateIndex(3333);
         bookView.developIndex(7777);
         bookViewService.update(bookView);
+    }
+
+    @Test
+    public void bookview(){
+        Integer bookId = 40;
+        List<BookInfo> bookInfos = bookInfoService.getListByIpId(bookId);
+        if (CollectionUtils.isNotEmpty(bookInfos)) {
+            BookView bookView = new BookView();
+            Map<Integer, BookInfo> bookInfoMap = new HashMap<>();
+            for (BookInfo bookInfo : bookInfos) {
+                bookInfoMap.put(bookInfo.getSource(), bookInfo);
+            }
+
+            Map<Integer, BookInfo> newBookInfoMap = new HashMap<>();
+//            if (bookInfos.contains(CrawlerSourceEnums.douban.getType())) {
+//                newBookInfoMap.put(CrawlerSourceEnums.douban.getType(), bookInfos.get(CrawlerSourceEnums.douban.getType()));
+//            }
+
+
+        }
     }
 }

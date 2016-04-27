@@ -1,5 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
+import com.dreamy.beans.Page;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.MemberDao;
@@ -41,11 +42,16 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public List<BookInfo> getList(int ipId) {
+    public List<BookInfo> getListByIpId(int ipId) {
         Query query = new Query();
         Criteria criteria = Criteria.where("ipId").is(ipId);
         query.addCriteria(criteria);
         return bookInfoDao.queryList(query);
+    }
 
+    @Override
+    public List<BookInfo> getListByOrderAndPage(Page page, String order) {
+
+        return null;
     }
 }

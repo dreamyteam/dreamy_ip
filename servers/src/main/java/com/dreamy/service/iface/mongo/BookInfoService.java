@@ -1,5 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
+import com.dreamy.beans.Page;
 import com.dreamy.mogodb.beans.BookInfo;
 
 import java.util.List;
@@ -34,7 +35,21 @@ public interface BookInfoService {
     void delById(Integer id);
 
 
-    public List<BookInfo> getList(int ipId);
+    /**
+     *
+     * @param ipId
+     * @return
+     */
+    public List<BookInfo> getListByIpId(int ipId);
+
+    /**
+     *
+     * @param page
+     * @param order
+     * @return
+     */
+    public List<BookInfo> getListByOrderAndPage(Page page,String order);
+
 
 
 }

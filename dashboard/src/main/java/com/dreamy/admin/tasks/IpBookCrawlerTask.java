@@ -24,7 +24,7 @@ import java.util.*;
  * Time: 下午4:58
  */
 @Component
-public class CreateCrawlerTask {
+public class IpBookCrawlerTask {
     @Autowired
     private BookCrawlerInfoService bookCrawlerInfoService;
 
