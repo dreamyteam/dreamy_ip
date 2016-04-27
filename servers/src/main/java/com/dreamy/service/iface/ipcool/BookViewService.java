@@ -11,18 +11,48 @@ import java.util.List;
 public interface BookViewService {
     /**
      * 保存
+     *
      * @param bookView
      */
     public void save(BookView bookView);
 
     /**
      * 更新
+     *
      * @param bookView
      * @return
      */
     public Integer update(BookView bookView);
 
+    /**
+     * @param bookView
+     * @param page
+     * @return
+     */
     public List<BookView> getList(BookView bookView, Page page);
 
+    /**
+     * @param id
+     * @return
+     */
     public BookView getById(Integer id);
+
+
+    /**
+     *
+     * @param page
+     * @param order
+     * @return
+     */
+    public List<BookView> getListByPageAndOrder(Page page,String order);
+
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    public BookView getByBookId(Integer bookId);
+
+
+
 }

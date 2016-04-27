@@ -36,9 +36,11 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
 
     @Override
     public List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page) {
-        Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
         BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
-        conditions.createCriteria().addByMap(params);
+        if (bookCrawlerInfo != null) {
+            Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
+            conditions.createCriteria().addByMap(params);
+        }
         if (page != null) {
             page.setTotalNum(bookCrawlerInfoDao.countByExample(conditions));
             conditions.setPage(page);
@@ -54,5 +56,18 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Override
     public BookCrawlerInfo getById(Integer id) {
         return bookCrawlerInfoDao.selectById(id);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getByPageAndOrder(Page page, String order) {
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
+        conditions.setPage(page);
+        conditions.setOrderByClause(order);
+        return bookCrawlerInfoDao.selectByExample(conditions);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getByCondition(BookCrawlerInfoConditions conditions) {
+        return bookCrawlerInfoDao.selectByExample(conditions);
     }
 }

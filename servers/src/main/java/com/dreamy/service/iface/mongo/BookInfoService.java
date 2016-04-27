@@ -35,5 +35,20 @@ public interface BookInfoService {
     void delById(Integer id);
 
 
+    /**
+     *
+     * @param ipId
+     * @return
+     */
+    public List<BookInfo> getListByIpId(int ipId);
+
+    /**
+     *
+     * @param page
+     * @param order
+     * @return
+     */
+    public List<BookInfo> getListByOrderAndPage(Page page,String order);
+ 
 
 }

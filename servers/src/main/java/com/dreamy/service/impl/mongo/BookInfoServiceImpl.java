@@ -41,5 +41,17 @@ public class BookInfoServiceImpl implements BookInfoService {
         bookInfoDao.deleteById(id);
     }
 
+    @Override
+    public List<BookInfo> getListByIpId(int ipId) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("ipId").is(ipId);
+        query.addCriteria(criteria);
+        return bookInfoDao.queryList(query);
+    }
 
+    @Override
+    public List<BookInfo> getListByOrderAndPage(Page page, String order) {
+
+        return null;
+    }
 }
