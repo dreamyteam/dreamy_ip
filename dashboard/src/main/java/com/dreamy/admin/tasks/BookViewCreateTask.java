@@ -6,14 +6,12 @@ import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
-import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -43,9 +41,6 @@ public class BookViewCreateTask {
 
     @Scheduled(fixedDelay = 8000)
     private void run() {
-        Page page = new Page();
-        page.setPageSize(100 * 4);
-
         BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
         conditions.createCriteria().andStatusEqualTo(CrawlerTaskStatusEnums.success.getStatus());
         conditions.setOrderByClause("book_id asc");
@@ -56,12 +51,13 @@ public class BookViewCreateTask {
             for (BookCrawlerInfo bookCrawlerInfo : bookCrawlerInfos) {
                 Integer currentId = bookCrawlerInfo.getBookId();
                 if (!currentId.equals(initBookId)) {
+                    initBookId = currentId;
+
                     BookView oldBookView = bookViewService.getById(currentId);
                     if (oldBookView == null) {
                         BookView bookView = getBookViewByBookId(currentId);
-                        bookView.setStatus(0);
                         bookView.setType(1);
-                        initBookId = currentId;
+                        bookView.setStatus(0);
                         bookViewService.save(bookView);
                     }
                 }
