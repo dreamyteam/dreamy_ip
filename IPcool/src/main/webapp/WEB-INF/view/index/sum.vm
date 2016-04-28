@@ -1,524 +1,523 @@
-
-    <div class="popup_mask" id="popup_mask"></div>
-    <div class="popup_box sign" id="popup_register">
-        <button class="close"></button>
-        <span class="logo"></span>
-        <form>
-            <span class="err_msg">手机号码格式错误</span>
-            <div class="sign_container">
-                <label class="icon_phone_number"></label>
-                <input type="text" placeholder="手机号码" />
-            </div>
-            <div class="sign_container">
-                <label class="icon_password"></label>
-                <input type="password" placeholder="密码" />
-            </div>
-            <div class="sign_container verify">
-                <label class="icon_verify"></label>
-                <input type="text" placeholder="验证码" />
-                <button class="btn_send_verify_code">发送验证码</button>
-            </div>
-            <button class="solid">登录</button>
-            <input class="hollow" type="submit" value="创建帐号" />
-        </form>
-        <div class="infos">
-            <a href="#" target="_blank">用户协议</a>
-            <a href="#" target="_blank">隐私政策</a>
-            <a href="#" target="_blank">帮助文档</a>
+<div class="popup_mask" id="popup_mask"></div>
+<div class="popup_box sign" id="popup_register">
+    <button class="close"></button>
+    <span class="logo"></span>
+    <form>
+        <span class="err_msg">手机号码格式错误</span>
+        <div class="sign_container">
+            <label class="icon_phone_number"></label>
+            <input type="text" placeholder="手机号码"/>
         </div>
+        <div class="sign_container">
+            <label class="icon_password"></label>
+            <input type="password" placeholder="密码"/>
+        </div>
+        <div class="sign_container verify">
+            <label class="icon_verify"></label>
+            <input type="text" placeholder="验证码"/>
+            <button class="btn_send_verify_code">发送验证码</button>
+        </div>
+        <button class="solid">登录</button>
+        <input class="hollow" type="submit" value="创建帐号"/>
+    </form>
+    <div class="infos">
+        <a href="#" target="_blank">用户协议</a>
+        <a href="#" target="_blank">隐私政策</a>
+        <a href="#" target="_blank">帮助文档</a>
     </div>
-    <div class="popup_box sign" id="popup_login">
-        <button class="close"></button>
-        <span class="logo"></span>
-        <form>
-            <div class="sign_container">
-                <label class="icon_phone_number"></label>
-                <input type="text" placeholder="手机号码" />
-            </div>
-            <div class="sign_container">
-                <label class="icon_password"></label>
-                <input type="password" placeholder="密码" />
-            </div>
-            <div class="remember_pwd_container clearfix">
-                <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked" />
-                <label>记住密码</label>
-                <a href="#">忘记密码</a>
-            </div>
-            <input class="solid" type="submit" value="登录" />
-            <button class="hollow">创建帐号</button>
-        </form>
-        <div class="infos">
-            <a href="#" target="_blank">用户协议</a>
-            <a href="#" target="_blank">隐私政策</a>
-            <a href="#" target="_blank">帮助文档</a>
+</div>
+<div class="popup_box sign" id="popup_login">
+    <button class="close"></button>
+    <span class="logo"></span>
+    <form>
+        <div class="sign_container">
+            <label class="icon_phone_number"></label>
+            <input type="text" placeholder="手机号码"/>
         </div>
+        <div class="sign_container">
+            <label class="icon_password"></label>
+            <input type="password" placeholder="密码"/>
+        </div>
+        <div class="remember_pwd_container clearfix">
+            <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked"/>
+            <label>记住密码</label>
+            <a href="#">忘记密码</a>
+        </div>
+        <input class="solid" type="submit" value="登录"/>
+        <button class="hollow">创建帐号</button>
+    </form>
+    <div class="infos">
+        <a href="#" target="_blank">用户协议</a>
+        <a href="#" target="_blank">隐私政策</a>
+        <a href="#" target="_blank">帮助文档</a>
     </div>
+</div>
 
-    
-    <header class="ipcool_hearder clearfix">
-        <div class="inner">
-            <a href="/" class="logo"></a>
-            <!--搜索框 用户中心显示-->
-            <!-- 				<div class="form_search">
-			        <input type="text" class="search" placeholder="试试搜索美人鱼">
-			        <input class="submit" type="submit" value="">
-			    </div> -->
-            <!-- 搜索框 结束 -->
-            <!--注册 登录按钮-->
-            <nav>
-                <button class="register" id="register">注册</button>
-                <button class="login" id="login">登录</button>
-            </nav>
-            <!--登录后用户id-->
-            <!-- <div class="user">
-				<h2 class="user_name">土豆</h2>
-				<div class="user_menu">
-					<div class="arrow">
-     					<span></span><em></em>
-    				</div>	
-					<ul>		
-						<li><a href="#">我关注的</a></li>
-						<li><a href="#">历史记录</a></li>
-						<li><a href="#">个人信息</a></li>
-						<li><a href="#">账号设置</a></li>
-						<li><a href="#">修改密码</a></li>
-						<li><a href="#">退出登录</a></li>
-					</ul>
-				</div>
-			</div>	 -->
-        </div>
-    </header>
-    <div class="container">
-        <!--搜索框-->
-        #parse("/common/search.vm")
-        <!--program_info-->
-        <section class="program_info clearfix">
-            <!-- TOP100 形状 -->
-            <div class="level_flag">
-                TOP100
-            </div>
-            <img src="$!{view.imageUrl}">
-            <div class="content">
-                <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
-                <h6 class="genre">类型：脱口秀</h6>
-                <p class="info">
-                    作者：$!{view.author}
-                </p>
-                <div class="tags">
-                    <span><a href="#">搞笑</a></span>
-                    <span><a href="#">星爷</a></span>
-                    <span><a href="#">2016</a></span>
-                    <span><a href="#">环保</a></span>
+
+<header class="ipcool_hearder clearfix">
+    <div class="inner">
+        <a href="/" class="logo"></a>
+        <!--搜索框 用户中心显示-->
+        <!-- 				<div class="form_search">
+                <input type="text" class="search" placeholder="试试搜索美人鱼">
+                <input class="submit" type="submit" value="">
+            </div> -->
+        <!-- 搜索框 结束 -->
+        <!--注册 登录按钮-->
+        <nav>
+            <button class="register" id="register">注册</button>
+            <button class="login" id="login">登录</button>
+        </nav>
+        <!--登录后用户id-->
+        <!-- <div class="user">
+            <h2 class="user_name">土豆</h2>
+            <div class="user_menu">
+                <div class="arrow">
+                     <span></span><em></em>
                 </div>
-            </div>
-            <div class="update_time">
-                <h6>数据更新时间</h6>
-                <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-            </div>
-        </section>
-        <!--program_nav -->
-        <section class="program_nav" id="program_nav">
-            <div class="inner clearfix">
                 <ul>
-                    <li class="active"><a href="">综合评价</a></li>
-                    <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
-                    <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
-                    <li><a href="/introduction.html?ip=$!{view.id}">简介</a></li>
+                    <li><a href="#">我关注的</a></li>
+                    <li><a href="#">历史记录</a></li>
+                    <li><a href="#">个人信息</a></li>
+                    <li><a href="#">账号设置</a></li>
+                    <li><a href="#">修改密码</a></li>
+                    <li><a href="#">退出登录</a></li>
                 </ul>
-                <div class="follow_download">
-                    <span class="follow">关注</span>
-                    <span class="download">下载完整报告</span>
+            </div>
+        </div>	 -->
+    </div>
+</header>
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--program_info-->
+    <section class="program_info clearfix">
+        <!-- TOP100 形状 -->
+        <div class="level_flag">
+            $!{crank}
+        </div>
+        <img src="$!{view.imageUrl}">
+        <div class="content">
+            <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
+            <h6 class="genre">类型：脱口秀</h6>
+            <p class="info">
+                作者：$!{view.author}
+            </p>
+            <div class="tags">
+                <span><a href="#">搞笑</a></span>
+                <span><a href="#">星爷</a></span>
+                <span><a href="#">2016</a></span>
+                <span><a href="#">环保</a></span>
+            </div>
+        </div>
+        <div class="update_time">
+            <h6>数据更新时间</h6>
+            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
+        </div>
+    </section>
+    <!--program_nav -->
+    <section class="program_nav" id="program_nav">
+        <div class="inner clearfix">
+            <ul>
+                <li class="active"><a href="">综合评价</a></li>
+                <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
+                <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
+                <li><a href="/introduction.html?ip=$!{view.id}">简介</a></li>
+            </ul>
+            <div class="follow_download">
+                <span class="follow">关注</span>
+                <span class="download">下载完整报告</span>
+            </div>
+        </div>
+    </section>
+    <!--指数综合-->
+    <section class="program_values">
+        <!-- 综合价值 -->
+        <div class="values_content comprehensive_value">
+            <h2 class="program_title">综合价值指数</h2>
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    这是一段提示信息
                 </div>
             </div>
-        </section>
-        <!--指数综合-->
-        <section class="program_values">
-            <!-- 综合价值 -->
-            <div class="values_content comprehensive_value">
-                <h2 class="program_title">综合价值指数</h2>
+            <h5 class="number">$!{view.compositeIndex}</h5>
+            <em class="warning">数据异常偏大，仅供基本参考</em>
+            <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
+        </div>
+        <!-- 开发潜力 热度趋势 -->
+        <div class="values_content potential_trend">
+            <h2 class="program_title">开发潜力指数</h2>
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    这是一段开发潜力指数的提示信息
+                </div>
+            </div>
+            <h5 class="number">$!{view.developIndex}  <span class="rank">$!{drank}</span></h5>
+
+            <h2 class="program_title" style="margin-top: 25px;">热度趋势指数</h2>
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    这是一段热度趋势指数的提示信息
+                </div>
+            </div>
+            <h5 class="number">$!{view.hotIndex}  <span class="rank">$!{hrank}</span></h5>
+        </div>
+        <!-- 传播能力 用户活跃 -->
+        <div class="values_content propagation_liveness">
+            <h2 class="program_title">传播能力指数</h2>
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    这是一段传播能力指数的提示信息
+                </div>
+            </div>
+            <h5 class="number">$!{view.propagateIndex} <span class="rank">$!{prank}</span></h5>
+            <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    这是一段用户活跃指数的提示信息
+                </div>
+            </div>
+            <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
+            <div>
+    </section>
+    <!--综合价值-->
+    <section>
+        <h1 class="title">综合价值</h1>
+        <div class="values_container">
+            <!--综合指数 -->
+            <div class="values_content">
+                <h2 class="program_title">综合指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
                         这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.compositeIndex}</h5>
-                <em class="warning">数据异常偏大，仅供基本参考</em>
-                <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
+                <h5 class="number">$!{view.compositeIndex}<span class="arrow">↑</span></h5>
             </div>
-            <!-- 开发潜力 热度趋势 -->
-            <div class="values_content potential_trend">
-                <h2 class="program_title">开发潜力指数</h2>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{history.compositeIndex}</h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">小说排名</h2>
+                <h5 class="number">$!{crank}</h5>
+            </div>
+        </div>
+        <!--综合价值 图表 -->
+        <div id="chart_comprehensive_value"></div>
+        <div class="program_tab" id="program_tab">
+            <h3 class="title">市场地位</h3>
+            <ul class="tab_tags">
+                <li class="active">全部</li>
+            ##                    <li>同类</li>
+            ##                    <li>同期</li>
+            </ul>
+            <ul class="tab_contents">
+                <li class="clearfix show">
+                    <div class="ipstatus">
+                        <h3>在全部文学中所处的地位</h3>
+                        <div class="pre_bar">
+                            <span>2%</span>
+                            <span class="current">8%</span>
+                            <span>18%</span>
+                            <span>32%</span>
+                            <span>40%</span>
+                            <!--
+                                    top:
+                                    2%: 0
+                                    8%: 35px
+                                    32%: 70px
+                                    40%: 140px;
+                                 -->
+                            <i style="top: 35px;">当前</i>
+                        </div>
+                        <h6>[斗破苍穹]在全小说中,　属于3%的优质级内容</h6>
+                    </div>
+                    <div class="iprank clearfix">
+                        <h3>在全部文学中的排名</h3>
+                        <a class="show_rank_list" href="/rank/list.html">查看排行榜 ></a>
+                        <table>
+                            <tr>
+                                <th>排名</th>
+                                <th>名称</th>
+                                <th>价值指数</th>
+                                <th>趋势</th>
+                            </tr>
+                            <tr>
+                                <td>32</td>
+                                <td>霸道总裁爱上我</td>
+                                <td>6554</td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="current">
+                                <td>33</td>
+                                <td>斗破苍穹</td>
+                                <td>6553</td>
+                                <td>↑</td>
+                            </tr>
+                            <tr>
+                                <td>33</td>
+                                <td>重生之官场无敌</td>
+                                <td>6442</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>35</td>
+                                <td>斗破苍穹</td>
+                                <td>6553</td>
+                                <td>↓</td>
+                            </tr>
+                        </table>
+                        <h6>[斗破苍穹]在全小说价值排名第33位, 并仍有上升趋势</h6>
+                    </div>
+                </li>
+                <li>
+                    <p>同类内容</p>
+                </li>
+                <li>
+                    <p>同期内容</p>
+                </li>
+            </ul>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="/comprehensive.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+    <!-- 开发潜力 -->
+    <section>
+        <h1 class="title">开发潜力</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--综合指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前潜力指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段开发潜力指数的提示信息
+                        这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.developIndex}  <span class="rank">$!{drank}</span></h5>
-
-                <h2 class="program_title" style="margin-top: 25px;">热度趋势指数</h2>
+                <h5 class="number">$!{view.developIndex}<span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高</h2>
+                <h5 class="number">$!{history.developIndex}</h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{drank}</h5>
+            </div>
+        </div>
+        <!-- 潜力模型图表 -->
+        <div id="chart_potential_model"></div>
+        <!-- 最受期待的开发项目 -->
+        <div class="vote_container">
+            <h3>最受期待的开发项目</h3>
+            <h6>投票查看结果</h6>
+            <div class="vote_content">
+                <div class="vote movie">
+                    <span></span>
+                    <h5>电影</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+                <div class="vote tvshow">
+                    <span></span>
+                    <h5>电视剧</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+                <div class="vote mobilegame">
+                    <span></span>
+                    <h5>手游</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+                <div class="vote game">
+                    <span></span>
+                    <h5>游戏</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+                <div class="vote peripheral">
+                    <span></span>
+                    <h5>周边</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+                <div class="vote others">
+                    <span></span>
+                    <h5>其他</h5>
+                    <div class="vote_btns">
+                        <button class="expext">期待</button>
+                        <button class="wantDevelop">想开发</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="">查看全部</a>
+        </div>
+    </section>
+    <!-- 热度趋势 -->
+    <section>
+        <h1 class="title">热度趋势</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段热度趋势指数的提示信息
+                        这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.hotIndex}  <span class="rank">$!{hrank}</span></h5>
+                <h5 class="number">$!{view.hotIndex} <span class="arrow">↑</span></h5>
             </div>
-            <!-- 传播能力 用户活跃 -->
-            <div class="values_content propagation_liveness">
-                <h2 class="program_title">传播能力指数</h2>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{history.hotIndex}</h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{hrank}</h5>
+            </div>
+        </div>
+        <!-- 热度趋势图表 -->
+        <div id="chart_heat_trend"></div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="/heat.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+    <!-- 传播能力 -->
+    <section>
+        <h1 class="title">传播能力</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">传播指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段传播能力指数的提示信息
+                        这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.propagateIndex} <span class="rank">$!{prank}</span></h5>
-                <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
+                <h5 class="number">$!{view.developIndex} <span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{history.developIndex}</h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{prank}</h5>
+            </div>
+        </div>
+        <!-- 传播指数图表 -->
+        <div id="chart_transmission_index"></div>
+        <!-- 新闻平台 社交平台 饼图 容器-->
+        <div class="col_2_container">
+            <!--新闻平台图表-->
+            <div class="col" id="chart_media_platform"></div>
+            <!--社交平台图表-->
+            <div class="col" id="chart_social_platform"></div>
+        </div>
+    </section>
+    <!--用户活跃-->
+    <section>
+        <h1 class="title">用户活跃</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">用户活跃指数</h2>
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段用户活跃指数的提示信息
+                        这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
-                <div>
-        </section>
-        <!--综合价值-->
-        <section>
-            <h1 class="title">综合价值</h1>
-            <div class="values_container">
-                <!--综合指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">综合指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
-                    </div>
-                    <h5 class="number">$!{view.compositeIndex}<span class="arrow">↑</span></h5>
-                </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{history.compositeIndex}</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">小说排名</h2>
-                    <h5 class="number">$!{crank}</h5>
-                </div>
+                <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
             </div>
-            <!--综合价值 图表 -->
-            <div id="chart_comprehensive_value"></div>
-            <div class="program_tab" id="program_tab">
-                <h3 class="title">市场地位</h3>
-                <ul class="tab_tags">
-                    <li class="active">全部</li>
-##                    <li>同类</li>
-##                    <li>同期</li>
-                </ul>
-                <ul class="tab_contents">
-                    <li class="clearfix show">
-                        <div class="ipstatus">
-                            <h3>在全部文学中所处的地位</h3>
-                            <div class="pre_bar">
-                                <span>2%</span>
-                                <span class="current">8%</span>
-                                <span>18%</span>
-                                <span>32%</span>
-                                <span>40%</span>
-                                <!-- 
-			                        	top:
-			                        	2%: 0
-			                        	8%: 35px
-			                        	32%: 70px
-			                        	40%: 140px;
-			                         -->
-                                <i style="top: 35px;">当前</i>
-                            </div>
-                            <h6>[斗破苍穹]在全小说中,　属于3%的优质级内容</h6>
-                        </div>
-                        <div class="iprank clearfix">
-                            <h3>在全部文学中的排名</h3>
-                            <a class="show_rank_list" href="/rank/list.html">查看排行榜 ></a>
-                            <table>
-                                <tr>
-                                    <th>排名</th>
-                                    <th>名称</th>
-                                    <th>价值指数</th>
-                                    <th>趋势</th>
-                                </tr>
-                                <tr>
-                                    <td>32</td>
-                                    <td>霸道总裁爱上我</td>
-                                    <td>6554</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr class="current">
-                                    <td>33</td>
-                                    <td>斗破苍穹</td>
-                                    <td>6553</td>
-                                    <td>↑</td>
-                                </tr>
-                                <tr>
-                                    <td>33</td>
-                                    <td>重生之官场无敌</td>
-                                    <td>6442</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>35</td>
-                                    <td>斗破苍穹</td>
-                                    <td>6553</td>
-                                    <td>↓</td>
-                                </tr>
-                            </table>
-                            <h6>[斗破苍穹]在全小说价值排名第33位, 并仍有上升趋势</h6>
-                        </div>
-                    </li>
-                    <li>
-                        <p>同类内容</p>
-                    </li>
-                    <li>
-                        <p>同期内容</p>
-                    </li>
-                </ul>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{history.activityIndex}</h5>
             </div>
-            <!-- 查看全部 -->
-            <div class="program_showMore">
-                <a href="/comprehensive.html?ip=$!{view.id}">查看全部</a>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{arank}</h5>
             </div>
-        </section>
-        <!-- 开发潜力 -->
-        <section>
-            <h1 class="title">开发潜力</h1>
-            <!-- 指数们 -->
-            <div class="values_container">
-                <!--综合指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前潜力指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
-                    </div>
-                    <h5 class="number">$!{view.developIndex}<span class="arrow">↑</span></h5>
-                </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高</h2>
-                    <h5 class="number">$!{history.developIndex}</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{drank}</h5>
-                </div>
+        </div>
+        <!-- 用户活跃度图表 -->
+        <div id="chart_user_vitalty"></div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+    <!--用户分析-->
+    <section>
+        <h1 class="title">用户分析</h1>
+        <!-- 受众年龄分布 容器-->
+        <div class="col_2_container">
+            <!--男女比例分布 图表-->
+            <div class="col" id="chart_sex_distribution"></div>
+            <!--年龄分布 图表-->
+            <div class="col" id="chart_age_distribution"></div>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="/persona.html">查看全部</a>
+        </div>
+    </section>
+    <!-- 点评 -->
+    <section>
+        <h1 class="title">点评</h1>
+        <!-- 点评指数 图表 容器 -->
+        <div class="review_container">
+            <div class="review_value">
+                <h2>综合口碑</h2>
+                <h5>8.6</h5>
+                <h6>大多数人觉得很好</h6>
             </div>
-            <!-- 潜力模型图表 -->
-            <div id="chart_potential_model"></div>
-            <!-- 最受期待的开发项目 -->
-            <div class="vote_container">
-                <h3>最受期待的开发项目</h3>
-                <h6>投票查看结果</h6>
-                <div class="vote_content">
-                    <div class="vote movie">
-                        <span></span>
-                        <h5>电影</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                    <div class="vote tvshow">
-                        <span></span>
-                        <h5>电视剧</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                    <div class="vote mobilegame">
-                        <span></span>
-                        <h5>手游</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                    <div class="vote game">
-                        <span></span>
-                        <h5>游戏</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                    <div class="vote peripheral">
-                        <span></span>
-                        <h5>周边</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                    <div class="vote others">
-                        <span></span>
-                        <h5>其他</h5>
-                        <div class="vote_btns">
-                            <button class="expext">期待</button>
-                            <button class="wantDevelop">想开发</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="review_chart">
+                <button>写点评</button>
+                <div id="chart_reviews"></div>
             </div>
-            <!-- 查看全部 -->
-            <div class="program_showMore">
-                <a href="">查看全部</a>
-            </div>
-        </section>
-        <!-- 热度趋势 -->
-        <section>
-            <h1 class="title">热度趋势</h1>
-            <!-- 指数们 -->
-            <div class="values_container">
-                <!--当前指数指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
-                    </div>
-                    <h5 class="number">$!{view.hotIndex} <span class="arrow">↑</span></h5>
-                </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{history.hotIndex}</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{hrank}</h5>
-                </div>
-            </div>
-            <!-- 热度趋势图表 -->
-            <div id="chart_heat_trend"></div>
-            <!-- 查看全部 -->
-            <div class="program_showMore">
-                <a href="/heat.html?ip=$!{view.id}">查看全部</a>
-            </div>
-        </section>
-        <!-- 传播能力 -->
-        <section>
-            <h1 class="title">传播能力</h1>
-            <!-- 指数们 -->
-            <div class="values_container">
-                <!--当前指数指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">传播指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
-                    </div>
-                    <h5 class="number">$!{view.developIndex} <span class="arrow">↑</span></h5>
-                </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{history.developIndex}</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{prank}</h5>
-                </div>
-            </div>
-            <!-- 传播指数图表 -->
-            <div id="chart_transmission_index"></div>
-            <!-- 新闻平台 社交平台 饼图 容器-->
-            <div class="col_2_container">
-                <!--新闻平台图表-->
-                <div class="col" id="chart_media_platform"></div>
-                <!--社交平台图表-->
-                <div class="col" id="chart_social_platform"></div>
-            </div>
-        </section>
-        <!--用户活跃-->
-        <section>
-            <h1 class="title">用户活跃</h1>
-            <!-- 指数们 -->
-            <div class="values_container">
-                <!--当前指数指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">用户活跃指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
-                    </div>
-                    <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
-                </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{history.activityIndex}</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">$!{arank}</h5>
-                </div>
-            </div>
-            <!-- 用户活跃度图表 -->
-            <div id="chart_user_vitalty"></div>
-            <!-- 查看全部 -->
-            <div class="program_showMore">
-                <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
-            </div>
-        </section>
-        <!--用户分析-->
-        <section>
-            <h1 class="title">用户分析</h1>
-            <!-- 受众年龄分布 容器-->
-            <div class="col_2_container">
-                <!--男女比例分布 图表-->
-                <div class="col" id="chart_sex_distribution"></div>
-                <!--年龄分布 图表-->
-                <div class="col" id="chart_age_distribution"></div>
-            </div>
-            <!-- 查看全部 -->
-            <div class="program_showMore">
-                <a href="/persona.html">查看全部</a>
-            </div>
-        </section>
-        <!-- 点评 -->
-        <section>
-            <h1 class="title">点评</h1>
-            <!-- 点评指数 图表 容器 -->
-            <div class="review_container">
-                <div class="review_value">
-                    <h2>综合口碑</h2>
-                    <h5>8.6</h5>
-                    <h6>大多数人觉得很好</h6>
-                </div>
-                <div class="review_chart">
-                    <button>写点评</button>
-                    <div id="chart_reviews"></div>
-                </div>
-            </div>
-            <ul class="comments_container">
-        #foreach($coment in $comments)
+        </div>
+        <ul class="comments_container">
+            #foreach($coment in $comments)
                 <li class="comment">
                     <img class="comment_avatar" src="$!{coment.image}">
                     <h3 class="comment_title">$!{coment.title}</h3>
@@ -526,23 +525,10 @@
                     <p class="comment_content">
                         $!{coment.content}
                     <p>
-                            <a class="comment_more" target="_blank" href="$!{coment.url}">查看全文>></a>
+                        <a class="comment_more" target="_blank" href="$!{coment.url}">查看全文>></a>
                 </li>
             #end
-            </ul>
-            <!-- 查看全部 -->
-            <div class="program_showMore" style="margin-top: 10px;">
-                <a href="">查看全部</a>
-            </div>
-        </section>
-        <!-- 发表点评 -->
-        <section class="write_comment_container">
-            <h1 class="title">发表点评</h1>
-            <form class="write_comment clearfix">
-                <h6 class="welfare">写点评赢iPhone7</h6>
-                <textarea name="comment"></textarea>
-                <input class="verify_code" type="text" placeholder="输入验证码">
-                <input class="submit" type="submit" value="发布">
-            </form>
-        </section>
-        </div>
+        </ul>
+    </section>
+
+</div>
