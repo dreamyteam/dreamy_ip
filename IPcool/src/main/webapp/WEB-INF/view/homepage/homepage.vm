@@ -1,4 +1,5 @@
-
+#set($layout = "/layout/layout_homepage.vm")
+#set($cssName="/dist/index")
     <div class="index_head">
         <div class="head_bg">
             <video autoplay muted loop id="bg-video">

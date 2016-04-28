@@ -1,5 +1,5 @@
 <!-- 底 -->
-##<div>
+<div class="footer_container">
     <footer>
         <nav>
             <ul>
@@ -17,5 +17,4 @@
             </div>
         </nav>
     </footer>
-##</div>
-
+</div>
