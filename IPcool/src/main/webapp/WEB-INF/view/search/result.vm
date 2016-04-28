@@ -76,15 +76,15 @@
                     <ul class="quotient">
                         <li>
                             <h6>开发潜力</h6>
-                            <span>$!{view.developIndex}</span>
+                            <span>$!{view.developIndex}11</span>
                         </li>
                         <li>
                             <h6>传播指数</h6>
-                            <span>$!{view.propagateIndex}</span>
+                            <span>$!{view.propagateIndex}11</span>
                         </li>
                         <li>
                             <h6>热度指数</h6>
-                            <span>$!{view.hotIndex}</span>
+                            <span>$!{view.hotIndex}11</span>
                         </li>
                         <li>
                             <h6>受众口碑</h6>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="overall">
                     <h6>小说综合评分</h6>
-                    <span>$!{view.compositeIndex}</span>
+                    <span>$!{view.compositeIndex}99</span>
                 </div>
             </div>
         #end

@@ -40,7 +40,8 @@
     <section class="program_info clearfix">
         <!-- TOP100 形状 -->
         <div class="level_flag">
-            $!{crank}
+            <span>排名</span>
+            $!{crank}100
         </div>
         <img src="$!{view.imageUrl}">
         <div class="content">
