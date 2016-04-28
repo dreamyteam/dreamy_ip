@@ -6,7 +6,6 @@ import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookScoreConditions;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.utils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
