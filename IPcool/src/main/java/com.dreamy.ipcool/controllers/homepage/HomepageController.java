@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Time: 上午10:37
  */
 @Controller
-@RequestMapping("/")
-public class HomepageController extends IpcoolController{
+@RequestMapping(value = {"/"})
+public class HomepageController extends IpcoolController {
 
+    @RequestMapping("")
     public String index() {
-        return "/index";
+        return "/homepage/homepage";
     }
 }
