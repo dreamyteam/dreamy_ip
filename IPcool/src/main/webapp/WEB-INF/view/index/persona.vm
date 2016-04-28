@@ -1,58 +1,4 @@
 
-
-    <div class="popup_box sign" id="popup_register">
-        <button class="close"></button>
-        <span class="logo"></span>
-        <form>
-            <span class="err_msg">手机号码格式错误</span>
-            <div class="sign_container">
-                <label class="icon_phone_number"></label>
-                <input type="text" placeholder="手机号码" />
-            </div>
-            <div class="sign_container">
-                <label class="icon_password"></label>
-                <input type="password" placeholder="密码" />
-            </div>
-            <div class="sign_container verify">
-                <label class="icon_verify"></label>
-                <input type="text" placeholder="验证码" />
-                <button class="btn_send_verify_code">发送验证码</button>
-            </div>
-            <button class="solid">登录</button>
-            <input class="hollow" type="submit" value="创建帐号" />
-        </form>
-        <div class="infos">
-            <a href="#" target="_blank">用户协议</a>
-            <a href="#" target="_blank">隐私政策</a>
-            <a href="#" target="_blank">帮助文档</a>
-        </div>
-    </div>
-    <div class="popup_box sign" id="popup_login">
-        <button class="close"></button>
-        <span class="logo"></span>
-        <form>
-            <div class="sign_container">
-                <label class="icon_phone_number"></label>
-                <input type="text" placeholder="手机号码" />
-            </div>
-            <div class="sign_container">
-                <label class="icon_password"></label>
-                <input type="password" placeholder="密码" />
-            </div>
-            <div class="remember_pwd_container clearfix">
-                <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked" />
-                <label>记住密码</label>
-                <a href="#">忘记密码</a>
-            </div>
-            <input class="solid" type="submit" value="登录" />
-            <button class="hollow">创建帐号</button>
-        </form>
-        <div class="infos">
-            <a href="#" target="_blank">用户协议</a>
-            <a href="#" target="_blank">隐私政策</a>
-            <a href="#" target="_blank">帮助文档</a>
-        </div>
-    </div>
     <header class="ipcool_hearder clearfix">
         <div class="inner">
             <a href="/" class="logo"></a>
@@ -67,8 +13,8 @@
                 <div class="user_menu">
                     <div class="arrow">
                         <span></span><em></em>
-                    </div>  
-                    <ul>        
+                    </div>
+                    <ul>
                         <li><a href="#">我关注的</a></li>
                         <li><a href="#">历史记录</a></li>
                         <li><a href="#">个人信息</a></li>
