@@ -1,8 +1,9 @@
-package com.dreamy.ipcool.controllers;
+package com.dreamy.ipcool.controllers.index;
 
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
@@ -24,7 +25,7 @@ import java.util.List;
  * Time: 下午4:30
  */
 @Controller
-@RequestMapping(value = {"/index", "/"})
+@RequestMapping(value = {"/index"})
 public class IndexController extends IpcoolController {
 
     @Resource
@@ -36,12 +37,6 @@ public class IndexController extends IpcoolController {
     @Resource
     private BookRankService bookRankService;
 
-
-
-    @RequestMapping("")
-    public String index() {
-        return "/index";
-    }
 
     /**
      * 综合指数更多

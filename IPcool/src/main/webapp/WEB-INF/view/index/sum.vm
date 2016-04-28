@@ -1,3 +1,4 @@
+
 <div class="popup_mask" id="popup_mask"></div>
 <div class="popup_box sign" id="popup_register">
     <button class="close"></button>
@@ -7,6 +8,34 @@
         <div class="sign_container">
             <label class="icon_phone_number"></label>
             <input type="text" placeholder="手机号码"/>
+
+
+
+    <div class="popup_box sign" id="popup_register">
+        <button class="close"></button>
+        <span class="logo"></span>
+        <form>
+            <span class="err_msg">手机号码格式错误</span>
+            <div class="sign_container">
+                <label class="icon_phone_number"></label>
+                <input type="text" placeholder="手机号码" />
+            </div>
+            <div class="sign_container">
+                <label class="icon_password"></label>
+                <input type="password" placeholder="密码" />
+            </div>
+            <div class="sign_container verify">
+                <label class="icon_verify"></label>
+                <input type="text" placeholder="验证码" />
+                <button class="btn_send_verify_code">发送验证码</button>
+            </div>
+            <button class="solid">登录</button>
+            <input class="hollow" type="submit" value="创建帐号" />
+        </form>
+        <div class="infos">
+            <a href="#" target="_blank">用户协议</a>
+            <a href="#" target="_blank">隐私政策</a>
+            <a href="#" target="_blank">帮助文档</a>
         </div>
         <div class="sign_container">
             <label class="icon_password"></label>

@@ -1,5 +1,4 @@
 
-    <div class="popup_mask" id="popup_mask"></div>
     <div class="popup_box sign" id="popup_register">
         <button class="close"></button>
         <span class="logo"></span>
