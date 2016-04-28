@@ -3,12 +3,12 @@
         <a href="/" class="logo"></a>
         <!--搜索框 用户中心显示-->
         <form class="search_bar_container" action="/search.html">
-        <div class="form_search">
+            <div class="form_search">
 
-            <input type="text" name="content" class="search" placeholder="试试搜索美人鱼">
-            <input class="submit" type="submit" value="">
+                <input type="text" name="content" class="search" placeholder="试试搜索美人鱼">
+                <input class="submit" type="submit" value="">
 
-        </div>
+            </div>
         </form>
         <!-- 搜索框 结束 -->
         <!--注册 登录按钮-->
@@ -19,6 +19,7 @@
         <!--登录后用户id-->
         <div class="user">
             <h2 class="user_name">土豆</h2>
+
             <div class="user_menu">
                 <div class="arrow">
                     <span></span><em></em>
@@ -43,8 +44,8 @@
     <section class="search_count">
         #if ($!{content.length()} > 0)
             <p>找到<span class="count">$!{page.totalNum}</span>个与[<span class="name">$!{content}</span>]相关的内容</p>
-       #else
-           <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
+        #else
+            <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
         #end
     </section>
     <section class="search_result">
@@ -57,12 +58,20 @@
             <button class="disabled">购买专属分析服务 | ￥999.00</button>
         </div> -->
         <!--搜索结果-->
+        <div class="hidden" id="search-attach">
+
+            <input type="hidden" name="status" value="1">
+            <input type="hidden" name="type" value="8">
+
+        </div>
 
         #foreach($view in $list)
             <div class="sresult_ip clearfix">
-                <img src="$!{view.imageUrl}">
+                <a href="/index/detail.html?ip=${view.id}"><img src="$!{view.imageUrl}"></a>
+
                 <div class="sresult_content">
-                    <h2><a href="/detail.html?ip=${view.id}">$!{view.name} </a> <span class="type">出版文学</span></h2>
+                    <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a> <span class="type">出版文学</span>
+                    </h2>
                     <h6>作者: 琼瑶</h6>
                     <ul class="quotient">
                         <li>
@@ -89,26 +98,8 @@
                 </div>
             </div>
         #end
-
-
     </section>
     <!--分页器 -->
-    <div class="paging">
-        <ul>
-            <li>
-                <a href="#">
-                    <</a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">></a></li>
-        </ul>
-    </div>
+    <div class="paging" data-total="10" data-current="3"></div>
     <!--分页器-->
 </div>
