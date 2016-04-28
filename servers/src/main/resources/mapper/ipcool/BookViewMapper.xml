@@ -6,6 +6,7 @@
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="composite_index" property="compositeIndex" jdbcType="INTEGER" />
@@ -80,7 +81,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, book_id, name, author, status, type, composite_index, hot_index, activity_index, 
+    id, book_id, name, author, score, status, type, composite_index, hot_index, activity_index, 
     propagate_index, develop_index, created_at, updated_at, image_url, remark
   </sql>
   <sql id="Blob_Column_List" >
@@ -138,17 +139,17 @@
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookView" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_view (book_id, name, author, 
-      status, type, composite_index, 
-      hot_index, activity_index, propagate_index, 
-      develop_index, created_at, updated_at, 
-      image_url, remark, introduction
-      )
+      score, status, type, 
+      composite_index, hot_index, activity_index, 
+      propagate_index, develop_index, created_at, 
+      updated_at, image_url, remark, 
+      introduction)
     values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{compositeIndex,jdbcType=INTEGER}, 
-      #{hotIndex,jdbcType=INTEGER}, #{activityIndex,jdbcType=INTEGER}, #{propagateIndex,jdbcType=INTEGER}, 
-      #{developIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{imageUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}
-      )
+      #{score,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{compositeIndex,jdbcType=INTEGER}, #{hotIndex,jdbcType=INTEGER}, #{activityIndex,jdbcType=INTEGER}, 
+      #{propagateIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{imageUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookView" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_view
@@ -161,6 +162,9 @@
       </if>
       <if test="author != null" >
         author,
+      </if>
+      <if test="score != null" >
+        score,
       </if>
       <if test="status != null" >
         status,
@@ -208,6 +212,9 @@
       </if>
       <if test="author != null" >
         #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -268,6 +275,9 @@
       <if test="record.author != null" >
         author = #{record.author,jdbcType=VARCHAR},
       </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -315,6 +325,7 @@
       book_id = #{record.bookId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       composite_index = #{record.compositeIndex,jdbcType=INTEGER},
@@ -337,6 +348,7 @@
       book_id = #{record.bookId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       composite_index = #{record.compositeIndex,jdbcType=INTEGER},
@@ -363,6 +375,9 @@
       </if>
       <if test="author != null" >
         author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -408,6 +423,7 @@
     set book_id = #{bookId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       composite_index = #{compositeIndex,jdbcType=INTEGER},
@@ -427,6 +443,7 @@
     set book_id = #{bookId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       composite_index = #{compositeIndex,jdbcType=INTEGER},

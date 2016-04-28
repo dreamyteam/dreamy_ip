@@ -13,6 +13,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     private String author;
 
+    private Integer score;
+
     private Integer status;
 
     private Integer type;
@@ -69,6 +71,14 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public Integer getStatus() {
@@ -183,6 +193,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
             && (this.getBookId() == null ? other.getBookId() == null : this.getBookId().equals(other.getBookId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getAuthor() == null ? other.getAuthor() == null : this.getAuthor().equals(other.getAuthor()))
+            && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getCompositeIndex() == null ? other.getCompositeIndex() == null : this.getCompositeIndex().equals(other.getCompositeIndex()))
@@ -205,6 +216,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getBookId() == null) ? 0 : getBookId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
+        result = prime * result + ((getScore() == null) ? 0 : getScore().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getCompositeIndex() == null) ? 0 : getCompositeIndex().hashCode());
@@ -237,6 +249,11 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     public BookView author(String value) {
         this.author = value;
+        return this;
+    }
+
+    public BookView score(Integer value) {
+        this.score = value;
         return this;
     }
 

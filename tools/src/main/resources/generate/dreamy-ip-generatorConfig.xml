@@ -25,7 +25,7 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/dreamy" userId="dreamy"
+			connectionURL="jdbc:mysql://112.74.106.159:3306/dreamy" userId="dreamy"
 			password="123456" />
 
 		<javaModelGenerator targetPackage="com.dreamy.domain"
@@ -64,6 +64,28 @@
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 
 		<!--</table>-->
+		<!--<table tableName="ip_algorithm" domainObjectName="ipcool.Algorithm">-->
+		<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
+
+		<!--<table tableName="ip_book_rank" domainObjectName="ipcool.BookRank">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
+		<!--<table tableName="ip_book_rank_history" domainObjectName="ipcool.BookRankHistory">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
+		<!--<table tableName="ip_book_index_history" domainObjectName="ipcool.BookIndexHistory">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
+		<table tableName="ip_book_view" domainObjectName="ipcool.BookView">
+			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+		</table>
+		<!--<table tableName="ip_book_score" domainObjectName="ipcool.BookScore">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
+
+
+
 
 
 	</context>
