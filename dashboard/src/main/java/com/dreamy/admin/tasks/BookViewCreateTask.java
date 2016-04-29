@@ -53,8 +53,8 @@ public class BookViewCreateTask {
                 if (!currentId.equals(initBookId)) {
                     initBookId = currentId;
 
-                    BookView oldBookView = bookViewService.getById(currentId);
-                    if (oldBookView == null) {
+                    BookView oldBookView = bookViewService.getByBookId(currentId);
+                    if (oldBookView.getId() == null) {
                         BookView bookView = getBookViewByBookId(currentId);
                         bookView.setType(1);
                         bookView.setStatus(0);
