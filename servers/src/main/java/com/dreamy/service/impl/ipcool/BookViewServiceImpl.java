@@ -52,7 +52,7 @@ public class BookViewServiceImpl implements BookViewService {
     public List<BookView> getListByPageAndOrder(Page page, String order) {
         BookViewConditions conditions = new BookViewConditions();
         conditions.setPage(page);
-        conditions.setOrderByClause("order");
+        conditions.setOrderByClause(order);
         return bookViewDao.selectByExample(conditions);
     }
 

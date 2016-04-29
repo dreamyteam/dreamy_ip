@@ -1,11 +1,12 @@
 package com.dreamy.admin.tasks.index;
 
-import com.dreamy.domain.ipcool.BookScore;
+import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -19,15 +20,18 @@ import java.util.Map;
  * Time: 下午2:17
  */
 @Component
-public class BookIndexesCreateTask {
+public class HotIndexesCreateTask {
     @Autowired
     private BookScoreService bookScoreService;
+
+    @Autowired
+    private BookViewService bookViewService;
 
     private void run() {
 
     }
 
-//    @Scheduled(fixedDelay = 8000)
+    //    @Scheduled(fixedDelay = 8000)
     public void getHotScore() {
 
         Map<Integer, Map<String, Double>> options = new HashMap<>();
@@ -62,27 +66,17 @@ public class BookIndexesCreateTask {
         options.put(CrawlerSourceEnums.amazon.getType(), map4);
 
 
-        List<BookScore> bookScores = bookScoreService.getByBookId(40);
-        Double hotScore = 0.0;
-        if (CollectionUtils.isNotEmpty(bookScores)) {
-            for (BookScore bookScore : bookScores) {
-                Integer commentNum = bookScore.getCommentNum();
-                Double score = bookScore.getScore();
-                Double coefficient = options.get(bookScore.getSource()).get("coefficient");
-                Double marketPercent = options.get(bookScore.getSource()).get("marketPercent");
-                Double argA = options.get(bookScore.getSource()).get("argA");
-                Double argB = options.get(bookScore.getSource()).get("argB");
-                Integer saleScore = bookScore.getSaleSort();
 
-                if (saleScore != null && saleScore > 0) {
-                    hotScore += marketPercent * commentNum * score * (argA / coefficient + argB * coefficient / saleScore);
-                } else {
-                    hotScore += marketPercent * commentNum * score * (argA / coefficient);
-                }
-
+        Page page = new Page();
+        page.setPageSize(1000);
+        List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
+        if (CollectionUtils.isNotEmpty(bookViews)) {
+            for (BookView bookView : bookViews) {
+                String hostIndex = bookScoreService.getBookHotIndexByBookAndOptions(bookView.getBookId(), options);
+                bookView.hotIndex(Integer.parseInt(hostIndex));
+                bookViewService.update(bookView);
             }
         }
-        System.err.println(hotScore.intValue());
     }
 
 

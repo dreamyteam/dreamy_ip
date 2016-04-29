@@ -39,7 +39,7 @@ public class BookScoreServiceImpl implements BookScoreService {
     }
 
     @Override
-    public String getScoreByBookAndOptions(Integer bookId, Map<Integer, Map<String, Double>> options) {
+    public String getBookHotIndexByBookAndOptions(Integer bookId, Map<Integer, Map<String, Double>> options) {
         List<BookScore> bookScores = getByBookId(bookId);
         Double hotScore = 0.0;
         String hotScoreStr = "--";
