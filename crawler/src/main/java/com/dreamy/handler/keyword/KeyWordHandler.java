@@ -47,12 +47,11 @@ public class KeyWordHandler {
     CommonService commonService;
 
 
-
     public void crawler(String word, Integer bookId) {
-        getBaidu(word,bookId);
-        getSo(word,bookId);
-        getWeiXin(word,bookId);
-        getSina(word,bookId);
+        getBaidu(word, bookId);
+        getSo(word, bookId);
+        getWeiXin(word, bookId);
+        getSina(word, bookId);
 
 
     }
@@ -62,7 +61,7 @@ public class KeyWordHandler {
      *
      * @param word
      */
-    public void getBaidu(String word,Integer bookId) {
+    public void getBaidu(String word, Integer bookId) {
 
         word = HttpUtils.encodeUrl(word);
         String url = "https://www.baidu.com/s?wd=" + word;
@@ -93,9 +92,9 @@ public class KeyWordHandler {
      *
      * @param name
      */
-    public void getSo(String name,Integer bookId) {
+    public void getSo(String name, Integer bookId) {
         String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + name;
-        String html = HttpUtils.getSsl(url, 300);
+        String html = HttpUtils.getSsl(url, 60000);
         Document document = Jsoup.parse(html);
         if (document != null) {
             Elements elements = document.getElementsByClass("nums");
@@ -118,10 +117,11 @@ public class KeyWordHandler {
      *
      * @param name
      */
-    public void getWeiXin(String name,Integer bookId) {
+    public void getWeiXin(String name, Integer bookId) {
         name = HttpUtils.encodeUrl(name);
         String url = "http://weixin.sogou.com/weixin?type=2&query=" + name;
         String html = HttpUtils.getHtmlGet(url);
+        System.out.println(html);
         Document document = Jsoup.parse(html);
         if (document != null) {
             Element element = document.getElementById("scd_num");
@@ -145,28 +145,29 @@ public class KeyWordHandler {
      * @param name
      * @throws IOException
      */
-    public void getSina(String name,Integer bookId) {
+    public void getSina(String name, Integer bookId) {
         try {
-        name = HttpUtils.encodeUrl(name);
+            name = HttpUtils.encodeUrl(name);
 //        LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
 //        ls.dologinSina();
-        HttpClient client = new DefaultHttpClient();
-        String url = "http://s.weibo.com/weibo/" + name;
-        HttpGet request = new HttpGet(url);
-        request.setHeader("Cookie", getCookies());
-        HttpResponse response = client.execute(request);
-        String responseText = SinaHttpUtils.getStringFromResponse(response);
-        client.getConnectionManager().shutdown();
-        responseText = HttpUtils.decodeUnicode(responseText);
-        String result = getResult(responseText);
-        if (StringUtils.isNotEmpty(result)) {
-            KeyWord keyWord = new KeyWord();
-            keyWord.bookId(bookId);
-            keyWord.source(KeyWordEnums.weibo.getType());
-            keyWord.indexNum(Integer.valueOf(result.replace(",","")));
-            keyWordService.save(keyWord);
-        }
-        }catch (Exception e){
+            HttpClient client = new DefaultHttpClient();
+            String url = "http://s.weibo.com/weibo/" + name;
+            HttpGet request = new HttpGet(url);
+            request.setHeader("Cookie", getCookies());
+            HttpResponse response = client.execute(request);
+            String responseText = SinaHttpUtils.getStringFromResponse(response);
+            client.getConnectionManager().shutdown();
+            responseText = HttpUtils.decodeUnicode(responseText);
+            System.out.println(responseText);
+            String result = getResult(responseText);
+            if (StringUtils.isNotEmpty(result)) {
+                KeyWord keyWord = new KeyWord();
+                keyWord.bookId(bookId);
+                keyWord.source(KeyWordEnums.weibo.getType());
+                keyWord.indexNum(Integer.valueOf(result.replace(",", "")));
+                keyWordService.save(keyWord);
+            }
+        } catch (Exception e) {
             log.error("微博搜索结果 失败 ", e);
         }
 

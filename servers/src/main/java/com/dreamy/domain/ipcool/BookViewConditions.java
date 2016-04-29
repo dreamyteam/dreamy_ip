@@ -857,6 +857,66 @@ public class BookViewConditions {
             return (Criteria) this;
         }
 
+        public Criteria andReputationIndexIsNull() {
+            addCriterion("reputation_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexIsNotNull() {
+            addCriterion("reputation_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexEqualTo(Integer value) {
+            addCriterion("reputation_index =", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexNotEqualTo(Integer value) {
+            addCriterion("reputation_index <>", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexGreaterThan(Integer value) {
+            addCriterion("reputation_index >", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("reputation_index >=", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexLessThan(Integer value) {
+            addCriterion("reputation_index <", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexLessThanOrEqualTo(Integer value) {
+            addCriterion("reputation_index <=", value, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexIn(List<Integer> values) {
+            addCriterion("reputation_index in", values, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexNotIn(List<Integer> values) {
+            addCriterion("reputation_index not in", values, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexBetween(Integer value1, Integer value2) {
+            addCriterion("reputation_index between", value1, value2, "reputationIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andReputationIndexNotBetween(Integer value1, Integer value2) {
+            addCriterion("reputation_index not between", value1, value2, "reputationIndex");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedAtIsNull() {
             addCriterion("created_at is null");
             return (Criteria) this;

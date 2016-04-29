@@ -29,6 +29,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     private Integer developIndex;
 
+    private Integer reputationIndex;
+
     private Date createdAt;
 
     private Date updatedAt;
@@ -137,6 +139,14 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         this.developIndex = developIndex;
     }
 
+    public Integer getReputationIndex() {
+        return reputationIndex;
+    }
+
+    public void setReputationIndex(Integer reputationIndex) {
+        this.reputationIndex = reputationIndex;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -201,6 +211,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
             && (this.getActivityIndex() == null ? other.getActivityIndex() == null : this.getActivityIndex().equals(other.getActivityIndex()))
             && (this.getPropagateIndex() == null ? other.getPropagateIndex() == null : this.getPropagateIndex().equals(other.getPropagateIndex()))
             && (this.getDevelopIndex() == null ? other.getDevelopIndex() == null : this.getDevelopIndex().equals(other.getDevelopIndex()))
+            && (this.getReputationIndex() == null ? other.getReputationIndex() == null : this.getReputationIndex().equals(other.getReputationIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
             && (this.getImageUrl() == null ? other.getImageUrl() == null : this.getImageUrl().equals(other.getImageUrl()))
@@ -224,6 +235,7 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getActivityIndex() == null) ? 0 : getActivityIndex().hashCode());
         result = prime * result + ((getPropagateIndex() == null) ? 0 : getPropagateIndex().hashCode());
         result = prime * result + ((getDevelopIndex() == null) ? 0 : getDevelopIndex().hashCode());
+        result = prime * result + ((getReputationIndex() == null) ? 0 : getReputationIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         result = prime * result + ((getImageUrl() == null) ? 0 : getImageUrl().hashCode());
@@ -289,6 +301,11 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     public BookView developIndex(Integer value) {
         this.developIndex = value;
+        return this;
+    }
+
+    public BookView reputationIndex(Integer value) {
+        this.reputationIndex = value;
         return this;
     }
 

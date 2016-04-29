@@ -14,6 +14,7 @@
     <result column="activity_index" property="activityIndex" jdbcType="INTEGER" />
     <result column="propagate_index" property="propagateIndex" jdbcType="INTEGER" />
     <result column="develop_index" property="developIndex" jdbcType="INTEGER" />
+    <result column="reputation_index" property="reputationIndex" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
@@ -82,7 +83,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, book_id, name, author, score, status, type, composite_index, hot_index, activity_index, 
-    propagate_index, develop_index, created_at, updated_at, image_url, remark
+    propagate_index, develop_index, reputation_index, created_at, updated_at, image_url, 
+    remark
   </sql>
   <sql id="Blob_Column_List" >
     introduction
@@ -141,15 +143,15 @@
     insert into ip_book_view (book_id, name, author, 
       score, status, type, 
       composite_index, hot_index, activity_index, 
-      propagate_index, develop_index, created_at, 
-      updated_at, image_url, remark, 
-      introduction)
+      propagate_index, develop_index, reputation_index, 
+      created_at, updated_at, image_url, 
+      remark, introduction)
     values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
       #{score,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{compositeIndex,jdbcType=INTEGER}, #{hotIndex,jdbcType=INTEGER}, #{activityIndex,jdbcType=INTEGER}, 
-      #{propagateIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
-      #{updatedAt,jdbcType=TIMESTAMP}, #{imageUrl,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=LONGVARCHAR})
+      #{propagateIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{reputationIndex,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookView" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_view
@@ -186,6 +188,9 @@
       </if>
       <if test="developIndex != null" >
         develop_index,
+      </if>
+      <if test="reputationIndex != null" >
+        reputation_index,
       </if>
       <if test="createdAt != null" >
         created_at,
@@ -236,6 +241,9 @@
       </if>
       <if test="developIndex != null" >
         #{developIndex,jdbcType=INTEGER},
+      </if>
+      <if test="reputationIndex != null" >
+        #{reputationIndex,jdbcType=INTEGER},
       </if>
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
@@ -299,6 +307,9 @@
       <if test="record.developIndex != null" >
         develop_index = #{record.developIndex,jdbcType=INTEGER},
       </if>
+      <if test="record.reputationIndex != null" >
+        reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
+      </if>
       <if test="record.createdAt != null" >
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
@@ -333,6 +344,7 @@
       activity_index = #{record.activityIndex,jdbcType=INTEGER},
       propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
       develop_index = #{record.developIndex,jdbcType=INTEGER},
+      reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       image_url = #{record.imageUrl,jdbcType=VARCHAR},
@@ -356,6 +368,7 @@
       activity_index = #{record.activityIndex,jdbcType=INTEGER},
       propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
       develop_index = #{record.developIndex,jdbcType=INTEGER},
+      reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       image_url = #{record.imageUrl,jdbcType=VARCHAR},
@@ -400,6 +413,9 @@
       <if test="developIndex != null" >
         develop_index = #{developIndex,jdbcType=INTEGER},
       </if>
+      <if test="reputationIndex != null" >
+        reputation_index = #{reputationIndex,jdbcType=INTEGER},
+      </if>
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
@@ -431,6 +447,7 @@
       activity_index = #{activityIndex,jdbcType=INTEGER},
       propagate_index = #{propagateIndex,jdbcType=INTEGER},
       develop_index = #{developIndex,jdbcType=INTEGER},
+      reputation_index = #{reputationIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       image_url = #{imageUrl,jdbcType=VARCHAR},
@@ -451,6 +468,7 @@
       activity_index = #{activityIndex,jdbcType=INTEGER},
       propagate_index = #{propagateIndex,jdbcType=INTEGER},
       develop_index = #{developIndex,jdbcType=INTEGER},
+      reputation_index = #{reputationIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       image_url = #{imageUrl,jdbcType=VARCHAR},
