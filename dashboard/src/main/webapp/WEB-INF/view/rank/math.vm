@@ -1,0 +1,171 @@
+<div class="page-heading">
+    <h3>
+        文学库
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">爬虫管理</a></li>
+        <li><a href="#">爬虫列表</a></li>
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    爬虫列表
+                    <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <a href="javascript:;" class="fa fa-times"></a>
+                 </span>
+                </header>
+                <div class="panel-body">
+                ##                    搜索框
+                    <div class="well searchBox">
+                        <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
+                              action="">
+##                            <input type="hidden" name="source" value="11">
+
+                            <div class="searchContent">
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数A(豆瓣)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数B(豆瓣)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数C(当当)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数D(当当)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数E(京东)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数(京东)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数(亚马逊)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName2">参数(亚马逊)</label>
+                                    <input type="text" class="form-control textInput"
+                                           name="arg[]"
+                                           placeholder="" value="1">
+                                </div>
+
+
+                                <div class="form-group">
+                                ##                                    <label for="exampleInputEmail2">爬取状态</label>
+##                                    <select class="form-control" name="status">
+##                                        <option value="-1">选择..</option>
+##                                        <option #if($!status ==0 )
+##                                                selected #end value="0">新建
+##                                        </option>
+##                                        <option #if($!status ==1 )
+##                                                selected #end value="1">爬取中
+##                                        </option>
+##                                        <option #if($!status ==2 )
+##                                                selected #end value="2">完成
+##                                        </option>
+##                                        <option #if($!status ==3 )
+##                                                selected #end value="3">失败
+##                                        </option>
+##                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-default dt-btn-submit">计算</button>
+                            </div>
+                        </form>
+                    </div>
+
+                ##                    操作
+                    <div class="well operate-box">
+                        <a class="btn btn-default" href="/crawler/create">
+                            添加
+                        </a>
+
+                        <button class="btn btn-default dt-btn-batch"
+                                data-batch-submit-url="">
+                            批量爬取
+                        </button>
+
+                        <button class="btn btn-danger dt-btn-batch dt-btn-batch"
+                                data-batch-submit-url="">批量删除
+                        </button>
+                    </div>
+                ##                    标记tab
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="#if(!$source) active #else #end"><a
+                                class="pjax-url " href="">全部</a></li>
+                        <li role="presentation" class="pjax-url #if($source==0) active #else #end"><a
+                                class="pjax-url " href="">新建</a></li>
+                        <li role="presentation" class="pjax-url #if($source==1) active #else #end"><a
+                                class="pjax-url " href="">爬取中</a></li>
+                        <li role="presentation" class="pjax-url #if($source==2) active #else #end"><a
+                                class="pjax-url " href="">爬虫</a></li>
+                    </ul>
+
+                ##                     展示表格
+                    <div id="albumListBox" class="adv-table">
+                        <table class="display table table-bordered table-striped dt-data-table" id="dynamic-table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <a class="dt-table-select-all">全选</a>
+                                </th>
+                                <th>id</th>
+                                <th>火热分</th>
+                                <th>书名</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                #foreach($book in $list)
+                                <tr class="gradeC">
+                                    <td class="center dt-checkbox-td">
+                                        <input type="checkbox" value="$!{book.id}">
+                                    </td>
+                                    <td class="center">$!{book.id}</td>
+                                    <td class="center"> $!scoreMap.get($!{book.id})</td>
+                                    <td class="center">  $!{book.name}</td>
+
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                        <div class="dt-page" data-current-page="$!page.currentPage" data-view-page-count="6"
+                             data-page-total="$!page.getTotalPage()"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

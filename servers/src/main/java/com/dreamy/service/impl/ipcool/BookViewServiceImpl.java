@@ -70,6 +70,6 @@ public class BookViewServiceImpl implements BookViewService {
             return bookViews.get(0);
         }
 
-        return null;
+        return new BookView();
     }
 }
