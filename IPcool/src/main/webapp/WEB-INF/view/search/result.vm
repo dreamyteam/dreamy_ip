@@ -76,15 +76,15 @@
                     <ul class="quotient">
                         <li>
                             <h6>开发潜力</h6>
-                            <span>$!{view.developIndex}11</span>
+                            <span>$!{view.developIndex}</span>
                         </li>
                         <li>
                             <h6>传播指数</h6>
-                            <span>$!{view.propagateIndex}11</span>
+                            <span>$!{view.propagateIndex}</span>
                         </li>
                         <li>
                             <h6>热度指数</h6>
-                            <span>$!{view.hotIndex}11</span>
+                            <span>$!{view.hotIndex}</span>
                         </li>
                         <li>
                             <h6>受众口碑</h6>

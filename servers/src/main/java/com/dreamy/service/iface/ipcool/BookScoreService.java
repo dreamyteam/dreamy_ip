@@ -38,6 +38,6 @@ public interface BookScoreService {
      * @param options
      * @return
      */
-    public String getScoreByBookAndOptions(Integer bookId,Map<Integer, Map<String, Double>> options);
+    public String getBookHotIndexByBookAndOptions(Integer bookId, Map<Integer, Map<String, Double>> options);
 
 }
