@@ -1,4 +1,4 @@
-package com.dreamy.handler.sina;
+package com.dreamy.handler.keyword.sina;
 
 import java.io.*;
 import java.text.ParseException;

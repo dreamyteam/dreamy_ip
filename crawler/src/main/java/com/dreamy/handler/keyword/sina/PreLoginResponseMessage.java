@@ -1,4 +1,4 @@
-package com.dreamy.handler.sina;
+package com.dreamy.handler.keyword.sina;
 
 /**
  * Created by wangyongxing on 16/4/28.

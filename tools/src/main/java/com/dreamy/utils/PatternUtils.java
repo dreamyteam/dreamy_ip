@@ -22,7 +22,9 @@ public final class PatternUtils {
             return m.replaceAll("").trim();
         }
         else {
-            return "";
+            return "0";
         }
     }
+
+
 }

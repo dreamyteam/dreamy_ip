@@ -2,6 +2,7 @@ package com.dreamy.handler;
 
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.selenium.SeleniumDownloader;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,6 +11,10 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Request;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Task;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,7 +30,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     private static final Logger log = LoggerFactory.getLogger(DangDangCrawlerHandler.class);
 
 
-    private final static String chromeDriverPath = "/usr/local/Cellar/chromedriver/2.21/bin/chromedriver";
 
     @Override
     public Integer getId() {
@@ -34,9 +38,10 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-
+//        String html = seleniumDownloader(url);
         String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
+        System.out.println(html);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
@@ -274,7 +279,34 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
         return result;
     }
 
+    private String seleniumDownloader(String url) {
+        SeleniumDownloader seleniumDownloader = new SeleniumDownloader();
+        String html = "";
+        try {
+            Page page = seleniumDownloader.download(new Request(url), new Task() {
+                @Override
+                public String getUUID() {
+                    return "http://product.dangdang.com/";
+                }
 
+                @Override
+                public Site getSite() {
+                    return Site.me();
+                }
+            });
+
+            html = page.getRawText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            seleniumDownloader.close();
+            return html;
+        }
+
+
+
+
+    }
     @Override
     public String analyeUrl(String url) {
         return null;

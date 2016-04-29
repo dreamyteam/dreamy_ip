@@ -17,6 +17,8 @@ import javax.annotation.Resource;
 public class BookScoreDaoImpl extends BaseDaoImpl<BookScore,Integer,BookScoreConditions> implements BookScoreDao  {
     @Resource
     BookScoreMapper bookScoreMapper;
+
+
     @Override
     @Autowired
     public void setBaseMapper() {

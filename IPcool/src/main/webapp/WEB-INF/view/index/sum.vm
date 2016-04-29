@@ -5,7 +5,7 @@
         <a href="/" class="logo"></a>
         <!--搜索框 用户中心显示-->
         <!-- 				<div class="form_search">
-                <input type="text" class="search" placeholder="试试搜索美人鱼">
+                <input type="text" class="keyword" placeholder="试试搜索美人鱼">
                 <input class="submit" type="submit" value="">
             </div> -->
         <!-- 搜索框 结束 -->
