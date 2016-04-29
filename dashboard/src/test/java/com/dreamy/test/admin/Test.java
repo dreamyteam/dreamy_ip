@@ -4,13 +4,19 @@ import com.dreamy.dao.iface.admin.AdminUserDao;
 import com.dreamy.dao.iface.admin.RoleDao;
 import com.dreamy.dao.iface.admin.SysModelDao;
 import com.dreamy.dao.iface.admin.UserRoleDao;
+import com.dreamy.dao.iface.ipcool.BookIndexHistoryDao;
 import com.dreamy.domain.admin.AdminUser;
 import com.dreamy.domain.admin.Role;
 import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
-import com.dreamy.service.iface.admin.SysModelService;
+import com.dreamy.domain.ipcool.BookIndexHistory;
+import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.mapper.ipcool.BookIndexHistoryMapper;
 import com.dreamy.service.cache.CommonService;
+import com.dreamy.service.iface.admin.SysModelService;
+import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.test.BaseJunitTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +38,12 @@ public class Test extends BaseJunitTest {
     AdminUserDao adminUserDao;
     @Resource
     CommonService commonService;
+    @Resource
+    BookViewService bookViewService;
+
+
+    @Autowired
+    BookIndexHistoryDao bookIndexHistoryDao;
 
     @org.junit.Test
     public void insertSysModel() {
@@ -59,14 +71,43 @@ public class Test extends BaseJunitTest {
     public void find() {
         List<SysModel> list = sysModelService.getByUserId(2);
         System.out.println(1212);
-        list=sysModelService.getAll();
+        list = sysModelService.getAll();
     }
+
     @org.junit.Test
-    public void  insertAdminUuser(){
-        AdminUser adminUser=new AdminUser().userName("test");
+    public void insertAdminUuser() {
+        AdminUser adminUser = new AdminUser().userName("test");
         adminUserDao.save(adminUser);
-        commonService.getCacheService().put("1","1");
+        commonService.getCacheService().put("1", "1");
 
 
     }
+
+    @org.junit.Test
+    public void findMax() {
+        BookIndexHistory bookIndexHistory= bookIndexHistoryDao.selectMaxByBookId(110);
+        System.out.println(1);
+
+
+    }
+
+    @org.junit.Test
+    public void insertBookIndexHistory() {
+        BookView bookView = bookViewService.getById(3);
+        BookIndexHistory history=new BookIndexHistory();
+        history.activityIndex(bookView.getActivityIndex());
+        history.developIndex(bookView.getDevelopIndex());
+        history.propagateIndex(bookView.getPropagateIndex());
+        history.hotIndex(bookView.getHotIndex());
+        history.compositeIndex(bookView.getCompositeIndex());
+        history.bookId(bookView.getBookId());
+        history.status(0);
+        bookIndexHistoryDao.save(history);
+
+
+
+
+    }
+
+
 }
