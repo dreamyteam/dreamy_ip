@@ -77,14 +77,16 @@
 		<!--<table tableName="ip_book_index_history" domainObjectName="ipcool.BookIndexHistory">-->
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 		<!--</table>-->
-		<table tableName="ip_book_view" domainObjectName="ipcool.BookView">
-			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-		</table>
+		<!--<table tableName="ip_book_view" domainObjectName="ipcool.BookView">-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+		<!--</table>-->
 		<!--<table tableName="ip_book_score" domainObjectName="ipcool.BookScore">-->
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 		<!--</table>-->
 
-
+		<table tableName="ip_keyword_source" domainObjectName="ipcool.KeyWord">
+			<generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+		</table>
 
 
 

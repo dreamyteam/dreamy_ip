@@ -1,20 +1,23 @@
 package com.dreamy.crawler;
 
 
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.handler.*;
-import com.dreamy.mogodb.beans.Book;
-import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.beans.Member;
-import com.dreamy.mogodb.beans.UserAgents;
-import com.dreamy.mogodb.dao.MemberDao;
-import com.dreamy.mogodb.dao.UserAgentDao;
+import com.dreamy.handler.so.SoHandler;
+import com.dreamy.mogodb.beans.*;
+import com.dreamy.mogodb.dao.*;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
+import com.mongodb.DBObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -32,6 +35,19 @@ public class test extends BaseJunitTest {
 
     @Autowired
     private BookInfoService bookInfoService;
+    @Autowired
+    private SoHandler soHandler;
+    @Autowired
+    BookIndexDataDao bookIndexDataDao;
+
+    @Autowired
+    BookInfoDao bookInfoDao;
+    @Autowired
+    CommentHandler commentHandler;
+    @Autowired
+    BookCrawlerInfoService bookCrawlerInfoService;
+    @Autowired
+    private CommentDao commentDao;
 
     @Test
     public void insert() {
@@ -75,7 +91,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testDangdang() {
-        String url = "http://product.dangdang.com/23274638.html?ref=book-65152-9162_1-473554-0";
+        String url = "http://product.dangdang.com/23353342.html";
         CrawlerHandler crawlerHandler = new DangDangCrawlerHandler();
         BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
         if (bookInfo != null) {
@@ -110,7 +126,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testGetMongo() {
-        Object object = bookInfoService.getById(218);
+        Object object = bookInfoService.getById(1);
         if (object != null) {
 
         }
@@ -126,7 +142,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void userAgents() {
-//        String html = HttpUtils.getHtmlGet("http://ua.theafh.net/");
+//        String html = SinaHttpUtils.getHtmlGet("http://ua.theafh.net/");
 //        Document document = Jsoup.parse(html);
 //        Element element = document.getElementById("result");
 //
@@ -175,6 +191,53 @@ public class test extends BaseJunitTest {
         Integer timeRange = random.nextInt(3000);
         long bb = aa + (long) timeRange;
         System.out.print(bb);
+    }
+
+    @Test
+    public void so() throws UnsupportedEncodingException {
+        BookIndexData bookIndexData = soHandler.getByUrl("少有人走的路", "全国");
+        bookIndexData.setId(110);
+        bookIndexData.setSource(2);
+        bookIndexDataDao.save(bookIndexData);
+
+    }
+
+
+    @Test
+    public void bookIndexDataFind() throws UnsupportedEncodingException {
+
+        BookIndexData bookIndexData = bookIndexDataDao.queryById(110);
+
+        System.out.println(bookIndexData);
+
+    }
+
+    @Test
+    public void find1() {
+        DBObject dbObject = bookInfoDao.getList();
+        System.out.println(11);
+    }
+
+    @Test
+    public void comment() {
+        BookCrawlerInfo crawlerInfo=new BookCrawlerInfo().source(4);
+        List<BookCrawlerInfo> list1= bookCrawlerInfoService.getByRecord(crawlerInfo);
+        for(BookCrawlerInfo info:list1){
+            String url = info.getUrl();
+            if(StringUtils.isNotEmpty(url)) {
+                List<Comment> commentList = commentHandler.getByUrl(url);
+                if(CollectionUtils.isNotEmpty(commentList))
+                {
+                    Comments comment=new Comments();
+                    comment.setIpId(info.getBookId());
+                    comment.setComments(commentList);
+                    commentDao.save(comment);
+                }
+            }
+        }
+
+
+
     }
 
 }

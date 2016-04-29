@@ -6,9 +6,6 @@ import com.dreamy.domain.ipcool.IpBook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-
 /**
  * Created by wangyongxing on 16/4/25.
  */
@@ -16,13 +13,11 @@ import java.util.List;
 @RequestMapping(value = "/popular")
 public class PopularController extends DashboardController {
 
-
     /**
      * @return
      */
     @RequestMapping("")
     public String role(IpBook ipBook, ModelMap model, Page page) {
-
         return "/crawler/netbook/ipbook";
     }
 

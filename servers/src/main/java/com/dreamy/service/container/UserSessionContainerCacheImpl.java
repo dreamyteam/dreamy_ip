@@ -29,7 +29,6 @@ public class UserSessionContainerCacheImpl<S extends CanonicalSession> implement
     }
 
     @Autowired
-
     CommonService commonService;
 
     public String getPrefix() {
