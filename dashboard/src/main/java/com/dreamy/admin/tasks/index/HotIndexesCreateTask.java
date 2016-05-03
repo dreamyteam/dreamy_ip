@@ -50,34 +50,22 @@ public class HotIndexesCreateTask {
             return;
         }
         Map<Integer, Map<String, Double>> options = new HashMap<>();
-        Map<String, Double> map1 = new HashMap<>();
-        map1.put("marketPercent", 0.5);
-        map1.put("coefficient", 0.1);
-        map1.put("argA", 0.1);
-        map1.put("argB", 0.1);
+        Map<String, Double> douban = new HashMap<>();
+        douban.put("marketPercent", CrawlerSourceEnums.douban.getPercent());
 
-        Map<String, Double> map2 = new HashMap<>();
-        map2.put("marketPercent", 0.24);
-        map2.put("coefficient", 0.01851851852);
-        map2.put("argA", 0.1);
-        map2.put("argB", 0.1);
+        Map<String, Double> dangdang = new HashMap<>();
+        dangdang.put("marketPercent", CrawlerSourceEnums.dangdang.getPercent());
 
-        Map<String, Double> map3 = new HashMap<>();
-        map3.put("marketPercent", 0.16);
-        map3.put("coefficient", 0.1315789474);
-        map3.put("argA", 0.1);
-        map3.put("argB", 0.1);
+        Map<String, Double> jd = new HashMap<>();
+        jd.put("marketPercent", CrawlerSourceEnums.jd.getPercent());
 
-        Map<String, Double> map4 = new HashMap<>();
-        map4.put("marketPercent", 0.1);
-        map4.put("coefficient", 1.4285714286);
-        map4.put("argA", 0.1);
-        map4.put("argB", 0.1);
+        Map<String, Double> amazon = new HashMap<>();
+        amazon.put("marketPercent", CrawlerSourceEnums.amazon.getPercent());
 
-        options.put(CrawlerSourceEnums.douban.getType(), map1);
-        options.put(CrawlerSourceEnums.dangdang.getType(), map2);
-        options.put(CrawlerSourceEnums.jd.getType(), map3);
-        options.put(CrawlerSourceEnums.amazon.getType(), map4);
+        options.put(CrawlerSourceEnums.douban.getType(), douban);
+        options.put(CrawlerSourceEnums.dangdang.getType(), dangdang);
+        options.put(CrawlerSourceEnums.jd.getType(), jd);
+        options.put(CrawlerSourceEnums.amazon.getType(), amazon);
 
 
         try {
@@ -91,7 +79,6 @@ public class HotIndexesCreateTask {
                     bookViewService.update(bookView);
                 }
             }
-
 
             BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
             if (bookIndexTaskLog.getId() != null) {

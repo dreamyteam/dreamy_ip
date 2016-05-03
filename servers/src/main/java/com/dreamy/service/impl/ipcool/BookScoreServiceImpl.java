@@ -42,25 +42,11 @@ public class BookScoreServiceImpl implements BookScoreService {
     public String getBookHotIndexByBookAndOptions(Integer bookId, Map<Integer, Map<String, Double>> options) {
         List<BookScore> bookScores = getByBookId(bookId);
         Double hotScore = 0.0;
-        String hotScoreStr = "--";
         if (CollectionUtils.isNotEmpty(bookScores)) {
             for (BookScore bookScore : bookScores) {
                 Integer commentNum = bookScore.getCommentNum();
-                Double score = bookScore.getScore();
-                Double coefficient = options.get(bookScore.getSource()).get("coefficient");
                 Double marketPercent = options.get(bookScore.getSource()).get("marketPercent");
-                Double argA = options.get(bookScore.getSource()).get("argA");
-                Double argB = options.get(bookScore.getSource()).get("argB");
-                Integer saleScore = bookScore.getSaleSort();
-
-                if (saleScore != null && saleScore > 0) {
-                    hotScore += marketPercent * commentNum * score * (argA / coefficient + argB * coefficient / saleScore);
-                    hotScoreStr += marketPercent+"*"+  commentNum +"*"+ score +"*"+ (argA +"/"+ coefficient +"+"+ argB +"*"+ coefficient +"/"+ saleScore);
-                } else {
-                    hotScore += marketPercent * commentNum * score * (argA / coefficient);
-                    hotScoreStr += marketPercent+"*"+ commentNum +"*"+ score +"*"+ (argA +"/"+ coefficient);
-                }
-
+                hotScore += marketPercent * commentNum;
             }
         }
 

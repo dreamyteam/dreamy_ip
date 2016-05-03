@@ -34,7 +34,7 @@ public class IpBookCrawlerTask {
     @Autowired
     private BookInfoService bookInfoService;
 
-    @Scheduled(fixedDelay = 5000)
+//    @Scheduled(fixedDelay = 5000)
     public void checkBookCrawlerWaittingStatus() {
         Page page = new Page();
         page.setPageSize(1000);

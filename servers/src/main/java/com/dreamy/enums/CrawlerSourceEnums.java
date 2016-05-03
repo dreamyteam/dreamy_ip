@@ -7,10 +7,10 @@ package com.dreamy.enums;
  * Time: 下午7:18
  */
 public enum CrawlerSourceEnums {
-    amazon(1, "亚马逊","amazon"),
-    jd(2, "京东","jd"),
-    dangdang(3, "当当","dd"),
-    douban(4, "豆瓣","douban");
+    amazon(1, "亚马逊", "amazon", 0.1),
+    jd(2, "京东", "jd", 0.16),
+    dangdang(3, "当当", "dd", 0.24),
+    douban(4, "豆瓣", "douban", 0.5);
 
     private Integer type;
 
@@ -18,10 +18,21 @@ public enum CrawlerSourceEnums {
 
     private String name;
 
-    CrawlerSourceEnums(Integer type, String description,String name) {
+    private Double percent;
+
+    CrawlerSourceEnums(Integer type, Double percent, String name, String description) {
         this.type = type;
-        this.description = description;
+        this.percent = percent;
         this.name = name;
+        this.description = description;
+    }
+
+    public Double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Double percent) {
+        this.percent = percent;
     }
 
     public Integer getType() {
