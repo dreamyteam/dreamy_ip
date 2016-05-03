@@ -142,6 +142,10 @@ public class Page implements Serializable {
         this.totalPage = totalPage;
     }
 
+    public boolean isHasNextPage() {
+        return (this.currentPage<this.getTotalPage()) ? true : false;
+    }
+
     public static void main(String[] args) {
         System.out.println(111);
     }

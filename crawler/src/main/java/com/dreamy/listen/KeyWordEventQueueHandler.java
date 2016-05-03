@@ -22,6 +22,11 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler  {
         Integer type = jsonObject.getInteger("source");
         Integer ipId=jsonObject.getInteger("bookId");
         String word=jsonObject.getString("word");
+        try {
+            keyWordHandler.crawler(word, ipId);
+        }catch (Exception e){
+            log.warn("keyWordHandler  failed: bookId:" + ipId+" word:"+word);
+        }
 
 
     }

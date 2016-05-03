@@ -11,7 +11,9 @@ public enum QueueRoutingKeyEnums {
     publish_book_am("crawler_event_book_am", "出版文学(亚马逊)"),
 
 
-    publish_book_comment("crawler_comment", "出版文学评论");
+    publish_book_comment("crawler_comment", "出版文学评论"),
+
+    publish_keyword("crawler_keyword_event","关键词搜索");
     private String key;
 
     private String description;
