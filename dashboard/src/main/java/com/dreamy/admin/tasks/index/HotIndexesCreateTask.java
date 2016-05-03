@@ -49,24 +49,6 @@ public class HotIndexesCreateTask {
         if (!isTaskActive) {
             return;
         }
-        Map<Integer, Map<String, Double>> options = new HashMap<>();
-        Map<String, Double> douban = new HashMap<>();
-        douban.put("marketPercent", CrawlerSourceEnums.douban.getPercent());
-
-        Map<String, Double> dangdang = new HashMap<>();
-        dangdang.put("marketPercent", CrawlerSourceEnums.dangdang.getPercent());
-
-        Map<String, Double> jd = new HashMap<>();
-        jd.put("marketPercent", CrawlerSourceEnums.jd.getPercent());
-
-        Map<String, Double> amazon = new HashMap<>();
-        amazon.put("marketPercent", CrawlerSourceEnums.amazon.getPercent());
-
-        options.put(CrawlerSourceEnums.douban.getType(), douban);
-        options.put(CrawlerSourceEnums.dangdang.getType(), dangdang);
-        options.put(CrawlerSourceEnums.jd.getType(), jd);
-        options.put(CrawlerSourceEnums.amazon.getType(), amazon);
-
 
         try {
             Page page = new Page();
@@ -74,8 +56,10 @@ public class HotIndexesCreateTask {
             List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
             if (CollectionUtils.isNotEmpty(bookViews)) {
                 for (BookView bookView : bookViews) {
-                    String hostIndex = bookScoreService.getBookHotIndexByBookAndOptions(bookView.getBookId(), options);
-                    bookView.hotIndex(Integer.parseInt(hostIndex));
+                    String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
+                    String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
+                    bookView.hotIndex(Integer.parseInt(hotIndex));
+                    bookView.propagateIndex(Integer.parseInt(propagateIndex));
                     bookViewService.update(bookView);
                 }
             }

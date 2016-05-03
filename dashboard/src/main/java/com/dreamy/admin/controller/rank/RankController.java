@@ -84,7 +84,7 @@ public class RankController {
                     BookView bookView = bookViewService.getByBookId(bookId);
                     if (bookView.getId() != null) {
                         if (bookView.getHotIndex() == 0) {
-                            String score = bookScoreService.getBookHotIndexByBookAndOptions(book.getId(), options);
+                            String score = bookScoreService.getBookHotIndexByBookId(book.getId());
                             map.put(book.getId(), score);
                             bookView.hotIndex(Integer.parseInt(score));
                             bookViewService.update(bookView);

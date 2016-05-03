@@ -20,7 +20,7 @@ public enum CrawlerSourceEnums {
 
     private Double percent;
 
-    CrawlerSourceEnums(Integer type, Double percent, String name, String description) {
+    CrawlerSourceEnums(Integer type, String name, String description, Double percent) {
         this.type = type;
         this.percent = percent;
         this.name = name;

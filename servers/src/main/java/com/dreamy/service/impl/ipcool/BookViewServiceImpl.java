@@ -39,6 +39,7 @@ public class BookViewServiceImpl implements BookViewService {
         if (page != null) {
             page.setTotalNum(bookViewDao.countByExample(conditions));
             conditions.setPage(page);
+            conditions.setOrderByClause("hot_index desc");
         }
         return bookViewDao.selectByExample(conditions);
     }
