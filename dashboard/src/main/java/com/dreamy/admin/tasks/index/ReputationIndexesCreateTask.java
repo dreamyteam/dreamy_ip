@@ -63,7 +63,7 @@ public class ReputationIndexesCreateTask {
             }
 
         } catch (NumberFormatException e) {
-            log.error("develop indexes create task failed", e);
+            log.error("reputation indexes create task failed", e);
         }
     }
 }
