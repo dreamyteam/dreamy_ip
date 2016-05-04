@@ -99,10 +99,11 @@ public class KeyWordHandler {
     /**
      * 360 搜索结果
      *
-     * @param name
+     * @param word
      */
-    public void getSo(String name, Integer bookId) {
-        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + name;
+    public void getSo(String word, Integer bookId) {
+
+        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q="+word;
         String html = HttpUtils.getSsl(url);
         Document document = Jsoup.parse(html);
         if (document != null) {
