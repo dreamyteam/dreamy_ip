@@ -94,7 +94,7 @@
                 </div>
                 <div class="overall">
                     <h6>小说综合评分</h6>
-                    <span>$!{view.compositeIndex}99</span>
+                    <span>$!{view.compositeIndex}</span>
                 </div>
             </div>
         #end

@@ -4,12 +4,14 @@ import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookScoreDao;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookScoreConditions;
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.BookIndexDataService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.utils.ArrayUtils;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +83,27 @@ public class BookScoreServiceImpl implements BookScoreService {
     }
 
     @Override
-    public String getDevelopIndexByBookId(Integer bookId) {
-        return null;
+    public String getDevelopIndexByRecord(BookView bookView) {
+        Double developScore = 0.0;
+        Integer hotIndex = bookView.getHotIndex();
+        Integer propagationIndex = bookView.getPropagateIndex();
+
+        List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
+        if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
+            int i = 0;
+            for (BookIndexData bookIndexData : bookIndexDatas) {
+                String[] ages = bookIndexData.getAge();
+                if (ArrayUtils.isNotEmpty(ages)) {
+                    developScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[1]) + 16 * Double.parseDouble(ages[0]) + 8 * Double.parseDouble(ages[0]);
+                    i++;
+                }
+            }
+
+            developScore = 0.01*(hotIndex + propagationIndex) * developScore / i;
+        }
+
+
+        return "" + (developScore.intValue());
     }
 
     @Override
@@ -96,6 +117,8 @@ public class BookScoreServiceImpl implements BookScoreService {
                 Double marketPercent = percentMap.get(bookScore.getSource());
                 reputationScore += marketPercent * score;
             }
+
+            reputationScore = reputationScore * 123.45;
         }
 
         return "" + reputationScore.intValue();
@@ -145,4 +168,6 @@ public class BookScoreServiceImpl implements BookScoreService {
 
         return res;
     }
+
+
 }

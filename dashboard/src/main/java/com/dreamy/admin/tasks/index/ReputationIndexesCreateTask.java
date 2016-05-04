@@ -35,7 +35,7 @@ public class ReputationIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 1000*10)
     public void run() {
         Integer type = BookIndexTypeEnums.reputation.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);

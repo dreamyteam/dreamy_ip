@@ -5,7 +5,6 @@ import com.dreamy.domain.ipcool.BookIndexTaskLog;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookIndexStatusEnums;
 import com.dreamy.enums.BookIndexTypeEnums;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookIndexTaskLogService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -16,19 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
- * Date: 16/4/28
- * Time: 下午2:17
+ * Date: 16/5/4
+ * Time: 下午2:12
  */
 @Component
-public class HotIndexesCreateTask {
-    private static final Logger log = LoggerFactory.getLogger(HotIndexesCreateTask.class);
+public class CompositeIndexexCreateTask {
+    private static final Logger log = LoggerFactory.getLogger(CompositeIndexexCreateTask.class);
     @Autowired
     private BookScoreService bookScoreService;
 
@@ -38,13 +35,9 @@ public class HotIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    private void run() {
-
-    }
-
-    @Scheduled(fixedDelay = 1000*10)
-    public void getHotScore() {
-        Integer type = BookIndexTypeEnums.hot.getType();
+    @Scheduled(fixedDelay = 1000 * 8)
+    public void run() {
+        Integer type = BookIndexTypeEnums.composite.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);
         if (!isTaskActive) {
             return;
@@ -56,21 +49,27 @@ public class HotIndexesCreateTask {
             List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
             if (CollectionUtils.isNotEmpty(bookViews)) {
                 for (BookView bookView : bookViews) {
-                    String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-                    bookView.hotIndex(Integer.parseInt(hotIndex));
+                    Integer hotIndex = bookView.getHotIndex();
+                    Integer propatationIndex = bookView.getPropagateIndex();
+                    Integer reputationIndex = bookView.getReputationIndex();
+                    Integer developIndex = bookView.getDevelopIndex();
+
+                    Double compositeIndex = 0.1 * (3 * (hotIndex + propatationIndex) + 2 * (reputationIndex + developIndex));
+
+                    bookView.compositeIndex(compositeIndex.intValue());
                     bookViewService.update(bookView);
+                }
+                BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
+                if (bookIndexTaskLog.getId() != null) {
+                    Integer oldRunTime = bookIndexTaskLog.getRunTime();
+                    bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
+                    bookIndexTaskLogService.update(bookIndexTaskLog);
                 }
             }
 
-            BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
-            if (bookIndexTaskLog.getId() != null) {
-                Integer oldRunTime = bookIndexTaskLog.getRunTime();
-                bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
-                bookIndexTaskLogService.update(bookIndexTaskLog);
-            }
 
         } catch (NumberFormatException e) {
-            log.error("hot indexes create task failed", e);
+            log.error("composite indexes create task failed", e);
         }
     }
 }

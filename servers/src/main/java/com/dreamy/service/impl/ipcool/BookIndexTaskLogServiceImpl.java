@@ -77,9 +77,11 @@ public class BookIndexTaskLogServiceImpl implements BookIndexTaskLogService {
                 Date lastUpdatedAt = compositeItem.getUpdatedAt();
                 Date currentDate = new Date();
 
-                long duration = 1000 * 60 * 60;
-                if (TimeUtils.diff(currentDate, lastUpdatedAt) > duration) {
-                    status = true;
+                if (developItem.getRunTime() - 1 == compositeItem.getRunTime()) {
+                    long duration = 1000 * 60 * 60;
+                    if (TimeUtils.diff(lastUpdatedAt, currentDate) > duration) {
+                        status = true;
+                    }
                 }
             }
         } else if (bookIndexTaskLogs.size() == 0) {

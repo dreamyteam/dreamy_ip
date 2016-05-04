@@ -2,6 +2,7 @@ package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookScore;
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.mogodb.beans.Book;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public interface BookScoreService {
      * @param bookId
      * @return
      */
-    public String getDevelopIndexByBookId(Integer bookId);
+    public String getDevelopIndexByRecord(BookView bookView);
 
     /**
      * @param bookId
