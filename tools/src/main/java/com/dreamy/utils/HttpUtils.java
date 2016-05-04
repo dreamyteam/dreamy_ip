@@ -472,7 +472,7 @@ public class HttpUtils {
     public static String getSsl(String url){
         String coment="";
         try {
-            URL u = new URL(url);
+            URL u = new URL(url.replace(" ",""));
             if("https".equalsIgnoreCase(u.getProtocol())){
                 SslUtils.ignoreSsl();
             }
