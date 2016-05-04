@@ -5,7 +5,6 @@ import com.dreamy.domain.ipcool.BookIndexTaskLog;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookIndexStatusEnums;
 import com.dreamy.enums.BookIndexTypeEnums;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookIndexTaskLogService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -16,19 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
- * Date: 16/4/28
- * Time: 下午2:17
+ * Date: 16/5/3
+ * Time: 下午6:55
  */
 @Component
-public class HotIndexesCreateTask {
-    private static final Logger log = LoggerFactory.getLogger(HotIndexesCreateTask.class);
+public class ReputationIndexesCreateTask {
+    private static final Logger log = LoggerFactory.getLogger(ReputationIndexesCreateTask.class);
     @Autowired
     private BookScoreService bookScoreService;
 
@@ -38,13 +35,9 @@ public class HotIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    private void run() {
-
-    }
-
-    @Scheduled(fixedDelay = 8000)
-    public void getHotScore() {
-        Integer type = BookIndexTypeEnums.hot.getType();
+    @Scheduled(fixedDelay = 10000)
+    public void run() {
+        Integer type = BookIndexTypeEnums.reputation.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);
         if (!isTaskActive) {
             return;
@@ -56,8 +49,8 @@ public class HotIndexesCreateTask {
             List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
             if (CollectionUtils.isNotEmpty(bookViews)) {
                 for (BookView bookView : bookViews) {
-                    String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-                    bookView.hotIndex(Integer.parseInt(hotIndex));
+                    String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
+                    bookView.reputationIndex(Integer.parseInt(reputationIndex));
                     bookViewService.update(bookView);
                 }
             }
@@ -70,7 +63,7 @@ public class HotIndexesCreateTask {
             }
 
         } catch (NumberFormatException e) {
-            log.error("hot indexes create task failed", e);
+            log.error("reputation indexes create task failed", e);
         }
     }
 }

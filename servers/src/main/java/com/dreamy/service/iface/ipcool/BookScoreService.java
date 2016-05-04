@@ -12,13 +12,11 @@ import java.util.Map;
  */
 public interface BookScoreService {
     /**
-     *
      * @param bookScore
      */
     public void save(BookScore bookScore);
 
     /**
-     *
      * @param bookScore
      * @param page
      * @return
@@ -26,14 +24,12 @@ public interface BookScoreService {
     public List<BookScore> getList(BookScore bookScore, Page page);
 
     /**
-     *
      * @param bookId
      * @return
      */
     public List<BookScore> getByBookId(Integer bookId);
 
     /**
-     *
      * @param bookId
      * @param options
      * @return
@@ -41,10 +37,22 @@ public interface BookScoreService {
     public String getBookHotIndexByBookId(Integer bookId);
 
     /**
-     *
      * @param bookId
      * @return
      */
     public String getPropagateIndexByBookId(Integer bookId);
+
+
+    /**
+     * @param bookId
+     * @return
+     */
+    public String getDevelopIndexByBookId(Integer bookId);
+
+    /**
+     * @param bookId
+     * @return
+     */
+    public String getReputationIndexByBookId(Integer bookId);
 
 }

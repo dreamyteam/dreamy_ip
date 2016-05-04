@@ -51,8 +51,6 @@ public class BookScoreServiceImpl implements BookScoreService {
     @Override
     public String getBookHotIndexByBookId(Integer bookId) {
         List<BookScore> bookScores = getByBookId(bookId);
-
-
         Double hotScore = 0.0;
         if (CollectionUtils.isNotEmpty(bookScores)) {
             Map<Integer, Double> percentMap = getPercentMap(bookScores);
@@ -78,8 +76,29 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Override
     public String getPropagateIndexByBookId(Integer bookId) {
-        Double propagateIndex = (getSearchIndexByBookId(bookId));
+        Double propagateIndex = (getSearchIndexByBookId(bookId)) * 5.27;
         return "" + propagateIndex.intValue();
+    }
+
+    @Override
+    public String getDevelopIndexByBookId(Integer bookId) {
+        return null;
+    }
+
+    @Override
+    public String getReputationIndexByBookId(Integer bookId) {
+        List<BookScore> bookScores = getByBookId(bookId);
+        Double reputationScore = 0.0;
+        if (CollectionUtils.isNotEmpty(bookScores)) {
+            Map<Integer, Double> percentMap = getPercentMap(bookScores);
+            for (BookScore bookScore : bookScores) {
+                Double score = bookScore.getScore();
+                Double marketPercent = percentMap.get(bookScore.getSource());
+                reputationScore += marketPercent * score;
+            }
+        }
+
+        return "" + reputationScore.intValue();
     }
 
     public Map<Integer, Double> getPercentMap(List<BookScore> bookScores) {
