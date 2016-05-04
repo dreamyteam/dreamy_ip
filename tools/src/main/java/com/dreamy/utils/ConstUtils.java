@@ -8,21 +8,15 @@ public class ConstUtils {
 
     public static final int DAY_OF_SECOND = 24 * 60 * 60;
 
-    /**
-     * @author jared
-     * @Description: 队列相关常量配置
-     * @date Nov 5, 2014 2:31:35 PM
+    /***
+     *
      */
-    public static final class Queue {
+    public static final class Option {
 
-        public static final String NEW_CONTENTS = "new_contents";
-        public static final String FEED_QUERY = "content_feeds";
-        public static final String DOWNLOAD_UPDATE_QUERY = "download_update";
-        public static final String FOLLOW_UPDATE_QUERY = "follow_update";
-        public static final String MESSAGE_PUSH_QUERY = "message_push";
-        public static final String MESSAGE_PUSH_SLOW_QUERY = "message_push_slow";
-        public static final String EMAIL_SEND_QUERY = "email_send";
-        public static final String PODCASTER_REPLACE_QUEUE = "podcaster_replace";
+        public static final String WEIBO_USER_CODE = "001";
+
+        public static final String AGENT_CODE = "002";
+
 
         /**
          * @author jared
