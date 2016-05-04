@@ -55,7 +55,10 @@ public class IpBookServiceImpl implements IpBookService {
     public List<IpBook> getIpBookList(IpBook ipBook, Page page) {
         Map<String, Object> params = BeanUtils.toQueryMap(ipBook);
         IpBookConditions conditions = new IpBookConditions();
-
+        if(params.get("id")!=null){
+            conditions.createCriteria().andIdLessThan((Integer)params.get("id"));
+            params.remove("id");
+        }
         conditions.createCriteria().addByMap(params);
         conditions.setOrderByClause("id desc");
         if (page != null) {
