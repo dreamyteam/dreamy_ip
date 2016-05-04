@@ -92,7 +92,7 @@ public class BookIndexTaskLogServiceImpl implements BookIndexTaskLogService {
             }
         }
 
-        return status;
+        return false;
     }
 
     @Override

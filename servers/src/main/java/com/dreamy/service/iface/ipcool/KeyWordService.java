@@ -10,10 +10,24 @@ import java.util.List;
  */
 public interface KeyWordService {
 
+    /**
+     *
+     * @param keyWord
+     */
     void save(KeyWord keyWord);
 
+    /**
+     *
+     * @param keyWord
+     * @param page
+     * @return
+     */
     List<KeyWord> getList(KeyWord keyWord,Page page);
 
+    /**
+     *
+     * @param keyWord
+     */
     public void saveOrUpdate(KeyWord keyWord);
 
 

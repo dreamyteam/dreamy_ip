@@ -5,12 +5,15 @@ import com.dreamy.dao.iface.ipcool.BookScoreDao;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookScoreConditions;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexSourceEnums;
+import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.BookIndexDataService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.utils.ArrayUtils;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
@@ -32,6 +35,9 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Autowired
     private BookIndexDataService bookIndexDataService;
+
+    @Autowired
+    private KeyWordService keyWordService;
 
     @Override
     public void save(BookScore bookScore) {
@@ -78,7 +84,25 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Override
     public String getPropagateIndexByBookId(Integer bookId) {
-        Double propagateIndex = (getSearchIndexByBookId(bookId)) * 5.27;
+        Double propagateIndex = 0.0;
+
+        KeyWord keyWord = new KeyWord();
+        keyWord.bookId(bookId);
+        Page page = new Page();
+        page.setPageSize(10);
+
+        Map<Integer, Double> map = new HashMap<>();
+        for (KeyWordEnums enums : KeyWordEnums.values()) {
+            map.put(enums.getType(), enums.getPercent());
+        }
+
+        List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
+        if (CollectionUtils.isNotEmpty(keyWords)) {
+            for (KeyWord word : keyWords) {
+                propagateIndex += map.get(word.getSource()) * word.getIndexNum();
+            }
+
+        }
         return "" + propagateIndex.intValue();
     }
 
@@ -99,7 +123,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 }
             }
 
-            developScore = 0.01*(hotIndex + propagationIndex) * developScore / i;
+            developScore = 0.01 * (hotIndex + propagationIndex) * developScore / i;
         }
 
 

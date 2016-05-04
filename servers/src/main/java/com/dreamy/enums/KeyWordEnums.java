@@ -5,17 +5,28 @@ package com.dreamy.enums;
  */
 public enum KeyWordEnums {
 
-    baidu(1, "百度"),
-    so(2, "360"),
-    weibo(3, "微博"),
-    weixin(4, "微信文章");
+    baidu(1, "百度", 0.16),
+    so(2, "360", 0.12),
+    weibo(3, "微博", 0.52),
+    weixin(4, "微信文章", 0.3);
     private Integer type;
 
     private String description;
 
-    KeyWordEnums(Integer type, String description) {
+    private double percent;
+
+    KeyWordEnums(Integer type, String description, Double percent) {
         this.type = type;
         this.description = description;
+        this.percent = percent;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
 
     public Integer getType() {
