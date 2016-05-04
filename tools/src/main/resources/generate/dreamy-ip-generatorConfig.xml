@@ -93,10 +93,10 @@
 		<!--<table tableName="sys_option" domainObjectName="sys.SysOption">-->
 			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
 		<!--</table>-->
-        <table tableName="ip_book_tags" domainObjectName="ipcool.bookTags">
+        <table tableName="ip_book_tags" domainObjectName="ipcool.BookTags">
         <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
-        <table tableName="ip_book_tags_map" domainObjectName="ipcool.bookTagsMap">
+        <table tableName="ip_book_tags_map" domainObjectName="ipcool.BookTagsMap">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

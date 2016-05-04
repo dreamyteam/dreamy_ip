@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class bookTagsConditions {
+public class BookTagsMapConditions {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -15,7 +15,7 @@ public class bookTagsConditions {
 
     private Page page;
 
-    public bookTagsConditions() {
+    public BookTagsMapConditions() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -177,73 +177,123 @@ public class bookTagsConditions {
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNull() {
-            addCriterion("name is null");
+        public Criteria andBookIdIsNull() {
+            addCriterion("book_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("name is not null");
+        public Criteria andBookIdIsNotNull() {
+            addCriterion("book_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("name =", value, "name");
+        public Criteria andBookIdEqualTo(Integer value) {
+            addCriterion("book_id =", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("name <>", value, "name");
+        public Criteria andBookIdNotEqualTo(Integer value) {
+            addCriterion("book_id <>", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("name >", value, "name");
+        public Criteria andBookIdGreaterThan(Integer value) {
+            addCriterion("book_id >", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("name >=", value, "name");
+        public Criteria andBookIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("book_id >=", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("name <", value, "name");
+        public Criteria andBookIdLessThan(Integer value) {
+            addCriterion("book_id <", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("name <=", value, "name");
+        public Criteria andBookIdLessThanOrEqualTo(Integer value) {
+            addCriterion("book_id <=", value, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLike(String value) {
-            addCriterion("name like", value, "name");
+        public Criteria andBookIdIn(List<Integer> values) {
+            addCriterion("book_id in", values, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion("name not like", value, "name");
+        public Criteria andBookIdNotIn(List<Integer> values) {
+            addCriterion("book_id not in", values, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("name in", values, "name");
+        public Criteria andBookIdBetween(Integer value1, Integer value2) {
+            addCriterion("book_id between", value1, value2, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("name not in", values, "name");
+        public Criteria andBookIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("book_id not between", value1, value2, "bookId");
             return (Criteria) this;
         }
 
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
+        public Criteria andTagIdIsNull() {
+            addCriterion("tag_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
+        public Criteria andTagIdIsNotNull() {
+            addCriterion("tag_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdEqualTo(Integer value) {
+            addCriterion("tag_id =", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdNotEqualTo(Integer value) {
+            addCriterion("tag_id <>", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdGreaterThan(Integer value) {
+            addCriterion("tag_id >", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("tag_id >=", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdLessThan(Integer value) {
+            addCriterion("tag_id <", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdLessThanOrEqualTo(Integer value) {
+            addCriterion("tag_id <=", value, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdIn(List<Integer> values) {
+            addCriterion("tag_id in", values, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdNotIn(List<Integer> values) {
+            addCriterion("tag_id not in", values, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdBetween(Integer value1, Integer value2) {
+            addCriterion("tag_id between", value1, value2, "tagId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTagIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("tag_id not between", value1, value2, "tagId");
             return (Criteria) this;
         }
 
@@ -424,11 +474,6 @@ public class bookTagsConditions {
 
         public Criteria andUpdatedAtNotBetween(Date value1, Date value2) {
             addCriterion("updated_at not between", value1, value2, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameLikeInsensitive(String value) {
-            addCriterion("upper(name) like", value.toUpperCase(), "name");
             return (Criteria) this;
         }
     }

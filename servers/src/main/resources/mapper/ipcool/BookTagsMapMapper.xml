@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dreamy.mapper.ipcool.bookTagsMapMapper" >
-  <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.bookTagsMap" >
+<mapper namespace="com.dreamy.mapper.ipcool.BookTagsMapMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.BookTagsMap" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="tag_id" property="tagId" jdbcType="INTEGER" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List" >
     id, book_id, tag_id, status, created_at, updated_at
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.bookTagsMapConditions" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.BookTagsMapConditions" >
     select
     <if test="distinct" >
       distinct
@@ -95,19 +95,19 @@
     delete from ip_book_tags_map
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dreamy.domain.ipcool.bookTagsMapConditions" >
+  <delete id="deleteByExample" parameterType="com.dreamy.domain.ipcool.BookTagsMapConditions" >
     delete from ip_book_tags_map
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dreamy.domain.ipcool.bookTagsMap" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookTagsMap" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_tags_map (book_id, tag_id, status, 
       created_at, updated_at)
     values (#{bookId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.bookTagsMap" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookTagsMap" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_tags_map
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="bookId != null" >
@@ -144,7 +144,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dreamy.domain.ipcool.bookTagsMapConditions" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.dreamy.domain.ipcool.BookTagsMapConditions" resultType="java.lang.Integer" >
     select count(*) from ip_book_tags_map
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -188,7 +188,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.ipcool.bookTagsMap" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.ipcool.BookTagsMap" >
     update ip_book_tags_map
     <set >
       <if test="bookId != null" >
@@ -209,7 +209,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.bookTagsMap" >
+  <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.BookTagsMap" >
     update ip_book_tags_map
     set book_id = #{bookId,jdbcType=INTEGER},
       tag_id = #{tagId,jdbcType=INTEGER},

@@ -4,10 +4,12 @@ import com.dreamy.domain.BaseDomain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class bookTags extends BaseDomain<Integer> implements Serializable {
+public class BookTagsMap extends BaseDomain<Integer> implements Serializable {
     private Integer id;
 
-    private String name;
+    private Integer bookId;
+
+    private Integer tagId;
 
     private Integer status;
 
@@ -25,12 +27,20 @@ public class bookTags extends BaseDomain<Integer> implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
 
     public Integer getStatus() {
@@ -68,9 +78,10 @@ public class bookTags extends BaseDomain<Integer> implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        bookTags other = (bookTags) that;
+        BookTagsMap other = (BookTagsMap) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getBookId() == null ? other.getBookId() == null : this.getBookId().equals(other.getBookId()))
+            && (this.getTagId() == null ? other.getTagId() == null : this.getTagId().equals(other.getTagId()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
@@ -81,34 +92,40 @@ public class bookTags extends BaseDomain<Integer> implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getBookId() == null) ? 0 : getBookId().hashCode());
+        result = prime * result + ((getTagId() == null) ? 0 : getTagId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         return result;
     }
 
-    public bookTags id(Integer value) {
+    public BookTagsMap id(Integer value) {
         this.id = value;
         return this;
     }
 
-    public bookTags name(String value) {
-        this.name = value;
+    public BookTagsMap bookId(Integer value) {
+        this.bookId = value;
         return this;
     }
 
-    public bookTags status(Integer value) {
+    public BookTagsMap tagId(Integer value) {
+        this.tagId = value;
+        return this;
+    }
+
+    public BookTagsMap status(Integer value) {
         this.status = value;
         return this;
     }
 
-    public bookTags createdAt(Date value) {
+    public BookTagsMap createdAt(Date value) {
         this.createdAt = value;
         return this;
     }
 
-    public bookTags updatedAt(Date value) {
+    public BookTagsMap updatedAt(Date value) {
         this.updatedAt = value;
         return this;
     }
