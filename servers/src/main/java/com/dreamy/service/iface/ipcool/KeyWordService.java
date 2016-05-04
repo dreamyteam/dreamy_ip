@@ -14,5 +14,7 @@ public interface KeyWordService {
 
     List<KeyWord> getList(KeyWord keyWord,Page page);
 
+    public void saveOrUpdate(KeyWord keyWord);
+
 
 }

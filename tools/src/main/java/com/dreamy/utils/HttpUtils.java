@@ -73,9 +73,23 @@ public class HttpUtils {
      * @param userAgent
      * @return
      */
-    public static String getHtmlGetByProxy(String tempurl,String proxyHost, int proxyPort ,String userAgent) {
-        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, userAgent, null, null, null);
+    public static String getHtmlGetByProxy(String tempurl,String proxyHost, int proxyPort,String userAgent) {
+        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, null,userAgent, null, null);
     }
+
+    /**
+     * 配置代理 get方法获取网页
+     * @param tempurl
+     * @param proxyHost
+     * @param proxyPort
+     * @param userAgent
+     * @param cookie
+     * @return
+     */
+    public static String getHtmlGetByProxy(String tempurl,String proxyHost,int proxyPort, String cookie,String userAgent) {
+        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, cookie,userAgent, null, null);
+    }
+
 
 
     /***
@@ -455,7 +469,7 @@ public class HttpUtils {
     }
 
 
-    public static String getSsl(String url,int timeOut){
+    public static String getSsl(String url){
         String coment="";
         try {
             URL u = new URL(url);
@@ -463,8 +477,8 @@ public class HttpUtils {
                 SslUtils.ignoreSsl();
             }
             URLConnection conn = u.openConnection();
-            conn.setConnectTimeout(timeOut);
-            conn.setReadTimeout(timeOut);
+            conn.setConnectTimeout(60000);
+            conn.setReadTimeout(120000);
             coment=IOUtils.toString(conn.getInputStream());
         }
         catch (Exception e){
