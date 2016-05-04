@@ -3,6 +3,8 @@ package com.dreamy.ipcool.controllers.index;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.mogodb.beans.Comments;
@@ -92,34 +94,38 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/detail")
     public String detail(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
         BookView bookView = bookViewService.getById(ipId);
-        Comments comments=commentService.getById(ipId);
+        Comments comments = commentService.getById(ipId);
         BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookView.getBookId());
-        BookRank bookRank=new BookRank().bookId(bookView.getBookId());
-        List<BookRank> list=bookRankService.getList(bookRank,null);
-        for(BookRank rank:list){
-            if(rank.getType()==1){
-                model.put("crank",rank.getRank());// 综合指数排名
+        BookRank bookRank = new BookRank().bookId(bookView.getBookId());
+        List<BookRank> list = bookRankService.getList(bookRank, null);
+        for (BookRank rank : list) {
+            if (rank.getType() == 1) {
+                model.put("crank", rank.getRank());// 综合指数排名
             }
-            if(rank.getType()==2){
-                model.put("drank",rank.getRank());//开发潜力指数排名
+            if (rank.getType() == 2) {
+                model.put("drank", rank.getRank());//开发潜力指数排名
             }
-            if(rank.getType()==3){
-                model.put("prank",rank.getRank());//传播指数排名
+            if (rank.getType() == 3) {
+                model.put("prank", rank.getRank());//传播指数排名
             }
-            if(rank.getType()==4){
-                model.put("hrank",rank.getRank());//热度指数排名
+            if (rank.getType() == 4) {
+                model.put("hrank", rank.getRank());//热度指数排名
             }
-            if(rank.getType()==5){
-                model.put("arank",rank.getRank());//活跃指数排名
+            if (rank.getType() == 5) {
+                model.put("arank", rank.getRank());//活跃指数排名
             }
         }
-        model.put("history", bookIndexHistory);
-        model.put("view", bookView);
-        if(comments!=null)
-        {
+
+        if (comments != null) {
             model.put("comments", comments.getComments());
         }
-        return "/index/sum";
+
+        model.put("rankEnums", BookRankEnums.values());
+        model.put("typeEnums", BookTypeEnums.values());
+
+        model.put("history", bookIndexHistory);
+        model.put("view", bookView);
+        return "/index/detail";
     }
 
     @RequestMapping("/persona")
