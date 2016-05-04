@@ -3,9 +3,11 @@ package com.dreamy.mapper.ipcool;
 import com.dreamy.domain.ipcool.BookTagsMap;
 import com.dreamy.domain.ipcool.BookTagsMapConditions;
 import java.util.List;
+
+import com.dreamy.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface BookTagsMapMapper {
+public interface BookTagsMapMapper extends BaseMapper<BookTagsMap,Integer,BookTagsMapConditions> {
     int countByExample(BookTagsMapConditions example);
 
     int deleteByExample(BookTagsMapConditions example);
