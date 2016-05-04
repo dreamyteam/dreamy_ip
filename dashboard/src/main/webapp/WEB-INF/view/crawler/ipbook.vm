@@ -59,10 +59,15 @@
                         </form>
                     </div>
 
+
                 ##                    操作
                     <div class="well operate-box">
                         <a class="btn btn-default" href="/crawler/create">
                             添加
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/keyword">
+                            爬取
                         </a>
 
                         <button class="btn btn-default dt-btn-batch"
