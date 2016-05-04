@@ -2,6 +2,7 @@ package com.dreamy.ipcool.controllers.search;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import org.springframework.stereotype.Controller;
@@ -26,12 +27,14 @@ public class SearchController extends IpcoolController {
     private BookViewService bookViewService;
 
     @RequestMapping(value = "")
-    public String result(@RequestParam(value = "content", required = false,defaultValue ="") String content, Page page, ModelMap model) {
-        BookView bookView=new BookView().name(content);
-       List<BookView> list= bookViewService.getList(bookView,page);
-        model.put("list",list);
-        model.put("page",page);
-        model.put("content",content);
+    public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
+        BookView bookView = new BookView().name(content);
+        List<BookView> list = bookViewService.getList(bookView, page);
+
+        model.put("typeEnums", BookTypeEnums.values());
+        model.put("list", list);
+        model.put("page", page);
+        model.put("content", content);
         return "/search/result";
     }
 }

@@ -70,7 +70,15 @@
                 <a href="/index/detail.html?ip=${view.id}"><img src="$!{view.imageUrl}"></a>
 
                 <div class="sresult_content">
-                    <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a> <span class="type">出版文学</span>
+                    <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
+
+                        <span class="type">
+                            #foreach($bookType in $typeEnums)
+                               #if($bookType.getType() == $view.getType())
+                                $bookType.getDescription()
+                            #end
+                            #end
+                        </span>
                     </h2>
                     <h6>作者: $!{view.author}</h6>
                     <ul class="quotient">
@@ -101,7 +109,7 @@
     </section>
     <!--分页器 -->
     <div class="paging" id="paging"
-         data-page-attach='{"totalNum":100,"currentPage":2,"pageSize":10,"content":"人"}'>
+         data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize,"content":"$!content"}'>
     </div>
 
     <!--分页器-->
