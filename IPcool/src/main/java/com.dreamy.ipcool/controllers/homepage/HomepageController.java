@@ -16,13 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = {"/"})
 public class HomepageController extends IpcoolController {
 
-    @Autowired
-    private RedisClientService redisClientService;
 
     @RequestMapping("")
     public String index() {
-        redisClientService.set("aaa",11);
-        Integer rs = redisClientService.get("aaa");
         return "/homepage/homepage";
     }
 }
