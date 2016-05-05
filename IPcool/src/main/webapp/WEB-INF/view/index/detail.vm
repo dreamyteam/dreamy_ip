@@ -48,22 +48,21 @@
                 <span class="type">
                     #foreach($bookType in $typeEnums)
                                #if($bookType.getType() == $view.getType())
-                                     $bookType.getDescription()
+                        $bookType.getDescription()
                     #end
                     #end
                 </span>
             </h1>
-##            <h6 class="genre"></h6>
+            <h6 class="genre">&nbsp;</h6>
 
             <p class="info">
                 作者：$!{view.author}
             </p>
 
             <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
+                #foreach($tagKey in $tagList.keySet())
+                    <span><a href="#" data-id="$tagKey">$tagList.get($tagKey)</a></span>
+                #end
             </div>
         </div>
         <div class="update_time">
