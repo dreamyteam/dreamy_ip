@@ -67,7 +67,11 @@
                         </a>
 
                         <a class="btn btn-default" href="/crawler/keyword">
-                            爬取
+                            关键词搜索爬取
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/soindex">
+                            指数爬取
                         </a>
 
                         <button class="btn btn-default dt-btn-batch"

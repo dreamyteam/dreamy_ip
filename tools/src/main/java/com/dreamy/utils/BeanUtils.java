@@ -30,8 +30,7 @@ public class BeanUtils extends BeanUtilsBean {
         super.copyProperty(dest, name, value);
     }
 
-    @Deprecated
-    public static Map<String, Object> toMap(Object bean) {
+    public static Map<String, Object> toMongodbMap(Object bean) {
 
         Map<String, Object> returnMap = new HashMap<String, Object>();
         try {
@@ -44,19 +43,13 @@ public class BeanUtils extends BeanUtilsBean {
                 if (!propertyName.equals("class")) {
                     Object type = descriptor.getPropertyType();
                     Method readMethod = descriptor.getReadMethod();
-                    Object result = readMethod.invoke(bean, new Object[0]);
-                    if (result != null && StringUtils.isNotEmpty(result.toString())) {
-//                        if (StringUtils.isNotEmpty(QuerySettings.QUERY_SETTINGS.get(propertyName))) {
-//                            returnMap.put(camelToUnderline(propertyName), StringUtils.sqlLike(result.toString()));
-//                        } else {
-//                            returnMap.put(camelToUnderline(propertyName), result);
-//                        }
-
-                    } else {
-
+                    Object result = readMethod.invoke(bean, null);
+                    if (result != null && result != "" && StringUtils.isNotEmpty(result.toString())) {
+                        returnMap.put(propertyName, result);
                     }
                 }
             }
+
         } catch (Exception e) {
             log.error("bean to map  has a error !" + e);
 

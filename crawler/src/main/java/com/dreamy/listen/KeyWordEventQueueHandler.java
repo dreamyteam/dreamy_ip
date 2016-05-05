@@ -6,12 +6,14 @@ import com.dreamy.utils.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 /**
  * Created by wangyongxing on 16/4/28.
  */
+@Component
 public class KeyWordEventQueueHandler extends AbstractQueueHandler  {
 
     private static final Logger log = LoggerFactory.getLogger(CrawlerEventQueueHandler.class);

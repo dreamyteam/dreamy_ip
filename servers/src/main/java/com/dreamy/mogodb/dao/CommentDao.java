@@ -12,4 +12,5 @@ public class CommentDao extends MongoGenDao<Comments> {
     protected Class<Comments> getEntityClass() {
         return Comments.class;
     }
+
 }

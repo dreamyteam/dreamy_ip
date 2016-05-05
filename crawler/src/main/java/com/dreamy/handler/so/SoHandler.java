@@ -51,11 +51,10 @@ public class SoHandler {
     private void check(String q) {
         String url =  "http://index.so.com/index.php?a=indexQuery&q="+q;
         String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
+        json =HttpUtils.decodeUnicode(json);
         if (StringUtils.isNotEmpty(json)) {
             Map<String, Object> map = JsonUtils.toMap(json);
             Map<String, Object> map1 = (Map<String, Object>) map.get("data");
-            System.out.println(111);
         }
 
 
@@ -71,7 +70,7 @@ public class SoHandler {
     private void drawAreaJson(BookIndexData data, String q) {
         String url = "http://index.so.com/index.php?a=drawAreaJson&&t=30&q=" + q;
         String json = HttpUtils.getHtmlGet(url);
-        json = decodeUnicode(json);
+        json = HttpUtils.decodeUnicode(json);
         if (StringUtils.isNotEmpty(json)) {
             So so = JsonUtils.toObject(So.class, json);
             if (so != null && so.getStatus() == 0) {
@@ -93,7 +92,7 @@ public class SoHandler {
         try {
             String url = "http://index.so.com/index.php?a=soMediaJson&q=" + q;
             String json = HttpUtils.getHtmlGet(url);
-            json = decodeUnicode(json);
+            json = HttpUtils.decodeUnicode(json);
             Map<String, Object> map = JsonUtils.toMap(json);
             int status = (Integer) map.get("status");
             if (status == 0) {
@@ -115,7 +114,7 @@ public class SoHandler {
         try {
             String url = "http://index.so.com/index.php?a=soIndexJson&q=" + q + "&area" + area;
             String json = HttpUtils.getHtmlGet(url);
-            json = decodeUnicode(json);
+            json = HttpUtils.decodeUnicode(json);
             Map<String, Object> map = JsonUtils.toMap(json);
             Map<String, Object> map1 = (Map<String, Object>) map.get("data");
             Map<String, Object> map2 = (Map<String, Object>) map1.get("index");
@@ -137,7 +136,7 @@ public class SoHandler {
         try {
             String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + q;
             String json = HttpUtils.getHtmlGet(url);
-            json = decodeUnicode(json);
+            json = HttpUtils.decodeUnicode(json);
             if (StringUtils.isNotEmpty(json)) {
                 So so = JsonUtils.toObject(So.class, json);
                 if (so != null) {
@@ -157,7 +156,7 @@ public class SoHandler {
         try {
             String url = "http://index.so.com/index.php?a=overviewJson&q=" + q + "&area" + area;
             String json = HttpUtils.getHtmlGet(url);
-            json = decodeUnicode(json);
+            json =HttpUtils.decodeUnicode(json);
             if (StringUtils.isNotEmpty(json)) {
                 json = json.replace("[", "").replace("]", "");
                 So so = JsonUtils.toObject(So.class, json);
@@ -169,70 +168,6 @@ public class SoHandler {
             e.printStackTrace();
         }
 
-    }
-
-    public static String decodeUnicode(String theString) {
-        char aChar;
-        int len = theString.length();
-        StringBuffer outBuffer = new StringBuffer(len);
-        for (int x = 0; x < len; ) {
-            aChar = theString.charAt(x++);
-            if (aChar == '\\') {
-                aChar = theString.charAt(x++);
-                if (aChar == 'u') {
-                    // Read the xxxx
-                    int value = 0;
-                    for (int i = 0; i < 4; i++) {
-                        aChar = theString.charAt(x++);
-                        switch (aChar) {
-                            case '0':
-                            case '1':
-                            case '2':
-                            case '3':
-                            case '4':
-                            case '5':
-                            case '6':
-                            case '7':
-                            case '8':
-                            case '9':
-                                value = (value << 4) + aChar - '0';
-                                break;
-                            case 'a':
-                            case 'b':
-                            case 'c':
-                            case 'd':
-                            case 'e':
-                            case 'f':
-                                value = (value << 4) + 10 + aChar - 'a';
-                                break;
-                            case 'A':
-                            case 'B':
-                            case 'C':
-                            case 'D':
-                            case 'E':
-                            case 'F':
-                                value = (value << 4) + 10 + aChar - 'A';
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Malformed   \\uxxxx   encoding.");
-                        }
-                    }
-                    outBuffer.append((char) value);
-                } else {
-                    if (aChar == 't')
-                        aChar = '\t';
-                    else if (aChar == 'r')
-                        aChar = '\r';
-                    else if (aChar == 'n')
-                        aChar = '\n';
-                    else if (aChar == 'f')
-                        aChar = '\f';
-                    outBuffer.append(aChar);
-                }
-            } else
-                outBuffer.append(aChar);
-        }
-        return outBuffer.toString();
     }
 
 

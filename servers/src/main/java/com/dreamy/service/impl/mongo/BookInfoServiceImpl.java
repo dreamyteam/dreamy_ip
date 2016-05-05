@@ -3,16 +3,13 @@ package com.dreamy.service.impl.mongo;
 import com.dreamy.beans.Page;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.dao.BookInfoDao;
-import com.dreamy.mogodb.dao.MemberDao;
 import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,5 +50,10 @@ public class BookInfoServiceImpl implements BookInfoService {
     public List<BookInfo> getListByOrderAndPage(Page page, String order) {
 
         return null;
+    }
+
+    @Override
+    public void updateInser(BookInfo bookInfo) {
+        bookInfoDao.updateInser(bookInfo);
     }
 }

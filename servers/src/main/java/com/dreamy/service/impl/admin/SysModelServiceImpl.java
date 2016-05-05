@@ -31,7 +31,7 @@ public class SysModelServiceImpl implements SysModelService {
     public List<SysModel> getSysModelPage(SysModel sysModel, Page page) {
 
         new HashMap<String, Object>();
-        Map<String, Object> params = BeanUtils.toMap(sysModel);
+        Map<String, Object> params = BeanUtils.toQueryMap(sysModel);
         SysModelConditions conditions = new SysModelConditions();
         conditions.createCriteria().addByMap(params);
         if (page != null) {
