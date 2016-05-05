@@ -98,7 +98,7 @@
                 </div>
             </div>
             <h5 class="number">$!{view.compositeIndex}</h5>
-            <em class="warning">数据异常偏大，仅供基本参考</em>
+##            <em class="warning">数据异常偏大，仅供基本参考</em>
             <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
         </div>
         <!-- 开发潜力 热度趋势 -->
