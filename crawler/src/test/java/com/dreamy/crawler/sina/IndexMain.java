@@ -61,7 +61,7 @@ public class IndexMain {
 
     public static void main2(String[] args) {
         String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=爱奇艺";
-        String html = HttpUtils.getSsl(url, 3000);
+        String html = HttpUtils.getSsl(url);
         Document document = Jsoup.parse(html);
         if (document != null) {
             Elements elements = document.getElementsByClass("nums");
