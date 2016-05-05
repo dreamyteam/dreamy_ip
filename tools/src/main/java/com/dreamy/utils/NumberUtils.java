@@ -91,4 +91,8 @@ public class NumberUtils {
     public static int randomInt(int min, int max) {
         return new Random().nextInt(max-min+1)+min;
     }
+
+    public static void main(String[] args) {
+        System.out.println(randomInt(50000,100000));
+    }
 }

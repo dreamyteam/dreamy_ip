@@ -1,86 +1,57 @@
 
-    <header class="ipcool_hearder clearfix">
-        <div class="inner">
-            <a href="/" class="logo"></a>
-            <!--搜索框 用户中心显示-->
-            <!-- 				<div class="form_search">
-			        <input type="text" class="keyword" placeholder="试试搜索美人鱼">
-			        <input class="submit" type="submit" value="">
-			    </div> -->
-            <!-- 搜索框 结束 -->
-            <!--注册 登录按钮-->
-            <nav>
-                <button class="register" id="register">注册</button>
-                <button class="login" id="login">登录</button>
-            </nav>
-            <!--登录后用户id-->
-            <!-- <div class="user">
-				<h2 class="user_name">土豆</h2>
-				<div class="user_menu">
-					<div class="arrow">
-     					<span></span><em></em>
-    				</div>
-					<ul>
-						<li><a href="#">我关注的</a></li>
-						<li><a href="#">历史记录</a></li>
-						<li><a href="#">个人信息</a></li>
-						<li><a href="#">账号设置</a></li>
-						<li><a href="#">修改密码</a></li>
-						<li><a href="#">退出登录</a></li>
-					</ul>
-				</div>
-			</div>	 -->
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--program_info-->
+    <section class="program_info clearfix">
+        <!-- TOP100 形状 -->
+        <div class="level_flag">
+            TOP100
         </div>
-    </header>
-    <div class="container">
-        <!--搜索框-->
-        #parse("/common/search.vm")
-        <!--program_info-->
-        <section class="program_info clearfix">
-            <!-- TOP100 形状 -->
-            <div class="level_flag">
-                TOP100
-            </div>
-            <img src="$!{view.imageUrl}">
-            <div class="content">
-                <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
-                <h6 class="genre">类型：脱口秀</h6>
-                <p class="info">
-                    作者：$!{view.author}
-                </p>
-                <div class="tags">
-                    <span><a href="#">搞笑</a></span>
-                    <span><a href="#">星爷</a></span>
-                    <span><a href="#">2016</a></span>
-                    <span><a href="#">环保</a></span>
-                </div>
-            </div>
-            <div class="update_time">
-                <h6>数据更新时间</h6>
-                <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-            </div>
-        </section>
-        <!--program_nav -->
-        <section class="program_nav" id="program_nav">
-            <div class="inner clearfix">
-                <ul>
-                    <li><a href="/detail.html?ip=$!{view.id}">综合评价</a></li>
-                    <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
-                    <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
-                    <li class="active"><a href="">简介</a></li>
-                </ul>
-                <div class="follow_download">
-                    <span class="follow">关注</span>
-                    <span class="download">下载完整报告</span>
-                </div>
-            </div>
-        </section>
-        
-        <section class="introduction">
-            <h2 class="title">简介</h2>
-            <p>
-                $!{view.introduction}
+        <img src="$!{view.imageUrl}">
+
+        <div class="content">
+            <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
+            <h6 class="genre">类型：脱口秀</h6>
+
+            <p class="info">
+                作者：$!{view.author}
             </p>
-        </section>
-        
+
+            <div class="tags">
+                <span><a href="#">搞笑</a></span>
+                <span><a href="#">星爷</a></span>
+                <span><a href="#">2016</a></span>
+                <span><a href="#">环保</a></span>
+            </div>
         </div>
+        <div class="update_time">
+            <h6>数据更新时间</h6>
+            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
+        </div>
+    </section>
+    <!--program_nav -->
+    <section class="program_nav" id="program_nav">
+        <div class="inner clearfix">
+            <ul>
+                <li><a href="/detail.html?ip=$!{view.id}">综合评价</a></li>
+                <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
+                <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
+                <li class="active"><a href="">简介</a></li>
+            </ul>
+            <div class="follow_download">
+                <span class="follow">关注</span>
+                <span class="download">下载完整报告</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="introduction">
+        <h2 class="title">简介</h2>
+
+        <p>
+            $!{view.introduction}
+        </p>
+    </section>
+
+</div>

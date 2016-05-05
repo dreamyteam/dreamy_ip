@@ -13,7 +13,10 @@ public enum QueueRoutingKeyEnums {
 
     publish_book_comment("crawler_comment", "出版文学评论"),
 
-    publish_keyword("crawler_keyword_event","关键词搜索");
+    publish_keyword("crawler_keyword_event","关键词搜索"),
+
+    publish_so_index("so_index","指数抓取");
+
     private String key;
 
     private String description;
