@@ -4,6 +4,7 @@ import com.dreamy.domain.ipcool.BookTags;
 import com.dreamy.domain.ipcool.BookTagsMap;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,16 +19,22 @@ public interface BookTagsService {
     Integer save(BookTags bookTags);
 
     /**
-     * @param name
-     * @return
-     */
-    List<BookTags> queryByName(String name);
-
-    /**
      * @param bookTagsMap
      * @return
      */
     Integer saveTagMap(BookTagsMap bookTagsMap);
+
+    /**
+     * @param name
+     * @return
+     */
+    List<BookTags> getByName(String name);
+
+    /**
+     * @param bookId
+     * @return
+     */
+    Map<Integer, String> getTagMapByBookId(Integer bookId);
 
 
 }

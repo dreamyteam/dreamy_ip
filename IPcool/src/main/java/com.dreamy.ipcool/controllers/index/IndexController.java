@@ -6,12 +6,13 @@ import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
-import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
+import com.dreamy.service.iface.ipcool.BookTagsService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,8 @@ public class IndexController extends IpcoolController {
     private CommentService commentService;
     @Resource
     private BookRankService bookRankService;
+    @Autowired
+    private BookTagsService bookTagsService;
 
 
     /**
@@ -94,9 +97,15 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/detail")
     public String detail(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
         BookView bookView = bookViewService.getById(ipId);
+        if (bookView == null || bookView.getId() == null) {
+            return null;
+        }
+
+        Integer bookId = bookView.getBookId();
+
         Comments comments = commentService.getById(ipId);
-        BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookView.getBookId());
-        BookRank bookRank = new BookRank().bookId(bookView.getBookId());
+        BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookId);
+        BookRank bookRank = new BookRank().bookId(bookId);
         List<BookRank> list = bookRankService.getList(bookRank, null);
         for (BookRank rank : list) {
             if (rank.getType() == 1) {
@@ -120,9 +129,9 @@ public class IndexController extends IpcoolController {
             model.put("comments", comments.getComments());
         }
 
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookId));
         model.put("rankEnums", BookRankEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
-
         model.put("history", bookIndexHistory);
         model.put("view", bookView);
         return "/index/detail";

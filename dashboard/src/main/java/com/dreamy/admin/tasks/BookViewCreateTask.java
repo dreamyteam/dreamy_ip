@@ -140,7 +140,7 @@ public class BookViewCreateTask {
             List<String> tagsList = getAllTags(tags);
             if (CollectionUtils.isNotEmpty(tagsList)) {
                 for (String tagName : tagsList) {
-                    List<BookTags> bookTagsList = bookTagsService.queryByName(tagName);
+                    List<BookTags> bookTagsList = bookTagsService.getByName(tagName);
                     Integer tagId = 0;
                     if (CollectionUtils.isEmpty(bookTagsList)) {
                         BookTags bookTags = new BookTags();
