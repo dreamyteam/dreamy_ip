@@ -17,19 +17,19 @@ import java.util.Map;
 /**
  * Created by wangyongxing on 16/4/26.
  */
-public class IpBookTest extends BaseJunitTest{
+public class IpBookTest extends BaseJunitTest {
     @Resource
     private BookInfoService bookInfoService;
     @Resource
     BookViewService bookViewService;
+
     @Test
-    public void insert(){
-       List<BookInfo> list= bookInfoService.getListByIpId(151);
-        BookView view=null;
-        for(BookInfo bookInfo:list)
-        {
-            if(bookInfo.getSource()==4){
-                view=new BookView();
+    public void insert() {
+        List<BookInfo> list = bookInfoService.getListByIpId(151);
+        BookView view = null;
+        for (BookInfo bookInfo : list) {
+            if (bookInfo.getSource() == 4) {
+                view = new BookView();
                 view.setName(bookInfo.getTitle());
                 view.setAuthor(bookInfo.getAuthor());
                 view.introduction(bookInfo.getInfo());
@@ -51,9 +51,10 @@ public class IpBookTest extends BaseJunitTest{
         }
 
     }
+
     @Test
-    public void update(){
-        BookView bookView=new BookView();
+    public void update() {
+        BookView bookView = new BookView();
         bookView.id(1);
         bookView.bookId(110);
         bookView.compositeIndex(10000);
@@ -65,7 +66,7 @@ public class IpBookTest extends BaseJunitTest{
     }
 
     @Test
-    public void bookview(){
+    public void bookview() {
         Integer bookId = 40;
         List<BookInfo> bookInfos = bookInfoService.getListByIpId(bookId);
         if (CollectionUtils.isNotEmpty(bookInfos)) {
@@ -82,5 +83,15 @@ public class IpBookTest extends BaseJunitTest{
 
 
         }
+    }
+    @Test
+    public void updateInser() {
+        BookInfo bookInfo = bookInfoService.getById(20000);
+        bookInfo.setCrawlerId(20000);
+        bookInfo.setCommentNum(21212);
+        bookInfo.setAuthor("测试");
+        bookInfo.setSaleSort("12");
+        bookInfo.setInfo("adadads");
+        bookInfoService.updateInser(bookInfo);
     }
 }

@@ -49,6 +49,12 @@ public interface BookInfoService {
      * @return
      */
     public List<BookInfo> getListByOrderAndPage(Page page,String order);
+
+    /**
+     * 查找更新,如果没有找到符合的记录,则将更新的记录插入库中
+     * @param bookInfo
+     */
+    public void updateInser(BookInfo bookInfo);
  
 
 }

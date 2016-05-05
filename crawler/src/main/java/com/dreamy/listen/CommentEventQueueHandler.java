@@ -9,12 +9,14 @@ import com.dreamy.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/18.
  */
+@Component
 public class CommentEventQueueHandler  extends  AbstractQueueHandler{
 
     private static final Logger log = LoggerFactory.getLogger(CrawlerEventQueueHandler.class);

@@ -28,6 +28,9 @@
 	        <rabbit:binding queue="${queue_crawler_comment}"/>
 			<rabbit:binding queue="${queue_crawler_event}"/>
 			<rabbit:binding queue="${queue_crawler_keyword_event}"/>
+			<rabbit:binding queue="${queue_crawler_so_index_event}"/>
+
+
 
 	    </rabbit:bindings>
 	</rabbit:direct-exchange>
@@ -42,7 +45,7 @@
     <rabbit:queue name="${queue_crawler_event}"/>
 	<rabbit:queue name="${queue_crawler_comment}"/>
 	<rabbit:queue name="${queue_crawler_keyword_event}"/>
-
+	<rabbit:queue name="${queue_crawler_so_index_event}"/>
 
 	<bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
@@ -51,7 +54,10 @@
 
 	<bean id="keyWordEventQueueHandler" class="com.dreamy.listen.KeyWordEventQueueHandler"/>
 
-    <!--队列监听-->
+	<bean id="soIndexEventQueueHandler" class="com.dreamy.listen.SoIndexEventQueueHandler"/>
+
+
+	<!--队列监听-->
     <rabbit:listener-container
             connection-factory="connectionFactory"
             auto-startup="true"
@@ -76,6 +82,17 @@
 
 
 	<rabbit:listener-container
+		connection-factory="connectionFactory"
+		auto-startup="true"
+		acknowledge="auto"
+		prefetch="1"
+		concurrency="5"
+		message-converter="simpleMessageConverter"
+		error-handler="listenerErrorHandler">
+	<rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_event}" />
+</rabbit:listener-container>
+
+	<rabbit:listener-container
 			connection-factory="connectionFactory"
 			auto-startup="true"
 			acknowledge="auto"
@@ -83,7 +100,7 @@
 			concurrency="5"
 			message-converter="simpleMessageConverter"
 			error-handler="listenerErrorHandler">
-		<rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_event}" />
+		<rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index_event}" />
 	</rabbit:listener-container>
 
 </beans>  

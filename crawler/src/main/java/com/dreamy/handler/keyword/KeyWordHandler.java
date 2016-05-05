@@ -86,7 +86,7 @@ public class KeyWordHandler {
                 keyWord.indexNum(Integer.valueOf(num));
                 keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 百度搜索结果 ", html);
+                log.info(bookId + " 百度搜索结果 "+html);
             }
 
         }
@@ -116,7 +116,7 @@ public class KeyWordHandler {
                 keyWord.indexNum(Integer.valueOf(num));
                 keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 360 搜索结果 ", html);
+                log.info(bookId + " 360 搜索结果 "+ html);
             }
         }
     }
@@ -144,7 +144,7 @@ public class KeyWordHandler {
                 keyWord.indexNum(Integer.valueOf(num));
                 keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 360 微信搜索结果 ", html);
+                log.info(bookId + " 360 微信搜索结果 "+ html);
             }
         }
 
@@ -175,7 +175,7 @@ public class KeyWordHandler {
                 keyWord.indexNum(Integer.valueOf(result.replace(",", "")));
                 keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 微博搜索结果 ", responseText);
+                log.info(bookId + " 微博搜索结果 "+responseText);
             }
         } catch (Exception e) {
             log.error("微博搜索结果 失败 ", e);
@@ -222,9 +222,9 @@ public class KeyWordHandler {
 
         int i = 1;
         for (Map.Entry<String, String> entry : CrawSina.SINA_USERS.entrySet()) {
-
             LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
             ls.dologinSina();
+            System.out.println(CrawSina.Cookie);
             commonService.getCacheService().set("cookie" + i, CrawSina.Cookie,3600);
             i++;
 
