@@ -10,10 +10,7 @@ import com.dreamy.service.cache.CacheService;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
-import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.JsonUtils;
-import com.dreamy.utils.PatternUtils;
-import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -186,14 +183,8 @@ public class KeyWordHandler {
 
     }
 
-    private static int getRandom(int size) {
-        Random random = new Random();
-        int result = random.nextInt(size);
-        return result;
-    }
-
     private String getCookies() throws Exception {
-        String name = "cookie" + getRandom(2);
+        String name = "cookie" + NumberUtils.randomInt(1,3);
         String cookie = (String) commonService.getCacheService().get(name);
         if (StringUtils.isNotEmpty(cookie)) {
             return cookie;
@@ -234,8 +225,7 @@ public class KeyWordHandler {
 
             LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
             ls.dologinSina();
-            System.out.println(CrawSina.Cookie);
-            commonService.getCacheService().put("cookie" + i, CrawSina.Cookie);
+            commonService.getCacheService().set("cookie" + i, CrawSina.Cookie,3600);
             i++;
 
         }
