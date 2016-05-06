@@ -44,12 +44,19 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
+    public Integer getToutleCount() {
+        BookViewConditions conditions = new BookViewConditions();
+        conditions.createCriteria().andIdGreaterThan(0);
+        return bookViewDao.countByExample(conditions);
+    }
+
+    @Override
     public BookView getById(Integer id) {
         return bookViewDao.selectById(id);
     }
 
     @Override
-    public List<BookView> getListByIds(List<Integer> ids) {
+    public List<BookView> getListByBookIds(List<Integer> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return null;
         }

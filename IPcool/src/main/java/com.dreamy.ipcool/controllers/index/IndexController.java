@@ -3,6 +3,7 @@ package com.dreamy.ipcool.controllers.index;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookLevelEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
@@ -107,21 +108,21 @@ public class IndexController extends IpcoolController {
         BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookId);
         BookRank bookRank = new BookRank().bookId(bookId);
         List<BookRank> list = bookRankService.getList(bookRank, null);
+
         for (BookRank rank : list) {
-            if (rank.getType() == BookRankEnums.composite.getType()) {
+            if (rank.getType().equals(BookRankEnums.composite.getType())) {
                 model.put("crank", rank.getRank());// 综合指数排名
+                model.put("crankLevel", bookRankService.getRankClassByPosition(rank.getRank(), bookViewService.getToutleCount()));
+                model.put("bookLevels", BookLevelEnums.values());
             }
-            if (rank.getType() == BookRankEnums.develop.getType()) {
+            if (rank.getType().equals(BookRankEnums.develop.getType())) {
                 model.put("drank", rank.getRank());//开发潜力指数排名
             }
-            if (rank.getType() == BookRankEnums.propagation.getType()) {
+            if (rank.getType().equals(BookRankEnums.propagation.getType())) {
                 model.put("prank", rank.getRank());//传播指数排名
             }
-            if (rank.getType() == BookRankEnums.hot.getType()) {
+            if (rank.getType().equals(BookRankEnums.hot.getType())) {
                 model.put("hrank", rank.getRank());//热度指数排名
-            }
-            if (rank.getType() == 5) {
-                model.put("arank", rank.getRank());//活跃指数排名
             }
         }
 
@@ -134,6 +135,7 @@ public class IndexController extends IpcoolController {
         model.put("typeEnums", BookTypeEnums.values());
         model.put("history", bookIndexHistory);
         model.put("view", bookView);
+
         return "/index/detail";
     }
 

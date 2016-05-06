@@ -4,10 +4,13 @@ import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookRankDao;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankConditions;
+import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookLevelEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.service.cache.RedisClientService;
+import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.BeanUtils;
@@ -34,6 +37,9 @@ public class BookRankServiceImpl implements BookRankService {
     @Autowired
     private BookViewService bookViewService;
 
+    @Autowired
+    private BookRankHistoryService bookRankHistoryService;
+
     @Override
     public void save(BookRank bookRank) {
         bookRankDao.save(bookRank);
@@ -50,6 +56,43 @@ public class BookRankServiceImpl implements BookRankService {
         }
 
         return bookRankDao.selectByExample(conditions);
+    }
+
+    @Override
+    public Map<String, Object> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType) {
+        Map<String, Object> map = new HashMap<>();
+        BookRankConditions conditions = new BookRankConditions();
+
+        Integer endIndex = rankId + 5;
+        Integer startIndex = rankId - 5;
+        if (startIndex < 0) {
+            startIndex = 0;
+        }
+
+        conditions.createCriteria().andRankBetween(startIndex, endIndex).andTypeEqualTo(rankType);
+        conditions.setOrderByClause("rank desc");
+
+        List<BookRank> bookRanks = bookRankDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookRanks)) {
+            if (CollectionUtils.isNotEmpty(bookRanks)) {
+                Map<Integer, Integer> mapTemp = new HashMap<>();
+                List<Integer> bookIds = new LinkedList<>();
+
+                for (BookRank bookRank : bookRanks) {
+                    mapTemp.put(bookRank.getBookId(), bookRank.getRank());
+                    bookIds.add(bookRank.getBookId());
+                }
+
+                List<BookView> bookViews = bookViewService.getListByBookIds(bookIds);
+//                List<BookRankHistory> bookRankHistories = bookRankHistoryService
+
+                if (CollectionUtils.isNotEmpty(bookViews)) {
+
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -106,5 +149,27 @@ public class BookRankServiceImpl implements BookRankService {
         BookRankConditions conditions = new BookRankConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId);
         return bookRankDao.deleteByExample(conditions);
+    }
+
+    @Override
+    public Integer getRankClassByPosition(Integer position, Integer totalNum) {
+        Integer classLevel = BookLevelEnums.five_class.getLevel();
+        if (position < 0 || totalNum < 0) {
+            return classLevel;
+        }
+
+        Double percent = ((double) totalNum) / position;
+        if (percent >= BookLevelEnums.one_class.getValue()) {
+            classLevel = BookLevelEnums.one_class.getLevel();
+        } else if (percent >= BookLevelEnums.two_class.getValue()) {
+            classLevel = BookLevelEnums.two_class.getLevel();
+        } else if (percent >= BookLevelEnums.three_class.getValue()) {
+            classLevel = BookLevelEnums.three_class.getLevel();
+        } else if (percent >= BookLevelEnums.four_class.getValue()) {
+            classLevel = BookLevelEnums.four_class.getLevel();
+        }
+
+        return classLevel;
+
     }
 }

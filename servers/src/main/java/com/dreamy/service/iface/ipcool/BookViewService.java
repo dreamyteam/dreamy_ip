@@ -32,33 +32,36 @@ public interface BookViewService {
     public List<BookView> getList(BookView bookView, Page page);
 
     /**
+     * 获取当前表的长度
+     *
+     * @return
+     */
+    Integer getToutleCount();
+
+    /**
      * @param id
      * @return
      */
     public BookView getById(Integer id);
 
     /**
-     *
      * @param ids
      * @return
      */
-    public List<BookView> getListByIds(List<Integer> ids);
+    public List<BookView> getListByBookIds(List<Integer> ids);
 
     /**
-     *
      * @param page
      * @param order
      * @return
      */
-    public List<BookView> getListByPageAndOrder(Page page,String order);
+    public List<BookView> getListByPageAndOrder(Page page, String order);
 
     /**
-     *
      * @param bookId
      * @return
      */
     public BookView getByBookId(Integer bookId);
-
 
 
 }
