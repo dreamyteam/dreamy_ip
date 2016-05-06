@@ -1,6 +1,7 @@
 package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
+import com.dreamy.beans.dto.BookViewWithExt;
 import com.dreamy.dao.iface.ipcool.BookRankDao;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankConditions;
@@ -8,6 +9,7 @@ import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookLevelEnums;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.BookRankTrendEnums;
 import com.dreamy.mogodb.beans.Book;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
@@ -59,40 +61,34 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
-    public Map<String, Object> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType) {
-        Map<String, Object> map = new HashMap<>();
+    public List<BookViewWithExt> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType) {
+        List<BookViewWithExt> bookViewWithExts = new LinkedList<>();
         BookRankConditions conditions = new BookRankConditions();
 
-        Integer endIndex = rankId + 5;
-        Integer startIndex = rankId - 5;
+        Integer endIndex = rankId + 3;
+        Integer startIndex = rankId - 1;
         if (startIndex < 0) {
             startIndex = 0;
         }
 
         conditions.createCriteria().andRankBetween(startIndex, endIndex).andTypeEqualTo(rankType);
-        conditions.setOrderByClause("rank desc");
+        conditions.setOrderByClause("rank asc");
 
         List<BookRank> bookRanks = bookRankDao.selectByExample(conditions);
         if (CollectionUtils.isNotEmpty(bookRanks)) {
-            if (CollectionUtils.isNotEmpty(bookRanks)) {
-                Map<Integer, Integer> mapTemp = new HashMap<>();
-                List<Integer> bookIds = new LinkedList<>();
+            for (BookRank r : bookRanks) {
+                BookView bookview = bookViewService.getByBookId(r.getBookId());
 
-                for (BookRank bookRank : bookRanks) {
-                    mapTemp.put(bookRank.getBookId(), bookRank.getRank());
-                    bookIds.add(bookRank.getBookId());
-                }
+                BookViewWithExt bookViewWithExt = new BookViewWithExt();
+                bookViewWithExt.setBookView(bookview);
+                bookViewWithExt.setCompositeRank(r.getRank());
+                bookViewWithExt.setTrend(BookRankTrendEnums.keep.getType());
 
-                List<BookView> bookViews = bookViewService.getListByBookIds(bookIds);
-//                List<BookRankHistory> bookRankHistories = bookRankHistoryService
-
-                if (CollectionUtils.isNotEmpty(bookViews)) {
-
-                }
+                bookViewWithExts.add(bookViewWithExt);
             }
         }
 
-        return null;
+        return bookViewWithExts;
     }
 
     @Override

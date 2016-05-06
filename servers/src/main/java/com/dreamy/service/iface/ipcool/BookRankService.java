@@ -1,6 +1,7 @@
 package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
+import com.dreamy.beans.dto.BookViewWithExt;
 import com.dreamy.domain.ipcool.BookRank;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface BookRankService {
      * @param
      * @return
      */
-    Map<String, Object> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType);
+    List<BookViewWithExt> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType);
 
     /**
      * @param bookIds

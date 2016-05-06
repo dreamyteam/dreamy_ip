@@ -13,7 +13,8 @@ public class BookViewWithExt {
 
     private Integer compositeRank;
 
-    private Integer trend;
+    //0 表示持平 1 增长 2 降低
+    private Integer trend = 0;
 
 
     public BookView getBookView() {
