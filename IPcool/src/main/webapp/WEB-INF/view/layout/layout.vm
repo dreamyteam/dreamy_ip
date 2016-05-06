@@ -11,7 +11,7 @@
 <body>
 
 <div class="">
-
+    #parse("/common/top_bar.vm")
     $screen_content
     #parse("/common/footer.vm")
 </div>

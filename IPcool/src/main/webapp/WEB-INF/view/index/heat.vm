@@ -1,105 +1,81 @@
-
-    <header class="ipcool_hearder clearfix">
-        <div class="inner">
-            <a href="/" class="logo"></a>
-            <!--注册 登录按钮-->
-            <nav>
-                <button class="register" id="register">注册</button>
-                <button class="login" id="login">登录</button>
-            </nav>
-            <!--登录后用户id-->
-            <!-- <div class="user">
-                <h2 class="user_name">土豆</h2>
-                <div class="user_menu">
-                    <div class="arrow">
-                        <span></span><em></em>
-                    </div>  
-                    <ul>        
-                        <li><a href="#">我关注的</a></li>
-                        <li><a href="#">历史记录</a></li>
-                        <li><a href="#">个人信息</a></li>
-                        <li><a href="#">账号设置</a></li>
-                        <li><a href="#">修改密码</a></li>
-                        <li><a href="#">退出登录</a></li>
-                    </ul>
-                </div>
-            </div>   -->
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--program_info-->
+    <section class="program_info clearfix">
+        <!-- TOP100 形状 -->
+        <div class="level_flag">
+            TOP100
         </div>
-    </header>
-    <div class="container">
-        <!--搜索框-->
-        #parse("/common/search.vm")
-        <!--program_info-->
-        <section class="program_info clearfix">
-            <!-- TOP100 形状 -->
-            <div class="level_flag">
-                TOP100
+        <img src="$!{view.imageUrl}">
+
+        <div class="content">
+            <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
+            <h6 class="genre">类型：脱口秀</h6>
+
+            <p class="info">
+                作者：$!{view.author}
+            </p>
+
+            <div class="tags">
+                <span><a href="#">搞笑</a></span>
+                <span><a href="#">星爷</a></span>
+                <span><a href="#">2016</a></span>
+                <span><a href="#">环保</a></span>
             </div>
-            <img src="$!{view.imageUrl}">
-            <div class="content">
-                <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
-                <h6 class="genre">类型：脱口秀</h6>
-                <p class="info">
-                    作者：$!{view.author}
-                </p>
-                <div class="tags">
-                    <span><a href="#">搞笑</a></span>
-                    <span><a href="#">星爷</a></span>
-                    <span><a href="#">2016</a></span>
-                    <span><a href="#">环保</a></span>
-                </div>
+        </div>
+        <div class="update_time">
+            <h6>数据更新时间</h6>
+            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
+        </div>
+    </section>
+    <!--program_nav -->
+    <section class="program_nav" id="program_nav">
+        <div class="inner clearfix">
+            <ul>
+                <li class="active"><a href="">综合评价</a></li>
+                <li><a href="">开发意向</a></li>
+                <li><a href="">用户点评</a></li>
+                <li><a href="">简介</a></li>
+            </ul>
+            <div class="follow_download">
+                <span class="follow">关注</span>
+                <span class="download">下载完整报告</span>
             </div>
-            <div class="update_time">
-                <h6>数据更新时间</h6>
-                <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-            </div>
-        </section>
-        <!--program_nav -->
-        <section class="program_nav" id="program_nav">
-            <div class="inner clearfix">
-                <ul>
-                    <li class="active"><a href="">综合评价</a></li>
-                    <li><a href="">开发意向</a></li>
-                    <li><a href="">用户点评</a></li>
-                    <li><a href="">简介</a></li>
-                </ul>
-                <div class="follow_download">
-                    <span class="follow">关注</span>
-                    <span class="download">下载完整报告</span>
-                </div>
-            </div>
-        </section>
-        <!-- 热度趋势 -->
-        <section>
-            <h1 class="title">热度指数概况</h1>
-            <!-- 指数们 -->
-            <div class="values_container">
-                <!--当前指数指数 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前热度指数</h2>
-                    <div class="tooltip">
-                        ?
-                        <div class="tooltip_info">
-                            这是一段提示信息
-                        </div>
+        </div>
+    </section>
+    <!-- 热度趋势 -->
+    <section>
+        <h1 class="title">热度指数概况</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前热度指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        这是一段提示信息
                     </div>
-                    <h5 class="number">7,623 <span class="arrow">↑</span></h5>
                 </div>
-                <!-- 历史最高 -->
-                <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
-                </div>
-                <!--同类排名 -->
-                <div class="values_content">
-                    <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">33</h5>
-                </div>
+                <h5 class="number">7,623 <span class="arrow">↑</span></h5>
             </div>
-        </section>
-        <section>
-            <h1 class="title">热度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
-            <!-- 热度趋势图表 -->
-            <div id="chart_heat_trend"></div>
-        </section>
-    </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">10,345</h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">33</h5>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h1 class="title">热度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
+        <!-- 热度趋势图表 -->
+        <div id="chart_heat_trend"></div>
+    </section>
+</div>

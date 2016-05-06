@@ -1,36 +1,3 @@
-<header class="ipcool_hearder clearfix">
-    <div class="inner">
-        <a href="/" class="logo"></a>
-        <!--搜索框 用户中心显示-->
-        <!-- 				<div class="form_search">
-                <input type="text" class="keyword" placeholder="试试搜索美人鱼">
-                <input class="submit" type="submit" value="">
-            </div> -->
-        <!-- 搜索框 结束 -->
-        <!--注册 登录按钮-->
-        <nav>
-            <button class="register" id="register">注册</button>
-            <button class="login" id="login">登录</button>
-        </nav>
-        <!--登录后用户id-->
-        <!-- <div class="user">
-            <h2 class="user_name">土豆</h2>
-            <div class="user_menu">
-                <div class="arrow">
-                     <span></span><em></em>
-                </div>
-                <ul>
-                    <li><a href="#">我关注的</a></li>
-                    <li><a href="#">历史记录</a></li>
-                    <li><a href="#">个人信息</a></li>
-                    <li><a href="#">账号设置</a></li>
-                    <li><a href="#">修改密码</a></li>
-                    <li><a href="#">退出登录</a></li>
-                </ul>
-            </div>
-        </div>	 -->
-    </div>
-</header>
 <div class="container">
     <!--搜索框-->
     #parse("/common/search.vm")
@@ -98,7 +65,7 @@
                 </div>
             </div>
             <h5 class="number">$!{view.compositeIndex}</h5>
-            <em class="warning">数据异常偏大，仅供基本参考</em>
+##            <em class="warning">数据异常偏大，仅供基本参考</em>
             <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
         </div>
         <!-- 开发潜力 热度趋势 -->

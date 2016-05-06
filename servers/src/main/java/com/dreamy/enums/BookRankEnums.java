@@ -7,18 +7,29 @@ package com.dreamy.enums;
  * Time: 下午4:37
  */
 public enum BookRankEnums {
-    composite(1, "综合指数排名"),
-    develop(2, "潜力指数排行"),
-    propagation(3, "传播指数排行"),
-    hot(4, "热度指数排行"),
-    activity(5, "活跃指数排行");
+    composite(1, "综合指数排名","book_composite_rank"),
+    develop(2, "潜力指数排行","book_develop_rank"),
+    propagation(3, "传播指数排行","book_propagation_rank"),
+    hot(4, "热度指数排行","book_hot_rank"),
+    activity(5, "活跃指数排行","book_activity_rank");
     private Integer type;
 
     private String Description;
 
-    BookRankEnums(Integer type, String description) {
+    private String cacheKey;
+
+    BookRankEnums(Integer type, String description, String cacheKey) {
         this.type = type;
         Description = description;
+        this.cacheKey = cacheKey;
+    }
+
+    public String getCacheKey() {
+        return cacheKey;
+    }
+
+    public void setCacheKey(String cacheKey) {
+        this.cacheKey = cacheKey;
     }
 
     public Integer getType() {

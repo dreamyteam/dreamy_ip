@@ -37,6 +37,12 @@ public interface BookViewService {
      */
     public BookView getById(Integer id);
 
+    /**
+     *
+     * @param ids
+     * @return
+     */
+    public List<BookView> getListByIds(List<Integer> ids);
 
     /**
      *
