@@ -81,8 +81,10 @@ public class KeyWorkTask {
                         } else {
                             map.put("word", book.getName());
                         }
+                        queueService.push(QueueRoutingKeyEnums.publish_keyword_weixin.getKey(), map);
+                        Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
                     }
-                    Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
+
                 }
                 return null;
             }
