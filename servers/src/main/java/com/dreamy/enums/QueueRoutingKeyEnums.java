@@ -15,6 +15,8 @@ public enum QueueRoutingKeyEnums {
 
     publish_keyword("crawler_keyword_event","关键词搜索"),
 
+    publish_keyword_weixin("crawler_keyword_weixin_event","搜狗微信关键词搜索"),
+
     publish_so_index("so_index","指数抓取");
 
     private String key;

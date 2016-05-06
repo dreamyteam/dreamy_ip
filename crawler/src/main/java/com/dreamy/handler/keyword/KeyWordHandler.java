@@ -52,14 +52,10 @@ public class KeyWordHandler {
     @Resource
     CommonService commonService;
 
-
     public void crawler(String word, Integer bookId) {
         getBaidu(word, bookId);
         getSo(word, bookId);
         getSina(word, bookId);
-        getWeiXin(word, bookId);
-
-
     }
 
     /**
@@ -122,35 +118,6 @@ public class KeyWordHandler {
     }
 
     /**
-     * 微信搜索结果
-     *
-     * @param name
-     */
-    public void getWeiXin(String name, Integer bookId) {
-        name = HttpUtils.encodeUrl(name);
-        String cookie = "SUIR=1462265639;SUID=CCB2C7736A20900A0000000057286727;";
-        String url = "http://weixin.sogou.com/weixin?type=2&ie=utf8&query=" + name;
-        String html = HttpUtils.getHtmlGetByProxy(url, null, 0, userAgentService.getOneByRandom().getUserAgent());
-        Document document = Jsoup.parse(html);
-        if (document != null) {
-            Element element = document.getElementById("scd_num");
-            if (element != null) {
-                KeyWord keyWord = null;
-                String result = element.text();
-                String num = PatternUtils.getNum(result);
-                keyWord = new KeyWord();
-                keyWord.bookId(bookId);
-                keyWord.source(KeyWordEnums.weixin.getType());
-                keyWord.indexNum(Integer.valueOf(num));
-                keyWordService.saveOrUpdate(keyWord);
-            } else {
-                log.info(bookId + " 360 微信搜索结果 "+ html);
-            }
-        }
-
-    }
-
-    /**
      *  微博搜索结果
      *
      * @param name
@@ -183,6 +150,12 @@ public class KeyWordHandler {
 
     }
 
+    private static int getRandom(int size) {
+        Random random = new Random();
+        int result = random.nextInt(size);
+        return result;
+    }
+
     private String getCookies() throws Exception {
         String name = "cookie" + NumberUtils.randomInt(1,3);
         String cookie = (String) commonService.getCacheService().get(name);
@@ -190,9 +163,6 @@ public class KeyWordHandler {
             return cookie;
         } else {
             init();
-//            LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
-//            ls.dologinSina();
-//            commonService.getCacheService().put("cookie0", CrawSina.Cookie);
             cookie = (String) commonService.getCacheService().get("cookie1");
             if (StringUtils.isEmpty(cookie)) {
                 LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
@@ -222,11 +192,15 @@ public class KeyWordHandler {
 
         int i = 1;
         for (Map.Entry<String, String> entry : CrawSina.SINA_USERS.entrySet()) {
+
             LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
             ls.dologinSina();
-            System.out.println(CrawSina.Cookie);
-            commonService.getCacheService().set("cookie" + i, CrawSina.Cookie,3600);
-            i++;
+            if(StringUtils.isNotEmpty(CrawSina.Cookie))
+            {
+                commonService.getCacheService().set("cookie" + i, CrawSina.Cookie,3600);
+                i++;
+            }
+
 
         }
     }
