@@ -86,7 +86,9 @@ public class BookRankServiceImpl implements BookRankService {
             List<BookRank> bookRanks = bookRankDao.selectByExample(bookRankConditions);
             if (CollectionUtils.isNotEmpty(bookRanks)) {
                 for (BookRank bookRank : bookRanks) {
-                    map.put(bookRank.getBookId(), bookRank.getRank());
+                    if (bookRank.getType().equals(BookRankEnums.composite.getType())) {
+                        map.put(bookRank.getBookId(), bookRank.getRank());
+                    }
                 }
             }
         }
