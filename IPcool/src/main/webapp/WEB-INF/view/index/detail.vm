@@ -11,15 +11,14 @@
         <img src="$!{view.imageUrl}">
 
         <div class="content">
-            <h1 class="name">$!{view.name}
-                <span class="type">
-                    #foreach($bookType in $typeEnums)
+            <h1 class="name">$!{view.name}</h1>
+            <span class="type">
+                #foreach($bookType in $typeEnums)
                                #if($bookType.getType() == $view.getType())
-                        $bookType.getDescription()
+                    $bookType.getDescription()
+                #end
                     #end
-                    #end
-                </span>
-            </h1>
+            </span>
             <h6 class="genre">&nbsp;</h6>
 
             <p class="info">
@@ -211,12 +210,12 @@
                         <h6>[斗破苍穹]在全小说价值排名第33位, 并仍有上升趋势</h6>
                     </div>
                 </li>
-                <li>
-                    <p>同类内容</p>
-                </li>
-                <li>
-                    <p>同期内容</p>
-                </li>
+##                <li>
+##                    <p>同类内容</p>
+##                </li>
+##                <li>
+##                    <p>同期内容</p>
+##                </li>
             </ul>
         </div>
         <!-- 查看全部 -->
