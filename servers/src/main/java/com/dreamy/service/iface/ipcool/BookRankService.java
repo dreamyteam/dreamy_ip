@@ -1,6 +1,7 @@
 package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
+import com.dreamy.beans.dto.BookViewWithExt;
 import com.dreamy.domain.ipcool.BookRank;
 
 import java.util.List;
@@ -24,7 +25,14 @@ public interface BookRankService {
     List<BookRank> getList(BookRank bookRank, Page page);
 
     /**
+     * 根据排行榜的名词获取前后指定名次的详细信息
      *
+     * @param
+     * @return
+     */
+    List<BookViewWithExt> getRankPositionAndDetailByBookIdAndType(Integer rankId, Integer rankType);
+
+    /**
      * @param bookIds
      * @return
      */
@@ -36,7 +44,6 @@ public interface BookRankService {
      * @return
      */
     Map<Integer, Integer> getBookRankMapFromRedisByCacheKey(String cacheKey);
-
 
 
     /**
@@ -52,9 +59,16 @@ public interface BookRankService {
     Integer deleteById(Integer id);
 
     /**
-     *
      * @param bookId
      * @return
      */
     Integer deleteByBookId(Integer bookId);
+
+    /**
+     *
+     * @param position
+     * @param totalNum
+     * @return
+     */
+    Integer getRankClassByPosition(Integer position, Integer totalNum);
 }

@@ -148,30 +148,31 @@
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
                 <li class="active">全部</li>
-            ##                    <li>同类</li>
-            ##                    <li>同期</li>
             </ul>
+
             <ul class="tab_contents">
                 <li class="clearfix show">
                     <div class="ipstatus">
                         <h3>在全部文学中所处的地位</h3>
 
                         <div class="pre_bar">
-                            <span>2%</span>
-                            <span class="current">8%</span>
-                            <span>18%</span>
-                            <span>32%</span>
-                            <span>40%</span>
-                            <!--
-                                    top:
-                                    2%: 0
-                                    8%: 35px
-                                    32%: 70px
-                                    40%: 140px;
-                                 -->
-                            <i style="top: 35px;">当前</i>
+
+                            #foreach($bookLevel in $bookLevels)
+
+                                #if($bookLevel.getLevel() == $crankLevel)
+                                    <span class="current"> $bookLevel.getDescription()</span>
+                                    #set($percent=$bookLevel.getDescription())
+                                #else
+                                    <span class=""> $bookLevel.getDescription()</span>
+                                #end
+
+                            #end
+                            #set($length = 35)
+                            #set($topValue = $crankLevel - 1)
+                            #set($top = $topValue * $length)
+                            <i style="top: ${top}px;">当前</i>
                         </div>
-                        <h6>[斗破苍穹]在全小说中,　属于3%的优质级内容</h6>
+                        <h6>[$!{view.name}]在全部小说中,　属于${percent}的优质级内容</h6>
                     </div>
                     <div class="iprank clearfix">
                         <h3>在全部文学中的排名</h3>
@@ -183,32 +184,36 @@
                                 <th>价值指数</th>
                                 <th>趋势</th>
                             </tr>
-                            <tr>
-                                <td>32</td>
-                                <td>霸道总裁爱上我</td>
-                                <td>6554</td>
-                                <td>-</td>
-                            </tr>
-                            <tr class="current">
-                                <td>33</td>
-                                <td>斗破苍穹</td>
-                                <td>6553</td>
-                                <td>↑</td>
-                            </tr>
-                            <tr>
-                                <td>33</td>
-                                <td>重生之官场无敌</td>
-                                <td>6442</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>35</td>
-                                <td>斗破苍穹</td>
-                                <td>6553</td>
-                                <td>↓</td>
-                            </tr>
+
+                            #foreach($rankPosition in $rankPositions)
+                                <tr
+                                    #if($rankPosition.getBookView().getBookId() == $view.getBookId())
+                                            class="current"
+                                        #set($trend=$rankPosition.getTrend())
+                                    #end>
+                                    <td>$rankPosition.getCompositeRank()</td>
+                                    <td>$rankPosition.getBookView().getName()</td>
+                                    <td>$rankPosition.getBookView().getCompositeIndex()</td>
+                                    <td>
+                                        #if($rankPosition.getTrend() == 0)
+                                            -
+                                            #elseif($rankPosition.getTrend() == 1)
+                                            ↑
+                                            #else
+                                            ↓
+                                        #end
+                                    </td>
+                                </tr>
+                            #end 
+
                         </table>
-                        <h6>[斗破苍穹]在全小说价值排名第33位, 并仍有上升趋势</h6>
+                        <h6>[$!{view.name}]在全小说价值排名第 ${crank} 位, 并有
+                            #foreach($trendEnum in $trendEnums)
+                                #if($trendEnum.getType() == $trend)
+                                    $trendEnum.getDescription()
+                                #end
+                            #end
+                            趋势</h6>
                     </div>
                 </li>
 ##                <li>
@@ -224,6 +229,7 @@
             <a href="/comprehensive.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
+
     <!-- 开发潜力 -->
     <section>
         <h1 class="title">开发潜力</h1>
@@ -321,6 +327,7 @@
             <a href="">查看全部</a>
         </div>
     </section>
+
     <!-- 热度趋势 -->
     <section>
         <h1 class="title">热度趋势</h1>
@@ -356,6 +363,7 @@
             <a href="/heat.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
+
     <!-- 传播能力 -->
     <section>
         <h1 class="title">传播能力</h1>
@@ -394,6 +402,7 @@
             <div class="col" id="chart_social_platform"></div>
         </div>
     </section>
+
     <!--用户活跃-->
     <section  #if($bookType.getType() == 1) class="hidden" #end>
         <h1 class="title">用户活跃</h1>
@@ -429,6 +438,8 @@
             <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
+
+
     <!--用户分析-->
     <section>
         <h1 class="title">用户分析</h1>

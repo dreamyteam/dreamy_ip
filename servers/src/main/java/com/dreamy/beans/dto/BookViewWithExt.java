@@ -8,10 +8,13 @@ import com.dreamy.domain.ipcool.BookView;
  * Date: 16/5/6
  * Time: 上午10:02
  */
-public class BookViewWithRanks {
+public class BookViewWithExt {
     private BookView bookView;
 
     private Integer compositeRank;
+
+    //0 表示持平 1 增长 2 降低
+    private Integer trend = 0;
 
 
     public BookView getBookView() {
@@ -28,5 +31,13 @@ public class BookViewWithRanks {
 
     public void setCompositeRank(Integer compositeRank) {
         this.compositeRank = compositeRank;
+    }
+
+    public Integer getTrend() {
+        return trend;
+    }
+
+    public void setTrend(Integer trend) {
+        this.trend = trend;
     }
 }

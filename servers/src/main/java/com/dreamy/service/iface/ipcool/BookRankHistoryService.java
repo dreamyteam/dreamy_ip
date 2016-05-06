@@ -23,4 +23,6 @@ public interface BookRankHistoryService {
      * @return
      */
     public List<BookRankHistory> getList(BookRankHistory bookRankHistory, Page page);
+
+
 }
