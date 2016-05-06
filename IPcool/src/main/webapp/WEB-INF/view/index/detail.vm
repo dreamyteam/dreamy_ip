@@ -143,7 +143,7 @@
             </div>
         </div>
         <!--综合价值 图表 -->
-        <div id="chart_comprehensive_value"></div>
+        <div id="chart_comprehensive_value" data-fetch-url=""></div>
         <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
