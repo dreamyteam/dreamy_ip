@@ -108,16 +108,16 @@ public class IndexController extends IpcoolController {
         BookRank bookRank = new BookRank().bookId(bookId);
         List<BookRank> list = bookRankService.getList(bookRank, null);
         for (BookRank rank : list) {
-            if (rank.getType() == 1) {
+            if (rank.getType() == BookRankEnums.composite.getType()) {
                 model.put("crank", rank.getRank());// 综合指数排名
             }
-            if (rank.getType() == 2) {
+            if (rank.getType() == BookRankEnums.develop.getType()) {
                 model.put("drank", rank.getRank());//开发潜力指数排名
             }
-            if (rank.getType() == 3) {
+            if (rank.getType() == BookRankEnums.propagation.getType()) {
                 model.put("prank", rank.getRank());//传播指数排名
             }
-            if (rank.getType() == 4) {
+            if (rank.getType() == BookRankEnums.hot.getType()) {
                 model.put("hrank", rank.getRank());//热度指数排名
             }
             if (rank.getType() == 5) {

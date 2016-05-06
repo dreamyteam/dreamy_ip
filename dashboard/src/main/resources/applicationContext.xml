@@ -13,13 +13,13 @@
             <list>
                 <value>classpath:rabbitmq_develop.properties</value>
                 <value>classpath:jdbc_develop.properties</value>
-                <value>classpath:redis-develop.properties</value>
+                <value>classpath:redis_develop.properties</value>
                 <value>classpath:mongodb.properties</value>
             </list>
         </property>
     </bean>
 
-    <task:annotation-driven/>
+    <!--<task:annotation-driven/>-->
 
     <bean id="jacksonMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>

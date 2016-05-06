@@ -39,7 +39,6 @@ public class BookViewServiceImpl implements BookViewService {
         if (page != null) {
             page.setTotalNum(bookViewDao.countByExample(conditions));
             conditions.setPage(page);
-            conditions.setOrderByClause("hot_index desc");
         }
         return bookViewDao.selectByExample(conditions);
     }
@@ -47,6 +46,17 @@ public class BookViewServiceImpl implements BookViewService {
     @Override
     public BookView getById(Integer id) {
         return bookViewDao.selectById(id);
+    }
+
+    @Override
+    public List<BookView> getListByIds(List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return null;
+        }
+        BookViewConditions conditions = new BookViewConditions();
+        conditions.createCriteria().andBookIdIn(ids);
+
+        return bookViewDao.selectByExample(conditions);
     }
 
     @Override

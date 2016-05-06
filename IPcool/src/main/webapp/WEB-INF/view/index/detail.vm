@@ -64,7 +64,7 @@
                 </div>
             </div>
             <h5 class="number">$!{view.compositeIndex}</h5>
-            <em class="warning">数据异常偏大，仅供基本参考</em>
+        ##            <em class="warning">数据异常偏大，仅供基本参考</em>
             <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
         </div>
         <!-- 开发潜力 热度趋势 -->
@@ -101,16 +101,17 @@
             </div>
             <h5 class="number">$!{view.propagateIndex} <span class="rank">$!{prank}</span></h5>
 
-            <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
+            #if($bookType.getType() == 2)
+                <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
 
-            <div class="tooltip">
-                ?
-                <div class="tooltip_info">
-                    这是一段用户活跃指数的提示信息
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        这是一段用户活跃指数的提示信息
+                    </div>
                 </div>
-            </div>
-            <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
-
+                <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
+            #end
             <div>
     </section>
     <!--综合价值-->
@@ -394,7 +395,7 @@
         </div>
     </section>
     <!--用户活跃-->
-    <section>
+    <section  #if($bookType.getType() == 1) class="hidden" #end>
         <h1 class="title">用户活跃</h1>
         <!-- 指数们 -->
         <div class="values_container">

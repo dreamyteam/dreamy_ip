@@ -34,6 +34,7 @@
     <rabbit:queue name="${queue_crawler_event}"/>
     <rabbit:queue name="${queue_crawler_comment}"/>
     <rabbit:queue name="${queue_crawler_keyword_event}"/>
+    <rabbit:queue name="${queue_crawler_keyword_weixin_event}"/>
     <rabbit:queue name="${queue_crawler_so_index_event}"/>
 
 
@@ -45,6 +46,7 @@
             <rabbit:binding queue="${queue_crawler_comment}"/>
             <rabbit:binding queue="${queue_crawler_keyword_event}"/>
             <rabbit:binding queue="${queue_crawler_so_index_event}"/>
+            <rabbit:binding queue="${queue_crawler_keyword_weixin_event}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
