@@ -3,10 +3,7 @@ package com.dreamy.service.cache;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -52,8 +49,9 @@ public class RedisClientService {
     /**
      * sorted set 操作
      */
-//    @Autowired
-//    private ZSetOperations<String, Object> zSetOperations;
+    @Autowired
+    @Qualifier("zSetOperations")
+    private ZSetOperations<String, Object> zSetOperations;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -321,7 +319,17 @@ public class RedisClientService {
     }
 
 
-    /**********************************zset操作*******************************************/
+    /**
+     * *******************************zset操作******************************************
+     */
+    public void zadd(String key1, Integer score, String member, String... keyValues) {
+        String key = format(key1, keyValues);
+        zSetOperations.add(key, member, score);
+    }
+
+    public Set<Object> zrange(String key, long start, long end) {
+        return  zSetOperations.range(key, start, end);
+    }
 
 
     /**

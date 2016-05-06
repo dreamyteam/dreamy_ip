@@ -50,6 +50,17 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
+    public List<BookView> getListByIds(List<Integer> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return null;
+        }
+        BookViewConditions conditions = new BookViewConditions();
+        conditions.createCriteria().andBookIdIn(ids);
+
+        return bookViewDao.selectByExample(conditions);
+    }
+
+    @Override
     public List<BookView> getListByPageAndOrder(Page page, String order) {
         BookViewConditions conditions = new BookViewConditions();
         conditions.setPage(page);

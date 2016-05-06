@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Set;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = {"/"})
 public class HomepageController extends IpcoolController {
 
+    @Autowired
+    private RedisClientService redisClientService;
 
     @RequestMapping("")
     public String index() {

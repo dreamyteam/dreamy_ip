@@ -63,8 +63,8 @@
                     </ul>
                 </div>
                 <div class="overall">
-                    <h6>小说综合评分</h6>
-                    <span>$!{view.compositeIndex}</span>
+                    <h6>小说综合排名</h6>
+                    <span>$!rankMap.get($view.getBookId())</span>
                 </div>
             </div>
         #end
