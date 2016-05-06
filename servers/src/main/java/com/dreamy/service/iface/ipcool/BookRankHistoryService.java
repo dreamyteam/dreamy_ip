@@ -10,7 +10,17 @@ import java.util.List;
  */
 public interface BookRankHistoryService {
 
+    /**
+     *
+     * @param bookRankHistory
+     */
     public void save(BookRankHistory bookRankHistory);
 
+    /**
+     *
+     * @param bookRankHistory
+     * @param page
+     * @return
+     */
     public List<BookRankHistory> getList(BookRankHistory bookRankHistory, Page page);
 }

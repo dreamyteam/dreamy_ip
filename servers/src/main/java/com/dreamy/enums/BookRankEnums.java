@@ -8,10 +8,10 @@ package com.dreamy.enums;
  */
 public enum BookRankEnums {
     composite(1, "综合指数排名","book_composite_rank"),
-    develop(2, "潜力指数排行",""),
-    propagation(3, "传播指数排行",""),
-    hot(4, "热度指数排行",""),
-    activity(5, "活跃指数排行","");
+    develop(2, "潜力指数排行","book_develop_rank"),
+    propagation(3, "传播指数排行","book_propagation_rank"),
+    hot(4, "热度指数排行","book_hot_rank"),
+    activity(5, "活跃指数排行","book_activity_rank");
     private Integer type;
 
     private String Description;

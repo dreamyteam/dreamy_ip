@@ -12,23 +12,49 @@ import java.util.Set;
  */
 public interface BookRankService {
     /**
-     *
      * @param bookRank
      */
-    public void save(BookRank bookRank);
+    void save(BookRank bookRank);
 
     /**
-     *
      * @param bookRank
      * @param page
      * @return
      */
-    public List<BookRank> getList(BookRank bookRank, Page page);
+    List<BookRank> getList(BookRank bookRank, Page page);
 
     /**
      *
-     * @param redisSetResult
+     * @param bookIds
      * @return
      */
-    Map<Integer, Integer> getCompositeRankMap();
+    List<BookRank> getListByBookIds(List<Integer> bookIds);
+
+    /**
+     * 从redis中获取排行榜相关的内容
+     *
+     * @return
+     */
+    Map<Integer, Integer> getBookRankMapFromRedisByCacheKey(String cacheKey);
+
+
+
+    /**
+     * @param bookIds
+     * @return
+     */
+    Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds);
+
+    /**
+     * @param id
+     * @return
+     */
+    Integer deleteById(Integer id);
+
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    Integer deleteByBookId(Integer bookId);
 }

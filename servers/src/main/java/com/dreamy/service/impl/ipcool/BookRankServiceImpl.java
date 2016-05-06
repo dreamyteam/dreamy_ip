@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankConditions;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.mogodb.beans.Book;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -52,10 +53,17 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
-    public Map<Integer, Integer> getCompositeRankMap() {
+    public List<BookRank> getListByBookIds(List<Integer> bookIds) {
+
+
+        return null;
+    }
+
+    @Override
+    public Map<Integer, Integer> getBookRankMapFromRedisByCacheKey(String cacheKey) {
         Map<Integer, Integer> map = new HashMap<>();
 
-        Set<Object> redisSetResult = redisClientService.zrange(BookRankEnums.composite.getCacheKey(), 0, -1);
+        Set<Object> redisSetResult = redisClientService.zrange(cacheKey, 0, -1);
         if (CollectionUtils.isNotEmpty(redisSetResult)) {
             Integer i = 1;
             for (Object bookId : redisSetResult) {
@@ -67,4 +75,34 @@ public class BookRankServiceImpl implements BookRankService {
         return map;
     }
 
+    @Override
+    public Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        if (CollectionUtils.isNotEmpty(bookIds)) {
+            BookRankConditions bookRankConditions = new BookRankConditions();
+            bookRankConditions.createCriteria().andBookIdIn(bookIds);
+
+            List<BookRank> bookRanks = bookRankDao.selectByExample(bookRankConditions);
+            if (CollectionUtils.isNotEmpty(bookRanks)) {
+                for (BookRank bookRank : bookRanks) {
+                    map.put(bookRank.getBookId(), bookRank.getRank());
+                }
+            }
+        }
+
+        return map;
+    }
+
+    @Override
+    public Integer deleteById(Integer id) {
+        return bookRankDao.deleteById(id);
+    }
+
+    @Override
+    public Integer deleteByBookId(Integer bookId) {
+        BookRankConditions conditions = new BookRankConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+        return bookRankDao.deleteByExample(conditions);
+    }
 }
