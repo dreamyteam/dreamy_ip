@@ -1,50 +1,5 @@
 <div class="container">
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--搜索框 end-->
-    <!--program_info-->
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            TOP100
-        </div>
-        <img src="../../assets/images/pic.png">
-
-        <div class="content">
-            <h1 class="name">奇葩说（2016）<span class="type">小说</span></h1>
-            <h6 class="genre">类型：脱口秀</h6>
-
-            <p class="info">
-                导演：周星驰 / 主演：林允 章鱼怪 螃蟹精 小顺子 土豆
-            </p>
-
-            <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>2016-04-23</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li><a href="">综合评价</a></li>
-                <li class="active"><a href="">开发意向</a></li>
-                <li><a href="">用户点评</a></li>
-                <li><a href="">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
+    #parse("/index/common.vm")
     <section>
         <h1 class="title">开发意向</h1>
         <h6>投票你最期待的项目</h6>
