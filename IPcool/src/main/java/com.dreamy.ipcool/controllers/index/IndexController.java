@@ -66,7 +66,12 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/potential")
-    public String potential() {
+    public String potential(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+        BookView bookView = bookViewService.getById(ipId);
+        model.put("view", bookView);
+        if(bookView!=null) {
+            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+        }
         return "/index/potential";
     }
 
@@ -79,6 +84,9 @@ public class IndexController extends IpcoolController {
     public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
         BookView bookView = bookViewService.getById(ipId);
         model.put("view", bookView);
+        if(bookView!=null) {
+            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+        }
         return "/index/heat";
     }
 
@@ -89,8 +97,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/introduction")
     public String introduction(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-
         BookView bookView = bookViewService.getById(ipId);
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
         model.put("view", bookView);
         return "/index/introduction";
     }
@@ -151,10 +159,17 @@ public class IndexController extends IpcoolController {
         return "/index/detail";
     }
 
+    /**
+     * 用户活跃
+     * @param ipId
+     * @param model
+     * @return
+     */
     @RequestMapping("/persona")
     public String personal(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
         BookView bookView = bookViewService.getById(ipId);
         model.put("view", bookView);
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
         return "/index/persona";
     }
 
@@ -167,6 +182,7 @@ public class IndexController extends IpcoolController {
     public String propagation(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
         BookView bookView = bookViewService.getById(ipId);
         model.put("view", bookView);
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
         return "/index/propagation";
     }
 
