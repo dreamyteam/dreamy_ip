@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookIndexHistoryConditions;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +26,7 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
     }
 
     @Override
-    public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page) {
+    public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page,String orderBy) {
         Map<String,Object> params= BeanUtils.toQueryMap(bookIndexHistory);
         BookIndexHistoryConditions conditions= new BookIndexHistoryConditions();
         conditions.createCriteria().addByMap(params);
@@ -34,6 +35,13 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
             page.setTotalNum(bookIndexHistoryDao.countByExample(conditions));
             conditions.setPage(page);
         }
+        if (StringUtils.isNotEmpty(orderBy)){
+            conditions.setOrderByClause(orderBy);
+        }
+        else{
+            conditions.setOrderByClause("id");
+        }
+
         return bookIndexHistoryDao.selectByExample(conditions);
     }
 

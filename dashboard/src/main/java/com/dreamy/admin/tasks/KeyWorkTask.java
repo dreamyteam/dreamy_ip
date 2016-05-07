@@ -58,7 +58,7 @@ public class KeyWorkTask {
                         break;
                     }
                     currentPage++;
-                    Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
+                    Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
                 }
             }
         } catch (Exception e) {
@@ -75,15 +75,14 @@ public class KeyWorkTask {
                     Map<String, Object> map = new HashMap<>();
                     map.put("source", book.getType());
                     map.put("bookId", book.getBookId());
-                    if (book.getType() == KeyWordEnums.weixin.getType()) {
-                        if (StringUtils.isNotEmpty(book.getAuthor())) {
-                            map.put("word", book.getName() + " " + book.getAuthor());
-                        } else {
-                            map.put("word", book.getName());
-                        }
-                        queueService.push(QueueRoutingKeyEnums.publish_keyword_weixin.getKey(), map);
-                        Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
+                    if (StringUtils.isNotEmpty(book.getAuthor())) {
+                        map.put("word", book.getName() + " " + book.getAuthor());
+                    } else {
+                        map.put("word", book.getName());
                     }
+                    queueService.push(QueueRoutingKeyEnums.publish_keyword_weixin.getKey(), map);
+                    Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
+
 
                 }
                 return null;
