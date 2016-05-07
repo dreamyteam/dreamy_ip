@@ -257,12 +257,15 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高</h2>
+                <h2 class="program_title">
+                    历史最高
+                    <span class="date highest_history_date">2015/03/24</span>
+                </h2>
                 <h5 class="number">$!{history.developIndex}</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名</h2>
                 <h5 class="number highest_histroy_value">$!{drank}</h5>
             </div>
         </div>
