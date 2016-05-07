@@ -66,7 +66,17 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/potential")
-    public String potential() {
+    public String potential(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+        BookView bookView = bookViewService.getById(ipId);
+        if (bookView == null || bookView.getId() == null) {
+            return null;
+        }
+
+        Integer bookId = bookView.getBookId();
+
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookId));
+        model.put("view", bookView);
+
         return "/index/potential";
     }
 
