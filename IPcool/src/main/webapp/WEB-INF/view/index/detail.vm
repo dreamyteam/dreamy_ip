@@ -3,7 +3,7 @@
     #parse("/common/search.vm")
     <!--program_info-->
     <div class="hidden">
-        <input type="hidden" id="bookId" value="$view.getBooKId()">
+        <input type="hidden" id="bookId" value="$view.getBookId()">
     </div>
 
     <section class="program_info clearfix">
