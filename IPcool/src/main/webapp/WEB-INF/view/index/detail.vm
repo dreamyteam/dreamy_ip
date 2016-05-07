@@ -143,7 +143,7 @@
             </div>
         </div>
         <!--综合价值 图表 -->
-        <div id="chart_comprehensive_value"></div>
+        <div id="chart_comprehensive_value" data-fetch-url="/propagation/newMedia?ip=55"></div>
         <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
@@ -357,7 +357,7 @@
             </div>
         </div>
         <!-- 热度趋势图表 -->
-        <div id="chart_heat_trend"></div>
+        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=55"></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
             <a href="/heat.html?ip=$!{view.id}">查看全部</a>
@@ -393,13 +393,13 @@
             </div>
         </div>
         <!-- 传播指数图表 -->
-        <div id="chart_transmission_index"></div>
+        <div id="chart_transmission_index" data-fetch-url="/propagateIndex/history?ip=55"></div>
         <!-- 新闻平台 社交平台 饼图 容器-->
         <div class="col_2_container">
             <!--新闻平台图表-->
-            <div class="col" id="chart_media_platform"></div>
+            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=55"></div>
             <!--社交平台图表-->
-            <div class="col" id="chart_social_platform"></div>
+            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=55"></div>
         </div>
     </section>
 
@@ -432,7 +432,7 @@
             </div>
         </div>
         <!-- 用户活跃度图表 -->
-        <div id="chart_user_vitalty"></div>
+        <div id="chart_user_vitalty" ></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
             <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
@@ -446,9 +446,9 @@
         <!-- 受众年龄分布 容器-->
         <div class="col_2_container">
             <!--男女比例分布 图表-->
-            <div class="col" id="chart_sex_distribution"></div>
+            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=55"></div>
             <!--年龄分布 图表-->
-            <div class="col" id="chart_age_distribution"></div>
+            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=55"></div>
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore">

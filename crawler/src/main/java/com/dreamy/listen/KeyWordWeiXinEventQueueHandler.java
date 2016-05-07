@@ -32,6 +32,6 @@ public class KeyWordWeiXinEventQueueHandler extends AbstractQueueHandler {
         keyWordWeiXinHandler.crawler(word, ipId);
 
 
-    }
+            }
 }
 

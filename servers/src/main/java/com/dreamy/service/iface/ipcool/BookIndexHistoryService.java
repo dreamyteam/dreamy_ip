@@ -12,7 +12,7 @@ public interface BookIndexHistoryService {
 
     public void save(BookIndexHistory bookIndexHistory);
 
-    public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page);
+    public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page,String orderBy);
 
     /**
      * 获取指数最高纪录

@@ -46,18 +46,21 @@ public class KeyWordServiceImpl implements KeyWordService {
         KeyWordConditions conditions = new KeyWordConditions();
         conditions.createCriteria().andBookIdEqualTo(keyWord.getBookId()).andSourceEqualTo(keyWord.getSource());
         List<KeyWord> list = keyWordDao.selectByExample(conditions);
-        if(CollectionUtils.isNotEmpty(list))
-        {
-            KeyWord old=list.get(0);
+        if (CollectionUtils.isNotEmpty(list)) {
+            KeyWord old = list.get(0);
             keyWord.setId(old.getId());
             keyWordDao.update(keyWord);
-        }
-        else{
+        } else {
             keyWordDao.save(keyWord);
         }
 
 
+    }
 
-
+    @Override
+    public List<KeyWord> getByBookId(Integer bookId) {
+        KeyWordConditions conditions = new KeyWordConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+        return keyWordDao.selectByExample(conditions);
     }
 }
