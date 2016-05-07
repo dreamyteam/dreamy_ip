@@ -177,7 +177,7 @@ public class IndexController extends IpcoolController {
 
     @RequestMapping("/historyTrend")
     @ResponseBody
-    public void trendHistory(HttpServletResponse response, @RequestParam(value = "bookId") Integer bookId, @RequestParam(value = "type") Integer type) {
+    public void trendHistory(HttpServletResponse response, @RequestParam(value = "bookId") Integer bookId, @RequestParam(value = "type", defaultValue = "") Integer type, @RequestParam(value = "callback") String callback) {
         InterfaceBean bean = new InterfaceBean().success();
         BookRank bookRank = bookRankService.getByBookIdAndType(bookId, type);
         if (bookRank.getId() == null) {
@@ -194,7 +194,7 @@ public class IndexController extends IpcoolController {
             bean.setData(result);
         }
 
-        interfaceReturn(response, JsonUtils.toString(bean), "");
+        interfaceReturn(response, JsonUtils.toString(bean), callback);
     }
 
 }
