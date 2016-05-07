@@ -187,7 +187,10 @@ public class IndexController extends IpcoolController {
     }
 
     @RequestMapping("/user/reviews")
-    public String userReviews() {
+    public String userReviews(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+        BookView bookView = bookViewService.getById(ipId);
+        model.put("view", bookView);
+        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
         return "/index/user_reviews";
     }
 

@@ -1,50 +1,5 @@
-
 <div class="container">
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--program_info-->
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            TOP100
-        </div>
-        <img src="$!{view.imageUrl}">
-
-        <div class="content">
-            <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
-            <h6 class="genre">类型：脱口秀</h6>
-
-            <p class="info">
-                作者：$!{view.author}
-            </p>
-
-            <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li><a href="/detail.html?ip=$!{view.id}">综合评价</a></li>
-                <li><a href="/potential.html?ip=$!{view.id}">开发意向</a></li>
-                <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
-                <li class="active"><a href="">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
+    #parse("/index/common.vm")
 
     <section class="introduction">
         <h2 class="title">简介</h2>
