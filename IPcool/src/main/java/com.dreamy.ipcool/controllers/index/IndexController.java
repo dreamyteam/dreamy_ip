@@ -3,10 +3,7 @@ package com.dreamy.ipcool.controllers.index;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookLevelEnums;
-import com.dreamy.enums.BookRankEnums;
-import com.dreamy.enums.BookRankTrendEnums;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.*;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
@@ -114,21 +111,20 @@ public class IndexController extends IpcoolController {
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
-                if (rank.getType().equals(BookRankEnums.composite.getType())) {
-                    bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookRankEnums.composite.getType());
+                if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
 
                     model.put("crank", rankIndex);
                     model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
                     model.put("bookLevels", BookLevelEnums.values());
-                    model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookRankEnums.composite.getType()));
+                    model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
                 }
-                if (rank.getType().equals(BookRankEnums.develop.getType())) {
+                if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
                     model.put("drank", rankIndex);//开发潜力指数排名
                 }
-                if (rank.getType().equals(BookRankEnums.propagation.getType())) {
+                if (rank.getType().equals(BookIndexTypeEnums.propagate.getType())) {
                     model.put("prank", rankIndex);//传播指数排名
                 }
-                if (rank.getType().equals(BookRankEnums.hot.getType())) {
+                if (rank.getType().equals(BookIndexTypeEnums.hot.getType())) {
                     model.put("hrank", rankIndex);//热度指数排名
                 }
             }
@@ -139,7 +135,7 @@ public class IndexController extends IpcoolController {
         }
 
         model.put("tagList", bookTagsService.getTagMapByBookId(bookId));
-        model.put("rankEnums", BookRankEnums.values());
+        model.put("rankEnums", BookIndexTypeEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
         model.put("history", bookIndexHistory);

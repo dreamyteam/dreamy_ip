@@ -9,7 +9,6 @@ import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookLevelEnums;
-import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookRankTrendEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
