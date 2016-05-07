@@ -1,51 +1,5 @@
-
 <div class="container">
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--搜索框 end-->
-    <!--program_info-->
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            TOP100
-        </div>
-        <img src="../../assets/images/pic.png">
-
-        <div class="content">
-            <h1 class="name">奇葩说（2016）<span class="type">小说</span></h1>
-            <h6 class="genre">类型：脱口秀</h6>
-
-            <p class="info">
-                导演：周星驰 / 主演：林允 章鱼怪 螃蟹精 小顺子 土豆
-            </p>
-
-            <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>2016-04-23</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">综合评价</a></li>
-                <li><a href="">开发意向</a></li>
-                <li><a href="">用户点评</a></li>
-                <li><a href="">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
+    #parse("/index/common.vm")
     <!-- 传播能力 -->
     <section class="propagation">
         <h1 class="title">传播能力概况</h1>
@@ -60,7 +14,7 @@
                         这是一段提示信息
                     </div>
                 </div>
-                <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                <h5 class="number">$!{view.propagateIndex} <span class="arrow">↑</span></h5>
             </div>
             <div class="values_content">
                 <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
@@ -84,16 +38,16 @@
         <h1 class="title">媒体关注度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
         <h6 class="trend_introduction">长期稳健型趋势，有持续的内容来推动，总体有热度下降的走势</h6>
         <!-- 传播指数图表 -->
-        <div id="chart_transmission_index"></div>
+        <div id="chart_transmission_index" data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}"></div>
     </section>
     <section>
         <h1 class="title">市场传播媒体构成</h1>
         <!-- 新闻平台 社交平台 饼图 容器-->
         <div class="col_2_container">
             <!--新闻平台图表-->
-            <div class="col" id="chart_media_platform"></div>
+            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}"></div>
             <!--社交平台图表-->
-            <div class="col" id="chart_social_platform"></div>
+            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
         </div>
     </section>
     <section>
