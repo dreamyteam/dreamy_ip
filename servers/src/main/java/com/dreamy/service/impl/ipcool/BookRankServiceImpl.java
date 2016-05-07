@@ -7,18 +7,16 @@ import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankConditions;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookLevelEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookRankTrendEnums;
-import com.dreamy.mogodb.beans.Book;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
-import com.mchange.v1.util.ListUtils;
-import com.mchange.v1.util.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,7 +80,7 @@ public class BookRankServiceImpl implements BookRankService {
                 BookViewWithExt bookViewWithExt = new BookViewWithExt();
                 bookViewWithExt.setBookView(bookview);
                 bookViewWithExt.setCompositeRank(r.getRank());
-                bookViewWithExt.setTrend(BookRankTrendEnums.keep.getType());
+                bookViewWithExt.setTrend(getRankTrendByBookIdAndTypeAndIndex(r.getBookId(), rankType, r.getRankIndex()));
 
                 bookViewWithExts.add(bookViewWithExt);
             }
@@ -102,7 +100,7 @@ public class BookRankServiceImpl implements BookRankService {
     public Map<Integer, Integer> getBookRankMapFromRedisByCacheKey(String cacheKey) {
         Map<Integer, Integer> map = new HashMap<>();
 
-        Set<Object> redisSetResult = redisClientService.zrange(cacheKey, 0, -1);
+        Set<Object> redisSetResult = redisClientService.reverseZrange(cacheKey, 0, -1);
         if (CollectionUtils.isNotEmpty(redisSetResult)) {
             Integer i = 1;
             for (Object bookId : redisSetResult) {
@@ -125,7 +123,7 @@ public class BookRankServiceImpl implements BookRankService {
             List<BookRank> bookRanks = bookRankDao.selectByExample(bookRankConditions);
             if (CollectionUtils.isNotEmpty(bookRanks)) {
                 for (BookRank bookRank : bookRanks) {
-                    if (bookRank.getType().equals(BookRankEnums.composite.getType())) {
+                    if (bookRank.getType().equals(BookIndexTypeEnums.composite.getType())) {
                         map.put(bookRank.getBookId(), bookRank.getRank());
                     }
                 }
@@ -133,6 +131,24 @@ public class BookRankServiceImpl implements BookRankService {
         }
 
         return map;
+    }
+
+    @Override
+    public Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId, Integer type, Integer randIndex) {
+        Integer res = BookRankTrendEnums.keep.getType();
+
+        List<BookRankHistory> bookRankHistoryList = bookRankHistoryService.getByBookIdAndType(bookId, type);
+        if (CollectionUtils.isNotEmpty(bookRankHistoryList)) {
+            BookRankHistory bookRankHistory = bookRankHistoryList.get(0);
+            Integer lastIndex = bookRankHistory.getRankIndex();
+            if (randIndex > lastIndex) {
+                res = BookRankTrendEnums.up.getType();
+            } else if (randIndex < lastIndex) {
+                res = BookRankTrendEnums.down.getType();
+            }
+        }
+
+        return res;
     }
 
     @Override

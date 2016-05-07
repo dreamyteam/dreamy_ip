@@ -53,6 +53,15 @@ public interface BookRankService {
     Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds);
 
     /**
+     *
+     * @param bookId
+     * @param type
+     * @param randIndex
+     * @return
+     */
+    Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId,Integer type,Integer randIndex);
+
+    /**
      * @param id
      * @return
      */

@@ -19,6 +19,7 @@ import java.util.Map;
 public class BookRankHistoryServiceImpl implements BookRankHistoryService {
     @Resource
     BookRankHistoryDao bookRankHistoryDao;
+
     @Override
     public void save(BookRankHistory bookRankHistory) {
         bookRankHistoryDao.save(bookRankHistory);
@@ -27,13 +28,26 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
     @Override
     public List<BookRankHistory> getList(BookRankHistory bookRankHistory, Page page) {
 
-        Map<String,Object> params= BeanUtils.toQueryMap(bookRankHistory);
-        BookRankHistoryConditions conditions=new BookRankHistoryConditions();
+        Map<String, Object> params = BeanUtils.toQueryMap(bookRankHistory);
+        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
         conditions.createCriteria().addByMap(params);
-        if(page!=null){
+        if (page != null) {
             page.setTotalNum(bookRankHistoryDao.countByExample(conditions));
             conditions.setPage(page);
         }
+        return bookRankHistoryDao.selectByExample(conditions);
+    }
+
+    @Override
+    public List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type) {
+        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
+        conditions.setOrderByClause("created_at desc");
+
+        Page page = new Page();
+        page.setPageSize(1);
+        conditions.setPage(page);
+
         return bookRankHistoryDao.selectByExample(conditions);
     }
 }

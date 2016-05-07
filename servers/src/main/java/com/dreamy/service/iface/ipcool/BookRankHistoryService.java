@@ -24,5 +24,12 @@ public interface BookRankHistoryService {
      */
     public List<BookRankHistory> getList(BookRankHistory bookRankHistory, Page page);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    List<BookRankHistory> getByBookIdAndType(Integer bookId,Integer type);
+
 
 }

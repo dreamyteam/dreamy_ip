@@ -4,6 +4,7 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
@@ -67,13 +68,12 @@ public class BookRankCreateTask {
             Map<Integer, Integer> propagationRankMap = bookRankService.getBookRankMapFromRedisByCacheKey(BookRankEnums.propagation.getCacheKey());
             Map<Integer, Integer> hotRankMap = bookRankService.getBookRankMapFromRedisByCacheKey(BookRankEnums.hot.getCacheKey());
 
-
             for (BookView bookView : bookViewList) {
 
-                update(bookView, BookRankEnums.composite.getType(), compositeRankMap);
-                update(bookView, BookRankEnums.develop.getType(), developRankMap);
-                update(bookView, BookRankEnums.propagation.getType(), propagationRankMap);
-                update(bookView, BookRankEnums.hot.getType(), hotRankMap);
+                update(bookView, BookIndexTypeEnums.composite.getType(), compositeRankMap);
+                update(bookView, BookIndexTypeEnums.develop.getType(), developRankMap);
+                update(bookView, BookIndexTypeEnums.propagate.getType(), propagationRankMap);
+                update(bookView, BookIndexTypeEnums.hot.getType(), hotRankMap);
             }
         } catch (Exception e) {
             log.error("book rank update failed", e);
@@ -94,8 +94,19 @@ public class BookRankCreateTask {
             tempPage.setPageSize(1);
             List<BookRank> currentRankList = bookRankService.getList(bookRank, tempPage);
 
-            bookRank.rankIndex(rankMap.get(bookId))
-                    .rank(rankMap.get(bookId));
+            bookRank.rank(rankMap.get(bookId));
+            Integer index = 0;
+            if (type.equals(BookIndexTypeEnums.composite.getType())) {
+                index = bookView.getCompositeIndex();
+            } else if (type.equals(BookIndexTypeEnums.hot.getType())) {
+                index = bookView.getHotIndex();
+            } else if (type.equals(BookIndexTypeEnums.propagate.getType())) {
+                index = bookView.getPropagateIndex();
+            } else if (type.equals(BookIndexTypeEnums.develop.getType())) {
+                index = bookView.getDevelopIndex();
+            }
+
+            bookRank.rankIndex(index);
 
             if (CollectionUtils.isNotEmpty(currentRankList)) {
                 BookRank currentRank = currentRankList.get(0);
