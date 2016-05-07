@@ -11,13 +11,11 @@ import java.util.List;
 public interface BookRankHistoryService {
 
     /**
-     *
      * @param bookRankHistory
      */
     public void save(BookRankHistory bookRankHistory);
 
     /**
-     *
      * @param bookRankHistory
      * @param page
      * @return
@@ -25,11 +23,18 @@ public interface BookRankHistoryService {
     public List<BookRankHistory> getList(BookRankHistory bookRankHistory, Page page);
 
     /**
-     *
      * @param bookId
      * @return
      */
-    List<BookRankHistory> getByBookIdAndType(Integer bookId,Integer type);
+    List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type,Page page);
+
+
+    /**
+     * @param bookId
+     * @param type
+     * @return
+     */
+    BookRankHistory getTopHistoryByBookIdAndType(Integer bookId, Integer type);
 
 
 }

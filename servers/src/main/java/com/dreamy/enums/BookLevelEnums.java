@@ -7,11 +7,11 @@ package com.dreamy.enums;
  * Time: 下午3:38
  */
 public enum BookLevelEnums {
-    one_class(1, "1% ~ 2%", 50.0),
-    two_class(2, "3% ~ %8%", 12.5),
-    three_class(3, "9% ~ 18%", 5.25),
-    four_class(4, "19% ~ 32%", 3.125),
-    five_class(5, "33% ~ ", 2.5),;
+    one_class(1, "2%", 50.0),
+    two_class(2, "8%", 12.5),
+    three_class(3, "18%", 5.25),
+    four_class(4, "32%", 3.125),
+    five_class(5, "40%", 2.5),;
     private Integer level;
     private String description;
     private Double value;

@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookRankHistoryConditions;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,15 +40,34 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
     }
 
     @Override
-    public List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type) {
+    public List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type,Page page) {
         BookRankHistoryConditions conditions = new BookRankHistoryConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
         conditions.setOrderByClause("created_at desc");
 
-        Page page = new Page();
-        page.setPageSize(1);
         conditions.setPage(page);
 
         return bookRankHistoryDao.selectByExample(conditions);
+    }
+
+    @Override
+    public BookRankHistory getTopHistoryByBookIdAndType(Integer bookId, Integer type) {
+        BookRankHistory bookRankHistory = new BookRankHistory();
+
+        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
+
+        Page p = new Page();
+        p.setPageSize(1);
+
+        conditions.setPage(p);
+        conditions.setOrderByClause("rank_index");
+
+        List<BookRankHistory> bookRankHistoryList = bookRankHistoryDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookRankHistoryList)) {
+            bookRankHistory = bookRankHistoryList.get(0);
+        }
+
+        return bookRankHistory;
     }
 }

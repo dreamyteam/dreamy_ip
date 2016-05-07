@@ -2,6 +2,10 @@
     <!--搜索框-->
     #parse("/common/search.vm")
     <!--program_info-->
+    <div class="hidden">
+        <input type="hidden" id="bookId" value="$view.getBooKId()">
+    </div>
+
     <section class="program_info clearfix">
         <!-- TOP100 形状 -->
         <div class="level_flag">
@@ -118,7 +122,7 @@
     <section>
         <h1 class="title">综合价值</h1>
 
-        <div class="values_container">
+        <div class="values_container"  id="composite_values">
             <!--综合指数 -->
             <div class="values_content">
                 <h2 class="program_title">综合指数</h2>
@@ -133,8 +137,8 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">$!{history.compositeIndex}</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value">$!{history.compositeIndex}</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -234,7 +238,7 @@
     <section>
         <h1 class="title">开发潜力</h1>
         <!-- 指数们 -->
-        <div class="values_container">
+        <div class="values_container" id="develop_values">
             <!--综合指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前潜力指数</h2>
@@ -254,8 +258,8 @@
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">$!{drank}</h5>
+                <h2 class="program_title">当前排名 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value">$!{drank}</h5>
             </div>
         </div>
         <!-- 潜力模型图表 -->
@@ -332,7 +336,7 @@
     <section>
         <h1 class="title">热度趋势</h1>
         <!-- 指数们 -->
-        <div class="values_container">
+        <div class="values_container" id="hot_values">
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前指数</h2>
@@ -347,8 +351,8 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">$!{history.hotIndex}</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value">$!{history.hotIndex}</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -368,7 +372,7 @@
     <section>
         <h1 class="title">传播能力</h1>
         <!-- 指数们 -->
-        <div class="values_container">
+        <div class="values_container" id="propagate_values">
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">传播指数</h2>
@@ -383,8 +387,8 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">$!{history.developIndex}</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value">$!{history.developIndex}</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -407,7 +411,7 @@
     <section  #if($bookType.getType() == 1) class="hidden" #end>
         <h1 class="title">用户活跃</h1>
         <!-- 指数们 -->
-        <div class="values_container">
+        <div class="values_container" id="reputation_values">
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">用户活跃指数</h2>
@@ -422,8 +426,8 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">$!{history.activityIndex}</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value">$!{history.activityIndex}</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">

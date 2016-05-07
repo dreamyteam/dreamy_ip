@@ -19,12 +19,23 @@
                 <h1 class="main_title">让IP有序 让文创有依</h1>
                 <h6 class="sub_text">已分析文学 IP 10000+</h6>
                 <form class="search_bar_container" action="/search.html">
-##                    <input type="radio" name="type" value="all" checked="checked" />
-##                    <input type="radio" name="type" value="literature" />
-##                    <input type="radio" name="type" value="film" />
-##                    <input type="radio" name="type" value="character" />
-##                    <input type="radio" name="type" value="mechanism" />
-                    <div class="serarch_bar_container">
+
+                    <input id="category_all" type="radio" name="type" value="all"  checked="checked"/>
+                    <label for="category_all">全部</label>
+
+                    <input id="category_literature" type="radio" name="type" value="literature"  disabled="disabled"  />
+                    <label for="category_literature">文学</label>
+
+                    <input id="category_film" type="radio" name="type" value="film" disabled="disabled"/>
+                    <label for="category_film">影视</label>
+
+                    <input id="category_character" type="radio" name="type" value="character"  disabled="disabled"/>
+                    <label for="category_character">人物</label>
+
+                    <input id="category_mechanism" type="radio" name="type" value="mechanism"  disabled="disabled"/>
+                    <label for="category_mechanism">机构</label>
+
+                    <div class="serarch_bar_content">
                         <input type="text" name="content" placeholder="输入关键词查询" />
                         <input type="submit" value="搜索" />
                     </div>
