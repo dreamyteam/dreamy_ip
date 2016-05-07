@@ -10,6 +10,7 @@ import com.dreamy.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,16 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
     public List<BookIndexHistory> getList(BookIndexHistory bookIndexHistory, Page page,String orderBy) {
         Map<String,Object> params= BeanUtils.toQueryMap(bookIndexHistory);
         BookIndexHistoryConditions conditions= new BookIndexHistoryConditions();
-        conditions.createCriteria().addByMap(params);
+        BookIndexHistoryConditions.Criteria criteria = conditions.createCriteria();
+        if (params.containsKey("created_at")) {
+            criteria.andCreatedAtGreaterThanOrEqualTo((Date) params.get("created_at"));
+            params.remove("created_at");
+        }
+        if (params.containsKey("updated_at")) {
+            criteria.andCreatedAtLessThanOrEqualTo((Date) params.get("updated_at"));
+            params.remove("updated_at");
+        }
+        criteria.addByMap(params);
         if(page!=null)
         {
             page.setTotalNum(bookIndexHistoryDao.countByExample(conditions));

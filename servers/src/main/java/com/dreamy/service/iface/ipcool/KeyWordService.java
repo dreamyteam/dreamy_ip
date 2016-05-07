@@ -30,5 +30,7 @@ public interface KeyWordService {
      */
     public void saveOrUpdate(KeyWord keyWord);
 
+    public List<KeyWord> getByBookId(Integer bookId);
+
 
 }
