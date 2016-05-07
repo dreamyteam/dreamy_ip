@@ -143,7 +143,7 @@
             </div>
         </div>
         <!--综合价值 图表 -->
-        <div id="chart_comprehensive_value" data-fetch-url="/propagation/newMedia?ip=55"></div>
+        <div id="chart_comprehensive_value" data-fetch-url="/comprehensive/history?ip=55"></div>
         <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
@@ -151,7 +151,7 @@
             </ul>
 
             <ul class="tab_contents">
-                <li class="clearfix show">
+                <li class="clearfix show">f
                     <div class="ipstatus">
                         <h3>在全部文学中所处的地位</h3>
 
@@ -259,7 +259,7 @@
             </div>
         </div>
         <!-- 潜力模型图表 -->
-        <div id="chart_potential_model"></div>
+        <div id="chart_potential_model" data-fetch-url="/developIndex/history?ip=55"></div>
         <!-- 最受期待的开发项目 -->
         <div class="vote_container">
             <h3>最受期待的开发项目</h3>
@@ -393,13 +393,13 @@
             </div>
         </div>
         <!-- 传播指数图表 -->
-        <div id="chart_transmission_index" data-fetch-url="/propagateIndex/history?ip=55"></div>
+        <div id="chart_transmission_index" data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}"></div>
         <!-- 新闻平台 社交平台 饼图 容器-->
         <div class="col_2_container">
             <!--新闻平台图表-->
-            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=55"></div>
+            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}"></div>
             <!--社交平台图表-->
-            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=55"></div>
+            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
         </div>
     </section>
 
@@ -432,7 +432,7 @@
             </div>
         </div>
         <!-- 用户活跃度图表 -->
-        <div id="chart_user_vitalty" ></div>
+        <div id="chart_user_vitalty" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
             <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
@@ -446,9 +446,9 @@
         <!-- 受众年龄分布 容器-->
         <div class="col_2_container">
             <!--男女比例分布 图表-->
-            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=55"></div>
+            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=$!{view.bookId}"></div>
             <!--年龄分布 图表-->
-            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=55"></div>
+            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore">
@@ -462,12 +462,12 @@
         <div class="review_container">
             <div class="review_value">
                 <h2>综合口碑</h2>
-                <h5>8.6</h5>
+                <h5>$!{view.reputationIndex} </h5>
                 <h6>大多数人觉得很好</h6>
             </div>
             <div class="review_chart">
                 <button>写点评</button>
-                <div id="chart_reviews"></div>
+                <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
             </div>
         </div>
         <ul class="comments_container">
