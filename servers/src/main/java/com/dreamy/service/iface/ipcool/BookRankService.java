@@ -39,6 +39,14 @@ public interface BookRankService {
     List<BookRank> getListByBookIds(List<Integer> bookIds);
 
     /**
+     *
+     * @param bookId
+     * @param type
+     * @return
+     */
+    BookRank getByBookIdAndType(Integer bookId,Integer type);
+
+    /**
      * 从redis中获取排行榜相关的内容
      *
      * @return
@@ -53,13 +61,19 @@ public interface BookRankService {
     Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds);
 
     /**
-     *
      * @param bookId
      * @param type
      * @param randIndex
      * @return
      */
-    Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId,Integer type,Integer randIndex);
+    Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId, Integer type, Integer randIndex);
+
+    /**
+     * @param position
+     * @param totalNum
+     * @return
+     */
+    Integer getRankClassByPosition(Integer position, Integer totalNum);
 
     /**
      * @param id
@@ -73,11 +87,5 @@ public interface BookRankService {
      */
     Integer deleteByBookId(Integer bookId);
 
-    /**
-     *
-     * @param position
-     * @param totalNum
-     * @return
-     */
-    Integer getRankClassByPosition(Integer position, Integer totalNum);
+
 }

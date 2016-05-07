@@ -1,25 +1,30 @@
 package com.dreamy.ipcool.controllers.index;
 
+import com.dreamy.beans.InterfaceBean;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
+import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.*;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comments;
-import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
-import com.dreamy.service.iface.ipcool.BookRankService;
-import com.dreamy.service.iface.ipcool.BookTagsService;
-import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.CommentService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +46,8 @@ public class IndexController extends IpcoolController {
     private BookRankService bookRankService;
     @Autowired
     private BookTagsService bookTagsService;
+    @Autowired
+    private BookRankHistoryService bookRankHistoryService;
 
 
     /**
@@ -168,5 +175,26 @@ public class IndexController extends IpcoolController {
         return "/index/user_reviews";
     }
 
+    @RequestMapping("/historyTrend")
+    @ResponseBody
+    public void trendHistory(HttpServletResponse response, @RequestParam(value = "bookId") Integer bookId, @RequestParam(value = "type") Integer type) {
+        InterfaceBean bean = new InterfaceBean().success();
+        BookRank bookRank = bookRankService.getByBookIdAndType(bookId, type);
+        if (bookRank.getId() == null) {
+            bean.failure(1, "book id not exist");
+        } else {
+            Map<String, String> result = new HashMap<String, String>();
+            BookRankHistory bookRankHistory = bookRankHistoryService.getTopHistoryByBookIdAndType(bookId, type);
+
+            result.put("current_index_value", bookRank.getRankIndex().toString());
+            result.put("current_index_trend", bookRankService.getRankTrendByBookIdAndTypeAndIndex(bookId, type, bookRank.getRankIndex()).toString());
+            result.put("history_top_value", bookRankHistory.getRankIndex().toString());
+            result.put("history_top_date", TimeUtils.toString("yyyy-MM-dd", bookRankHistory.getCreatedAt()));
+
+            bean.setData(result);
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+    }
 
 }

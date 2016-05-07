@@ -96,6 +96,25 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
+    public BookRank getByBookIdAndType(Integer bookId, Integer type) {
+        BookRank bookRank = new BookRank();
+
+        BookRankConditions conditions = new BookRankConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
+
+        Page page = new Page();
+        page.setPageSize(1);
+        conditions.setPage(page);
+
+        List<BookRank> bookRanks = bookRankDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookRanks)) {
+            bookRank = bookRanks.get(0);
+        }
+
+        return bookRank;
+    }
+
+    @Override
     public Map<Integer, Integer> getBookRankMapFromRedisByCacheKey(String cacheKey) {
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -135,8 +154,9 @@ public class BookRankServiceImpl implements BookRankService {
     @Override
     public Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId, Integer type, Integer randIndex) {
         Integer res = BookRankTrendEnums.keep.getType();
-
-        List<BookRankHistory> bookRankHistoryList = bookRankHistoryService.getByBookIdAndType(bookId, type);
+        Page page = new Page();
+        page.setPageSize(1);
+        List<BookRankHistory> bookRankHistoryList = bookRankHistoryService.getByBookIdAndType(bookId, type,page);
         if (CollectionUtils.isNotEmpty(bookRankHistoryList)) {
             BookRankHistory bookRankHistory = bookRankHistoryList.get(0);
             Integer lastIndex = bookRankHistory.getRankIndex();
