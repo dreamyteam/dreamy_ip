@@ -2,6 +2,7 @@ package com.dreamy.admin.controller.crawler;
 
 import com.dreamy.admin.beans.BookCrawlerModel;
 import com.dreamy.admin.controller.DashboardController;
+import com.dreamy.admin.tasks.IpBookCrawlerTask;
 import com.dreamy.admin.tasks.KeyWorkTask;
 import com.dreamy.admin.tasks.SoIndexTask;
 import com.dreamy.beans.Page;
@@ -44,7 +45,8 @@ public class CrawlerController extends DashboardController {
 
     @Autowired
     SoIndexTask soIndexTask;
-
+    @Autowired
+    IpBookCrawlerTask ipBookCrawlerTask;
 
 
     /**
@@ -162,6 +164,13 @@ public class CrawlerController extends DashboardController {
 
         return redirect("/crawler.html");
     }
+
+    @RequestMapping(value = "/all")
+    public String crawlingAll() {
+        ipBookCrawlerTask.crawler();
+        return redirect("/crawler.html");
+    }
+
 
     @RequestMapping(value = "/keyword")
     public String crawlingKeyWord() {
