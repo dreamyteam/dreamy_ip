@@ -4,6 +4,7 @@ package com.dreamy.handler;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,8 +26,8 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     @Override
     public BookInfo getByUrl(String url) {
         url = HttpUtils.toUtf8String(url);
-        String html = HttpUtils.getHtmlGetByProxy(url,null, 0, userAgentService.getOneByRandom().getUserAgent());
-//        html = HttpUtils.getHtmlGet(url);
+//        String html = HttpUtils.getHtmlGetByProxy(url,null, 0, userAgentService.getOneByRandom().getUserAgent());
+        String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
@@ -163,7 +164,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         } catch (Exception e) {
             log.error("解析 图书销售排名 异常", e);
         } finally {
-            bean.setSaleSort(saleSort);
+            bean.setSaleSort(PatternUtils.getNum(saleSort));
         }
 
     }
