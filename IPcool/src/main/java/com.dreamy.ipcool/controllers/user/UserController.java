@@ -39,4 +39,9 @@ public class UserController extends IpcoolController {
     public String modifyPassword() {
         return "/user/password_modify";
     }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "/homepage/homepage";
+    }
 }

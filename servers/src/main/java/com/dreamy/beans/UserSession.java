@@ -27,8 +27,15 @@ public class UserSession  implements CanonicalSession {
 
     private Date loginTime;
 
+    private String imageUrl;
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     private Map<String, Serializable> attributes = new HashMap<>();
 

@@ -11,15 +11,7 @@
         #end
     </section>
     <section class="search_result">
-        <!--搜索结果为0时 显示-->
-        <!-- <div class="sresult_none clearfix" >
-            <h5>"<span class="name">霸道总裁爱上我</span>"可能不具备分析价值或暂未被收录</h5>
-            <h6>您可以:</h6>
-            <button>提交收录申请</button>
-            <h6>或</h6>
-            <button class="disabled">购买专属分析服务 | ￥999.00</button>
-        </div> -->
-        <!--搜索结果-->
+
         <div class="hidden" id="search-attach">
 
             <input type="hidden" name="status" value="1">
@@ -27,12 +19,15 @@
 
         </div>
 
-        #foreach($view in $list)
-            <div class="sresult_ip clearfix">
-                <a class="sresult_ip_img_cointainer" href="/index/detail.html?ip=${view.id}"><img src="$!{view.imageUrl}"></a>
+        #if($list)
 
-                <div class="sresult_content">
-                    <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
+            #foreach($view in $list)
+                <div class="sresult_ip clearfix">
+                    <a class="sresult_ip_img_cointainer" href="/index/detail.html?ip=${view.id}"><img
+                            src="$!{view.imageUrl}"></a>
+
+                    <div class="sresult_content">
+                        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
 
                         <span class="type">
                             #foreach($bookType in $typeEnums)
@@ -41,31 +36,39 @@
                             #end
                             #end
                         </span>
-                    </h2>
-                    <h6>作者: $!{view.author}</h6>
-                    <ul class="quotient">
-                        <li>
-                            <h6>开发潜力</h6>
-                            <span>$!{view.developIndex}</span>
-                        </li>
-                        <li>
-                            <h6>传播指数</h6>
-                            <span>$!{view.propagateIndex}</span>
-                        </li>
-                        <li>
-                            <h6>热度指数</h6>
-                            <span>$!{view.hotIndex}</span>
-                        </li>
-                        <li>
-                            <h6>受众口碑</h6>
-                            <span>$!{view.reputationIndex}</span>
-                        </li>
-                    </ul>
+                        </h2>
+                        <h6>作者: $!{view.author}</h6>
+                        <ul class="quotient">
+                            <li>
+                                <h6>开发潜力</h6>
+                                <span>$!{view.developIndex}</span>
+                            </li>
+                            <li>
+                                <h6>传播指数</h6>
+                                <span>$!{view.propagateIndex}</span>
+                            </li>
+                            <li>
+                                <h6>热度指数</h6>
+                                <span>$!{view.hotIndex}</span>
+                            </li>
+                            <li>
+                                <h6>受众口碑</h6>
+                                <span>$!{view.reputationIndex}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="overall">
+                        <h6>文学综合排名</h6>
+                        <span>$!rankMap.get($view.getBookId())</span>
+                    </div>
                 </div>
-                <div class="overall">
-                    <h6>文学综合排名</h6>
-                    <span>$!rankMap.get($view.getBookId())</span>
-                </div>
+            #end
+        #else
+            <div class="sresult_none clearfix">
+                <h5>"<span class="name">$!{content}</span>"可能不具备分析价值或暂未被收录</h5>
+                <h6>您可以:</h6>
+                <button>提交收录申请</button>
+
             </div>
         #end
     </section>
