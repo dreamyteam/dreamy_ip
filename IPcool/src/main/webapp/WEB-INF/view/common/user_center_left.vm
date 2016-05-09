@@ -5,10 +5,10 @@
             <img src="$!thisUser.imageUrl">
         </div>
         <h2 class="user_name">$!thisUser.username</h2>
-        <h6 class="user_signature">我是90后牛逼闪闪的新锐导演</h6>
+        <h6 class="user_signature">$!thisUser.info</h6>
     </li>
-    <li><a href="">我关注的</a></li>
-    <li class="active"><a href="">帐号信息</a></li>
-    <li><a href="">修改密码</a></li>
-    <li><a href="">历史纪录</a></li>
+##    <li><a href="">我关注的</a></li>
+    <li #if($pageName=="bio") class="active" #end><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">帐号信息</a></li>
+    <li #if($pageName=="password") class="active"    #end><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
+##    <li><a href="">历史纪录</a></li>
 </ul>

@@ -50,6 +50,8 @@ public class LoginController extends IpcoolController {
             session.setUsername(user.getUserName());
             session.setUserKey(user.getUserKey());
             session.setImageUrl(user.getImageUrl());
+            session.setInfo(user.getInfo());
+            session.setSex(user.getSex());
 
             userSessionContainer.set(getUserSessionId(request), session);
         }

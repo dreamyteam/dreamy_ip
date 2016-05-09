@@ -105,7 +105,10 @@
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="ip_user" domainObjectName="user.User">
+        <!--<table tableName="ip_user" domainObjectName="user.User">-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="ip_user_attach" domainObjectName="user.UserAttach">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 
