@@ -15,7 +15,7 @@
 
     <bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
         <constructor-arg ref="mongo" />
-        <constructor-arg name="databaseName" value="mongodb" />
+        <constructor-arg name="databaseName" value="${mongo.database.name}" />
 
     </bean>
 
