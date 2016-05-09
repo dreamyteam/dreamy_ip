@@ -197,12 +197,10 @@
                 <h5 class="number">$!{view.developIndex}<span class="arrow">↑</span></h5>
             </div>
             <!-- 历史最高 -->
+            <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">
-                    历史最高
-                    <span class="date highest_history_date">2015/03/24</span>
-                </h2>
-                <h5 class="number">$!{history.developIndex}</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -309,7 +307,7 @@
             </div>
         </div>
         <!-- 热度趋势图表 -->
-        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=55"></div>
+        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=${view.bookId}"></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
             <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
@@ -336,7 +334,7 @@
             <!-- 历史最高 -->
             <div class="values_content">
                 <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value">$!{history.propagateIndex}</h5>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -379,7 +377,7 @@
             <!-- 历史最高 -->
             <div class="values_content">
                 <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value">$!{history.activityIndex}</h5>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">

@@ -46,13 +46,13 @@ public class SougouHandler {
         OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), Sougou.class);
         word=word.replace(" ","");
         String url = "http://news.sogou.com/news?query=" + word;
-
         Sougou sougou = ooSpider.<Sougou>get(url);
         if(sougou!=null) {
             List<String> list = sougou.getUrls();
             ooSpider.close();
             if (CollectionUtils.isNotEmpty(list)) {
                 int size = list.size();
+                newsMediaService.delByBookId(bookId);
                 for (int i = 0; i < size; i++) {
                     get(list.get(i), i, bookId);
                 }

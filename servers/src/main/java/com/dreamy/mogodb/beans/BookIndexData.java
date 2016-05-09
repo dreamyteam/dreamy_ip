@@ -2,6 +2,7 @@ package com.dreamy.mogodb.beans;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +37,8 @@ public class BookIndexData {
     private  OverviewJson overviewJson;
 
     private String lastDate;
+
+    private Date updatedAt;
 
     public String[] getAge() {
         return age;
@@ -123,5 +126,13 @@ public class BookIndexData {
 
     public void setLastDate(String lastDate) {
         this.lastDate = lastDate;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
