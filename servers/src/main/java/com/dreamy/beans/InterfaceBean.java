@@ -1,6 +1,8 @@
 package com.dreamy.beans;
 
 import java.io.Serializable;
+
+import com.dreamy.enums.ErrorCodeEnums;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
@@ -30,6 +32,12 @@ public class InterfaceBean implements Serializable {
     public InterfaceBean failure(int code, String message) {
         setErrorCode(code);
         setErrorMsg(message);
+        return this;
+    }
+
+    public InterfaceBean failure(ErrorCodeEnums errorCodeEnums) {
+        setErrorCode(errorCodeEnums.getErrorCode());
+        setErrorMsg(errorCodeEnums.getErrorMsg());
         return this;
     }
 
