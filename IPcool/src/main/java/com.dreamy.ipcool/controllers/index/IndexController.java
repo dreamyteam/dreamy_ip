@@ -61,11 +61,15 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/comprehensive")
     public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
         getCommonDataOfPage(ipId, model, request);
+        Integer rankIndex = Integer.parseInt(model.get("crank").toString());
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
+        model.put("bookLevels", BookLevelEnums.values());
+        model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
         return "/index/comprehensive";
     }
 
     /**
-     * 开发意向
+     * 开发潜力
      *
      * @return
      */
@@ -76,12 +80,26 @@ public class IndexController extends IpcoolController {
     }
 
     /**
+     * 开发意向
+     *
+     * @return
+     */
+    @RequestMapping("/develop")
+    public String develop(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
+        return "/index/develop";
+    }
+
+
+    /**
      * 热度指数更多
      *
      * @return
      */
     @RequestMapping("/heat")
     public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        model.put("endDate",TimeUtils.toString("yyyy/MM/dd",TimeUtils.appointed(-1)));
+        model.put("startDate",TimeUtils.toString("yyyy/MM/dd",TimeUtils.appointed(-8)));
         getCommonDataOfPage(ipId, model, request);
         return "/index/heat";
     }
@@ -154,6 +172,7 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/propagation")
     public String propagation(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+
         getCommonDataOfPage(ipId, model, request);
         return "/index/propagation";
     }

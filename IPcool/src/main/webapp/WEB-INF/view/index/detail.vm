@@ -83,7 +83,7 @@
             <!-- 历史最高 -->
             <div class="values_content">
                 <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value">$!{history.compositeIndex}</h5>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -276,7 +276,7 @@
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore">
-            <a href="">查看全部</a>
+            <a href="/index/potential?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
 
@@ -300,7 +300,7 @@
             <!-- 历史最高 -->
             <div class="values_content">
                 <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value">$!{history.hotIndex}</h5>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -353,10 +353,14 @@
             <!--社交平台图表-->
             <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
         </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore">
+            <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
+        </div>
     </section>
 
     <!--用户活跃-->
-    <section  #if($bookType.getType() == 1) class="hidden" #end>
+    <section  #if($view.getType() == 1) class="hidden" #end>
         <h1 class="title">用户活跃</h1>
         <!-- 指数们 -->
         <div class="values_container" id="reputation_values">

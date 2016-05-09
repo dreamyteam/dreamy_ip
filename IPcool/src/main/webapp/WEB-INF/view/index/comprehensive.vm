@@ -20,18 +20,18 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">10,345</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--全站排名 -->
             <div class="values_content">
                 <h2 class="program_title">全站排名</h2>
-                <h5 class="number">33</h5>
+                <h5 class="number">暂无</h5>
             </div>
             <!-- 同类排名 -->
             <div class="values_content">
                 <h2 class="program_title">同类排名</h2>
-                <h5 class="number">346</h5>
+                <h5 class="number">$!{crank}</h5>
             </div>
         </div>
     </section>

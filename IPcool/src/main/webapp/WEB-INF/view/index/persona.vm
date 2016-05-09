@@ -19,13 +19,13 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">10,345</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
                 <h2 class="program_title">排名</h2>
-                <h5 class="number">33</h5>
+                <h5 class="number">$!{arank}</h5>
             </div>
             <div class="values_content">
                 <h2 class="program_title">主要年龄段</h2>

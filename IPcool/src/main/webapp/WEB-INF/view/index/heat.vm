@@ -1,49 +1,5 @@
 <div class="container">
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--program_info-->
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            TOP100
-        </div>
-        <img src="$!{view.imageUrl}">
-
-        <div class="content">
-            <h1 class="name">$!{view.name}<span class="type">出版文学</span></h1>
-            <h6 class="genre">类型：脱口秀</h6>
-
-            <p class="info">
-                作者：$!{view.author}
-            </p>
-
-            <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">综合评价</a></li>
-                <li><a href="">开发意向</a></li>
-                <li><a href="">用户点评</a></li>
-                <li><a href="">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
+    #parse("/index/common.vm")
     <!-- 热度趋势 -->
     <section>
         <h1 class="title">热度指数概况</h1>
@@ -63,20 +19,20 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">10,345</h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
-                <h5 class="number">33</h5>
+                <h2 class="program_title">当前排名</h2>
+                <h5 class="number">$!{hrank}</h5>
             </div>
         </div>
     </section>
     <section>
-        <h1 class="title">热度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
+        <h1 class="title">热度趋势 <span class="date_region">$!{startDate}至$!{endDate}</span></h1>
         <!-- 热度趋势图表 -->
-        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=55"></div>
+        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=$!{view.bookId}"></div>
 
     </section>
 </div>
