@@ -12,10 +12,10 @@
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段提示信息
+                        以社交平台粉丝人群为基数，综合相关内容生产数量和频率，通过分析和标准化的加权数。用来衡量粉丝的活跃程度。
                     </div>
                 </div>
-                <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
@@ -48,9 +48,9 @@
 
         <div class="col_2_container">
             <!--男女比例分布 图表-->
-            <div class="col" id="chart_sex_distribution"></div>
+            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=$!{view.bookId}"></div>
             <!--年龄分布 图表-->
-            <div class="col" id="chart_age_distribution"></div>
+            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
             <!-- 用户偏好图表 -->
             <div class="col" id="chart_user_preference"></div>
             <!-- 关键词 -->

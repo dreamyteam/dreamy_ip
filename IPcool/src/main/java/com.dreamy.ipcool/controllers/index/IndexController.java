@@ -60,14 +60,6 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/comprehensive")
     public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        BookView bookView = bookViewService.getById(ipId);
-        if (bookView == null || bookView.getId() == null) {
-            return null;
-        }
-
-        Integer bookId = bookView.getBookId();
-        BookRank entity = new BookRank().bookId(bookId);
-        List<BookRank> bookRanks = bookRankService.getList(entity, null);
         getCommonDataOfPage(ipId, model, request);
         return "/index/comprehensive";
     }
@@ -205,6 +197,7 @@ public class IndexController extends IpcoolController {
             pageName = "detail";
         }
         model.put("pageName", pageName);
+        model.put("typeEnums", BookTypeEnums.values());
 
         BookRank bookRank = new BookRank().bookId(bookId);
         List<BookRank> list = bookRankService.getList(bookRank, null);

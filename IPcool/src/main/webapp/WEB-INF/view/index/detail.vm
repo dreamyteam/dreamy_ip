@@ -404,7 +404,7 @@
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore">
-            <a href="/persona.html">查看全部</a>
+            <a href="/index/persona.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
     <!-- 点评 -->

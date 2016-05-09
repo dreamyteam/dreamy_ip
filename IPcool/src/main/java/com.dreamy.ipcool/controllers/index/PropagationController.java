@@ -213,9 +213,9 @@ public class PropagationController extends IpcoolController {
             list.add(develop);
 
             Map<String, Object> propagate = new HashMap<String, Object>();
-            develop.put("name","传播");
-            develop.put("max",bookView.getPropagateIndex());
-            list.add(develop);
+            propagate.put("name","传播");
+            propagate.put("max",bookView.getPropagateIndex());
+            list.add(propagate);
             Map<String, Object> score = new HashMap<String, Object>();
             score.put("name","口碑");
             score.put("max",bookView.getScore());
@@ -224,10 +224,8 @@ public class PropagationController extends IpcoolController {
             BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId());
             if (bookIndexData != null) {
                 String[] ages = bookIndexData.getAge();
-
                 if (ArrayUtils.isNotEmpty(ages)) {
                     developScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[1]) + 16 * Double.parseDouble(ages[0]) + 8 * Double.parseDouble(ages[0]);
-
                 }
             }
 
@@ -235,7 +233,7 @@ public class PropagationController extends IpcoolController {
             speed.put("name","消费能力");
             speed.put("max",developScore.intValue());
             list.add(speed);
-            indicator.put("indicator",list);
+            //indicator.put("indicator",list);
             int arr[] = new int[]{bookView.getHotIndex(),bookView.getDevelopIndex(),bookView.getPropagateIndex(),bookView.getScore(),developScore.intValue()};
             indicator.put("value",arr);
             bean.setData(indicator);
