@@ -129,6 +129,11 @@ public class IndexController extends IpcoolController {
         }
 
         getCommonDataOfPage(ipId, model, request);
+
+        Integer rankIndex = Integer.parseInt(model.get("crank").toString());
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
+        model.put("bookLevels", BookLevelEnums.values());
+        model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
         model.put("rankEnums", BookIndexTypeEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
@@ -190,7 +195,7 @@ public class IndexController extends IpcoolController {
         interfaceReturn(response, JsonUtils.toString(bean), callback);
     }
 
-    private void getCommonDataOfPage (Integer ipId, ModelMap model, HttpServletRequest request) {
+    private void getCommonDataOfPage(Integer ipId, ModelMap model, HttpServletRequest request) {
         String pageName = request.getParameter("pageName");
 
         BookView bookView = bookViewService.getById(ipId);
@@ -214,9 +219,6 @@ public class IndexController extends IpcoolController {
                 if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
 
                     model.put("crank", rankIndex);
-                    model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
-                    model.put("bookLevels", BookLevelEnums.values());
-                    model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
                     model.put("drank", rankIndex);//开发潜力指数排名
