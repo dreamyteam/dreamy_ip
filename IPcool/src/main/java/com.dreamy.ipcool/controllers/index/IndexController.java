@@ -65,7 +65,10 @@ public class IndexController extends IpcoolController {
         Integer bookId = bookView.getBookId();
         BookRank entity = new BookRank().bookId(bookId);
         List<BookRank> bookRanks = bookRankService.getList(entity, null);
-
+        model.put("view", bookView);
+        if(bookView!=null) {
+            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+        }
         return "/index/comprehensive";
     }
 
