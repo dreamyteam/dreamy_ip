@@ -12,5 +12,7 @@ public interface NewsMediaService {
 
     public void save(NewsMedia newsMedia);
 
+    public Integer delByBookId(Integer bookId);
+
     public List<NewsMedia> getList(NewsMedia media, Page page);
 }

@@ -9,6 +9,7 @@ import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,17 +35,30 @@ public class IpBookCrawlerTask {
     @Autowired
     private BookInfoService bookInfoService;
 
-//    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 5000)
     public void checkBookCrawlerWaittingStatus() {
-        Page page = new Page();
-        page.setPageSize(1000);
-
+        int currentPage = 1;
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().status(CrawlerTaskStatusEnums.waitting.getStatus());
-        List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
-        if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
-            for (BookCrawlerInfo info : bookCrawlerInfos) {
-                ipBookService.doCrawler(info);
+        try {
+            while (true) {
+                Page page = new Page();
+                page.setPageSize(50);
+                page.setCurrentPage(currentPage);
+                List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
+                if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
+                    for (BookCrawlerInfo info : bookCrawlerInfos) {
+                        ipBookService.doCrawler(info);
+                    }
+                }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+                Thread.sleep(NumberUtils.randomInt(30, 50) * 1000);
+
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,5 +110,34 @@ public class IpBookCrawlerTask {
             }
         }
 
+    }
+
+
+
+    public void crawler() {
+        int currentPage = 1;
+        BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
+        try {
+            while (true) {
+                Page page = new Page();
+
+                page.setPageSize(20);
+                page.setCurrentPage(currentPage);
+                List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
+                if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
+                    for (BookCrawlerInfo info : bookCrawlerInfos) {
+                        ipBookService.doCrawler(info);
+                    }
+                }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+                Thread.sleep(NumberUtils.randomInt(30, 50) * 1000);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -45,8 +45,8 @@
         <ul>
             <li #if($pageName == "detail") class="active" #end ><a
                     href="/index/detail.html?ip=$!{view.id}&pageName=detail">综合评价</a></li>
-            <li #if($pageName == "protential") class="active" #end><a
-                    href="/index/potential.html?ip=$!{view.id}&pageName=protential">开发意向</a></li>
+            <li #if($pageName == "develop") class="active" #end><a
+                    href="/index/develop.html?ip=$!{view.id}&pageName=develop">开发意向</a></li>
             <li #if($pageName == "reviews") class="active" #end><a
                     href="/index/user/reviews.html?ip=$!{view.id}&pageName=reviews">用户点评</a></li>
             <li #if($pageName == "intro") class="active" #end><a

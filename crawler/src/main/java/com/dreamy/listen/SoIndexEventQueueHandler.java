@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 /**
  * Created by wangyongxing on 16/5/5.
  */
@@ -35,6 +37,7 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
             BookIndexData bookIndexData = soHandler.getByUrl(word, "全国");
             bookIndexData.setId(ipId);
             bookIndexData.setSource(type);
+            bookIndexData.setUpdatedAt(new Date());
             bookIndexDataDao.updateInser(bookIndexData);
             Thread.sleep(NumberUtils.randomInt(30000,50000));
         }catch (Exception e){

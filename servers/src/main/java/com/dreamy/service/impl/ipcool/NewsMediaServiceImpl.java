@@ -27,6 +27,13 @@ public class NewsMediaServiceImpl implements NewsMediaService {
     }
 
     @Override
+    public Integer delByBookId(Integer bookId) {
+        NewsMediaConditions conditions=new NewsMediaConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+        return newsMediaDao.deleteByExample(conditions);
+    }
+
+    @Override
     public List<NewsMedia> getList(NewsMedia media, Page page) {
         Map<String,Object> params= BeanUtils.toQueryMap(media);
         NewsMediaConditions conditions=new NewsMediaConditions();

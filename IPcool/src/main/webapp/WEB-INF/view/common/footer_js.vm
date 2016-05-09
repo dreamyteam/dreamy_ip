@@ -1,3 +1,6 @@
+<script type="text/javascript" src="http://ipcool.me/dist/jquery.min.js "></script>
+<script type="text/javascript" src="http://ipcool.me/dist/echarts.min.js"></script>
+<script type="text/javascript" src="http://ipcool.me/dist/index.js "></script>
 <script type="text/javascript" src="http://ipcool.me/dist/program_detail.js "></script>
 <script type="text/javascript" src="http://ipcool.me/dist/searchresult.js "></script>
 

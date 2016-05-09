@@ -33,7 +33,7 @@ public class SoHandler {
             String q = java.net.URLEncoder.encode(name, "UTF-8");
             area = java.net.URLEncoder.encode(area, "GBK");
             data = new BookIndexData();
-            check(q);
+            //check(q);
             drawAreaJson(data, q);
             soMediaJson(data, name, q, area);
             soIndexJson(data, name, q, area);

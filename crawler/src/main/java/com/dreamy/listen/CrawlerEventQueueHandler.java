@@ -75,15 +75,15 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
             BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
             if (bookInfo != null) {
 
-                BookInfo old = bookInfoService.getById(crawlerId);
-                if (old != null) {
-                    bookInfoService.delById(crawlerId);
-                }
-
-                bookInfo.setCrawlerId(crawlerId);
-                bookInfo.setSource(type);
-                bookInfo.setIpId(ipId);
-                bookInfoService.saveByRecord(bookInfo);
+//                BookInfo old = bookInfoService.getById(crawlerId);
+//                if (old != null) {
+//                    bookInfoService.delById(crawlerId);
+//                }
+//
+//                bookInfo.setCrawlerId(crawlerId);
+//                bookInfo.setSource(type);
+//                bookInfo.setIpId(ipId);
+                bookInfoService.updateInser(bookInfo);
 
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
             } else {

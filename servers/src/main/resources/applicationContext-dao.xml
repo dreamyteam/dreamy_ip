@@ -10,18 +10,8 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
     <context:component-scan base-package="com.dreamy"/>
-
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc_develop.properties</value>
-                <value>classpath:redis_develop.properties</value>
-            </list>
-        </property>
-    </bean>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${connection_driver_class}"/>
-
         <property name="idleConnectionTestPeriod"
                   value="${jdbc_pool_c3p0_idle_connection_test_period}"/>
         <property name="preferredTestQuery" value="${jdbc_pool_c3p0_preferred_test_query}"/>
