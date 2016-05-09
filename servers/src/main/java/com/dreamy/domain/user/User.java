@@ -7,6 +7,8 @@ import java.util.Date;
 public class User extends BaseDomain<Integer> implements Serializable {
     private Integer id;
 
+    private String userKey;
+
     private String phone;
 
     private String password;
@@ -25,7 +27,7 @@ public class User extends BaseDomain<Integer> implements Serializable {
 
     private Date updatedAt;
 
-    private String userKey;
+    private String info;
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +37,14 @@ public class User extends BaseDomain<Integer> implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
     public String getPhone() {
@@ -109,12 +119,12 @@ public class User extends BaseDomain<Integer> implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public String getUserKey() {
-        return userKey;
+    public String getInfo() {
+        return info;
     }
 
-    public void setUserKey(String userKey) {
-        this.userKey = userKey;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     @Override
@@ -130,6 +140,7 @@ public class User extends BaseDomain<Integer> implements Serializable {
         }
         User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserKey() == null ? other.getUserKey() == null : this.getUserKey().equals(other.getUserKey()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getImageUrl() == null ? other.getImageUrl() == null : this.getImageUrl().equals(other.getImageUrl()))
@@ -139,7 +150,7 @@ public class User extends BaseDomain<Integer> implements Serializable {
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
-            && (this.getUserKey() == null ? other.getUserKey() == null : this.getUserKey().equals(other.getUserKey()));
+            && (this.getInfo() == null ? other.getInfo() == null : this.getInfo().equals(other.getInfo()));
     }
 
     @Override
@@ -147,6 +158,7 @@ public class User extends BaseDomain<Integer> implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserKey() == null) ? 0 : getUserKey().hashCode());
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getImageUrl() == null) ? 0 : getImageUrl().hashCode());
@@ -156,12 +168,17 @@ public class User extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
-        result = prime * result + ((getUserKey() == null) ? 0 : getUserKey().hashCode());
+        result = prime * result + ((getInfo() == null) ? 0 : getInfo().hashCode());
         return result;
     }
 
     public User id(Integer value) {
         this.id = value;
+        return this;
+    }
+
+    public User userKey(String value) {
+        this.userKey = value;
         return this;
     }
 
@@ -210,8 +227,8 @@ public class User extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public User userKey(String value) {
-        this.userKey = value;
+    public User info(String value) {
+        this.info = value;
         return this;
     }
 }
