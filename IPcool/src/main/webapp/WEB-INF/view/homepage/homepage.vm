@@ -1,5 +1,64 @@
 #set($layout = "/layout/layout_homepage.vm")
 #set($cssName="/dist/index")
+<!-- 登录注册弹窗 -->
+<div class="popup_box sign" id="popup_register">
+    <button class="close"></button>
+    <span class="logo"></span>
+    <form id="from_register">
+        <span class="err_msg"></span>
+        <div class="sign_container">
+            <label class="icon_phone_number"></label>
+            <input type="text" name="phone_number" placeholder="手机号码" value="" />
+        </div>
+        <div class="sign_container">
+            <label class="icon_password"></label>
+            <input type="password" name="password" placeholder="密码" />
+        </div>
+        <div class="sign_container verify">
+            <label class="icon_verify"></label>
+            <input type="text" name="verify_code" placeholder="验证码" />
+            <button class="btn_send_verify_code">发送验证码</button>
+        </div>
+        <button class="solid">登录</button>
+        <input class="hollow" type="submit" value="创建帐号" />
+    </form>
+    <div class="infos">
+        <a href="#" target="_blank">用户协议</a>
+        <a href="#" target="_blank">隐私政策</a>
+        <a href="#" target="_blank">帮助文档</a>
+    </div>
+</div>
+<div class="popup_box sign" id="popup_login">
+    <button class="close"></button>
+    <span class="logo"></span>
+    <form id="from_login">
+        <span class="err_msg"></span>
+        <div class="sign_container">
+            <label class="icon_phone_number"></label>
+            <input type="text" name="phone_number" placeholder="手机号码" />
+        </div>
+        <div class="sign_container">
+            <label class="icon_password"></label>
+            <input type="password" name="password" placeholder="密码" />
+        </div>
+        <div class="remember_pwd_container clearfix">
+            <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked" />
+            <label>记住密码</label>
+            <a href="#">忘记密码</a>
+        </div>
+        <input class="solid" type="submit" value="登录" />
+        <button class="hollow">创建帐号</button>
+    </form>
+    <div class="infos">
+        <a href="#" target="_blank">用户协议</a>
+        <a href="#" target="_blank">隐私政策</a>
+        <a href="#" target="_blank">帮助文档</a>
+    </div>
+</div>
+
+
+
+
     <div class="index_head">
         <div class="head_bg">
             <video autoplay muted loop id="bg-video">
