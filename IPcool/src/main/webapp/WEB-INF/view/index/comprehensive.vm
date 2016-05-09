@@ -1,50 +1,6 @@
 <div class="container">
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--搜索框 end-->
-    <!--program_info-->
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            TOP100
-        </div>
-        <img src="../../assets/images/pic.png">
-
-        <div class="content">
-            <h1 class="name">奇葩说（2016）<span class="type">小说</span></h1>
-            <h6 class="genre">类型：脱口秀</h6>
-
-            <p class="info">
-                导演：周星驰 / 主演：林允 章鱼怪 螃蟹精 小顺子 土豆
-            </p>
-
-            <div class="tags">
-                <span><a href="#">搞笑</a></span>
-                <span><a href="#">星爷</a></span>
-                <span><a href="#">2016</a></span>
-                <span><a href="#">环保</a></span>
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>2016-04-23</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">综合评价</a></li>
-                <li><a href="">开发意向</a></li>
-                <li><a href="">用户点评</a></li>
-                <li><a href="">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
+    #parse("/index/common.vm")
+    <!--指数综合-->
     <!--综合指数趋势-->
     <section class="comprehensive">
         <h1 class="title">综合指数趋势</h1>
@@ -57,10 +13,10 @@
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段提示信息
+                        以IP质量、热度、传播、潜力、粉丝活跃为关键指标，通过科学分析计算出的IP价值加权数。
                     </div>
                 </div>
-                <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                <h5 class="number">$!{view.compositeIndex} <span class="arrow">↑</span></h5>
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
@@ -83,44 +39,45 @@
     <section>
         <h1 class="title">综合指数趋势<span class="date_region">2015/03/24至2016/03/23</span></h1>
 
-        <div class="chart_comprehensive_value" id="chart_comprehensive_value"></div>
+        <div class="chart_comprehensive_value" id="chart_comprehensive_value" data-fetch-url="/comprehensive/history?ip=55"></div>
     </section>
     <!--综合排名地位-->
     <section>
         <h1 class="title">综合排名地位</h1>
 
-        <div class="program_tab">
+        <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
                 <li class="active">全部</li>
-                <li>同类</li>
-                <li>同期</li>
             </ul>
+
             <ul class="tab_contents">
-                <li class="clearfix show">
+                <li class="clearfix show">f
                     <div class="ipstatus">
                         <h3>在全部文学中所处的地位</h3>
 
                         <div class="pre_bar">
-                            <span>2%</span>
-                            <span class="current">8%</span>
-                            <span>18%</span>
-                            <span>32%</span>
-                            <span>40%</span>
-                            <!--
-                                    top:
-                                    2%: 0
-                                    8%: 35px
-                                    32%: 70px
-                                    40%: 140px;
-                                 -->
-                            <i style="top: 35px;">当前</i>
+
+                            #foreach($bookLevel in $bookLevels)
+
+                                #if($bookLevel.getLevel() == $crankLevel)
+                                    <span class="current"> $bookLevel.getDescription()</span>
+                                    #set($percent=$bookLevel.getDescription())
+                                #else
+                                    <span class=""> $bookLevel.getDescription()</span>
+                                #end
+
+                            #end
+                            #set($length = 35)
+                            #set($topValue = $crankLevel - 1)
+                            #set($top = $topValue * $length)
+                            <i style="top: ${top}px;">当前</i>
                         </div>
-                        <h6>[斗破苍穹]在全小说中,　属于3%的优质级内容</h6>
+                        <h6>[$!{view.name}]在全部小说中,　属于${percent}的优质级内容</h6>
                     </div>
                     <div class="iprank clearfix">
                         <h3>在全部文学中的排名</h3>
-                        <a class="show_rank_list" href="#">查看排行榜 ></a>
+                        <a class="show_rank_list" href="/rank/list.html">查看排行榜 ></a>
                         <table>
                             <tr>
                                 <th>排名</th>
@@ -128,40 +85,44 @@
                                 <th>价值指数</th>
                                 <th>趋势</th>
                             </tr>
-                            <tr>
-                                <td>32</td>
-                                <td>霸道总裁爱上我</td>
-                                <td>6554</td>
-                                <td>-</td>
-                            </tr>
-                            <tr class="current">
-                                <td>33</td>
-                                <td>斗破苍穹</td>
-                                <td>6553</td>
-                                <td>↑</td>
-                            </tr>
-                            <tr>
-                                <td>33</td>
-                                <td>重生之官场无敌</td>
-                                <td>6442</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>35</td>
-                                <td>斗破苍穹</td>
-                                <td>6553</td>
-                                <td>↓</td>
-                            </tr>
+
+                            #foreach($rankPosition in $rankPositions)
+                                <tr
+                                    #if($rankPosition.getBookView().getBookId() == $view.getBookId())
+                                            class="current"
+                                        #set($trend=$rankPosition.getTrend())
+                                    #end>
+                                    <td>$rankPosition.getCompositeRank()</td>
+                                    <td>$rankPosition.getBookView().getName()</td>
+                                    <td>$rankPosition.getBookView().getCompositeIndex()</td>
+                                    <td>
+                                        #if($rankPosition.getTrend() == 0)
+                                            -
+                                        #elseif($rankPosition.getTrend() == 1)
+                                            ↑
+                                        #else
+                                            ↓
+                                        #end
+                                    </td>
+                                </tr>
+                            #end
+
                         </table>
-                        <h6>[斗破苍穹]在全小说价值排名第33位, 并仍有上升趋势</h6>
+                        <h6>[$!{view.name}]在全小说价值排名第 ${crank} 位, 并有
+                            #foreach($trendEnum in $trendEnums)
+                                #if($trendEnum.getType() == $trend)
+                                    $trendEnum.getDescription()
+                                #end
+                            #end
+                            趋势</h6>
                     </div>
                 </li>
-                <li>
-                    <p>同类内容</p>
-                </li>
-                <li>
-                    <p>同期内容</p>
-                </li>
+            ##                <li>
+            ##                    <p>同类内容</p>
+            ##                </li>
+            ##                <li>
+            ##                    <p>同期内容</p>
+            ##                </li>
             </ul>
         </div>
     </section>

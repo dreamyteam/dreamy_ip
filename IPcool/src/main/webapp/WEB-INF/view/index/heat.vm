@@ -56,10 +56,10 @@
                 <div class="tooltip">
                     ?
                     <div class="tooltip_info">
-                        这是一段提示信息
+                        以用户在网络上近期的搜索量为数据基础，以关键词为统计对象，科学分析出各个关键词搜索频次的加权数。用来衡量当下的热门程度。
                     </div>
                 </div>
-                <h5 class="number">7,623 <span class="arrow">↑</span></h5>
+                <h5 class="number">$!{view.hotIndex}  <span class="arrow">↑</span></h5>
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
@@ -76,6 +76,7 @@
     <section>
         <h1 class="title">热度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
         <!-- 热度趋势图表 -->
-        <div id="chart_heat_trend"></div>
+        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=55"></div>
+
     </section>
 </div>

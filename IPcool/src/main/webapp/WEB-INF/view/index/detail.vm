@@ -1,64 +1,5 @@
 <div class="container">
-<<<<<<< HEAD
-    <!--搜索框-->
-    #parse("/common/search.vm")
-    <!--program_info-->
-    <div class="hidden">
-        <input type="hidden" id="bookId" value="$view.getBookId()">
-    </div>
-
-    <section class="program_info clearfix">
-        <!-- TOP100 形状 -->
-        <div class="level_flag">
-            <span>排名</span>
-            $!{crank}
-        </div>
-        <img src="$!{view.imageUrl}">
-
-        <div class="content">
-            <h1 class="name">$!{view.name}</h1>
-            <span class="type">
-                #foreach($bookType in $typeEnums)
-                               #if($bookType.getType() == $view.getType())
-                    $bookType.getDescription()
-                #end
-                    #end
-            </span>
-            <h6 class="genre">&nbsp;</h6>
-
-            <p class="info">
-                作者：$!{view.author}
-            </p>
-
-            <div class="tags">
-                #foreach($tagKey in $tagList.keySet())
-                    <span><a href="#" data-id="$tagKey">$tagList.get($tagKey)</a></span>
-                #end
-            </div>
-        </div>
-        <div class="update_time">
-            <h6>数据更新时间</h6>
-            <span>$!dateUtils.toString("yyyy-MM-dd",$view.updatedAt)</span>
-        </div>
-    </section>
-    <!--program_nav -->
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">综合评价</a></li>
-                <li><a href="/index/potential.html?ip=$!{view.id}">开发意向</a></li>
-                <li><a href="/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
-                <li><a href="/introduction.html?ip=$!{view.id}">简介</a></li>
-            </ul>
-            <div class="follow_download">
-                <span class="follow">关注</span>
-                <span class="download">下载完整报告</span>
-            </div>
-        </div>
-    </section>
-=======
     #parse("/index/common.vm")
->>>>>>> 56e013727aba0249033ea3f1abc71aa6007a0e4b
     <!--指数综合-->
     <section class="program_values">
         <!-- 综合价值 -->
@@ -212,7 +153,7 @@
                                         #end
                                     </td>
                                 </tr>
-                            #end 
+                            #end
 
                         </table>
                         <h6>[$!{view.name}]在全小说价值排名第 ${crank} 位, 并有
@@ -234,7 +175,7 @@
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore">
-            <a href="/comprehensive.html?ip=$!{view.id}">查看全部</a>
+            <a href="/index/comprehensive.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
 
@@ -371,7 +312,7 @@
         <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=55"></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
-            <a href="/heat.html?ip=$!{view.id}">查看全部</a>
+            <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
 
@@ -446,7 +387,7 @@
         <div id="chart_user_vitalty" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
         <!-- 查看全部 -->
         <div class="program_showMore">
-            <a href="/propagation.html?ip=$!{view.id}">查看全部</a>
+            <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
 

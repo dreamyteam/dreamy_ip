@@ -56,7 +56,16 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/comprehensive")
-    public String comprehensive() {
+    public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+        BookView bookView = bookViewService.getById(ipId);
+        if (bookView == null || bookView.getId() == null) {
+            return null;
+        }
+
+        Integer bookId = bookView.getBookId();
+        BookRank entity = new BookRank().bookId(bookId);
+        List<BookRank> bookRanks = bookRankService.getList(entity, null);
+
         return "/index/comprehensive";
     }
 
@@ -122,7 +131,6 @@ public class IndexController extends IpcoolController {
         BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookId);
         BookRank bookRank = new BookRank().bookId(bookId);
         List<BookRank> list = bookRankService.getList(bookRank, null);
-
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
