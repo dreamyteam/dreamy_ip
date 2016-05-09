@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class VerificationCodeServiceImpl implements VerificationCodeService {
+    private final static String CACHE_PREFIX = "VC_";
 
     @Autowired
     private RedisClientService redisClientService;
@@ -33,12 +34,13 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     @Override
     public void saveCodeToCache(String cacheKey, String code) {
-        redisClientService.set(cacheKey, code);
+        redisClientService.set(CACHE_PREFIX + cacheKey, code);
+        redisClientService.expire(CACHE_PREFIX + cacheKey, 1800);
     }
 
 
     @Override
     public String getCodeFromCache(String cacheKey) {
-        return redisClientService.get(cacheKey);
+        return redisClientService.get(CACHE_PREFIX + cacheKey);
     }
 }

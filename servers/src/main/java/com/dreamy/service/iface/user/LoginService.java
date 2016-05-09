@@ -1,6 +1,7 @@
 package com.dreamy.service.iface.user;
 
-import com.dreamy.beans.params.RegisterParam;
+import com.dreamy.beans.params.LoginParam;
+import com.dreamy.enums.ErrorCodeEnums;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,11 +12,10 @@ import com.dreamy.beans.params.RegisterParam;
 public interface LoginService {
 
     /**
-     * 检测登陆信息
      *
      * @param param
      * @return
      */
-    Boolean isLoginParamsOk(RegisterParam param);
+    ErrorCodeEnums checkLoginParam(LoginParam param);
 
 }

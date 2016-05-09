@@ -23,7 +23,7 @@ import java.util.UUID;
  */
 @SuppressWarnings("unchecked")
 public class UserSessionInterceptor<S extends CanonicalSession> extends HandlerInterceptorAdapter {
-    private NamedThreadLocal<Long>  startTimeThreadLocal =
+    private NamedThreadLocal<Long> startTimeThreadLocal =
             new NamedThreadLocal<Long>("StopWatch-StartTime");
 
 
@@ -41,8 +41,10 @@ public class UserSessionInterceptor<S extends CanonicalSession> extends HandlerI
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             handler = handlerMethod.getBean();
         }
+
         long beginTime = System.currentTimeMillis();//1、开始时间
         startTimeThreadLocal.set(beginTime);
+
         if (handler instanceof RootController) {
             RootController<S> controller = (RootController<S>) handler;
             if (controller.enableUserSession() && controller.getUserSessionId(request) == null) {
@@ -86,7 +88,7 @@ public class UserSessionInterceptor<S extends CanonicalSession> extends HandlerI
         long endTime = System.currentTimeMillis();//2、结束时间
         long beginTime = startTimeThreadLocal.get();//得到线程绑定的局部变量（开始时间）
         long consumeTime = endTime - beginTime;//3、消耗的时间
-        if(consumeTime > 500) {//此处认为处理时间超过500毫秒的请求为慢请求
+        if (consumeTime > 500) {//此处认为处理时间超过500毫秒的请求为慢请求
             //TODO 记录到日志文件
             System.out.println(
                     String.format("%s consume %d millis", request.getRequestURI(), consumeTime));

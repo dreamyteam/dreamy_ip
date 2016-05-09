@@ -18,4 +18,12 @@ public interface RegisterService {
      */
     ErrorCodeEnums checkRegisterParam(RegisterParam param);
 
+    /**
+     *
+     * @param param
+     * @return
+     */
+    String createUserKey(RegisterParam param);
+
+
 }

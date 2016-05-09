@@ -10,7 +10,8 @@ public enum ErrorCodeEnums {
     success(0, "success"),
 
     //注册、登陆相关
-    login_failed(20001, "登陆失败");
+    register_failed(20001, "注册失败"),
+    login_failed(2002, "登录失败");
 
 
     private Integer errorCode;
