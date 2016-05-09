@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/19.
+ * 算法库
  */
 @Controller
 @RequestMapping(value = "/algorithm")
