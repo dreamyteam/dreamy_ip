@@ -43,10 +43,14 @@
 <section class="program_nav" id="program_nav">
     <div class="inner clearfix">
         <ul>
-            <li class="active"><a href="/index/detail.html?ip=$!{view.id}">综合评价</a></li>
-            <li><a href="/index/potential.html?ip=$!{view.id}">开发意向</a></li>
-            <li><a href="/index/user/reviews.html?ip=$!{view.id}">用户点评</a></li>
-            <li><a href="/index/introduction.html?ip=$!{view.id}">简介</a></li>
+            <li #if($pageName == "detail") class="active" #end ><a
+                    href="/index/detail.html?ip=$!{view.id}&pageName=detail">综合评价</a></li>
+            <li #if($pageName == "protential") class="active" #end><a
+                    href="/index/potential.html?ip=$!{view.id}&pageName=protential">开发意向</a></li>
+            <li #if($pageName == "reviews") class="active" #end><a
+                    href="/index/user/reviews.html?ip=$!{view.id}&pageName=reviews">用户点评</a></li>
+            <li #if($pageName == "intro") class="active" #end><a
+                    href="/index/introduction.html?ip=$!{view.id}&pageName=intro">简介</a></li>
         </ul>
         <div class="follow_download">
             <span class="follow">关注</span>

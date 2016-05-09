@@ -12,7 +12,9 @@ import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.CommentService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
+import org.codehaus.janino.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +59,7 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/comprehensive")
-    public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+    public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
         BookView bookView = bookViewService.getById(ipId);
         if (bookView == null || bookView.getId() == null) {
             return null;
@@ -65,10 +68,7 @@ public class IndexController extends IpcoolController {
         Integer bookId = bookView.getBookId();
         BookRank entity = new BookRank().bookId(bookId);
         List<BookRank> bookRanks = bookRankService.getList(entity, null);
-        model.put("view", bookView);
-        if(bookView!=null) {
-            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
-        }
+        getCommonDataOfPage(ipId, model, request);
         return "/index/comprehensive";
     }
 
@@ -78,12 +78,8 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/potential")
-    public String potential(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("view", bookView);
-        if(bookView!=null) {
-            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
-        }
+    public String potential(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
         return "/index/potential";
     }
 
@@ -93,12 +89,8 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/heat")
-    public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("view", bookView);
-        if(bookView!=null) {
-            model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
-        }
+    public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
         return "/index/heat";
     }
 
@@ -108,10 +100,8 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/introduction")
-    public String introduction(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
-        model.put("view", bookView);
+    public String introduction(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
         return "/index/introduction";
     }
 
@@ -122,7 +112,7 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/detail")
-    public String detail(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
+    public String detail(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
         BookView bookView = bookViewService.getById(ipId);
         if (bookView == null || bookView.getId() == null) {
             return null;
@@ -132,55 +122,31 @@ public class IndexController extends IpcoolController {
 
         Comments comments = commentService.getById(ipId);
         BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookId);
-        BookRank bookRank = new BookRank().bookId(bookId);
-        List<BookRank> list = bookRankService.getList(bookRank, null);
-        if (CollectionUtils.isNotEmpty(list)) {
-            for (BookRank rank : list) {
-                Integer rankIndex = rank.getRank();
-                if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
 
-                    model.put("crank", rankIndex);
-                    model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
-                    model.put("bookLevels", BookLevelEnums.values());
-                    model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
-                }
-                if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
-                    model.put("drank", rankIndex);//开发潜力指数排名
-                }
-                if (rank.getType().equals(BookIndexTypeEnums.propagate.getType())) {
-                    model.put("prank", rankIndex);//传播指数排名
-                }
-                if (rank.getType().equals(BookIndexTypeEnums.hot.getType())) {
-                    model.put("hrank", rankIndex);//热度指数排名
-                }
-            }
-        }
 
         if (comments != null) {
             model.put("comments", comments.getComments());
         }
 
-        model.put("tagList", bookTagsService.getTagMapByBookId(bookId));
+        getCommonDataOfPage(ipId, model, request);
         model.put("rankEnums", BookIndexTypeEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
         model.put("history", bookIndexHistory);
-        model.put("view", bookView);
 
         return "/index/detail";
     }
 
     /**
      * 用户活跃
+     *
      * @param ipId
      * @param model
      * @return
      */
     @RequestMapping("/persona")
-    public String personal(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("view", bookView);
-        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+    public String personal(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
         return "/index/persona";
     }
 
@@ -190,18 +156,15 @@ public class IndexController extends IpcoolController {
      * @return
      */
     @RequestMapping("/propagation")
-    public String propagation(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("view", bookView);
-        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+    public String propagation(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        getCommonDataOfPage(ipId, model, request);
         return "/index/propagation";
     }
 
     @RequestMapping("/user/reviews")
-    public String userReviews(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model) {
-        BookView bookView = bookViewService.getById(ipId);
-        model.put("view", bookView);
-        model.put("tagList", bookTagsService.getTagMapByBookId(bookView.getBookId()));
+    public String userReviews(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+
+        getCommonDataOfPage(ipId, model, request);
         return "/index/user_reviews";
     }
 
@@ -225,6 +188,47 @@ public class IndexController extends IpcoolController {
         }
 
         interfaceReturn(response, JsonUtils.toString(bean), callback);
+    }
+
+    private void getCommonDataOfPage (Integer ipId, ModelMap model, HttpServletRequest request) {
+        String pageName = request.getParameter("pageName");
+
+        BookView bookView = bookViewService.getById(ipId);
+        model.put("view", bookView);
+
+        Integer bookId = bookView.getBookId();
+
+        if (bookView.getId() != null) {
+            model.put("tagList", bookTagsService.getTagMapByBookId(bookId));
+        }
+        if (StringUtils.isEmpty(pageName)) {
+            pageName = "detail";
+        }
+        model.put("pageName", pageName);
+
+        BookRank bookRank = new BookRank().bookId(bookId);
+        List<BookRank> list = bookRankService.getList(bookRank, null);
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (BookRank rank : list) {
+                Integer rankIndex = rank.getRank();
+                if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
+
+                    model.put("crank", rankIndex);
+                    model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
+                    model.put("bookLevels", BookLevelEnums.values());
+                    model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
+                }
+                if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
+                    model.put("drank", rankIndex);//开发潜力指数排名
+                }
+                if (rank.getType().equals(BookIndexTypeEnums.propagate.getType())) {
+                    model.put("prank", rankIndex);//传播指数排名
+                }
+                if (rank.getType().equals(BookIndexTypeEnums.hot.getType())) {
+                    model.put("hrank", rankIndex);//热度指数排名
+                }
+            }
+        }
     }
 
 }
