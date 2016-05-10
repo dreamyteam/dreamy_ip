@@ -9,9 +9,9 @@
     </appender>
 	
 	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/project/logs/ipcool.log</file>
+		<file>/home/dreamy/project/logs/ipcool.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/project/logs/ipcool.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>/home/dreamy/project/logs/ipcool.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>3</maxHistory>
 		</rollingPolicy>
 		<encoder>
