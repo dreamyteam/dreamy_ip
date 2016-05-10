@@ -45,7 +45,7 @@ public class BookViewCreateTask {
     private BookTagsService bookTagsService;
 
     @Scheduled(fixedDelay = 8000)
-    private void run() {
+    public void run() {
         try {
             BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
             conditions.createCriteria().andStatusEqualTo(CrawlerTaskStatusEnums.success.getStatus());

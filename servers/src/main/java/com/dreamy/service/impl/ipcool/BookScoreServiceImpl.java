@@ -39,8 +39,30 @@ public class BookScoreServiceImpl implements BookScoreService {
     private KeyWordService keyWordService;
 
     @Override
-    public void save(BookScore bookScore) {
-        bookScoreDao.save(bookScore);
+    public void saveUpdate(BookScore bookScore) {
+
+        BookScoreConditions conditions = new BookScoreConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookScore.getBookId()).andSourceEqualTo(bookScore.getSource());
+        List<BookScore> list= bookScoreDao.selectByExample(conditions);
+        if(CollectionUtils.isNotEmpty(list))
+        {
+            BookScore old=list.get(0);
+            if(bookScore.getCommentNum()>0){
+                old.commentNum(bookScore.getCommentNum());
+            }
+            if(bookScore.getScore()>0){
+                old.score(bookScore.getScore());
+            }
+            if(bookScore.getSaleSort()>0){
+                old.saleSort(bookScore.getSaleSort());
+            }
+            bookScoreDao.update(old);
+        }
+        else{
+            bookScoreDao.save(bookScore);
+        }
+
+
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface BookScoreService {
     /**
      * @param bookScore
      */
-    public void save(BookScore bookScore);
+    public void saveUpdate(BookScore bookScore);
 
     /**
      * @param bookScore
@@ -55,5 +55,7 @@ public interface BookScoreService {
      * @return
      */
     public String getReputationIndexByBookId(Integer bookId);
+
+
 
 }

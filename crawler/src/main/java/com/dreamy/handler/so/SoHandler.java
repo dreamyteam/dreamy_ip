@@ -10,6 +10,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
@@ -24,6 +26,7 @@ import java.util.Map;
 @Component
 public class SoHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(SoHandler.class);
 
     public BookIndexData getByUrl(String name, String area) throws UnsupportedEncodingException {
 
@@ -40,7 +43,7 @@ public class SoHandler {
             portrayalJson(data, q);
             overviewJson(data, q, area);
         } catch (Exception e) {
-            e.printStackTrace();
+           log.error("book " +name+"360 指数抓取失败 ",e);
         } finally {
             return data;
         }
@@ -104,7 +107,7 @@ public class SoHandler {
                 data.setMedia(arr);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("book " +name+"360 指数抓取失败  媒体关注度",e);
         }
 
     }
@@ -126,15 +129,15 @@ public class SoHandler {
             String arr[] = str.split("\\|");
             data.setIndex(arr);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("book " +name+"360 指数抓取失败  soIndexJson",e);
         }
 
 
     }
 
-    public static void portrayalJson(BookIndexData data, String q) {
+    public static void portrayalJson(BookIndexData data, String word) {
         try {
-            String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + q;
+            String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + word;
             String json = HttpUtils.getHtmlGet(url);
             json = HttpUtils.decodeUnicode(json);
             if (StringUtils.isNotEmpty(json)) {
@@ -147,7 +150,7 @@ public class SoHandler {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("book " +word+"360 指数抓取失败  portrayalJson",e);
         }
 
     }
@@ -165,7 +168,7 @@ public class SoHandler {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("book " +q+"360 指数抓取失败  portrayalJson",e);
         }
 
     }

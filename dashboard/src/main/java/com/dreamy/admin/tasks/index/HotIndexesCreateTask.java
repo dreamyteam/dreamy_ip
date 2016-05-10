@@ -5,7 +5,6 @@ import com.dreamy.domain.ipcool.BookIndexTaskLog;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookIndexStatusEnums;
 import com.dreamy.enums.BookIndexTypeEnums;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookIndexTaskLogService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -16,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
