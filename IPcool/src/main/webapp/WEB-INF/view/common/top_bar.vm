@@ -49,7 +49,7 @@
     <button class="close"></button>
     <span class="logo"></span>
 
-    <form id="sign_form">
+    <div id="sign_form">
         <span class="err_msg"></span>
 
         <div class="sign_container">
@@ -68,5 +68,5 @@
         <button class="solid btn_submit">创建帐号</button>
         <p class="tips_bottom">已有帐号,点击</p>
         <button class="tips_bottom_btn">登录</button>
-    </form>
+    </div>
 </div>
