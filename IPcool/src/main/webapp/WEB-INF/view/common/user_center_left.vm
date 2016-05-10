@@ -5,7 +5,7 @@
             <img src="$!thisUser.imageUrl">
         </div>
         <h2 class="user_name">$!thisUser.username</h2>
-        <h6 class="user_signature">$!thisUser.info</h6>
+        <h6 class="user_signature">$!user.info</h6>
     </li>
 ##    <li><a href="">我关注的</a></li>
     <li #if($pageName=="bio") class="active" #end><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">帐号信息</a></li>

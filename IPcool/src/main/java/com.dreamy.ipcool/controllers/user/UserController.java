@@ -1,6 +1,7 @@
 package com.dreamy.ipcool.controllers.user;
 
 import com.dreamy.beans.UserSession;
+import com.dreamy.beans.params.ModifyPasswordParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserAttach;
 import com.dreamy.enums.QualificationEnums;
@@ -8,6 +9,7 @@ import com.dreamy.enums.SexEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.user.UserAttachService;
 import com.dreamy.service.iface.user.UserService;
+import com.dreamy.utils.PasswordUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,9 +47,9 @@ public class UserController extends IpcoolController {
             map.put("qualifications", QualificationEnums.values());
             map.put("pageName", request.getParameter("pageName"));
             return "/user/bio";
-        } else {
-            return null;
         }
+        return null;
+
     }
 
     @RequestMapping("/following")
@@ -62,9 +64,46 @@ public class UserController extends IpcoolController {
 
     @RequestMapping("/modify/password")
     public String modifyPassword(ModelMap map, HttpServletRequest request) {
+        UserSession userSession = getUserSession(request);
+        if (userSession != null && userSession.getUserId() > 0) {
+            map.put("wrongType", request.getParameter("wrongType"));
+            map.put("pageName", request.getParameter("pageName"));
+            User user = userService.getUserById(userSession.getUserId());
+            if (user != null && user.getId() != null) {
+                map.put("user", userService.getUserById(userSession.getUserId()));
+                return "/user/password_modify";
+            }
+        }
 
-        map.put("pageName", request.getParameter("pageName"));
-        return "/user/password_modify";
+        return null;
+    }
+
+    @RequestMapping("/modify/password/do")
+    public String doModifyPassword(ModelMap map, HttpServletRequest request, ModifyPasswordParams passwordParams) {
+        String returnUrlPre = "/user/modify/password?pageName=password";
+
+        UserSession userSession = getUserSession(request);
+        if (userSession != null && userSession.getUserId() > 0) {
+            map.put("pageName", request.getParameter("pageName"));
+            User user = userService.getUserById(userSession.getUserId());
+            if (user != null && user.getId() != null) {
+                Boolean res = PasswordUtils.isPasswordInvalid(user.getPassword(), passwordParams.getCurrentPassword());
+                if (!res) {
+                    return redirect(returnUrlPre + "&wrongType=1");
+                } else {
+                    if (passwordParams.getNewPassword().equals(passwordParams.getNewPasswordConfirm()) && StringUtils.isNotEmpty(passwordParams.getNewPassword())) {
+                        user.setPassword(PasswordUtils.createPassword(passwordParams.getCurrentPassword()));
+                        userService.save(user);
+
+                        return redirect(returnUrlPre);
+                    } else {
+                        return redirect(returnUrlPre + "&wrongType=2");
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     @RequestMapping("/logout")
