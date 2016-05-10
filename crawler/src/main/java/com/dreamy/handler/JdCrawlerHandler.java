@@ -33,7 +33,6 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     public BookInfo getByUrl(String url) {
         url = url + "#comment";
         String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
-        System.out.println(html);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);

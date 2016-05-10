@@ -41,7 +41,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 //        String html = seleniumDownloader(url);
         String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
-        System.out.println(html);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {

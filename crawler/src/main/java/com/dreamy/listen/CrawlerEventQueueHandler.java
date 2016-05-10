@@ -79,12 +79,11 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
 //                if (old != null) {
 //                    bookInfoService.delById(crawlerId);
 //                }
-//
-//                bookInfo.setCrawlerId(crawlerId);
-//                bookInfo.setSource(type);
-//                bookInfo.setIpId(ipId);
-                bookInfoService.updateInser(bookInfo);
 
+                bookInfo.setCrawlerId(crawlerId);
+                bookInfo.setSource(type);
+                bookInfo.setIpId(ipId);
+                bookInfoService.updateInser(bookInfo);
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
             } else {
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
