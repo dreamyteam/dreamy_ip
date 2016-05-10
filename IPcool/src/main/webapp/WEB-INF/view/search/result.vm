@@ -9,6 +9,13 @@
         #else
             <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
         #end
+
+
+        <form method="post" action="/upload/img" accept-charset="utf-8" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="提交">
+        </form>
+
     </section>
     <section class="search_result">
 
