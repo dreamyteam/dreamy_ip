@@ -39,7 +39,7 @@
                 <header class="clearfix">
                     <a href="/" class="logo"></a>
                     <nav>
-                        <button class="register" id="register">注册1</button>
+                        <button class="register" id="register">注册</button>
                         <button class="login" id="login">登录</button>
                     </nav>
                 </header>

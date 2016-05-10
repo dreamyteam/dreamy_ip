@@ -5,12 +5,15 @@ import com.dreamy.beans.params.RegisterParam;
 import com.dreamy.domain.user.User;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
+import com.dreamy.service.iface.ShortMessageService;
 import com.dreamy.service.iface.VerificationCodeService;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.service.impl.user.RegisterServiceImpl;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.PasswordUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.asynchronous.AsynchronousService;
+import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,19 +41,27 @@ public class RegisterController extends IpcoolController {
     @Autowired
     private VerificationCodeService verificationCodeService;
 
+    @Autowired
+    private ShortMessageService shortMessageService;
+
 
     @RequestMapping(value = "/user/register/verificationCode")
     @ResponseBody
     public void getVerificationCode(RegisterParam param, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
-        String code = verificationCodeService.createVerificationCode(4);
-        if (StringUtils.isNotEmpty(code)) {
-            verificationCodeService.saveCodeToCache(param.getMobile(), code);
 
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("verification_code", code);
-            bean.setData(map);
-        }
+        AsynchronousService.submit(new ObjectCallable(param.getMobile()) {
+            @Override
+            public Object run() throws Exception {
+                String code = verificationCodeService.createVerificationCode(4);
+                if (StringUtils.isNotEmpty(code)) {
+                    verificationCodeService.saveCodeToCache(name, code);
+                    shortMessageService.send(name, "【IP库】您的验证码是" + code);
+                }
+                return null;
+            }
+        });
+
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
     }
