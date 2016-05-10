@@ -1,7 +1,7 @@
 <ul class="sidebar_nav">
     <li class="user_info">
         <div class="user_avatar_container">
-            <span class="avatar_mask"></span>
+            <span class="avatar_mask" id="avatar_mask"></span>
             <img src="$!thisUser.imageUrl">
         </div>
         <h2 class="user_name">$!thisUser.username</h2>

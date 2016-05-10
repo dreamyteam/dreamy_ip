@@ -1,32 +1,5 @@
 #set($layout = "/layout/layout_homepage.vm")
 #set($cssName="/dist/index")
-<!-- 登录注册弹窗 -->
-<div class="popup_box sign" id="popup_sign">
-    <button class="close"></button>
-    <span class="logo"></span>
-    <form id="sign_form">
-        <span class="err_msg"></span>
-        <div class="sign_container">
-            <label class="icon_phone_number"></label>
-            <input type="text" name="phone_number" placeholder="手机号码" value="" />
-        </div>
-        <div class="sign_container">
-            <label class="icon_password"></label>
-            <input type="password" name="password" placeholder="密码" />
-        </div>
-        <div class="sign_container verify">
-            <label class="icon_verify"></label>
-            <input type="text" name="verify_code" placeholder="验证码" />
-            <button class="btn_send_verify_code" disabled="disabled">发送验证码</button>
-        </div>
-        <button class="solid btn_submit">创建帐号</button>
-        <p class="tips_bottom">已有帐号,点击</p>
-        <button class="tips_bottom_btn">登录</button>
-    </form>
-
-</div>
-
-
     <div class="index_head">
         <div class="head_bg">
             <video autoplay muted loop id="bg-video">
@@ -36,16 +9,6 @@
         </div>
         <div class="head_front">
             <div class="inner">
-<<<<<<< HEAD
-=======
-                <header class="clearfix">
-                    <a href="/" class="logo"></a>
-                    <nav>
-                        <button class="register" id="register">注册</button>
-                        <button class="login" id="login">登录</button>
-                    </nav>
-                </header>
->>>>>>> 47ac0436a63bfb3f9c7e8f65896493b0157cf933
                 <h1 class="main_title">让IP有序 让文创有依</h1>
                 <h6 class="sub_text">已分析文学 IP 10000+</h6>
                 <form class="search_bar_container" action="/search.html">

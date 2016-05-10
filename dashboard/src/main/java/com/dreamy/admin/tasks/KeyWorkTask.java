@@ -34,37 +34,53 @@ public class KeyWorkTask {
     public void crawler() {
 
         BookView bookView = new BookView().type(1);
-        int currentPage = 1;
+        int currentPage = 18;
         try {
             while (true) {
                 Page page = new Page();
-                page.setPageSize(5);
+                page.setPageSize(10);
                 page.setCurrentPage(currentPage);
                 List<BookView> list = bookViewService.getList(bookView, page);
-                crawlerWeiXin(list);
                 for (BookView book : list) {
-                    if (book.getType() != KeyWordEnums.weixin.getType()) {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("source", book.getType());
-                        map.put("bookId", book.getBookId());
-                        if (StringUtils.isNotEmpty(book.getAuthor())) {
-                            map.put("word", book.getName() + " " + book.getAuthor());
-                        } else {
-                            map.put("word", book.getName());
-                        }
-                        queueService.push(QueueRoutingKeyEnums.publish_keyword.getKey(), map);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("source", book.getType());
+                    map.put("bookId", book.getBookId());
+                    if (StringUtils.isNotEmpty(book.getAuthor())) {
+                        map.put("word", book.getName() + " " + book.getAuthor());
+                    } else {
+                        map.put("word", book.getName());
                     }
-                    if (!page.isHasNextPage()) {
-                        break;
-                    }
-                    currentPage++;
-                    Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
+                    queueService.push(QueueRoutingKeyEnums.publish_keyword.getKey(), map);
+
                 }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+                Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void crawlerWeiXin() throws InterruptedException {
+
+        BookView bookView = new BookView().type(1);
+        int currentPage = 1;
+        while (true) {
+            Page page = new Page();
+            page.setPageSize(100);
+            page.setCurrentPage(currentPage);
+            List<BookView> list = bookViewService.getList(bookView, page);
+            crawlerWeiXin(list);
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            currentPage++;
+            Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
+        }
     }
 
     public void crawlerWeiXin(final List<BookView> list) {
@@ -81,7 +97,7 @@ public class KeyWorkTask {
                         map.put("word", book.getName());
                     }
                     queueService.push(QueueRoutingKeyEnums.publish_keyword_weixin.getKey(), map);
-                    Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
+                    Thread.sleep(NumberUtils.randomInt(20, 50) * 1000);
 
 
                 }

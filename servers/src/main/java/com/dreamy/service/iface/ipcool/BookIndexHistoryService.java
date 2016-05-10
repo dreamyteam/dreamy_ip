@@ -3,6 +3,7 @@ package com.dreamy.service.iface.ipcool;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,4 +20,6 @@ public interface BookIndexHistoryService {
      * @param bookId
      */
     public BookIndexHistory getMaxByBookId(Integer bookId);
+
+    public Integer delByDate(Date date);
 }

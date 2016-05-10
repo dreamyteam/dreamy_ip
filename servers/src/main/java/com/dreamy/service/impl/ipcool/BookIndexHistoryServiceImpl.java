@@ -59,4 +59,12 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
     public BookIndexHistory getMaxByBookId(Integer bookId) {
        return bookIndexHistoryDao.selectMaxByBookId(bookId);
     }
+
+    @Override
+    public Integer delByDate(Date date) {
+        BookIndexHistoryConditions conditions= new BookIndexHistoryConditions();
+        BookIndexHistoryConditions.Criteria criteria = conditions.createCriteria();
+        criteria.andCreatedAtEqualTo(date);
+        return  bookIndexHistoryDao.deleteByExample(conditions);
+    }
 }
