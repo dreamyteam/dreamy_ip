@@ -1,11 +1,13 @@
 package com.dreamy.ipcool.controllers.index;
 
 import com.dreamy.beans.InterfaceBean;
-import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.*;
+import com.dreamy.enums.BookIndexTypeEnums;
+import com.dreamy.enums.BookLevelEnums;
+import com.dreamy.enums.BookRankTrendEnums;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.service.iface.ipcool.*;
@@ -14,7 +16,6 @@ import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
-import org.codehaus.janino.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -98,8 +99,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/heat")
     public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        model.put("endDate",TimeUtils.toString("yyyy/MM/dd",TimeUtils.appointed(-1)));
-        model.put("startDate",TimeUtils.toString("yyyy/MM/dd",TimeUtils.appointed(-8)));
+        model.put("endDate", TimeUtils.toString("yyyy/MM/dd", TimeUtils.appointed(-1)));
+        model.put("startDate", TimeUtils.toString("yyyy/MM/dd", TimeUtils.appointed(-8)));
         getCommonDataOfPage(ipId, model, request);
         return "/index/heat";
     }
@@ -130,8 +131,7 @@ public class IndexController extends IpcoolController {
 
         Integer bookId = bookView.getBookId();
 
-        Comments comments = commentService.getById(ipId);
-        BookIndexHistory bookIndexHistory = bookIndexHistoryService.getMaxByBookId(bookId);
+        Comments comments = commentService.getById(bookId);
 
 
         if (comments != null) {
@@ -147,7 +147,7 @@ public class IndexController extends IpcoolController {
         model.put("rankEnums", BookIndexTypeEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
-        model.put("history", bookIndexHistory);
+
 
         return "/index/detail";
     }
@@ -229,7 +229,6 @@ public class IndexController extends IpcoolController {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
                 if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
-
                     model.put("crank", rankIndex);
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
@@ -242,6 +241,11 @@ public class IndexController extends IpcoolController {
                     model.put("hrank", rankIndex);//热度指数排名
                 }
             }
+        } else {
+            model.put("crank", 0);
+            model.put("drank", 0);//开发潜力指数排名
+            model.put("prank", 0);//传播指数排名
+            model.put("hrank", 0);//热度指数排名
         }
     }
 
