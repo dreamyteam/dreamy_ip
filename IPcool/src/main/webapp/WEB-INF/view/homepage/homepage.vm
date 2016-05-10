@@ -39,13 +39,6 @@
         </div>
         <div class="head_front">
             <div class="inner">
-                <header class="clearfix">
-                    <a href="/" class="logo"></a>
-                    <nav>
-                        <button class="register" id="register">注册</button>
-                        <button class="login" id="login">登录</button>
-                    </nav>
-                </header>
                 <h1 class="main_title">让IP有序 让文创有依</h1>
                 <h6 class="sub_text">已分析文学 IP 10000+</h6>
                 <form class="search_bar_container" action="/search.html">

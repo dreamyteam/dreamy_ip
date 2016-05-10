@@ -39,7 +39,7 @@
     <section>
         <h1 class="title">综合指数趋势<span class="date_region">2015/03/24至2016/03/23</span></h1>
 
-        <div class="chart_comprehensive_value" id="chart_comprehensive_value" data-fetch-url="/comprehensive/history?ip=55"></div>
+        <div class="line_charts" id="chart_comprehensive_value_detail" data-fetch-url="/comprehensive/history?ip=55"></div>
     </section>
     <!--综合排名地位-->
     <section>
