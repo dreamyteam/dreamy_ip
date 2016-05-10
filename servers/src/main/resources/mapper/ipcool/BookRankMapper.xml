@@ -9,6 +9,7 @@
     <result column="rank_index" property="rankIndex" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, book_id, rank, type, rank_index, created_at, updated_at
+    id, book_id, rank, type, rank_index, created_at, updated_at, name
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.BookRankConditions" >
     select
@@ -104,11 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookRank" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_rank (book_id, rank, type, 
-      rank_index, created_at, updated_at
-      )
+      rank_index, created_at, updated_at, 
+      name)
     values (#{bookId,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{rankIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
-      )
+      #{rankIndex,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookRank" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_rank
@@ -131,6 +132,9 @@
       <if test="updatedAt != null" >
         updated_at,
       </if>
+      <if test="name != null" >
+        name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="bookId != null" >
@@ -150,6 +154,9 @@
       </if>
       <if test="updatedAt != null" >
         #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -183,6 +190,9 @@
       <if test="record.updatedAt != null" >
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -196,7 +206,8 @@
       type = #{record.type,jdbcType=INTEGER},
       rank_index = #{record.rankIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -222,6 +233,9 @@
       <if test="updatedAt != null" >
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -232,7 +246,8 @@
       type = #{type,jdbcType=INTEGER},
       rank_index = #{rankIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >

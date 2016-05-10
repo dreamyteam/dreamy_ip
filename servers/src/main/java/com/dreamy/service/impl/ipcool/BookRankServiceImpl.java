@@ -16,6 +16,7 @@ import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,13 +46,16 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
-    public List<BookRank> getList(BookRank bookRank, Page page) {
+    public List<BookRank> getList(BookRank bookRank, Page page,String order) {
         Map<String, Object> params = BeanUtils.toQueryMap(bookRank);
         BookRankConditions conditions = new BookRankConditions();
         conditions.createCriteria().addByMap(params);
         if (page != null) {
             page.setTotalNum(bookRankDao.countByExample(conditions));
             conditions.setPage(page);
+        }
+        if(StringUtils.isNotEmpty(order)){
+            conditions.setOrderByClause(order);
         }
 
         return bookRankDao.selectByExample(conditions);

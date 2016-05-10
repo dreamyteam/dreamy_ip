@@ -19,6 +19,8 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
 
     private Date updatedAt;
 
+    private String name;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -77,6 +79,14 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -95,7 +105,8 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getRankIndex() == null ? other.getRankIndex() == null : this.getRankIndex().equals(other.getRankIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
     }
 
     @Override
@@ -109,6 +120,7 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getRankIndex() == null) ? 0 : getRankIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         return result;
     }
 
@@ -144,6 +156,11 @@ public class BookRank extends BaseDomain<Integer> implements Serializable {
 
     public BookRank updatedAt(Date value) {
         this.updatedAt = value;
+        return this;
+    }
+
+    public BookRank name(String value) {
+        this.name = value;
         return this;
     }
 }
