@@ -1,253 +1,84 @@
 <!--main-->
-    <div class="container">
-        <!--搜索框-->
-        #parse("/common/search.vm")
-        <!--搜索框 end-->
-        <section class="rank_list">
-            <div class="rank_list_table">
-                <h2 class="title">综合排行<span class="date">榜单更新日期: 2016-04-14</span></h2>
-                <table>
-                    <tr>
-                        <th class="rank_num">排名</th>
-                        <th class="content">内容</th>
-                        <th>指数</th>
-                    </tr>
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--搜索框 end-->
+    <section class="rank_list">
+        <div class="rank_list_table">
+            <h2 class="title">综合排行<span class="date">榜单更新日期: $!{date}</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+
+                #foreach($view in $clist)
                     <tr class="top_three">
-                        <td class="rank_num">1</td>
-                        <td class="content">太阳的后裔</td>
-                        <td>23453676</td>
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
                     </tr>
+                #end
+
+
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">潜力排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $dlist)
                     <tr class="top_three">
-                        <td class="rank_num">2</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
                     </tr>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">热度排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $hlist)
                     <tr class="top_three">
-                        <td class="rank_num">3</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
                     </tr>
-                    <tr>
-                        <td class="rank_num">4</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">5</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">6</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">7</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">8</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">9</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">10</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                </table>
-                <a class="show_top50" href="#">查看热门TOP50</a>
-            </div>
-            <div class="rank_list_table">
-                <h2 class="title">潜力排行<span class="date">榜单更新日期: 2016-04-14</span></h2>
-                <table>
-                    <tr>
-                        <th class="rank_num">排名</th>
-                        <th class="content">内容</th>
-                        <th>指数</th>
-                    </tr>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">传播排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $plist)
                     <tr class="top_three">
-                        <td class="rank_num">1</td>
-                        <td class="content">太阳的后裔</td>
-                        <td>23453676</td>
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
                     </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">2</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">3</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">4</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">5</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">6</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">7</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">8</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">9</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">10</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                </table>
-                <a class="show_top50" href="#">查看热门TOP50</a>
-            </div>
-            <div class="rank_list_table">
-                <h2 class="title">热度排行<span class="date">榜单更新日期: 2016-04-14</span></h2>
-                <table>
-                    <tr>
-                        <th class="rank_num">排名</th>
-                        <th class="content">内容</th>
-                        <th>指数</th>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">1</td>
-                        <td class="content">太阳的后裔</td>
-                        <td>23453676</td>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">2</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">3</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">4</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">5</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">6</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">7</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">8</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">9</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">10</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                </table>
-                <a class="show_top50" href="#">查看热门TOP50</a>
-            </div>
-            <div class="rank_list_table">
-                <h2 class="title">传播排行<span class="date">榜单更新日期: 2016-04-14</span></h2>
-                <table>
-                    <tr>
-                        <th class="rank_num">排名</th>
-                        <th class="content">内容</th>
-                        <th>指数</th>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">1</td>
-                        <td class="content">太阳的后裔</td>
-                        <td>23453676</td>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">2</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr class="top_three">
-                        <td class="rank_num">3</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">4</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">5</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">6</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">7</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">8</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">9</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                    <tr>
-                        <td class="rank_num">10</td>
-                        <td class="content">斗破苍穹</td>
-                        <td>6553</td>
-                    </tr>
-                </table>
-                <a class="show_top50" href="#">查看热门TOP50</a>
-            </div>
-        </section>
-    </div>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+    </section>
+</div>
 

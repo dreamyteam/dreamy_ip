@@ -22,7 +22,7 @@ public interface BookRankService {
      * @param page
      * @return
      */
-    List<BookRank> getList(BookRank bookRank, Page page);
+    List<BookRank> getList(BookRank bookRank, Page page,String order);
 
     /**
      * 根据排行榜的名词获取前后指定名次的详细信息
@@ -86,6 +86,9 @@ public interface BookRankService {
      * @return
      */
     Integer deleteByBookId(Integer bookId);
+
+
+
 
 
 }

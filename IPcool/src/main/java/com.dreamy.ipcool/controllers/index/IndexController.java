@@ -224,7 +224,7 @@ public class IndexController extends IpcoolController {
         model.put("typeEnums", BookTypeEnums.values());
 
         BookRank bookRank = new BookRank().bookId(bookId);
-        List<BookRank> list = bookRankService.getList(bookRank, null);
+        List<BookRank> list = bookRankService.getList(bookRank, null,null);
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
