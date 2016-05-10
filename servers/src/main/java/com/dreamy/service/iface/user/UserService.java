@@ -23,4 +23,18 @@ public interface UserService {
      * @return
      */
     User getUserByMobile(String mobile);
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    User getUserById(Integer userId);
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    Integer updateByRecord(User user);
 }

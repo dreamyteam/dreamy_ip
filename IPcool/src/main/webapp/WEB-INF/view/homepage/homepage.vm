@@ -20,13 +20,10 @@
             <button class="btn_send_verify_code" disabled="disabled">发送验证码</button>
         </div>
         <button class="solid btn_submit">创建帐号</button>
-        <p class="tips_bottom">已有帐号,点击</p><button class="tips_bottom_btn">登录</button>
+        <p class="tips_bottom">已有帐号,点击</p>
+        <button class="tips_bottom_btn">登录</button>
     </form>
-    <div class="infos">
-        <a href="#" target="_blank">用户协议</a>
-        <a href="#" target="_blank">隐私政策</a>
-        <a href="#" target="_blank">帮助文档</a>
-    </div>
+
 </div>
 
 
@@ -42,7 +39,7 @@
                 <header class="clearfix">
                     <a href="/" class="logo"></a>
                     <nav>
-                        <button class="register" id="register">注册</button>
+                        <button class="register" id="register">注册1</button>
                         <button class="login" id="login">登录</button>
                     </nav>
                 </header>
