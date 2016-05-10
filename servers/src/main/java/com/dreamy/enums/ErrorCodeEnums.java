@@ -11,7 +11,10 @@ public enum ErrorCodeEnums {
 
     //注册、登陆相关
     register_failed(20001, "注册失败"),
-    login_failed(2002, "登录失败");
+    login_failed(2002, "登录失败"),
+
+    //图片上传
+    image_upload_failed(9001,"图片上传失败");
 
 
     private Integer errorCode;

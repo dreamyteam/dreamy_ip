@@ -1,6 +1,6 @@
 package com.dreamy.service.iface.user;
 
-import com.dreamy.beans.params.RegisterParam;
+import com.dreamy.beans.params.RegisterParams;
 import com.dreamy.enums.ErrorCodeEnums;
 
 /**
@@ -16,14 +16,14 @@ public interface RegisterService {
      * @param param
      * @return
      */
-    ErrorCodeEnums checkRegisterParam(RegisterParam param);
+    ErrorCodeEnums checkRegisterParam(RegisterParams param);
 
     /**
      *
      * @param param
      * @return
      */
-    String createUserKey(RegisterParam param);
+    String createUserKey(RegisterParams param);
 
 
 }

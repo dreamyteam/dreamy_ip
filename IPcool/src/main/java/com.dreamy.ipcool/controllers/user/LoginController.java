@@ -2,7 +2,7 @@ package com.dreamy.ipcool.controllers.user;
 
 import com.dreamy.beans.InterfaceBean;
 import com.dreamy.beans.UserSession;
-import com.dreamy.beans.params.LoginParam;
+import com.dreamy.beans.params.LoginParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
@@ -33,7 +33,7 @@ public class LoginController extends IpcoolController {
     private LoginService loginService;
 
     @RequestMapping("/user/login")
-    public void login(HttpServletResponse response, LoginParam param, HttpServletRequest request) {
+    public void login(HttpServletResponse response, LoginParams param, HttpServletRequest request) {
 
         InterfaceBean bean = new InterfaceBean().success();
 

@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.user;
 
-import com.dreamy.beans.params.RegisterParam;
+import com.dreamy.beans.params.RegisterParams;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.service.iface.VerificationCodeService;
 import com.dreamy.service.iface.user.RegisterService;
@@ -25,7 +25,7 @@ public class RegisterServiceImpl implements RegisterService {
     private VerificationCodeService verificationCodeService;
 
     @Override
-    public ErrorCodeEnums checkRegisterParam(RegisterParam param) {
+    public ErrorCodeEnums checkRegisterParam(RegisterParams param) {
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
 
@@ -61,7 +61,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public String createUserKey(RegisterParam param) {
+    public String createUserKey(RegisterParams param) {
         Date date = new Date();
         return HashUtils.md5(param.getMobile() + date.toString());
     }

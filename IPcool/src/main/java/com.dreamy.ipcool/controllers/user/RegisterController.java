@@ -1,7 +1,7 @@
 package com.dreamy.ipcool.controllers.user;
 
 import com.dreamy.beans.InterfaceBean;
-import com.dreamy.beans.params.RegisterParam;
+import com.dreamy.beans.params.RegisterParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,7 +45,7 @@ public class RegisterController extends IpcoolController {
 
     @RequestMapping(value = "/user/register/verificationCode")
     @ResponseBody
-    public void getVerificationCode(RegisterParam param, HttpServletResponse response) {
+    public void getVerificationCode(RegisterParams param, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
 
         AsynchronousService.submit(new ObjectCallable(param.getMobile()) {
@@ -69,7 +67,7 @@ public class RegisterController extends IpcoolController {
 
     @RequestMapping(value = "/user/register")
     @ResponseBody
-    public void register(RegisterParam param, HttpServletResponse response) {
+    public void register(RegisterParams param, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
         ErrorCodeEnums errorCodeEnums = registerService.checkRegisterParam(param);
         if (errorCodeEnums.getErrorCode() > 0) {
