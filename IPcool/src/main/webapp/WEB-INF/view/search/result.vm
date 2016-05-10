@@ -10,12 +10,6 @@
             <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
         #end
 
-
-        <form method="post" action="/upload/img" accept-charset="utf-8" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" value="提交">
-        </form>
-
     </section>
     <section class="search_result">
 
@@ -74,7 +68,9 @@
             <div class="sresult_none clearfix">
                 <h5>"<span class="name">$!{content}</span>"可能不具备分析价值或暂未被收录</h5>
                 <h6>您可以:</h6>
-                <button>提交收录申请</button>
+                <a href="/apply">
+                    <button>提交收录申请</button>
+                </a>
 
             </div>
         #end

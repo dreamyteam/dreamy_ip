@@ -7,8 +7,9 @@
 
             <h2 class="record_result_title">提交成功</h2>
 
-            <h3 class="record_result_subtitle">我们会尽快完成[斗破苍穹]的收录</h3>
-            
-            <a class="back_home" href="#">提交</a>
+            <h3 class="record_result_subtitle">我们会尽快处理关于[ $!ipName ]的收录</h3>
+            <br>
+            <br>
+            <br>
         </section>
     </div>

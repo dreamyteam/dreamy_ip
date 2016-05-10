@@ -1,66 +1,86 @@
 <!--main-->
-    <div class="container">
-        <section class="record">
-            <form>
-                <div class="record_content">
-                    <h2 class="title">申请收录</h2>
-                    <h3 class="sub_title">告诉我们一些基本信息，IP库将优先处理您的申请</h3>
-                    <div class="input_container">
-                        <div class="input_content">
-                            <label>IP名称</label>
-                            <input class="ip_name" type="text" placeholder="输入您想收录的IP名称" ／>
-                        </div>
-                        <div class="input_content"> 
-                            <label>选择IP类型</label>
-                            <select name="ip_type">
-                                <option value="网络小说">网络小说</option>
-                                <option value="出版图书">出版图书</option>
-                                <option value="漫画">漫画</option>
-                                <option value="电影">电影</option>
-                                <option value="电视剧">电视剧</option>
-                                <option value="综艺节目">综艺节目</option>
-                                <option value="网络节目">网络节目</option>
-                                <option value="明星">明星</option>
-                                <option value="虚拟角色">虚拟角色</option>
-                                <option value="职能人员">职能人员</option>
-                                <option value="开发机构">开发机构</option>
-                                <option value="发行机构">发行机构</option>
-                                <option value="投资机构">投资机构</option>
-                            </select>
-                        </div>
+<div class="container">
+    <section class="record">
+        <form method="post" action="/apply/save">
+            <div class="record_content">
+                <h2 class="title">申请收录</h2>
+
+                <h3 class="sub_title">告诉我们一些基本信息，IP库将优先处理您的申请</h3>
+
+                <div class="input_container">
+                    <div class="input_content">
+                        <label>IP名称</label>
+
+                        #foreach($wrongType in $wrongTypes)
+                            #if($wrongType == 1)
+                                <span class="err_msg">该IP已被收录</span>
+                            #end
+                        #end
+                        <input class="ip_name" type="text" name="ipName" placeholder="输入您想收录的IP名称"
+                               value="$!apply.ipName" ／>
                     </div>
                     <div class="input_content">
-                        <label>IP相关网址</label>
-                        <input type="text" value="http://" />
+                        <label>选择IP类型</label>
+                        #foreach($wrongType in $wrongTypes)
+                            #if($wrongType == 2)
+                                <span class="err_msg">您需要选择类型</span>
+                            #end
+                        #end
+
+                        <select name="ipType">
+                            <option value="0">请选择ip类型</option>
+                            #foreach($booTypeEnum in $booTypeEnums)
+                                <option
+                                    #if($!apply.ipType == $booTypeEnum.getType())
+                                        selected
+                                    #end value="$booTypeEnum.getType()">$booTypeEnum.getDescription()</option>
+                            #end
+                        </select>
                     </div>
                 </div>
+
+                <div class="input_content">
+                    <label>IP相关网址</label>
+                    <input type="text" name="refUrl" value="$!apply.refUrl"/>
+                </div>
+
+                #if($!thisUser.userKey)
+                    <input type="submit" value="提交"/>
+                #end
+            </div>
+
+            #if($!thisUser.userKey)
+            #else
                 <div class="record_content">
                     <h2 class="title">您的联系方式</h2>
+
                     <h3 class="sub_title">留下您的联系方式，IP库完成收录后将在第一时间通知您</h3>
+
                     <div class="input_container">
                         <div class="input_content">
                             <label>您的称呼</label>
-                            <span class="err_msg">该IP已被收录</span>
-                            <input type="text" placeholder="请填写您的名字" ／>
+                            #foreach($wrongType in $wrongTypes)
+                                #if($wrongType == 3)
+                                    <span class="err_msg">您的称呼不能为空</span>
+                                #end
+                            #end
+                            <input type="text" name="userName" value="$!user.userName" placeholder="请填写您的名字" ／>
                         </div>
                         <div class="input_content">
-                            <label>您的手机</label>
-                            <span class="err_msg">请正确的填写手机号</span>
-                            <input type="text" placeholder="请填写您的手机号" ／>
+                            <label>您的邮箱</label>
+                            #foreach($wrongType in $wrongTypes)
+                                #if($wrongType == 3)
+                                    <span class="err_msg">邮箱格式不正确</span>
+                                #end
+                            #end
+                            <input type="email" name="email" placeholder="请填写您的邮箱" value="$!user.email" ／>
                         </div>
                     </div>
-                    <div class="input_content">
-                        <span class="err_msg">该IP已被收录</span>
-                        <label>您的邮箱</label>
-                        <input type="email" placeholder="请填写您的邮箱地址" />
-                    </div>
-                    <div class="verify_container clearfix">
-                        <input class="verify_code " type="text" placeholder="输入验证码" />
-                    </div>
-                    
 
-                    <input type="submit" value="提交" />
+                    <input type="submit" value="提交"/>
                 </div>
-            </form>
-        </section>
-    </div>
+            #end
+
+        </form>
+    </section>
+</div>
