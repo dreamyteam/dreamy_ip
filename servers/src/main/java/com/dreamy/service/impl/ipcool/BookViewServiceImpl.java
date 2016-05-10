@@ -40,6 +40,7 @@ public class BookViewServiceImpl implements BookViewService {
             page.setTotalNum(bookViewDao.countByExample(conditions));
             conditions.setPage(page);
         }
+        conditions.setOrderByClause("book_id  desc");
         return bookViewDao.selectByExample(conditions);
     }
 
