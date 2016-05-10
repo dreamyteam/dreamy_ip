@@ -6,7 +6,7 @@ package com.dreamy.beans.params;
  * Date: 16/5/9
  * Time: 上午11:19
  */
-public class LoginParam {
+public class LoginParams {
     private String mobile;
     private String password;
     private String ip;

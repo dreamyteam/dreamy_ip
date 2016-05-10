@@ -6,7 +6,7 @@ package com.dreamy.beans.params;
  * Date: 16/5/9
  * Time: 上午11:19
  */
-public class RegisterParam {
+public class RegisterParams {
     private String mobile;
     private String password;
     private String checkCode;

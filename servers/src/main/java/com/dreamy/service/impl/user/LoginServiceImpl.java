@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.user;
 
-import com.dreamy.beans.params.LoginParam;
+import com.dreamy.beans.params.LoginParams;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.service.iface.user.LoginService;
 import com.dreamy.utils.StringUtils;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class LoginServiceImpl implements LoginService {
     @Override
-    public ErrorCodeEnums checkLoginParam(LoginParam param) {
+    public ErrorCodeEnums checkLoginParam(LoginParams param) {
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
 
