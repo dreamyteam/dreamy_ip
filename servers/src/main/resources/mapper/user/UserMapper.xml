@@ -3,6 +3,7 @@
 <mapper namespace="com.dreamy.mapper.user.UserMapper" >
   <resultMap id="BaseResultMap" type="com.dreamy.domain.user.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_key" property="userKey" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
-    <result column="user_key" property="userKey" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, phone, password, image_url, user_name, sex, email, status, created_at, updated_at, 
-    user_key
+    id, user_key, phone, password, image_url, user_name, sex, email, status, created_at, 
+    updated_at, info
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.user.UserConditions" >
     select
@@ -108,18 +109,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.user.User" useGeneratedKeys="true" keyProperty="id" >
-    insert into ip_user (phone, password, image_url, 
-      user_name, sex, email, 
-      status, created_at, updated_at, 
-      user_key)
-    values (#{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{userKey,jdbcType=VARCHAR})
+    insert into ip_user (user_key, phone, password, 
+      image_url, user_name, sex, 
+      email, status, created_at, 
+      updated_at, info)
+    values (#{userKey,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{info,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.user.User" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userKey != null" >
+        user_key,
+      </if>
       <if test="phone != null" >
         phone,
       </if>
@@ -147,11 +151,14 @@
       <if test="updatedAt != null" >
         updated_at,
       </if>
-      <if test="userKey != null" >
-        user_key,
+      <if test="info != null" >
+        info,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userKey != null" >
+        #{userKey,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
@@ -179,8 +186,8 @@
       <if test="updatedAt != null" >
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="userKey != null" >
-        #{userKey,jdbcType=VARCHAR},
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -195,6 +202,9 @@
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userKey != null" >
+        user_key = #{record.userKey,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null" >
         phone = #{record.phone,jdbcType=VARCHAR},
@@ -223,8 +233,8 @@
       <if test="record.updatedAt != null" >
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userKey != null" >
-        user_key = #{record.userKey,jdbcType=VARCHAR},
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -234,6 +244,7 @@
   <update id="updateByExample" parameterType="map" >
     update ip_user
     set id = #{record.id,jdbcType=INTEGER},
+      user_key = #{record.userKey,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       image_url = #{record.imageUrl,jdbcType=VARCHAR},
@@ -243,7 +254,7 @@
       status = #{record.status,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      user_key = #{record.userKey,jdbcType=VARCHAR}
+      info = #{record.info,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -251,6 +262,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.user.User" >
     update ip_user
     <set >
+      <if test="userKey != null" >
+        user_key = #{userKey,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
@@ -278,15 +292,16 @@
       <if test="updatedAt != null" >
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="userKey != null" >
-        user_key = #{userKey,jdbcType=VARCHAR},
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.user.User" >
     update ip_user
-    set phone = #{phone,jdbcType=VARCHAR},
+    set user_key = #{userKey,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       image_url = #{imageUrl,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
@@ -295,7 +310,7 @@
       status = #{status,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      user_key = #{userKey,jdbcType=VARCHAR}
+      info = #{info,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >

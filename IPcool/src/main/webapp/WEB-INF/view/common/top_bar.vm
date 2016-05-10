@@ -3,39 +3,70 @@
         <a href="/" class="logo"></a>
         <!--搜索框 用户中心显示-->
 
-##        <form class="search_bar_container" action="/search.html">
-##            <div class="form_search">
-##
-##                <input type="text" name="content" class="search" placeholder="试试搜索美人鱼">
-##                <input class="submit" type="submit" value="">
-##
-##            </div>
-##        </form>
+    ##        <form class="search_bar_container" action="/search.html">
+    ##            <div class="form_search">
+    ##
+    ##                <input type="text" name="content" class="search" placeholder="试试搜索美人鱼">
+    ##                <input class="submit" type="submit" value="">
+    ##
+    ##            </div>
+    ##        </form>
         <!-- 搜索框 结束 -->
 
         <!--注册 登录按钮-->
-        <!-- <nav>
+        <!--
             <button class="register">注册</button>
             <button class="login">登录</button>
         </nav> -->
         <!--登录后用户id-->
 
-        <div class="user">
-            <h2 class="user_name">土豆</h2>
+        #if($!thisUser.userKey)
+            <div class="user">
+                <h2 class="user_name">$!thisUser.username</h2>
 
-            <div class="user_menu">
-                <div class="arrow">
-                    <span></span><em></em>
+                <div class="user_menu">
+                    <div class="arrow">
+                        <span></span><em></em>
+                    </div>
+                    <ul>
+                        <li><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">账号设置</a></li>
+                        <li><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
+                        <li><a href="/user/logout?userKey=$!thisUser.userKey">退出登录</a></li>
+                    </ul>
                 </div>
-                <ul>
-                    <li><a href="#">我关注的</a></li>
-                    <li><a href="#">历史记录</a></li>
-                    <li><a href="#">个人信息</a></li>
-                    <li><a href="#">账号设置</a></li>
-                    <li><a href="#">修改密码</a></li>
-                    <li><a href="#">退出登录</a></li>
-                </ul>
             </div>
-        </div>
+        #else
+            <nav>
+                <button class="register" id="register">注册</button>
+                <button class="login" id="login">登录</button>
+            </nav>
+        #end
     </div>
 </header>
+
+<!-- 登录注册弹窗 -->
+<div class="popup_box sign" id="popup_sign">
+    <button class="close"></button>
+    <span class="logo"></span>
+
+    <form id="sign_form">
+        <span class="err_msg"></span>
+
+        <div class="sign_container">
+            <label class="icon_phone_number"></label>
+            <input type="text" name="phone_number" placeholder="手机号码" value=""/>
+        </div>
+        <div class="sign_container">
+            <label class="icon_password"></label>
+            <input type="password" name="password" placeholder="密码"/>
+        </div>
+        <div class="sign_container verify">
+            <label class="icon_verify"></label>
+            <input type="text" name="verify_code" placeholder="验证码"/>
+            <button class="btn_send_verify_code" disabled="disabled">发送验证码</button>
+        </div>
+        <button class="solid btn_submit">创建帐号</button>
+        <p class="tips_bottom">已有帐号,点击</p>
+        <button class="tips_bottom_btn">登录</button>
+    </form>
+</div>

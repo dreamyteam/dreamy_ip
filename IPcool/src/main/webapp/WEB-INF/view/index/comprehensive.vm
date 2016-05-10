@@ -5,7 +5,7 @@
     <section class="comprehensive">
         <h1 class="title">综合指数趋势</h1>
 
-        <div class="values_container">
+        <div class="values_container" id="composite_values">
             <!--当前指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前指数</h2>
@@ -39,7 +39,7 @@
     <section>
         <h1 class="title">综合指数趋势<span class="date_region">2015/03/24至2016/03/23</span></h1>
 
-        <div class="chart_comprehensive_value" id="chart_comprehensive_value" data-fetch-url="/comprehensive/history?ip=55"></div>
+        <div class="line_charts" id="chart_comprehensive_value_detail" data-fetch-url="/comprehensive/history?ip=55"></div>
     </section>
     <!--综合排名地位-->
     <section>
@@ -52,7 +52,7 @@
             </ul>
 
             <ul class="tab_contents">
-                <li class="clearfix show">f
+                <li class="clearfix show">
                     <div class="ipstatus">
                         <h3>在全部文学中所处的地位</h3>
 

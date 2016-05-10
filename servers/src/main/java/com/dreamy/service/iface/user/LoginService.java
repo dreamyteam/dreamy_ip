@@ -1,6 +1,6 @@
 package com.dreamy.service.iface.user;
 
-import com.dreamy.beans.params.LoginParam;
+import com.dreamy.beans.params.LoginParams;
 import com.dreamy.enums.ErrorCodeEnums;
 
 /**
@@ -16,6 +16,6 @@ public interface LoginService {
      * @param param
      * @return
      */
-    ErrorCodeEnums checkLoginParam(LoginParam param);
+    ErrorCodeEnums checkLoginParam(LoginParams param);
 
 }

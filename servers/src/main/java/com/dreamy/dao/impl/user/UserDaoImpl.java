@@ -1,7 +1,7 @@
 package com.dreamy.dao.impl.user;
 
 import com.dreamy.dao.BaseDaoImpl;
-import com.dreamy.dao.iface.user.UserDao;
+import com.dreamy.dao.iface.User.UserDao;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserConditions;
 import com.dreamy.mapper.user.UserMapper;
