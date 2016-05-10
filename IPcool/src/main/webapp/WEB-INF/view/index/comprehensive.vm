@@ -5,7 +5,7 @@
     <section class="comprehensive">
         <h1 class="title">综合指数趋势</h1>
 
-        <div class="values_container">
+        <div class="values_container" id="composite_values">
             <!--当前指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前指数</h2>
@@ -52,7 +52,7 @@
             </ul>
 
             <ul class="tab_contents">
-                <li class="clearfix show">f
+                <li class="clearfix show">
                     <div class="ipstatus">
                         <h3>在全部文学中所处的地位</h3>
 

@@ -177,6 +177,76 @@ public class UserConditions {
             return (Criteria) this;
         }
 
+        public Criteria andUserKeyIsNull() {
+            addCriterion("user_key is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyIsNotNull() {
+            addCriterion("user_key is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyEqualTo(String value) {
+            addCriterion("user_key =", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyNotEqualTo(String value) {
+            addCriterion("user_key <>", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyGreaterThan(String value) {
+            addCriterion("user_key >", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyGreaterThanOrEqualTo(String value) {
+            addCriterion("user_key >=", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyLessThan(String value) {
+            addCriterion("user_key <", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyLessThanOrEqualTo(String value) {
+            addCriterion("user_key <=", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyLike(String value) {
+            addCriterion("user_key like", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyNotLike(String value) {
+            addCriterion("user_key not like", value, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyIn(List<String> values) {
+            addCriterion("user_key in", values, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyNotIn(List<String> values) {
+            addCriterion("user_key not in", values, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyBetween(String value1, String value2) {
+            addCriterion("user_key between", value1, value2, "userKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyNotBetween(String value1, String value2) {
+            addCriterion("user_key not between", value1, value2, "userKey");
+            return (Criteria) this;
+        }
+
         public Criteria andPhoneIsNull() {
             addCriterion("phone is null");
             return (Criteria) this;
@@ -767,73 +837,78 @@ public class UserConditions {
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyIsNull() {
-            addCriterion("user_key is null");
+        public Criteria andInfoIsNull() {
+            addCriterion("info is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyIsNotNull() {
-            addCriterion("user_key is not null");
+        public Criteria andInfoIsNotNull() {
+            addCriterion("info is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyEqualTo(String value) {
-            addCriterion("user_key =", value, "userKey");
+        public Criteria andInfoEqualTo(String value) {
+            addCriterion("info =", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyNotEqualTo(String value) {
-            addCriterion("user_key <>", value, "userKey");
+        public Criteria andInfoNotEqualTo(String value) {
+            addCriterion("info <>", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyGreaterThan(String value) {
-            addCriterion("user_key >", value, "userKey");
+        public Criteria andInfoGreaterThan(String value) {
+            addCriterion("info >", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyGreaterThanOrEqualTo(String value) {
-            addCriterion("user_key >=", value, "userKey");
+        public Criteria andInfoGreaterThanOrEqualTo(String value) {
+            addCriterion("info >=", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyLessThan(String value) {
-            addCriterion("user_key <", value, "userKey");
+        public Criteria andInfoLessThan(String value) {
+            addCriterion("info <", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyLessThanOrEqualTo(String value) {
-            addCriterion("user_key <=", value, "userKey");
+        public Criteria andInfoLessThanOrEqualTo(String value) {
+            addCriterion("info <=", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyLike(String value) {
-            addCriterion("user_key like", value, "userKey");
+        public Criteria andInfoLike(String value) {
+            addCriterion("info like", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyNotLike(String value) {
-            addCriterion("user_key not like", value, "userKey");
+        public Criteria andInfoNotLike(String value) {
+            addCriterion("info not like", value, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyIn(List<String> values) {
-            addCriterion("user_key in", values, "userKey");
+        public Criteria andInfoIn(List<String> values) {
+            addCriterion("info in", values, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyNotIn(List<String> values) {
-            addCriterion("user_key not in", values, "userKey");
+        public Criteria andInfoNotIn(List<String> values) {
+            addCriterion("info not in", values, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyBetween(String value1, String value2) {
-            addCriterion("user_key between", value1, value2, "userKey");
+        public Criteria andInfoBetween(String value1, String value2) {
+            addCriterion("info between", value1, value2, "info");
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyNotBetween(String value1, String value2) {
-            addCriterion("user_key not between", value1, value2, "userKey");
+        public Criteria andInfoNotBetween(String value1, String value2) {
+            addCriterion("info not between", value1, value2, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserKeyLikeInsensitive(String value) {
+            addCriterion("upper(user_key) like", value.toUpperCase(), "userKey");
             return (Criteria) this;
         }
 
@@ -862,8 +937,8 @@ public class UserConditions {
             return (Criteria) this;
         }
 
-        public Criteria andUserKeyLikeInsensitive(String value) {
-            addCriterion("upper(user_key) like", value.toUpperCase(), "userKey");
+        public Criteria andInfoLikeInsensitive(String value) {
+            addCriterion("upper(info) like", value.toUpperCase(), "info");
             return (Criteria) this;
         }
     }
