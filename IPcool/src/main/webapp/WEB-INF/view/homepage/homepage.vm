@@ -36,6 +36,8 @@
         </div>
         <div class="head_front">
             <div class="inner">
+<<<<<<< HEAD
+=======
                 <header class="clearfix">
                     <a href="/" class="logo"></a>
                     <nav>
@@ -43,6 +45,7 @@
                         <button class="login" id="login">登录</button>
                     </nav>
                 </header>
+>>>>>>> 47ac0436a63bfb3f9c7e8f65896493b0157cf933
                 <h1 class="main_title">让IP有序 让文创有依</h1>
                 <h6 class="sub_text">已分析文学 IP 10000+</h6>
                 <form class="search_bar_container" action="/search.html">
