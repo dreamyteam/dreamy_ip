@@ -1,6 +1,7 @@
 package com.dreamy.ipcool.controllers.user;
 
 import com.dreamy.beans.InterfaceBean;
+import com.dreamy.beans.UserSession;
 import com.dreamy.beans.params.RegisterParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.enums.ErrorCodeEnums;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -56,6 +58,7 @@ public class RegisterController extends IpcoolController {
                     verificationCodeService.saveCodeToCache(name, code);
                     shortMessageService.send(name, "【IP库】您的验证码是" + code);
                 }
+
                 return null;
             }
         });
@@ -67,7 +70,7 @@ public class RegisterController extends IpcoolController {
 
     @RequestMapping(value = "/user/register")
     @ResponseBody
-    public void register(RegisterParams param, HttpServletResponse response) {
+    public void register(RegisterParams param,HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
         ErrorCodeEnums errorCodeEnums = registerService.checkRegisterParam(param);
         if (errorCodeEnums.getErrorCode() > 0) {
@@ -81,6 +84,16 @@ public class RegisterController extends IpcoolController {
                 user.userKey(registerService.createUserKey(param));
 
                 userService.save(user);
+
+                UserSession session = new UserSession();
+                session.setUserId(user.getId());
+                session.setUsername(user.getUserName());
+                session.setUserKey(user.getUserKey());
+                session.setImageUrl(user.getImageUrl());
+                session.setInfo(user.getInfo());
+                session.setSex(user.getSex());
+
+                userSessionContainer.set(getUserSessionId(request), session);
             } else {
                 errorCodeEnums = ErrorCodeEnums.register_failed;
                 errorCodeEnums.setErrorMsg("用户已存在！");

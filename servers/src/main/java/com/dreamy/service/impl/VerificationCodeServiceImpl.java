@@ -20,7 +20,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     @Override
     public String createVerificationCode(Integer length) {
-        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String chars = "0123456789";
         Integer charsLength = chars.length();
         char[] rands = new char[length];
         for (int i = 0; i < 4; i++) {
