@@ -120,7 +120,7 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou_event}"/>
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin_event} "/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -131,7 +131,7 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin_event}"/>
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou_event}"/>
     </rabbit:listener-container>
 
 </beans>  

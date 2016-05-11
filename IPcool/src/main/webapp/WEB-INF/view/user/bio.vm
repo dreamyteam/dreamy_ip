@@ -9,6 +9,9 @@
 
         <div class="user_personal_information_container">
             <form action="/user/update" method="post">
+
+                <input id="hidden_avatar" type="hidden" value="$user.imageUrl">
+
                 <h2 class="sub_title">基本信息</h2>
 
                 <div class="col_2_container">
