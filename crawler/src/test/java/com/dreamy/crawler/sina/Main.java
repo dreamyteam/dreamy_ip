@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.dreamy.handler.keyword.sina.CrawSina;
-import com.dreamy.handler.keyword.sina.LoginSina;
-import com.dreamy.handler.keyword.sina.SinaHttpUtils;
+import com.dreamy.utils.sina.CrawSina;
+import com.dreamy.utils.sina.LoginSina;
+import com.dreamy.utils.sina.SinaHttpUtils;
 import com.dreamy.utils.HttpUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

@@ -109,10 +109,13 @@
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="ip_user_attach" domainObjectName="user.UserAttach">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="ip_user_apply" domainObjectName="user.UserApply">
+        <!--<table tableName="ip_user_apply" domainObjectName="user.UserApply">-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="ip_user_intention_vote" domainObjectName="user.IntentionVote">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

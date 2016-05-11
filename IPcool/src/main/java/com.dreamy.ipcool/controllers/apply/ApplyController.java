@@ -83,6 +83,8 @@ public class ApplyController extends IpcoolController {
             if (StringUtils.isEmpty(user.getEmail())) {
                 wrongTypes.add(4);
             }
+        } else {
+            user.setId(userSession.getUserId());
         }
 
         UserApply userApply = userApplyService.getByName(applyParams.getIpName());
