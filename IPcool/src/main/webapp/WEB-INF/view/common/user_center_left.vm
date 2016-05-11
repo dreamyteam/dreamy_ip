@@ -12,3 +12,16 @@
     <li #if($pageName=="password") class="active"    #end><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
 ##    <li><a href="">历史纪录</a></li>
 </ul>
+
+
+<div class="popup_box avatar" id="avatar_popup">
+    <button class="close"></button>
+    <div class="img_upload_container">
+        <h5>添加或更改你的头像</h5>
+        <div class="avatar_container">
+            <img id="avatar_upload" src="">
+        </div>
+        <p>随意拖拽或缩放大图中的虚线方格，虚线内小图即为保存后的小头像图标。</p>
+        <button class="submit" id="avatar_upload_submit">保存</button>
+    </div>
+</div>
