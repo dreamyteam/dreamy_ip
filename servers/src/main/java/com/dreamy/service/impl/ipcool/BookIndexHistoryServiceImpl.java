@@ -7,6 +7,7 @@ import com.dreamy.domain.ipcool.BookIndexHistoryConditions;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -64,7 +65,7 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
     public Integer delByDate(Date date) {
         BookIndexHistoryConditions conditions= new BookIndexHistoryConditions();
         BookIndexHistoryConditions.Criteria criteria = conditions.createCriteria();
-        criteria.andCreatedAtEqualTo(date);
+        criteria.andCreatedAtEqualTo(TimeUtils.getDate(date));
         return  bookIndexHistoryDao.deleteByExample(conditions);
     }
 }

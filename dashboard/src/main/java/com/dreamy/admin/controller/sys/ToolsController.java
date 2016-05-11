@@ -2,10 +2,9 @@ package com.dreamy.admin.controller.sys;
 
 import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.admin.service.SinaLoginService;
-import com.dreamy.admin.tasks.IpBookCrawlerTask;
-import com.dreamy.admin.tasks.KeyWorkTask;
-import com.dreamy.admin.tasks.NewsMediaTask;
-import com.dreamy.admin.tasks.SoIndexTask;
+import com.dreamy.admin.tasks.*;
+import com.dreamy.admin.tasks.index.*;
+import com.dreamy.admin.tasks.rank.BookRankCreateTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +28,25 @@ public class ToolsController extends DashboardController {
 
     @Autowired
     NewsMediaTask newsMediaTask;
+    @Autowired
+    BookScoreTask bookScoreTask;
+
+    @Autowired
+    CompositeIndexexCreateTask compositeIndexexCreateTask;
+    @Autowired
+    DevelopIndexesCreateTask developIndexesCreateTask;
+    @Autowired
+    HotIndexesCreateTask hotIndexesCreateTask;
+    @Autowired
+    PropagationIndexesCreareTask propagationIndexesCreareTask;
+
+    @Autowired
+    ReputationIndexesCreateTask reputationIndexesCreateTask;
+
+    @Autowired
+    BookIndexHistoryTask bookIndexHistoryTask;
+    @Autowired
+    BookRankCreateTask bookRankCreateTask;
 
     /**
      * 新浪登录
@@ -93,6 +111,46 @@ public class ToolsController extends DashboardController {
     @RequestMapping(value = "/crawler/newsMedia")
     public String newsSogou() {
         newsMediaTask.crawler();
+        return redirect("/system/call.html");
+    }
+
+    /**
+     * news.sougou 积分 排名抽取
+     * @return
+     */
+    @RequestMapping(value = "/crawler/score")
+    public String score() {
+        bookScoreTask.crawler();
+        return redirect("/system/call.html");
+    }
+
+
+
+
+    /**
+     * 计算指数
+     * @return
+     */
+    @RequestMapping(value = "/index/hotIndex")
+    public String hotIndex() {
+        hotIndexesCreateTask.run();
+        developIndexesCreateTask.run();
+        propagationIndexesCreareTask.run();
+        reputationIndexesCreateTask.run();
+        compositeIndexexCreateTask.run();
+        bookIndexHistoryTask.copy();
+        return redirect("/system/call.html");
+    }
+
+
+
+    /**
+     * 计算排名
+     * @return
+     */
+    @RequestMapping(value = "/index/rank")
+    public String rank() {
+        bookRankCreateTask.run();
         return redirect("/system/call.html");
     }
 }

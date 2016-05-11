@@ -29,6 +29,13 @@ public class TimeUtils {
         return new SimpleDateFormat(pattern == null ? "yyyy/MM/dd" : pattern).format(date == null ? new Date() : date);
     }
 
+
+
+    public static Date getDate(Date date) {
+        String time =toString(FORMAT_YMDA,date);
+
+        return getDateByStr(time,FORMAT_YMDA);
+    }
     /**
      * 时间字符串转换为date类型
      *
@@ -426,6 +433,7 @@ public class TimeUtils {
 
 
     public static void main(String[] args) {
+        System.out.println(getDate(new Date()));
 //        // DateTime dt = new DateTime();
 //        // System.out.println("" + dt.getMonthOfYear());
 //        // System.out.println(getDateByStr("2015-04-20","yy-mm-dd"));
