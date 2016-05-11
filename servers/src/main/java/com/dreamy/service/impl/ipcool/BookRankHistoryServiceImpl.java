@@ -7,6 +7,8 @@ import com.dreamy.domain.ipcool.BookRankHistoryConditions;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.TimeUtils;
+import com.dreamy.utils.TimerUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -75,7 +77,7 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
     @Override
     public int delByBookIdAndTypeAndDate(Integer bookId, Integer type, Date date) {
         BookRankHistoryConditions conditions = new BookRankHistoryConditions();
-        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type).andCreatedAtEqualTo(date);
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type).andCreatedAtEqualTo(TimeUtils.getDate(date));
         return bookRankHistoryDao.deleteByExample(conditions);
     }
 }
