@@ -48,17 +48,17 @@ public class RegisterController extends IpcoolController {
     public void getVerificationCode(RegisterParams param, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
 
-//        AsynchronousService.submit(new ObjectCallable(param.getMobile()) {
-//            @Override
-//            public Object run() throws Exception {
-//                String code = verificationCodeService.createVerificationCode(4);
-//                if (StringUtils.isNotEmpty(code)) {
-//                    verificationCodeService.saveCodeToCache(name, code);
-//                    shortMessageService.send(name, "【IP库】您的验证码是" + code);
-//                }
-//                return null;
-//            }
-//        });
+        AsynchronousService.submit(new ObjectCallable(param.getMobile()) {
+            @Override
+            public Object run() throws Exception {
+                String code = verificationCodeService.createVerificationCode(4);
+                if (StringUtils.isNotEmpty(code)) {
+                    verificationCodeService.saveCodeToCache(name, code);
+                    shortMessageService.send(name, "【IP库】您的验证码是" + code);
+                }
+                return null;
+            }
+        });
 
 
         interfaceReturn(response, JsonUtils.toString(bean), "");

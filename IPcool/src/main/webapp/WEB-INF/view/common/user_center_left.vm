@@ -1,8 +1,9 @@
 <ul class="sidebar_nav">
     <li class="user_info">
         <div class="user_avatar_container">
-            <span class="avatar_mask" id="avatar_mask"></span>
-            <img src="$!thisUser.imageUrl">
+            <label for="avatar_input_upload" id="avatar_mask" class="avatar_mask"></label>
+            <input id="avatar_input_upload" type="file" accept="image/png,image/gif,image/jpg,image/jpeg" name="file"/>
+            <img id="avatar_image" src="$!thisUser.imageUrl">
         </div>
         <h2 class="user_name">$!thisUser.username</h2>
         <h6 class="user_signature">$!user.info</h6>
@@ -16,12 +17,12 @@
 
 <div class="popup_box avatar" id="avatar_popup">
     <button class="close"></button>
-    <div class="img_upload_container">
-        <h5>添加或更改你的头像</h5>
-        <div class="avatar_container">
-            <img id="avatar_upload" src="">
+        <div class="img_upload_container">
+            <h5>添加或更改你的头像</h5>
+            <div class="avatar_container">
+                <img id="avatar_upload" src="">
+            </div>
+            <p>随意拖拽或缩放大图中的虚线方格，虚线内小图即为保存后的小头像图标。</p>
+            <button class="submit" id="avatar_upload_submit">保存</button>
         </div>
-        <p>随意拖拽或缩放大图中的虚线方格，虚线内小图即为保存后的小头像图标。</p>
-        <button class="submit" id="avatar_upload_submit">保存</button>
-    </div>
 </div>

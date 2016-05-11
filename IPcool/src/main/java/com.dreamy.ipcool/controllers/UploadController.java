@@ -44,7 +44,7 @@ public class UploadController extends IpcoolController {
         if (bean.getErrorCode() == 0) {
             Map<String, String> map = new HashMap<String, String>();
             String url = imgUploadService.uploadImage(upfile);
-            map.put("image_url", url);
+            map.put("image_url", "http://"+url);
             bean.setData(map);
         }
 

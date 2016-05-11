@@ -14,7 +14,10 @@ public enum ErrorCodeEnums {
     login_failed(2002, "登录失败"),
 
     //图片上传
-    image_upload_failed(9001,"图片上传失败");
+    image_upload_failed(9001, "图片上传失败"),
+
+    //投票
+    vote_failed(10001, "投票失败");
 
 
     private Integer errorCode;

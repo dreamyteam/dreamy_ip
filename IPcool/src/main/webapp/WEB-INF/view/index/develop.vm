@@ -5,70 +5,10 @@
         <h6>投票你最期待的项目</h6>
 
         <div class="vote_container">
-            <div class="vote_content">
-                <div class="vote movie">
-                    <span></span>
-                    <h5>电影</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote tvshow">
-                    <span></span>
-                    <h5>电视剧</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote mobilegame">
-                    <span></span>
-                    <h5>手游</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote game">
-                    <span></span>
-                    <h5>游戏</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote peripheral">
-                    <span></span>
-                    <h5>周边</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote others">
-                    <span></span>
-                    <h5>其他</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-            </div>
+            #parse("/index/develop_intention.vm")
         </div>
     </section>
-    <section>
-        <h1 class="title">投票结果</h1>
-
-        <div id="chart_vote_result"></div>
-    </section>
-    <section>
+    <section class="hidden">
         <h1 class="title">TA们愿意参与开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
         <ul class="comments_container">
             <li class="comment">
@@ -112,7 +52,7 @@
             <a href="">查看全部</a>
         </div>
     </section>
-    <section>
+    <section class="hidden">
         <h1 class="title">TA们这样期待开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
         <ul class="comments_container">
             <li class="comment">

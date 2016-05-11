@@ -4,10 +4,7 @@ import com.dreamy.beans.InterfaceBean;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookIndexTypeEnums;
-import com.dreamy.enums.BookLevelEnums;
-import com.dreamy.enums.BookRankTrendEnums;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.*;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.service.iface.ipcool.*;
@@ -63,9 +60,11 @@ public class IndexController extends IpcoolController {
     public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
         getCommonDataOfPage(ipId, model, request);
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
+
         model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCount()));
         model.put("bookLevels", BookLevelEnums.values());
         model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
+
         return "/index/comprehensive";
     }
 
@@ -132,8 +131,6 @@ public class IndexController extends IpcoolController {
         Integer bookId = bookView.getBookId();
 
         Comments comments = commentService.getById(bookId);
-
-
         if (comments != null) {
             model.put("comments", comments.getComments());
         }
@@ -147,7 +144,7 @@ public class IndexController extends IpcoolController {
         model.put("rankEnums", BookIndexTypeEnums.values());
         model.put("typeEnums", BookTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
-
+        model.put("developEnums", BookIpDevelopTypeEnums.values());
 
         return "/index/detail";
     }
@@ -180,6 +177,17 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/user/reviews")
     public String userReviews(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
 
+        BookView bookView = bookViewService.getById(ipId);
+        if (bookView == null || bookView.getId() == null) {
+            return null;
+        }
+
+        Integer bookId = bookView.getBookId();
+
+        Comments comments = commentService.getById(bookId);
+        if (comments != null) {
+            model.put("comments", comments.getComments());
+        }
         getCommonDataOfPage(ipId, model, request);
         return "/index/user_reviews";
     }
@@ -224,7 +232,7 @@ public class IndexController extends IpcoolController {
         model.put("typeEnums", BookTypeEnums.values());
 
         BookRank bookRank = new BookRank().bookId(bookId);
-        List<BookRank> list = bookRankService.getList(bookRank, null,null);
+        List<BookRank> list = bookRankService.getList(bookRank, null, null);
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();

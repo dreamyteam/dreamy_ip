@@ -174,7 +174,7 @@
             </ul>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/comprehensive.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -215,65 +215,10 @@
             <h3>最受期待的开发项目</h3>
             <h6>投票查看结果</h6>
 
-            <div class="vote_content">
-                <div class="vote movie">
-                    <span></span>
-                    <h5>电影</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote tvshow">
-                    <span></span>
-                    <h5>电视剧</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote mobilegame">
-                    <span></span>
-                    <h5>手游</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote game">
-                    <span></span>
-                    <h5>游戏</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote peripheral">
-                    <span></span>
-                    <h5>周边</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-                <div class="vote others">
-                    <span></span>
-                    <h5>其他</h5>
-
-                    <div class="vote_btns">
-                        <button class="expext">期待</button>
-                        <button class="wantDevelop">想开发</button>
-                    </div>
-                </div>
-            </div>
+            #parse("/index/develop_intention.vm")
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/potential?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -309,7 +254,7 @@
         <!-- 热度趋势图表 -->
         <div id="chart_heat_trend" class="line_charts" data-fetch-url="/hotIndex/history?ip=${view.bookId}"></div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -352,7 +297,7 @@
             <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -388,7 +333,7 @@
         <!-- 用户活跃度图表 -->
         <div id="chart_user_vitalty" class="line_charts" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -405,7 +350,7 @@
             <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/persona.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -420,7 +365,7 @@
                 <h6>大多数人觉得很好</h6>
             </div>
             <div class="review_chart">
-                <button>写点评</button>
+##                <button>写点评</button>
                 <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
             </div>
         </div>
