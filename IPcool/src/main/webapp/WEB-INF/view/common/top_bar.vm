@@ -29,9 +29,9 @@
                         <span></span><em></em>
                     </div>
                     <ul>
-                        <li><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">账号设置</a></li>
-                        <li><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
-                        <li><a href="/user/logout?userKey=$!thisUser.userKey">退出登录</a></li>
+                        <li><a href="/user/bio?pageName=bio">账号设置</a></li>
+                        <li><a href="/user/modify/password?pageName=password">修改密码</a></li>
+                        <li><a href="/logout">退出登录</a></li>
                     </ul>
                 </div>
             </div>
