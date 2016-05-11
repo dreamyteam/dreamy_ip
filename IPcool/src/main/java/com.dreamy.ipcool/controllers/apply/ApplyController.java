@@ -3,13 +3,16 @@ package com.dreamy.ipcool.controllers.apply;
 import com.dreamy.beans.UserSession;
 import com.dreamy.beans.params.IpApplyParams;
 import com.dreamy.domain.user.User;
+import com.dreamy.domain.user.UserApply;
 import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
+import com.dreamy.service.iface.ipcool.UserApplyService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.omg.CORBA.MARSHAL;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,9 @@ import java.util.Map;
 @RequestMapping("/apply")
 public class ApplyController extends IpcoolController {
 
+    @Autowired
+    private UserApplyService userApplyService;
+
     @RequestMapping("")
     public String apply(ModelMap map, HttpServletRequest request, IpApplyParams applyParams, User user) {
 
@@ -45,6 +51,14 @@ public class ApplyController extends IpcoolController {
         return "/apply/apply";
     }
 
+    /**
+     * @param applyParams
+     * @param user
+     * @param map
+     * @param request
+     * @return
+     * @todo 这里需要对提交频率做一个限制，对应的表以及存下ip地址
+     */
     @RequestMapping("/save")
     public String applyResult(IpApplyParams applyParams, User user, ModelMap map, HttpServletRequest request) {
         String redirectUrl = "/apply";
@@ -67,6 +81,12 @@ public class ApplyController extends IpcoolController {
                 wrongTypes.add(4);
             }
         }
+
+        UserApply userApply = userApplyService.getByName(applyParams.getIpName());
+        if (userApply.getId() != null) {
+            wrongTypes.add(5);
+        }
+
         if (wrongTypes.size() > 0) {
             return redirect(redirectUrl + "?wrongTypes=" + JsonUtils.toString(wrongTypes)
                             + "&ipName=" + applyParams.getIpName()
@@ -76,6 +96,9 @@ public class ApplyController extends IpcoolController {
                             + "&email=" + user.getEmail()
             );
         }
+
+        applyParams.setIpAddress(HttpUtils.getIpAddr(request));
+        userApplyService.save(applyParams, user);
 
         map.put("ipName", applyParams.getIpName());
         return "/apply/result";

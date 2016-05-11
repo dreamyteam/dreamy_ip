@@ -27,13 +27,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author jared
- *
  * @Description: http请求相关工具类
- *
  * @date Nov 5, 2014 3:34:29 PM
- *
  */
 public class HttpUtils {
 
@@ -45,16 +41,15 @@ public class HttpUtils {
     /**
      * get方法获取网页
      *
-     * @param tempurl
-     *            网页链接
+     * @param tempurl 网页链接
      * @return
      */
     public static String getHtmlGet(String tempurl) {
-        return getHtmlGet(tempurl,CHARSET, null, 0, null, null, null, null);
+        return getHtmlGet(tempurl, CHARSET, null, 0, null, null, null, null);
     }
 
-    public static String getHtmlGet(String tempurl,String charSet ) {
-        return getHtmlGet(tempurl,charSet, null, 0, null, null, null, null);
+    public static String getHtmlGet(String tempurl, String charSet) {
+        return getHtmlGet(tempurl, charSet, null, 0, null, null, null, null);
     }
 
     public static String refer(String url) {
@@ -67,18 +62,20 @@ public class HttpUtils {
 
     /**
      * 配置代理 get方法获取网页
+     *
      * @param tempurl
      * @param proxyHost
      * @param proxyPort
      * @param userAgent
      * @return
      */
-    public static String getHtmlGetByProxy(String tempurl,String proxyHost, int proxyPort,String userAgent) {
-        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, null,userAgent, null, null);
+    public static String getHtmlGetByProxy(String tempurl, String proxyHost, int proxyPort, String userAgent) {
+        return getHtmlGet(tempurl, CHARSET, proxyHost, proxyPort, null, userAgent, null, null);
     }
 
     /**
      * 配置代理 get方法获取网页
+     *
      * @param tempurl
      * @param proxyHost
      * @param proxyPort
@@ -86,33 +83,8 @@ public class HttpUtils {
      * @param cookie
      * @return
      */
-    public static String getHtmlGetByProxy(String tempurl,String proxyHost,int proxyPort, String cookie,String userAgent) {
-        return getHtmlGet(tempurl,CHARSET, proxyHost, proxyPort, cookie,userAgent, null, null);
-    }
-
-
-
-    /***
-     * get方法获取网页
-     * @param tempurl
-     * @param charSet
-     * @param referer
-     * @return
-     */
-    public static String getHtmlGet(String tempurl,String charSet,String referer) {
-        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, null);
-    }
-
-    /**
-     * 配置请求头,get方法获取网页
-     * @param tempurl
-     * @param charSet
-     * @param referer
-     * @param XRequestedWith
-     * @return
-     */
-    public static String getHtmlGet(String tempurl,String charSet, String referer, String XRequestedWith) {
-        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, XRequestedWith);
+    public static String getHtmlGetByProxy(String tempurl, String proxyHost, int proxyPort, String cookie, String userAgent) {
+        return getHtmlGet(tempurl, CHARSET, proxyHost, proxyPort, cookie, userAgent, null, null);
     }
 
 
@@ -120,19 +92,38 @@ public class HttpUtils {
      * get方法获取网页
      *
      * @param tempurl
-     *            网页链接
      * @param charSet
-     *            网页字符类型
-     * @param proxyHost
-     *            代理ip
-     * @param proxyPort
-     *            代理端口
-     * @param cookie
-     *            cookie
-     * @param userAgent
-     *            userAgent
      * @param referer
-     *            referer
+     * @return
+     */
+    public static String getHtmlGet(String tempurl, String charSet, String referer) {
+        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, null);
+    }
+
+    /**
+     * 配置请求头,get方法获取网页
+     *
+     * @param tempurl
+     * @param charSet
+     * @param referer
+     * @param XRequestedWith
+     * @return
+     */
+    public static String getHtmlGet(String tempurl, String charSet, String referer, String XRequestedWith) {
+        return getHtmlGet(tempurl, charSet, null, 0, null, null, referer, XRequestedWith);
+    }
+
+
+    /**
+     * get方法获取网页
+     *
+     * @param tempurl   网页链接
+     * @param charSet   网页字符类型
+     * @param proxyHost 代理ip
+     * @param proxyPort 代理端口
+     * @param cookie    cookie
+     * @param userAgent userAgent
+     * @param referer   referer
      * @return
      */
     public static String getHtmlGet(String tempurl, String charSet, String proxyHost, int proxyPort, String cookie,
@@ -148,8 +139,7 @@ public class HttpUtils {
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
         if (StringUtils.isNotEmpty(charSet)) {
             method.getParams().setContentCharset(charSet);
-        }
-        else{
+        } else {
             method.getParams().setContentCharset(CHARSET);
         }
 
@@ -162,7 +152,7 @@ public class HttpUtils {
         if (StringUtils.isNotEmpty(userAgent)) {
             method.setRequestHeader("User-Agent", userAgent);
         } else {
-            method.setRequestHeader("User-Agent",USER_AGENT);
+            method.setRequestHeader("User-Agent", USER_AGENT);
         }
 
         if (StringUtils.isNotEmpty(cookie)) {
@@ -171,8 +161,7 @@ public class HttpUtils {
 
         if (StringUtils.isNotEmpty(referer)) {
             method.setRequestHeader("Referer", referer);
-        }
-        else{
+        } else {
             method.setRequestHeader("Referer", refer(tempurl));
         }
 
@@ -227,11 +216,10 @@ public class HttpUtils {
             } catch (IOException e) {
                 e.printStackTrace();
                 LOGGER.error(e.getMessage());
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 LOGGER.error(e.getMessage());
-            }
-            finally {
+            } finally {
                 if (method != null) {
                     method.releaseConnection();
                 }
@@ -250,8 +238,7 @@ public class HttpUtils {
     /**
      * 获取无参数链接
      *
-     * @param url
-     *            链接
+     * @param url 链接
      * @return
      */
     public static String getUrlWithoutParams(String url) {
@@ -269,10 +256,8 @@ public class HttpUtils {
     /**
      * 文件上传
      *
-     * @param tempurl
-     *            链接
-     * @param parts
-     *            post参数
+     * @param tempurl 链接
+     * @param parts   post参数
      * @return
      */
     public static String fileUpload(String tempurl, Part[] parts) {
@@ -287,8 +272,8 @@ public class HttpUtils {
         PostMethod method = new PostMethod(tempurl);
         List<Part> req = new ArrayList<Part>();
         if (CollectionUtils.isNotEmpty(params)) {
-            for(Map.Entry<String, String> entry:params.entrySet()){
-                req.add(new StringPart(entry.getKey(),entry.getValue()));
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                req.add(new StringPart(entry.getKey(), entry.getValue()));
             }
         }
         req.addAll(Arrays.asList(parts));
@@ -345,7 +330,7 @@ public class HttpUtils {
                     StringBuilder message = new StringBuilder();
                     message.append("http post has an error, Response Code:");
                     message.append(statusCode);
-                    message.append("url:"+url+" param "+params.toString());
+                    message.append("url:" + url + " param " + params.toString());
                     message.append(" Response content: ");
                     message.append(sb.toString());
                     LOGGER.error(message.toString());
@@ -418,6 +403,7 @@ public class HttpUtils {
 
         return url;
     }
+
     public static String toUtf8String(String s) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < s.length(); i++) {
@@ -434,8 +420,9 @@ public class HttpUtils {
                 }
                 for (int j = 0; j < b.length; j++) {
                     int k = b[j];
-                    if (k < 0)
+                    if (k < 0) {
                         k += 256;
+                    }
                     sb.append("%" + Integer.toHexString(k).toUpperCase());
                 }
             }
@@ -459,8 +446,9 @@ public class HttpUtils {
                 }
                 for (int j = 0; j < b.length; j++) {
                     int k = b[j];
-                    if (k < 0)
+                    if (k < 0) {
                         k += 256;
+                    }
                     sb.append("%" + Integer.toHexString(k).toUpperCase());
                 }
             }
@@ -469,29 +457,28 @@ public class HttpUtils {
     }
 
 
-    public static String getSsl(String url){
-        String coment="";
+    public static String getSsl(String url) {
+        String coment = "";
         try {
-            URL u = new URL(url.replace(" ",""));
-            if("https".equalsIgnoreCase(u.getProtocol())){
+            URL u = new URL(url.replace(" ", ""));
+            if ("https".equalsIgnoreCase(u.getProtocol())) {
                 SslUtils.ignoreSsl();
             }
             URLConnection conn = u.openConnection();
             conn.setConnectTimeout(60000);
             conn.setReadTimeout(120000);
-            coment=IOUtils.toString(conn.getInputStream());
-        }
-        catch (Exception e){
+            coment = IOUtils.toString(conn.getInputStream());
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             return coment;
         }
 
     }
-    public String postSsl(String urlAddress,String args,int timeOut) throws Exception{
+
+    public String postSsl(String urlAddress, String args, int timeOut) throws Exception {
         URL url = new URL(urlAddress);
-        if("https".equalsIgnoreCase(url.getProtocol())){
+        if ("https".equalsIgnoreCase(url.getProtocol())) {
             SslUtils.ignoreSsl();
         }
         URLConnection u = url.openConnection();
@@ -505,6 +492,31 @@ public class HttpUtils {
         osw.close();
         u.getOutputStream();
         return IOUtils.toString(u.getInputStream());
+    }
+
+
+    public static String getIpAddr(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("http_client_ip");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        // 如果是多级代理，那么取第一个ip为客户ip
+        if (ip != null && ip.indexOf(",") != -1) {
+            ip = ip.substring(ip.lastIndexOf(",") + 1, ip.length()).trim();
+        }
+        return ip;
     }
 
     public static String decodeUnicode(String theString) {
@@ -555,21 +567,24 @@ public class HttpUtils {
                     }
                     outBuffer.append((char) value);
                 } else {
-                    if (aChar == 't')
+                    if (aChar == 't') {
                         aChar = '\t';
-                    else if (aChar == 'r')
+                    } else if (aChar == 'r') {
                         aChar = '\r';
-                    else if (aChar == 'n')
+                    } else if (aChar == 'n') {
                         aChar = '\n';
-                    else if (aChar == 'f')
+                    } else if (aChar == 'f') {
                         aChar = '\f';
+                    }
                     outBuffer.append(aChar);
                 }
-            } else
+            } else {
                 outBuffer.append(aChar);
+            }
         }
         return outBuffer.toString();
     }
+
     public static final String CHARSET = "UTF-8";
 
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36 AlexaToolbar/alxg-3.1";

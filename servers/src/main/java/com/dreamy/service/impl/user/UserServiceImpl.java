@@ -1,7 +1,7 @@
 package com.dreamy.service.impl.user;
 
 import com.dreamy.beans.Page;
-import com.dreamy.dao.iface.User.UserDao;
+import com.dreamy.dao.iface.user.UserDao;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserConditions;
 import com.dreamy.service.iface.user.UserService;

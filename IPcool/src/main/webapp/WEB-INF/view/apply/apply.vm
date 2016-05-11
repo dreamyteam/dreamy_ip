@@ -13,6 +13,9 @@
 
                         #foreach($wrongType in $wrongTypes)
                             #if($wrongType == 1)
+                                <span class="err_msg">IP不能为空</span>
+                            #end
+                            #if($wrongType == 5)
                                 <span class="err_msg">该IP已被收录</span>
                             #end
                         #end
@@ -32,7 +35,7 @@
                             #foreach($booTypeEnum in $booTypeEnums)
                                 <option
                                     #if($!apply.ipType == $booTypeEnum.getType())
-                                        selected
+                                            selected
                                     #end value="$booTypeEnum.getType()">$booTypeEnum.getDescription()</option>
                             #end
                         </select>
