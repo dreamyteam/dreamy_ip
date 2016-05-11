@@ -66,19 +66,6 @@
                             添加
                         </a>
 
-                        <a class="btn btn-default" href="/crawler/keyword">
-                            关键词搜索爬取
-                        </a>
-
-                        <a class="btn btn-default" href="/crawler/soindex">
-                            360指数爬取
-                        </a>
-
-                        <a class="btn btn-default" href="/crawler/all">
-                            全部爬取
-                        </a>
-
-
                         <button class="btn btn-default dt-btn-batch"
                                 data-batch-submit-url="/crawler/crawling/batch">
                             批量爬取

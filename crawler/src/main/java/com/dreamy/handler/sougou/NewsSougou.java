@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by wangyongxing on 16/4/20.
  */
-public class Sougou {
+public class NewsSougou {
     @ExtractBy("//div[@class=\"filt-sort filt-sort-from\"]//a/@href")
     private List<String> urls;
 

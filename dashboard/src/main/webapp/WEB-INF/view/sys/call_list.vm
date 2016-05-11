@@ -1,0 +1,76 @@
+<div class="page-heading">
+    <h3>
+        系统管理
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">参数管理</a></li>
+
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="pjax-url">
+                    <a class="pjax-url "
+                       href="/sysoption">系统参数</a></li>
+
+                <li role="presentation" class="pjax-url active">
+                    <a class="pjax-url" href="#">接口调用</a></li>
+
+            </ul>
+
+            <section class="panel">
+                <div class="panel-body">
+##                    <div class="well searchBox">
+##                        <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
+##                              action="/tools/sina">
+##                            <input type="hidden" name="source" value="$!source">
+##
+##                            <div class="searchContent">
+##                                <button type="submit" class="btn btn-default dt-btn-submit">新浪登录</button>
+##                            </div>
+##                        </form>
+##                    </div>
+                    <div class="well operate-box">
+                        <a class="btn btn-default" href="/tools/sina">
+                            新浪登录
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/keyword">
+                            关键词搜索爬取
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/keyword_weixin">
+                            微信关键词搜索爬取
+                        </a>
+
+
+                        <a class="btn btn-default" href="/crawler/soindex">
+                            360指数爬取
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/all">
+                            出版文学全部爬取
+                        </a>
+
+
+                        <a class="btn btn-default" href="/crawler/newsMedia">
+                            news.sogou.com上5大新闻的新闻数量爬取
+                        </a>
+
+##
+##                        <button class="btn btn-danger dt-btn-batch dt-btn-batch"
+##                                data-batch-submit-url="">批量删除
+##                        </button>
+                    </div>
+
+
+
+
+        </div>
+    </div>
+</div>

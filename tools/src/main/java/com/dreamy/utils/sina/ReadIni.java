@@ -1,4 +1,4 @@
-package com.dreamy.handler.keyword.sina;
+package com.dreamy.utils.sina;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

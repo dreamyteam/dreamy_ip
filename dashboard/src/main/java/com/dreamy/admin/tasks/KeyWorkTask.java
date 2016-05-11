@@ -65,21 +65,24 @@ public class KeyWorkTask {
 
     }
 
-    public void crawlerWeiXin() throws InterruptedException {
-
-        BookView bookView = new BookView().type(1);
-        int currentPage = 1;
-        while (true) {
-            Page page = new Page();
-            page.setPageSize(100);
-            page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page);
-            crawlerWeiXin(list);
-            if (!page.isHasNextPage()) {
-                break;
+    public void crawlerWeiXin() {
+        try {
+            BookView bookView = new BookView().type(1);
+            int currentPage = 1;
+            while (true) {
+                Page page = new Page();
+                page.setPageSize(20);
+                page.setCurrentPage(currentPage);
+                List<BookView> list = bookViewService.getList(bookView, page);
+                crawlerWeiXin(list);
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+                Thread.sleep(NumberUtils.randomInt(20, 30) * 1000);
             }
-            currentPage++;
-            Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

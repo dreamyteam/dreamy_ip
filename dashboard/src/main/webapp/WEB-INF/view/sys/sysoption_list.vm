@@ -18,6 +18,9 @@
                     <a class="pjax-url "
                        href="/crawler/view?id=$!book.id&source=$source.getType()">系统参数</a></li>
 
+                <li role="presentation" class="pjax-url">
+                    <a class="pjax-url" href="/system/call">接口调用</a></li>
+
             </ul>
 
             <section class="panel">
