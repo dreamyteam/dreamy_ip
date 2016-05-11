@@ -45,10 +45,10 @@ public class RegisterServiceImpl implements RegisterService {
             if (!matcher.matches()) {
                 errorMsg = ("手机号码格式不正确！");
             } else {
-//                String verificationCode = verificationCodeService.getCodeFromCache(param.getMobile());
-//                if (!param.getCheckCode().equals(verificationCode)) {
-//                    errorMsg = ("验证码错误");
-//                }
+                String verificationCode = verificationCodeService.getCodeFromCache(param.getMobile());
+                if (!param.getCheckCode().equals(verificationCode)) {
+                    errorMsg = ("验证码错误");
+                }
             }
         }
 
