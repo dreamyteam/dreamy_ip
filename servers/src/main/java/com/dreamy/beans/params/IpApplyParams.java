@@ -11,6 +11,16 @@ public class IpApplyParams {
     private Integer ipType;
     private String refUrl;
 
+    private String ipAddress;
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
     public String getIpName() {
         return ipName;
     }

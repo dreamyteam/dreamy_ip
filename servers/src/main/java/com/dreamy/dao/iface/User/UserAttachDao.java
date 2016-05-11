@@ -1,4 +1,4 @@
-package com.dreamy.dao.iface.User;
+package com.dreamy.dao.iface.user;
 
 import com.dreamy.dao.BaseDao;
 import com.dreamy.domain.user.UserAttach;

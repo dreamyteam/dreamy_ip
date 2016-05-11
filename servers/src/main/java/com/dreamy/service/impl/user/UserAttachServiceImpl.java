@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.user;
 
-import com.dreamy.dao.iface.User.UserAttachDao;
+import com.dreamy.dao.iface.user.UserAttachDao;
 import com.dreamy.domain.user.UserAttach;
 import com.dreamy.domain.user.UserAttachConditions;
 import com.dreamy.service.iface.user.UserAttachService;
