@@ -41,9 +41,12 @@ public class ApplyController extends IpcoolController {
     public String apply(ModelMap map, HttpServletRequest request, IpApplyParams applyParams, User user) {
 
         List<Integer> wrongTypes = JsonUtils.toList(Integer.class, request.getParameter("wrongTypes"));
-
         map.put("wrongTypes", wrongTypes);
         map.put("booTypeEnums", BookTypeEnums.values());
+
+        user.userName(HttpUtils.decodeUrl(user.getUserName()));
+        applyParams.setIpName(HttpUtils.decodeUrl(applyParams.getIpName()));
+        applyParams.setRefUrl(HttpUtils.decodeUrl(applyParams.getRefUrl()));
 
         map.put("user", user);
         map.put("apply", applyParams);
@@ -73,7 +76,7 @@ public class ApplyController extends IpcoolController {
         }
 
         UserSession userSession = getUserSession(request);
-        if (userSession == null) {
+        if (userSession == null || userSession.getUserId() == 0) {
             if (StringUtils.isEmpty(user.getUserName())) {
                 wrongTypes.add(3);
             }
@@ -89,10 +92,10 @@ public class ApplyController extends IpcoolController {
 
         if (wrongTypes.size() > 0) {
             return redirect(redirectUrl + "?wrongTypes=" + JsonUtils.toString(wrongTypes)
-                            + "&ipName=" + applyParams.getIpName()
+                            + "&ipName=" + HttpUtils.encodeUrl(applyParams.getIpName())
                             + "&ipType=" + applyParams.getIpType()
-                            + "&refUrl=" + applyParams.getRefUrl()
-                            + "&userName=" + user.getUserName()
+                            + "&refUrl=" + HttpUtils.encodeUrl(applyParams.getRefUrl())
+                            + "&userName=" + HttpUtils.encodeUrl(user.getUserName())
                             + "&email=" + user.getEmail()
             );
         }
