@@ -3,6 +3,7 @@
 <mapper namespace="com.dreamy.mapper.user.IntentionVoteMapper" >
   <resultMap id="BaseResultMap" type="com.dreamy.domain.user.IntentionVote" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ip_id" property="ipId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="user_choice" property="userChoice" jdbcType="INTEGER" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, status, type, user_choice, user_id, ip_address, created_at, updated_at
+    id, ip_id, status, type, user_choice, user_id, ip_address, created_at, updated_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.user.IntentionVoteConditions" >
     select
@@ -104,16 +105,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.user.IntentionVote" useGeneratedKeys="true" keyProperty="id" >
-    insert into ip_user_intention_vote (status, type, user_choice, 
-      user_id, ip_address, created_at, 
-      updated_at)
-    values (#{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{userChoice,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER}, #{ipAddress,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
-      #{updatedAt,jdbcType=TIMESTAMP})
+    insert into ip_user_intention_vote (ip_id, status, type, 
+      user_choice, user_id, ip_address, 
+      created_at, updated_at)
+    values (#{ipId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{userChoice,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{ipAddress,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.user.IntentionVote" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_user_intention_vote
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ipId != null" >
+        ip_id,
+      </if>
       <if test="status != null" >
         status,
       </if>
@@ -137,6 +141,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ipId != null" >
+        #{ipId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
@@ -172,6 +179,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.ipId != null" >
+        ip_id = #{record.ipId,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -201,6 +211,7 @@
   <update id="updateByExample" parameterType="map" >
     update ip_user_intention_vote
     set id = #{record.id,jdbcType=INTEGER},
+      ip_id = #{record.ipId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       user_choice = #{record.userChoice,jdbcType=INTEGER},
@@ -215,6 +226,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.user.IntentionVote" >
     update ip_user_intention_vote
     <set >
+      <if test="ipId != null" >
+        ip_id = #{ipId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -241,7 +255,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.user.IntentionVote" >
     update ip_user_intention_vote
-    set status = #{status,jdbcType=INTEGER},
+    set ip_id = #{ipId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       user_choice = #{userChoice,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},

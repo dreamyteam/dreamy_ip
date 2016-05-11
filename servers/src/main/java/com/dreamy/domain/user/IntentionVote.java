@@ -7,6 +7,8 @@ import java.util.Date;
 public class IntentionVote extends BaseDomain<Integer> implements Serializable {
     private Integer id;
 
+    private Integer ipId;
+
     private Integer status;
 
     private Integer type;
@@ -29,6 +31,14 @@ public class IntentionVote extends BaseDomain<Integer> implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIpId() {
+        return ipId;
+    }
+
+    public void setIpId(Integer ipId) {
+        this.ipId = ipId;
     }
 
     public Integer getStatus() {
@@ -100,6 +110,7 @@ public class IntentionVote extends BaseDomain<Integer> implements Serializable {
         }
         IntentionVote other = (IntentionVote) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getIpId() == null ? other.getIpId() == null : this.getIpId().equals(other.getIpId()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getUserChoice() == null ? other.getUserChoice() == null : this.getUserChoice().equals(other.getUserChoice()))
@@ -114,6 +125,7 @@ public class IntentionVote extends BaseDomain<Integer> implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getIpId() == null) ? 0 : getIpId().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getUserChoice() == null) ? 0 : getUserChoice().hashCode());
@@ -126,6 +138,11 @@ public class IntentionVote extends BaseDomain<Integer> implements Serializable {
 
     public IntentionVote id(Integer value) {
         this.id = value;
+        return this;
+    }
+
+    public IntentionVote ipId(Integer value) {
+        this.ipId = value;
         return this;
     }
 

@@ -177,6 +177,66 @@ public class IntentionVoteConditions {
             return (Criteria) this;
         }
 
+        public Criteria andIpIdIsNull() {
+            addCriterion("ip_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdIsNotNull() {
+            addCriterion("ip_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdEqualTo(Integer value) {
+            addCriterion("ip_id =", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdNotEqualTo(Integer value) {
+            addCriterion("ip_id <>", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdGreaterThan(Integer value) {
+            addCriterion("ip_id >", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ip_id >=", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdLessThan(Integer value) {
+            addCriterion("ip_id <", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdLessThanOrEqualTo(Integer value) {
+            addCriterion("ip_id <=", value, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdIn(List<Integer> values) {
+            addCriterion("ip_id in", values, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdNotIn(List<Integer> values) {
+            addCriterion("ip_id not in", values, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdBetween(Integer value1, Integer value2) {
+            addCriterion("ip_id between", value1, value2, "ipId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIpIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("ip_id not between", value1, value2, "ipId");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
