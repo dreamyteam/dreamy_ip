@@ -3,6 +3,7 @@ package com.dreamy.service.iface.ipcool;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRankHistory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,12 @@ public interface BookRankHistoryService {
      * @return
      */
     BookRankHistory getTopHistoryByBookIdAndType(Integer bookId, Integer type);
+
+
+    int delByBookIdAndTypeAndDate(Integer bookId, Integer type, Date date);
+
+
+
 
 
 }

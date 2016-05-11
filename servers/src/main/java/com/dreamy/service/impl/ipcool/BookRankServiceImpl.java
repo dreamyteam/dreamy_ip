@@ -187,6 +187,13 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
+    public Integer deleteByBookIdAndType(Integer bookId,Integer type) {
+        BookRankConditions conditions = new BookRankConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
+        return bookRankDao.deleteByExample(conditions);
+    }
+
+    @Override
     public Integer getRankClassByPosition(Integer position, Integer totalNum) {
         Integer classLevel = BookLevelEnums.five_class.getLevel();
         if (position < 0 || totalNum < 0) {

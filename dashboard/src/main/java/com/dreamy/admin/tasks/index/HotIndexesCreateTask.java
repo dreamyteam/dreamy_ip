@@ -22,6 +22,7 @@ import java.util.List;
  * User: yujianfu (yujianfu@duotin.com)
  * Date: 16/4/28
  * Time: 下午2:17
+ * 热度指数
  */
 @Component
 public class HotIndexesCreateTask {
@@ -35,12 +36,8 @@ public class HotIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    private void run() {
-
-    }
-
-    @Scheduled(fixedDelay = 1000*10)
-    public void getHotScore() {
+    @Scheduled(fixedDelay = 1000 * 10)
+    public void run() {
         Integer type = BookIndexTypeEnums.hot.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);
         if (!isTaskActive) {

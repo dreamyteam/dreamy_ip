@@ -10,6 +10,7 @@ import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
     }
 
     @Override
-    public List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type,Page page) {
+    public List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type, Page page) {
         BookRankHistoryConditions conditions = new BookRankHistoryConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
         conditions.setOrderByClause("created_at desc");
@@ -69,5 +70,12 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
         }
 
         return bookRankHistory;
+    }
+
+    @Override
+    public int delByBookIdAndTypeAndDate(Integer bookId, Integer type, Date date) {
+        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type).andCreatedAtEqualTo(date);
+        return bookRankHistoryDao.deleteByExample(conditions);
     }
 }

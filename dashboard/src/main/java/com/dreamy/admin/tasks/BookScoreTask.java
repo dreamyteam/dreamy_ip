@@ -30,7 +30,7 @@ public class BookScoreTask {
     IpBookService ipBookService;
 
 
-    public void insertValue() {
+    public void crawler() {
         IpBook entity = new IpBook();
         entity.setType(1);
         int currentPage = 1;

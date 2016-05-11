@@ -88,6 +88,9 @@ public interface BookRankService {
     Integer deleteByBookId(Integer bookId);
 
 
+    Integer deleteByBookIdAndType(Integer bookId,Integer type);
+
+
 
 
 

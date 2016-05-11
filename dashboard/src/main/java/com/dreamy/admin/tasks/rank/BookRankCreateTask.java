@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +49,6 @@ public class BookRankCreateTask {
     public void run() {
         Page page = new Page();
         page.setPageSize(1000);
-
-
         try {
             List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "id asc");
             if (CollectionUtils.isEmpty(bookViewList)) {
@@ -87,15 +86,17 @@ public class BookRankCreateTask {
 
         try {
             BookRank bookRank = new BookRank();
+            BookRankHistory bookRankHistory = new BookRankHistory();
             Integer bookId = bookView.getBookId();
-
+            bookRankHistory.bookId(bookId).type(type);
             bookRank.bookId(bookId).type(type);
             bookRank.name(bookView.getName());
-            Page tempPage = new Page();
-            tempPage.setPageSize(1);
-            List<BookRank> currentRankList = bookRankService.getList(bookRank, tempPage,null);
+//            Page tempPage = new Page();
+//            tempPage.setPageSize(1);
+//            List<BookRank> currentRankList = bookRankService.getList(bookRank, tempPage,null);
 
             bookRank.rank(rankMap.get(bookId));
+            bookRankHistory.rank(rankMap.get(bookId));
             Integer index = 0;
             if (type.equals(BookIndexTypeEnums.composite.getType())) {
                 index = bookView.getCompositeIndex();
@@ -108,18 +109,25 @@ public class BookRankCreateTask {
             }
 
             bookRank.rankIndex(index);
+            bookRankHistory.rankIndex(index);
 
-            if (CollectionUtils.isNotEmpty(currentRankList)) {
-                BookRank currentRank = currentRankList.get(0);
-                bookRankService.deleteById(currentRank.getId());
-                BookRankHistory bookRankHistory = new BookRankHistory();
-                bookRankHistory.bookId(currentRank.getBookId()).type(currentRank.getType()).rankIndex(currentRank.getRankIndex()).rank(currentRank.getRank());
-                bookRankHistoryService.save(bookRankHistory);
-            }
-
+//            if (CollectionUtils.isNotEmpty(currentRankList)) {
+//                BookRank currentRank = currentRankList.get(0);
+//                bookRankService.deleteById(currentRank.getId());
+//                BookRankHistory bookRankHistory = new BookRankHistory();
+//                bookRankHistory.bookId(currentRank.getBookId()).type(currentRank.getType()).rankIndex(currentRank.getRankIndex()).rank(currentRank.getRank());
+//                bookRankHistoryService.save(bookRankHistory);
+//            }
+            del(bookRank.getBookId(),bookRank.getType());
             bookRankService.save(bookRank);
+            bookRankHistoryService.save(bookRankHistory);
         } catch (Exception e) {
             log.error("book rank type failed and the type is:" + type, e);
         }
+    }
+
+    public void del(Integer bookId,Integer type){
+        bookRankService.deleteByBookIdAndType(bookId,type);
+        bookRankHistoryService.delByBookIdAndTypeAndDate(bookId,type,new Date());
     }
 }

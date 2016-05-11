@@ -62,7 +62,20 @@
                             news.sogou.com上5大新闻的新闻数量爬取
                         </a>
 
-##
+                        <a class="btn btn-default" href="/crawler/score">
+                           积分销售排名抽取
+                        </a>
+
+                        <a class="btn btn-default" href="/index/hotIndex">
+                            指数计算
+                        </a>
+                        <a class="btn btn-default" href="/index/rank">
+                            计算排名
+                        </a>
+
+
+
+                    ##
 ##                        <button class="btn btn-danger dt-btn-batch dt-btn-batch"
 ##                                data-batch-submit-url="">批量删除
 ##                        </button>
