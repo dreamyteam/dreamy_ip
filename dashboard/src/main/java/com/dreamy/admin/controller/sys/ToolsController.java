@@ -66,6 +66,17 @@ public class ToolsController extends DashboardController {
     }
 
     /**
+     *
+     * weixin关键词搜索爬取
+     * @return
+     */
+    @RequestMapping(value = "/crawler/keyword_weixin")
+    public String crawlingKeyWordWeiXin() {
+        keyWorkTask.crawlerWeiXin();
+        return redirect("/system/call.html");
+    }
+
+    /**
      *  360指数爬取
      * @return
      */
