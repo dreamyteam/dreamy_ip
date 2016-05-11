@@ -1,16 +1,12 @@
 package com.dreamy.handler.sougou;
 
 import com.dreamy.domain.ipcool.NewsMedia;
-import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.ipcool.NewsMediaService;
-import com.dreamy.service.iface.mongo.UserAgentService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.config.ParsingUtils;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
@@ -24,8 +20,8 @@ import java.util.Map;
  * Created by wangyongxing on 16/5/6.
  */
 @Component
-public class SougouHandler {
-    private static final Logger log = LoggerFactory.getLogger(SougouHandler.class);
+public class NewsSougouHandler {
+    private static final Logger log = LoggerFactory.getLogger(NewsSougouHandler.class);
 
     private static final Map<Integer, String> CRAWL_SOURCES = new LinkedHashMap<Integer, String>();
 
@@ -43,10 +39,10 @@ public class SougouHandler {
 
 
     public void crawler(String word, int bookId) {
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), Sougou.class);
+        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
         word=word.replace(" ","");
         String url = "http://news.sogou.com/news?query=" + word;
-        Sougou sougou = ooSpider.<Sougou>get(url);
+        NewsSougou sougou = ooSpider.<NewsSougou>get(url);
         if(sougou!=null) {
             List<String> list = sougou.getUrls();
             ooSpider.close();
@@ -64,8 +60,8 @@ public class SougouHandler {
 
     public void get(String url, int source, int bookId) {
         if (StringUtils.isNotEmpty(url)) {
-            OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), Sougou.class);
-            Sougou sougou = ooSpider.<Sougou>get(url);
+            OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
+            NewsSougou sougou = ooSpider.<NewsSougou>get(url);
             if (sougou != null) {
                 NewsMedia newsMedia=new NewsMedia();
                 newsMedia.type(1);

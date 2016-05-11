@@ -31,7 +31,7 @@
             <rabbit:binding queue="${queue_crawler_keyword_weixin_event}"/>
 
             <rabbit:binding queue="${queue_crawler_so_index_event}"/>
-
+            <rabbit:binding queue="${queue_crawler_news_sougou_event}"/>
 
         </rabbit:bindings>
     </rabbit:direct-exchange>
@@ -48,6 +48,8 @@
     <rabbit:queue name="${queue_crawler_keyword_event}"/>
     <rabbit:queue name="${queue_crawler_keyword_weixin_event}"/>
     <rabbit:queue name="${queue_crawler_so_index_event}"/>
+    <rabbit:queue name="${queue_crawler_news_sougou_event}"/>
+
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
@@ -60,6 +62,8 @@
     <bean id="keyWordWeiXinEventQueueHandler" class="com.dreamy.listen.KeyWordWeiXinEventQueueHandler"/>
 
     <bean id="soIndexEventQueueHandler" class="com.dreamy.listen.SoIndexEventQueueHandler"/>
+
+    <bean id="newsMediaQueueHandler" class="com.dreamy.listen.NewsMediaQueueHandler"/>
 
 
     <!--队列监听-->
@@ -116,7 +120,18 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin_event}"/>
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou_event}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin_event}"/>
     </rabbit:listener-container>
 
 </beans>  

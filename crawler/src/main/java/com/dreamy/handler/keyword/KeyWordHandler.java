@@ -2,11 +2,9 @@ package com.dreamy.handler.keyword;
 
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
-import com.dreamy.handler.keyword.sina.CrawSina;
-import com.dreamy.handler.keyword.sina.LoginSina;
-import com.dreamy.handler.keyword.sina.PreLoginResponseMessage;
-import com.dreamy.handler.keyword.sina.SinaHttpUtils;
-import com.dreamy.service.cache.CacheService;
+import com.dreamy.utils.sina.CrawSina;
+import com.dreamy.utils.sina.LoginSina;
+import com.dreamy.utils.sina.SinaHttpUtils;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
@@ -26,8 +24,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -157,17 +153,17 @@ public class KeyWordHandler {
     }
 
     private String getCookies() throws Exception {
-        String name = "cookie" + NumberUtils.randomInt(1,3);
+        String name = "sinacookie" + NumberUtils.randomInt(1,3);
         String cookie = (String) commonService.getCacheService().get(name);
         if (StringUtils.isNotEmpty(cookie)) {
             return cookie;
         } else {
             init();
-            cookie = (String) commonService.getCacheService().get("cookie1");
+            cookie = (String) commonService.getCacheService().get("sinacookie1");
             if (StringUtils.isEmpty(cookie)) {
                 LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
                 ls.dologinSina();
-                commonService.getCacheService().put("cookie1", CrawSina.Cookie);
+                commonService.getCacheService().put("sinacookie1", CrawSina.Cookie);
                 cookie = CrawSina.Cookie;
             }
             return cookie;

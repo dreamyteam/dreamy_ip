@@ -1,4 +1,4 @@
-package com.dreamy.handler.keyword.sina;
+package com.dreamy.utils.sina;
 
 import com.dreamy.utils.Base64Encoder;
 import org.apache.http.*;
