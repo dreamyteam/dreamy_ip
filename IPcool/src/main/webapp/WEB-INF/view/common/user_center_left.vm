@@ -3,7 +3,7 @@
         <div class="user_avatar_container">
             <label for="avatar_input_upload" id="avatar_mask" class="avatar_mask"></label>
             <input id="avatar_input_upload" type="file" accept="image/png,image/gif,image/jpg,image/jpeg" name="file"/>
-            <img id="avatar_image" src="$!thisUser.imageUrl">
+            <img id="avatar_image" src="$!user.imageUrl">
         </div>
         <h2 class="user_name">$!thisUser.username</h2>
         <h6 class="user_signature">$!user.info</h6>

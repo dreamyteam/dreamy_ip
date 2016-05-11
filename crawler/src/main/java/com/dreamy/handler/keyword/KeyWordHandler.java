@@ -193,7 +193,7 @@ public class KeyWordHandler {
             ls.dologinSina();
             if(StringUtils.isNotEmpty(CrawSina.Cookie))
             {
-                commonService.getCacheService().set("cookie" + i, CrawSina.Cookie,3600);
+                commonService.getCacheService().set("sinacookie" + i, CrawSina.Cookie,3600);
                 i++;
             }
 
