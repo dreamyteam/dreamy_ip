@@ -1,6 +1,6 @@
-package com.dreamy.handler.sougou;
+package com.dreamy.crawler;
 
-import com.dreamy.utils.StringUtils;
+import com.dreamy.handler.sougou.NewsSougou;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
 
@@ -12,26 +12,26 @@ import java.util.List;
 public class Main {
     public  static void test(String url)
     {
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), Sougou.class);
-        Sougou sougou = ooSpider.<Sougou>get(url);
+        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
+        NewsSougou sougou = ooSpider.<NewsSougou>get(url);
         if(sougou!=null) {
             System.out.println(sougou.getNum());
         }
     }
 
     public static void main(String[] args) {
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), Sougou.class);
+        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
         String url="http://news.sogou.com/news?query=斗破苍穹";
 
-        Sougou baike = ooSpider.<Sougou>get(url);
+        NewsSougou baike = ooSpider.<NewsSougou>get(url);
+        System.out.println(baike.getNum());
         List<String> list=baike.getUrls();
-        for(String str:list)
+        int size=list.size();
+        for(int i=0;i<size;i++)
         {
-          if(StringUtils.isNotEmpty(str))
-          {
-           test(str);
-          }
+            test(list.get(i));
         }
+
         ooSpider.close();
     }
 
