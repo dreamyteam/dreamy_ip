@@ -40,7 +40,7 @@ public class SoIndexTest extends BaseJunitTest {
             BookIndexData bookIndexData = soHandler.getByUrl(book.getName(), "全国");
             bookIndexData.setId(book.getId());
             bookIndexData.setSource(2);
-            bookIndexDataDao.save(bookIndexData);
+            bookIndexDataDao.updateInser(bookIndexData);
             Thread.sleep(1000);
         }
 
@@ -50,13 +50,12 @@ public class SoIndexTest extends BaseJunitTest {
     @Test
     public void soOne() throws UnsupportedEncodingException, InterruptedException {
 
-        IpBook book = ipBookService.getById(66);
-
+        IpBook book = ipBookService.getById(52);
         BookIndexData bookIndexData = soHandler.getByUrl(book.getName(), "全国");
         bookIndexData.setId(book.getId());
         bookIndexData.setSource(2);
-        bookIndexDataDao.save(bookIndexData);
-        Thread.sleep(1000);
+        bookIndexDataDao.updateInser(bookIndexData);
+        //Thread.sleep(1000);
 
 
     }

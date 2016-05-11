@@ -33,8 +33,8 @@ public class MainController extends DashboardController {
     public String left(HttpServletRequest request, ModelMap model) {
         int userId = getUserSession(request).getUserId();
         Map<Integer, Object[]> models = sysModelService.getSysModelMapByUserId(userId);
-        StringBuilder str = new StringBuilder();
-        for (Map.Entry<Integer, Object[]> entry : models.entrySet()) {
+                  StringBuilder str = new StringBuilder();
+            for (Map.Entry<Integer, Object[]> entry : models.entrySet()) {
 
             Object[] arr = entry.getValue();
             SysModel sysModel = (SysModel) arr[0];

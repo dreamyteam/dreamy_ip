@@ -90,9 +90,10 @@ public class BookRankCreateTask {
             Integer bookId = bookView.getBookId();
 
             bookRank.bookId(bookId).type(type);
+            bookRank.name(bookView.getName());
             Page tempPage = new Page();
             tempPage.setPageSize(1);
-            List<BookRank> currentRankList = bookRankService.getList(bookRank, tempPage);
+            List<BookRank> currentRankList = bookRankService.getList(bookRank, tempPage,null);
 
             bookRank.rank(rankMap.get(bookId));
             Integer index = 0;
@@ -111,7 +112,6 @@ public class BookRankCreateTask {
             if (CollectionUtils.isNotEmpty(currentRankList)) {
                 BookRank currentRank = currentRankList.get(0);
                 bookRankService.deleteById(currentRank.getId());
-
                 BookRankHistory bookRankHistory = new BookRankHistory();
                 bookRankHistory.bookId(currentRank.getBookId()).type(currentRank.getType()).rankIndex(currentRank.getRankIndex()).rank(currentRank.getRank());
                 bookRankHistoryService.save(bookRankHistory);

@@ -1,5 +1,6 @@
 package com.dreamy.test.ipcool;
 
+import com.dreamy.admin.tasks.BookScoreTask;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.IpBook;
@@ -11,6 +12,7 @@ import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.StringUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,6 +30,19 @@ public class BookScoreTest extends BaseJunitTest {
     private BookInfoService bookInfoService;
     @Resource
     IpBookService ipBookService;
+    @Autowired
+    BookScoreTask bookScoreTask;
+
+
+
+    @Test
+    public void score() {
+        bookScoreTask.insertValue();
+    }
+
+
+
+
 
     @Test
     public void insert() {
@@ -36,7 +51,7 @@ public class BookScoreTest extends BaseJunitTest {
         bookScore.status(0);
         bookScore.score(80.0);
         bookScore.bookId(1);
-        bookScoreService.save(bookScore);
+        bookScoreService.saveUpdate(bookScore);
     }
 
     @Test
@@ -62,7 +77,7 @@ public class BookScoreTest extends BaseJunitTest {
                     bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore())?  Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                 }
 
-                bookScoreService.save(bookScore);
+                bookScoreService.saveUpdate(bookScore);
 
             }
         }
@@ -90,9 +105,12 @@ public class BookScoreTest extends BaseJunitTest {
             } else if (bookInfo.getSource() == 4) {
                 bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
             }
-            bookScoreService.save(bookScore);
+            bookScoreService.saveUpdate(bookScore);
 
 
         }
     }
+
+
+
 }
