@@ -176,7 +176,7 @@
             </ul>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/comprehensive.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -220,7 +220,7 @@
             #parse("/index/develop_intention.vm")
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/potential?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -256,7 +256,7 @@
         <!-- 热度趋势图表 -->
         <div id="chart_heat_trend" class="line_charts" data-fetch-url="/hotIndex/history?ip=${view.bookId}"></div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -299,7 +299,7 @@
             <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -335,7 +335,7 @@
         <!-- 用户活跃度图表 -->
         <div id="chart_user_vitalty" class="line_charts" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
@@ -352,7 +352,7 @@
             <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
         </div>
         <!-- 查看全部 -->
-        <div class="program_showMore">
+        <div class="program_showMore hidden">
             <a href="/index/persona.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
