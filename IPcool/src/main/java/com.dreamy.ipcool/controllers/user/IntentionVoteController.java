@@ -74,7 +74,6 @@ public class IntentionVoteController extends IpcoolController {
     @ResponseBody
     public void getIntentionByIp(HttpServletResponse response, HttpServletRequest request, Integer ipId) {
         InterfaceBean bean = new InterfaceBean().success();
-        User user = new User();
         UserSession userSession = getUserSession(request);
 
         List<IntentionVote> list = new LinkedList<IntentionVote>();

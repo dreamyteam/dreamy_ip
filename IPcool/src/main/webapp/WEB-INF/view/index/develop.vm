@@ -8,12 +8,7 @@
             #parse("/index/develop_intention.vm")
         </div>
     </section>
-    <section>
-        <h1 class="title">投票结果</h1>
-
-        <div id="chart_vote_result"></div>
-    </section>
-    <section>
+    <section class="hidden">
         <h1 class="title">TA们愿意参与开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
         <ul class="comments_container">
             <li class="comment">
@@ -57,7 +52,7 @@
             <a href="">查看全部</a>
         </div>
     </section>
-    <section>
+    <section class="hidden">
         <h1 class="title">TA们这样期待开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
         <ul class="comments_container">
             <li class="comment">

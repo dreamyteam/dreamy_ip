@@ -131,8 +131,6 @@ public class IndexController extends IpcoolController {
         Integer bookId = bookView.getBookId();
 
         Comments comments = commentService.getById(bookId);
-
-
         if (comments != null) {
             model.put("comments", comments.getComments());
         }
@@ -179,6 +177,17 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/user/reviews")
     public String userReviews(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
 
+        BookView bookView = bookViewService.getById(ipId);
+        if (bookView == null || bookView.getId() == null) {
+            return null;
+        }
+
+        Integer bookId = bookView.getBookId();
+
+        Comments comments = commentService.getById(bookId);
+        if (comments != null) {
+            model.put("comments", comments.getComments());
+        }
         getCommonDataOfPage(ipId, model, request);
         return "/index/user_reviews";
     }
