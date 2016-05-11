@@ -55,11 +55,12 @@ public class ToolsController extends DashboardController {
     @RequestMapping("/tools/sina")
     public String sinaLogin(){
         sinaLoginService.init();
-        return "null";
+        return "/sys/call_list";
     }
 
     @RequestMapping("/system/call")
     public String call(){
+
         return "/sys/call_list";
     }
 

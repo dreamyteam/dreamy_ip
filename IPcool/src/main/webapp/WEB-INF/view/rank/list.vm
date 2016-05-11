@@ -26,7 +26,7 @@
             <a class="show_top50" href="#">排名前十</a>
         </div>
         <div class="rank_list_table">
-            <h2 class="title">潜力排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <h2 class="title">潜力排行<span class="date">榜单更新日期: $!{date}</span></h2>
             <table>
                 <tr>
                     <th class="rank_num">排名</th>
@@ -44,7 +44,7 @@
             <a class="show_top50" href="#">排名前十</a>
         </div>
         <div class="rank_list_table">
-            <h2 class="title">热度排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <h2 class="title">热度排行<span class="date">榜单更新日期: $!{date}</span></h2>
             <table>
                 <tr>
                     <th class="rank_num">排名</th>
@@ -62,7 +62,7 @@
             <a class="show_top50" href="#">排名前十</a>
         </div>
         <div class="rank_list_table">
-            <h2 class="title">传播排行<span class="date">榜单更新日期: $!{date}<</span></h2>
+            <h2 class="title">传播排行<span class="date">榜单更新日期: $!{date}</span></h2>
             <table>
                 <tr>
                     <th class="rank_num">排名</th>

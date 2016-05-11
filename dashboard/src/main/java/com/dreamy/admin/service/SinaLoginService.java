@@ -34,13 +34,12 @@ public class SinaLoginService {
                 int length = arr.length;
                 int j=1;
                 for (int i = 0; i < length; i++) {
-                    String values[] = arr[0].split("\\|");
+                    String values[] = arr[i].split("\\|");
                     LoginSina ls = new LoginSina(values[0], values[1]);
                     ls.dologinSina();
                     if (StringUtils.isNotEmpty(CrawSina.Cookie)) {
-                        commonService.getCacheService().set("cookie" + j, CrawSina.Cookie, 3600);
+                        commonService.getCacheService().set("sinacookie" + j, CrawSina.Cookie, 3600);
                         j++;
-
                     }
                 }
             }
