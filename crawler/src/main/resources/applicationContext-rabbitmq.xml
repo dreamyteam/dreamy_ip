@@ -76,7 +76,7 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="1"
+            concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerEventQueueHandler" method="onMessage" queues="${queue_crawler_publish_book}"/>
@@ -121,10 +121,10 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="5"
+            concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index}"/>
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin} "/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -132,10 +132,10 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="1"
+            concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin} "/>
+        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
