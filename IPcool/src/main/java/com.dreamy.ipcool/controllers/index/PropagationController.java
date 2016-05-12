@@ -332,12 +332,12 @@ public class PropagationController extends IpcoolController {
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", bookIndexData.getAge());
+            map.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
             re.add(map);
 
             //@todo
             Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", bookIndexData.getAge());
+            male.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
             re.add(male);
         }
 

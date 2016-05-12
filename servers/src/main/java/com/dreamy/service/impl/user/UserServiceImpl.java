@@ -6,8 +6,6 @@ import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserConditions;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.HashUtils;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,14 +59,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Cookie rememerPwd(User user) {
-        long validTime = (60 * 60 * 24 * 7 * 1000);
-        String cookieValueWithMd5 = HashUtils.md5(user.getUserName() + ":" + user.getPassword() + ":" + validTime + ":" + "jeff1989");
-        String cookieValue = user.getUserName() + ":" + validTime + ":" + cookieValueWithMd5;
-        String cookieValueBase64 = Base64.encode(cookieValue.getBytes());
-        Cookie cookie = new Cookie("zmcom", cookieValueBase64);
-        cookie.setMaxAge(60 * 60 * 24 * 365 * 2);
-        cookie.setPath("/");
+//        long validTime = (60 * 60 * 24 * 7 * 1000);
+//        String cookieValueWithMd5 = HashUtils.md5(user.getUserName() + ":" + user.getPassword() + ":" + validTime + ":" + "jeff1989");
+//        String cookieValue = user.getUserName() + ":" + validTime + ":" + cookieValueWithMd5;
+//        String cookieValueBase64 = Base64.encode(cookieValue.getBytes());
+//        Cookie cookie = new Cookie("zmcom", cookieValueBase64);
+//        cookie.setMaxAge(60 * 60 * 24 * 365 * 2);
+//        cookie.setPath("/");
 
-        return cookie;
+        return null;
     }
 }
