@@ -12,6 +12,7 @@
         <property name="locations">
             <list>
                 <value>classpath:jdbc_${model}.properties</value>
+                <value>classpath:rabbitmq_${model}.properties</value>
                 <value>classpath:redis_${model}.properties</value>
                 <value>classpath:mongodb_${model}.properties</value>
             </list>
