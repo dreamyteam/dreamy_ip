@@ -42,6 +42,10 @@ public class IpBookServiceImpl implements IpBookService {
     @Value("${queue_crawler_comment}")
     private String commentQueueName;
 
+
+    @Value("${queue_crawler_publish_book_amazon}")
+    private String amazonQueueName;
+
     @Override
     public IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         ipBookDao.save(ipBook);
@@ -62,8 +66,8 @@ public class IpBookServiceImpl implements IpBookService {
     public List<IpBook> getIpBookList(IpBook ipBook, Page page) {
         Map<String, Object> params = BeanUtils.toQueryMap(ipBook);
         IpBookConditions conditions = new IpBookConditions();
-        if(params.get("id")!=null){
-            conditions.createCriteria().andIdLessThan((Integer)params.get("id"));
+        if (params.get("id") != null) {
+            conditions.createCriteria().andIdLessThan((Integer) params.get("id"));
             params.remove("id");
         }
         conditions.createCriteria().addByMap(params);
@@ -123,8 +127,12 @@ public class IpBookServiceImpl implements IpBookService {
             map.put("url", info.getUrl());
             map.put("ipId", info.getBookId());
             map.put("crawlerId", info.getId());
+            if (info.getSource().equals(CrawlerSourceEnums.amazon.getType())) {
+                queueService.push(amazonQueueName, map);
+            } else {
+                queueService.push(queueName, map);
+            }
 
-            queueService.push(queueName, map);
 
             if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
                 queueService.push(commentQueueName, map);

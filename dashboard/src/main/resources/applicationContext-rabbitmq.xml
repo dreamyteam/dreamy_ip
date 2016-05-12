@@ -37,12 +37,12 @@
     <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
     <rabbit:queue name="${queue_crawler_so_index}"/>
     <rabbit:queue name="${queue_crawler_news_sougou}"/>
-
-
+    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
     <!--交换器声明-->
-    <rabbit:direct-exchange name="data.listen" >
+    <rabbit:direct-exchange name="data.listen">
         <rabbit:bindings>
             <rabbit:binding queue="${queue_crawler_publish_book}"/>
+            <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
             <rabbit:binding queue="${queue_crawler_comment}"/>
             <rabbit:binding queue="${queue_crawler_keyword}"/>
             <rabbit:binding queue="${queue_crawler_so_index}"/>
@@ -52,7 +52,7 @@
     </rabbit:direct-exchange>
 
 
-    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter" />
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
 
     <bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
 

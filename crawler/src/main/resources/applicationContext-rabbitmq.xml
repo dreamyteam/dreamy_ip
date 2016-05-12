@@ -44,6 +44,7 @@
 
     <!--队列声明-->
     <rabbit:queue name="${queue_crawler_publish_book}"/>
+    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
     <rabbit:queue name="${queue_crawler_comment}"/>
     <rabbit:queue name="${queue_crawler_keyword}"/>
     <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
@@ -54,6 +55,9 @@
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
     <bean id="crawlerEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+
+    <bean id="crawlerAmazonQueueHandler" class="com.dreamy.listen.CrawlerAmazonQueueHandler"/>
+
 
     <bean id="commentEventQueueHandler" class="com.dreamy.listen.CommentEventQueueHandler"/>
 
@@ -76,6 +80,17 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerEventQueueHandler" method="onMessage" queues="${queue_crawler_publish_book}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerAmazonQueueHandler" method="onMessage" queues="${queue_crawler_publish_book_amazon}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
