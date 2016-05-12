@@ -333,13 +333,14 @@ public class PropagationController extends IpcoolController {
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("value", bookIndexData.getAge());
-            map.put("name", "平均分布");
             re.add(map);
+
+            //@todo
             Map<String, Object> male = new HashMap<String, Object>();
             male.put("value", bookIndexData.getAge());
-            male.put("name", "斗破苍穹");
             re.add(male);
         }
+
         bean.setData(re);
         interfaceReturn(response, JsonUtils.toString(bean), callback);
 

@@ -97,8 +97,8 @@ public class IntentionVoteController extends IpcoolController {
 
             map.put("1", typeOne);
             map.put("2", typeTwo);
-            bean.setData(map);
         }
+        bean.setData(map);
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
     }
