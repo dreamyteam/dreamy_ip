@@ -54,7 +54,7 @@ public class IpBookCrawlerTask {
                     break;
                 }
                 currentPage++;
-                Thread.sleep(NumberUtils.randomInt(30, 50) * 1000);
+                Thread.sleep(NumberUtils.randomInt(10, 30) * 1000);
 
             }
         } catch (Exception e) {
@@ -120,7 +120,6 @@ public class IpBookCrawlerTask {
         try {
             while (true) {
                 Page page = new Page();
-
                 page.setPageSize(20);
                 page.setCurrentPage(currentPage);
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
@@ -133,7 +132,7 @@ public class IpBookCrawlerTask {
                     break;
                 }
                 currentPage++;
-                Thread.sleep(NumberUtils.randomInt(30, 50) * 1000);
+                Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
 
             }
         } catch (Exception e) {

@@ -37,7 +37,7 @@ public class BookScoreTest extends BaseJunitTest {
 
     @Test
     public void score() {
-        bookScoreTask.insertValue();
+        bookScoreTask.crawler();
     }
 
 

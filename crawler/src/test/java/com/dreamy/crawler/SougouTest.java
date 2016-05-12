@@ -2,8 +2,7 @@ package com.dreamy.crawler;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.handler.keyword.KeyWordHandler;
-import com.dreamy.handler.sougou.SougouHandler;
+import com.dreamy.handler.sougou.NewsSougouHandler;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class SougouTest extends BaseJunitTest {
 
 
     @Autowired
-    SougouHandler sougouHandler;
+    NewsSougouHandler newsSougouHandler;
     @Autowired
     BookViewService bookViewService;
 
@@ -33,7 +32,7 @@ public class SougouTest extends BaseJunitTest {
             List<BookView> list = bookViewService.getList(bookView, page);
 
             for (BookView book : list) {
-                sougouHandler.crawler(book.getName(), book.getBookId());
+                newsSougouHandler.crawler(book.getName(), book.getBookId());
             }
             if (!page.isHasNextPage()) {
                 break;

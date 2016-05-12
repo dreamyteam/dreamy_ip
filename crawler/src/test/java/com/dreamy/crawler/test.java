@@ -10,7 +10,6 @@ import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
-import com.dreamy.utils.TimeUtils;
 import com.mongodb.DBObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +47,8 @@ public class test extends BaseJunitTest {
     BookCrawlerInfoService bookCrawlerInfoService;
     @Autowired
     private CommentDao commentDao;
+
+
 
     @Test
     public void insert() {
@@ -103,11 +104,11 @@ public class test extends BaseJunitTest {
     @Test
     public void testAm() {
         String url = "https://www.amazon.cn/%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE-%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97-%E4%B8%9C%E9%87%8E%E5%9C%AD%E5%90%BE/dp/B00JZ96ZI8/ref=sr_1_1?ie=UTF8&qid=1460946961&sr=8-1&keywords=%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97";
-        url = "https://www.amazon.cn/dp/B00MGKFQ6U/ref=tmm_hrd_swatch_0?_encoding=UTF8&qid=1461228641&sr=1-1";
+        url = "https://www.amazon.cn/撒哈拉的故事-三毛/dp/B005DRCQZ2/ref=sr_1_1?ie=UTF8&qid=1461746931&sr=8-1&keywords=哭泣的骆驼";
         CrawlerHandler crawlerHandler = new AmazonCrawlerHandler();
         BookInfo bookInfo = (BookInfo) crawlerHandler.getByUrl(url);
         if (bookInfo != null) {
-
+            bookInfoService.updateInser(bookInfo);
         }
         assertNotNull(bookInfo);
     }
@@ -142,7 +143,17 @@ public class test extends BaseJunitTest {
 
     @Test
     public void userAgents() {
-//        String html = SinaHttpUtils.getHtmlGet("http://ua.theafh.net/");
+
+        UserAgents userAgents1 = new UserAgents();
+        for(int i=2;i<1100;i++) {
+            String tmp = "User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.94 Safari/537.36";
+            userAgents1.setId(i);
+            userAgents1.setUserAgent(tmp);
+            userAgentDao.save(userAgents1);
+        }
+
+
+//        String html = HttpUtils.getHtmlGet("http://ua.theafh.net/");
 //        Document document = Jsoup.parse(html);
 //        Element element = document.getElementById("result");
 //
@@ -155,8 +166,9 @@ public class test extends BaseJunitTest {
 //            userAgentDao.save(userAgents1);
 //            i++;
 //        }
-        UserAgents userAgents1 = userAgentDao.queryById(933);
-        BookInfo bookInfo = bookInfoService.getById(398);
+
+//        UserAgents userAgents1 = userAgentDao.queryById(933);
+//        BookInfo bookInfo = bookInfoService.getById(398);
 //        BookInfo old = bookInfoService.getById(410);
 //        if (old != null) {
 //            bookInfoService.delById(410);

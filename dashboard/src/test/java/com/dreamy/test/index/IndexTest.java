@@ -28,7 +28,8 @@ public class IndexTest extends BaseJunitTest {
 
     @Test
     public  void task(){
-        compositeIndexexCreateTask.run();
+
+        hotIndexesCreateTask.run();
     }
 
     @Test
