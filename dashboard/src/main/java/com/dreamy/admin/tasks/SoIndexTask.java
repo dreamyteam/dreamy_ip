@@ -7,7 +7,9 @@ import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -26,6 +28,9 @@ public class SoIndexTask {
     @Resource
     private QueueService queueService;
 
+    @Value("${queue_crawler_so_index}")
+    private String queueName;
+
     public void crawler() {
 
         BookView bookView = new BookView().type(1);
@@ -40,7 +45,7 @@ public class SoIndexTask {
                 map.put("source", book.getType());
                 map.put("bookId", book.getBookId());
                 map.put("word", book.getName());
-                queueService.push(QueueRoutingKeyEnums.publish_so_index.getKey(), map);
+                queueService.push(queueName, map);
             }
             if (!page.isHasNextPage()) {
                 break;

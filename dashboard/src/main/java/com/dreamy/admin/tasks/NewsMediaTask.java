@@ -6,6 +6,7 @@ import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.mq.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,6 +26,9 @@ public class NewsMediaTask {
     @Resource
     BookViewService bookViewService;
 
+    @Value("${queue_crawler_news_sougou}")
+    private String queueName;
+
     public void crawler() {
 
         BookView bookView = new BookView().type(1);
@@ -39,8 +43,7 @@ public class NewsMediaTask {
                 map.put("source", book.getType());
                 map.put("bookId", book.getBookId());
                 map.put("word", book.getName());
-                queueService.push(QueueRoutingKeyEnums.publish_news_sougou.getKey(), map);
-
+                queueService.push(queueName, map);
             }
             if (!page.isHasNextPage()) {
                 break;

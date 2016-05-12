@@ -24,14 +24,13 @@ public class KeyWordWeiXinEventQueueHandler extends AbstractQueueHandler {
     KeyWordWeiXinHandler keyWordWeiXinHandler;
 
     @Override
-    public void consume(JSONObject jsonObject) {
+    public void consume(JSONObject jsonObject) throws InterruptedException {
 
         Integer type = jsonObject.getInteger("source");
         Integer ipId = jsonObject.getInteger("bookId");
         String word = jsonObject.getString("word");
         keyWordWeiXinHandler.crawler(word, ipId);
-
-
-            }
+        Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
+    }
 }
 

@@ -120,7 +120,7 @@ public class IpBookCrawlerTask {
         try {
             while (true) {
                 Page page = new Page();
-                page.setPageSize(20);
+                page.setPageSize(100);
                 page.setCurrentPage(currentPage);
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
                 if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
@@ -132,7 +132,7 @@ public class IpBookCrawlerTask {
                     break;
                 }
                 currentPage++;
-                Thread.sleep(NumberUtils.randomInt(10, 20) * 1000);
+
 
             }
         } catch (Exception e) {

@@ -40,6 +40,6 @@ public abstract class AbstractQueueHandler implements MessageListener {
      *
      * @param jsonObject
      */
-    public abstract void consume(JSONObject jsonObject);
+    public abstract void consume(JSONObject jsonObject) throws InterruptedException;
 
 }

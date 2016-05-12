@@ -35,7 +35,13 @@
 ##                            </div>
 ##                        </form>
 ##                    </div>
+
+
                     <div class="well operate-box">
+
+                        <a class="btn btn-default" href="/crawler/all">
+                            出版文学全部爬取
+                        </a>
                         <a class="btn btn-default" href="/tools/sina">
                             新浪登录
                         </a>
@@ -51,10 +57,6 @@
 
                         <a class="btn btn-default" href="/crawler/soindex">
                             360指数爬取
-                        </a>
-
-                        <a class="btn btn-default" href="/crawler/all">
-                            出版文学全部爬取
                         </a>
 
 
