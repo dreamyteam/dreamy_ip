@@ -1,5 +1,6 @@
 package com.dreamy.service.impl.ipcool;
 
+import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookCrawlerInfoDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
+
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
         bookCrawlerInfoDao.save(info);
@@ -25,16 +27,47 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     }
 
     @Override
-    public List<BookCrawlerInfo> getBy(BookCrawlerInfo bookCrawlerInfo)
-    {
-        Map<String,Object> params= BeanUtils.toQueryMap(bookCrawlerInfo);
-        BookCrawlerInfoConditions conditions=new BookCrawlerInfoConditions();
+    public List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo) {
+        Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
         conditions.createCriteria().addByMap(params);
+        return bookCrawlerInfoDao.selectByExample(conditions);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getListByRecord(BookCrawlerInfo bookCrawlerInfo, Page page) {
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
+        if (bookCrawlerInfo != null) {
+            Map<String, Object> params = BeanUtils.toQueryMap(bookCrawlerInfo);
+            conditions.createCriteria().addByMap(params);
+        }
+        if (page != null) {
+            page.setTotalNum(bookCrawlerInfoDao.countByExample(conditions));
+            conditions.setPage(page);
+        }
         return bookCrawlerInfoDao.selectByExample(conditions);
     }
 
     @Override
     public int update(BookCrawlerInfo info) {
         return bookCrawlerInfoDao.update(info);
+    }
+
+    @Override
+    public BookCrawlerInfo getById(Integer id) {
+        return bookCrawlerInfoDao.selectById(id);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getByPageAndOrder(Page page, String order) {
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
+        conditions.setPage(page);
+        conditions.setOrderByClause(order);
+        return bookCrawlerInfoDao.selectByExample(conditions);
+    }
+
+    @Override
+    public List<BookCrawlerInfo> getByCondition(BookCrawlerInfoConditions conditions) {
+        return bookCrawlerInfoDao.selectByExample(conditions);
     }
 }

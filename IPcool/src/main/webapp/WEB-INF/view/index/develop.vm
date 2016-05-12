@@ -1,0 +1,101 @@
+<input id="getIpid" type="hidden" value="$!{view.bookId}">
+
+<div class="container">
+    #parse("/index/common.vm")
+    <section>
+        <h1 class="title">开发意向</h1>
+        <h6>投票你最期待的项目</h6>
+
+        <div class="vote_container">
+            #parse("/index/develop_intention.vm")
+        </div>
+    </section>
+    <section class="hidden">
+        <h1 class="title">TA们愿意参与开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
+        <ul class="comments_container">
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+        </ul>
+        <div class="program_showMore">
+            <a href="">查看全部</a>
+        </div>
+    </section>
+    <section class="hidden">
+        <h1 class="title">TA们这样期待开发<span class="date_region">24个人愿意为[盗墓笔记]开发</span></h1>
+        <ul class="comments_container">
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">土豆 导演 90后新锐电影导演</h3>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+        </ul>
+        <div class="program_showMore">
+            <a href="">查看全部</a>
+        </div>
+    </section>
+</div>

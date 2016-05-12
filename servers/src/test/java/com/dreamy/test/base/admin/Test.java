@@ -8,9 +8,11 @@ import com.dreamy.domain.admin.AdminUser;
 import com.dreamy.domain.admin.Role;
 import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
+import com.dreamy.mapper.ipcool.BookIndexHistoryMapper;
 import com.dreamy.service.iface.admin.SysModelService;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.test.base.BaseJunitTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Test extends BaseJunitTest {
     AdminUserDao adminUserDao;
     @Resource
     CommonService commonService;
+
 
     @org.junit.Test
     public void insertSysModel() {
@@ -69,4 +72,7 @@ public class Test extends BaseJunitTest {
 
 
     }
+
+
+
 }

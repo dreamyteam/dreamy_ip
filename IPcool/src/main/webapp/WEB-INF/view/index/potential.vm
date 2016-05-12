@@ -1,0 +1,103 @@
+<div class="container">
+    #parse("/index/common.vm")
+        <section class="potential_trend">
+            <h1 class="title">开发潜力概况</h1>
+            <!-- 指数们 -->
+            <div class="values_container">
+                <!--当前潜力指数 -->
+                <div class="values_content">
+                    <h2 class="program_title">当前潜力指数</h2>
+                    <div class="tooltip">
+                        ?
+                        <div class="tooltip_info">
+                            这是一段提示信息
+                        </div>
+                    </div>
+                    <h5 class="number">$!{view.developIndex} <span class="arrow">↑</span></h5>
+                </div>
+                <!-- 历史最高 -->
+                <div class="values_content">
+                    <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                    <h5 class="number highest_histroy_value"></h5>
+                </div>
+                <!--同类排名 -->
+                <div class="values_content">
+                    <h2 class="program_title">潜力排名 <span class="date">2015/03/24</span></h2>
+                    <h5 class="number">$!{drank}</h5>
+                </div>
+                <div class="values_content">
+                    <!-- <h2 class="program_title">潜力模型</h2> -->
+                    <div id="chart_potential_model_small"></div>
+                </div>
+            </div>
+        </section>
+        <!-- 潜力趋势图表 -->
+        <section>
+            <h1 class="title">潜力趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
+            <!-- 潜力趋势图表 -->
+            <div id="chart_potential_trend" data-fetch-url="/developIndex/history?ip=55"></div>
+        </section>
+        <!-- 同类IP对比 -->
+        <section>
+            <h1 class="title">同类IP对比</h1>
+            <div id="chart_similar_contrast"></div>
+        </section>
+        <!-- 期待开发项目 -->
+        <section>
+            <!-- 最受期待的开发项目 -->
+            <div class="vote_container">
+                <h1 class="title">最受期待的开发项目</h1>
+                <h6>投票查看结果</h6>
+                <div class="vote_content">
+                    <div class="vote movie">
+                        <span></span>
+                        <h5>电影</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                    <div class="vote tvshow">
+                        <span></span>
+                        <h5>电视剧</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                    <div class="vote mobilegame">
+                        <span></span>
+                        <h5>手游</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                    <div class="vote game">
+                        <span></span>
+                        <h5>游戏</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                    <div class="vote peripheral">
+                        <span></span>
+                        <h5>周边</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                    <div class="vote others">
+                        <span></span>
+                        <h5>其他</h5>
+                        <div class="vote_btns">
+                            <button class="expext">期待</button>
+                            <button class="wantDevelop">想开发</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>

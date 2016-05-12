@@ -16,10 +16,15 @@ import java.util.List;
 public class UserRoleServiceImpl implements UserRoleService {
     @Resource
     private UserRoleDao userRoleDao;
+
     @Override
     public List<UserRole> getUserToRoleList(Integer userId) {
-        UserRoleConditions roleConditions=new UserRoleConditions();
-        roleConditions.createCriteria().andAdminIdEqualTo(userId);
+        UserRoleConditions roleConditions = new UserRoleConditions();
+        if (userId != 1) {
+            roleConditions.createCriteria().andAdminIdEqualTo(userId);
+        }else{
+            roleConditions.createCriteria().andIdGreaterThanOrEqualTo(userId);
+        }
         return userRoleDao.selectByExample(roleConditions);
     }
 
@@ -31,8 +36,8 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public int updateRoleId(UserRole userRole) {
-        UserRoleConditions userRoleConditions=new UserRoleConditions();
+        UserRoleConditions userRoleConditions = new UserRoleConditions();
         userRoleConditions.createCriteria().andAdminIdEqualTo(userRole.getAdminId());
-        return userRoleDao.updateByExampleSelective(userRole,userRoleConditions);
+        return userRoleDao.updateByExampleSelective(userRole, userRoleConditions);
     }
 }

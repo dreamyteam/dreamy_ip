@@ -1,0 +1,71 @@
+
+    <div class="container clearfix">
+        <!-- 关于我们 左侧导航 -->
+        <ul class="sidebar_nav">
+            <li><a href="">关于我们</a></li>
+            <li><a href="">意见反馈</a></li>
+            <li class="active"><a href="">用户协议</a></li>
+            <li><a href="">隐私政策</a></li>
+        </ul>
+        <!-- 关于我们 右侧部分 -->
+        <div class="sidebar_content">
+            <div class="clearfix" style="margin-bottom: 20px;">
+                <h1 class="title clearfix">用户政策 </h1>
+                <span class="update_date">更新时间：2016/04/04</span>
+            </div>
+            <p class="ontent_chinese">
+                感谢您使用IPCool的产品和服务。本协议是用户（下称“您”），包括注册用户及没注册的访客（访客适用部分条款的约束），以注册、访问或浏览方式使用IPCool的产品和服务时与广州爱拼信息科技有限公司（下称“爱拼”）签署的协议。
+            </p>
+            <p class="content_chinese">
+                请留意：您对IPCool网页、产品和服务的使用即视为对本协议的签署，具有法律约束力。
+            </p>
+            <p class="content_chinese">
+                1． 重要须知---在签署本协议之前，IPCool正式提醒用户：
+            </p>
+            <p class="content_chinese">
+                1.1 您（未成年人应当在监护人陪同下）应认真阅读、充分理解本本协议以及本协议的有效补充《用户隐私保护政策》中各条款，当中可能包括免除或者限制IPCool责任或对用户权利限制的条款。
+            </p>
+            <p class="content_chinese">
+                1.2 您必须年满16周岁的完全行为能力人。年满16周岁而不满18周岁的用户的需经监护人同意。否则，您不视为IPCool产品和服务提供的对象，也不作为本协议用户。
+            </p>
+            <p class="ontent_chinese">
+                1.3 除非您接受本协议，否则您无权也无必要继续接受IPCool的产品及服务。您可以退出用户注册页面或停止使用IPCool的产品及服务。您点击“同意”接受并继续使用IPCool的产品及服务，视为您已完全接受本协议。
+            </p>
+            <p class="content_chinese">
+                1.4 在您签署本协议之后，此文本可能因国家政策、产品以及履行本协议的环境发生变化而多次进行修改。修改后的协议发布在本网站上，若您对修改后的协议有异议的，请立即停止登录账户及停止使用IPCool产品和服务，若您登录或继续使用，将视为对修改后的协议予以认可。
+            </p>
+            <p class="content_chinese">
+                2． 关于IPCool账户
+            </p>
+            <p class="content_chinese">
+                2.1 您在登录账户及使用IPCool产品和服务时，于任一通道注册并接受本协议的具有同等效力。
+            </p>
+            <p class="content_chinese">
+                2.2 您在接受本协议之后，设置的帐号、密码是您用以登录IPCool产品，接受IPCool服务持有的身份识别凭证。
+            </p>
+            <p class="content_chinese">
+                2.3 账户是IPCool提供产品及服务授予用户的凭证，是IPCool持有的相应计算机软件作品的一部分，即IPCool于一定范围内将相关产品计算机软件著作权部分或全部授权给注册用户的授权凭证。
+            </p>
+            <p class="content_chinese">
+                2.4 您在注册了IPCool帐号并不意味获得全部产品及服务的授权，仅仅是取得了接受IPCool产品使用或服务的身份，您在登录相关网页、加载应用、下载安装软件、使用某些服务时或需要另行签署单个产品的授权协议。
+            </p>
+            <p class="content_chinese">
+                2.5 IPCool帐号仅限于在IPCool网站上注册用户本人使用，禁止赠与、借用、租用、转让或售卖。
+            </p>
+            <p class="content_chinese">
+                2.6 您应采用保密性强且安全性高的密码，并妥善保管帐号和密码。您就其帐号及受密保项下之一切活动负全部责任，包括用户数据的修改以及其他所有的损失由您自行承担。
+            </p>
+            <p class="content_chinese">
+                2.7 您保证注册IPCool帐号时填写的信息是真实的，任何非法、不真实、不准确的用户信息所产生的责任由您承担。所有原始键入的资料将引用用户登记的注册资料。如果因您的注册信息不真实而引起的问题，以及对问题发生所带来的后果，IPCool不负任何责任。
+            </p>
+            <p class="content_chinese">
+                3． 权利和限制
+            </p>
+            <p class="content_chinese">
+                3.1 IPCool产品及服务包括IPCool产品及运营的网站、网页应用、软件以及内涵的文字、图片、色彩、视频、音频、版面设计和编排、数据或数据分析结论等，IPCool产品及服务标志、标识以及专利权，IPCool公司对此享有上述知识产权。本协议的签署不代表任何上述知识产权的授权，亦不包含上述权利的转让。任何人未经授权，不得擅自复制、使用、传播、转载或引用IPCool产品和服务提供的内容。
+            </p>
+            <p class="content_chinese">
+                3.2 用户使用IPCool产品及服务只能在相应的授权许可范围使用IPCool的上述知识产权，未经授权或超范围的使用构成对IPCool的侵权。
+            </p>
+        </div>
+    </div>

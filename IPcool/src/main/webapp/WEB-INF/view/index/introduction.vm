@@ -1,0 +1,12 @@
+<div class="container">
+    #parse("/index/common.vm")
+
+    <section class="introduction">
+        <h2 class="title">简介</h2>
+
+        <p>
+            $!{view.introduction}
+        </p>
+    </section>
+
+</div>

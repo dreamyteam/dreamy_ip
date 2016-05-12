@@ -1,0 +1,80 @@
+<div class="container">
+    #parse("/index/common.vm")
+    <section class="user_reviews">
+        <h1 class="title">用户口碑</h1>
+
+        <div class="review_container">
+            <div class="review_value">
+                <h2>综合口碑</h2>
+                <h5>$!{view.reputationIndex} </h5>
+                <h6>大多数人觉得很好</h6>
+            </div>
+            <div class="review_chart">
+##                <button>写点评</button>
+                <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
+            </div>
+        </div>
+        <ul class="comments_container">
+            #foreach($coment in $comments)
+                <li class="comment">
+                    <img class="comment_avatar" src="$!{coment.image}">
+
+                    <h3 class="comment_title">$!{coment.title}</h3>
+                    <h4 class="comment_author">$!{coment.author} -- 来自豆瓣</h4>
+
+                    <p class="comment_content">
+                        $!{coment.content}
+
+                    <p class="clearfix">
+                        <a class="comment_more" target="_blank" href="$!{coment.url}">查看全文>></a>
+                    </p>
+                </li>
+            #end
+        </ul>
+    </section>
+    <section class="hidden">
+        <h1 class="title">用户点评</h1>
+        <ul class="comments_container">
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                <h4 class="comment_author">旺财大爷 导演 有100种方式拍电影</h4>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <span class="comment_like">赞</span>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+            <li class="comment">
+                <img class="comment_avatar" src="../../assets/images/authorpic.png">
+
+                <h3 class="comment_title">但是主角光管太严重了，回回都“罕见”是不是太傻比了？</h3>
+                <h4 class="comment_author">旺财大爷 导演 有100种方式拍电影</h4>
+
+                <p class="comment_content">
+                    其实看美人鱼之前我有很多方面的脑内活动，最大的期待是周星驰作品肯定不难看，对于情节特效笑果方面也做了很多设想，虽然有文章这么一颗老鼠屎，但是我说服了自己一个酱油没什么，无视就行。
+                    最重要的是，作为一个有美人鱼情节...
+
+                <p>
+                    <span class="comment_like liked">已赞</span>
+                    <a class="comment_more" href="#">查看全文>></a>
+            </li>
+        </ul>
+    </section>
+    <!-- 发表点评 -->
+    <section class="write_comment_container hidden">
+        <h1 class="title">发表点评</h1>
+
+        <form class="write_comment clearfix">
+            <h6 class="welfare">写点评赢iPhone7</h6>
+            <textarea name="comment"></textarea>
+            <input class="verify_code" type="text" placeholder="输入验证码">
+            <input class="submit" type="submit" value="发布">
+        </form>
+    </section>
+</div>
+    

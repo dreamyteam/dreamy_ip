@@ -1,0 +1,56 @@
+<div class="page-heading">
+    <h3>
+        爬虫管理
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">爬虫管理</a></li>
+        <li><a href="#">查看详细</a></li>
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="#if(!$currentSource) active #else #end"><a
+                        class="pjax-url " href="/crawler/view?id=$!book.id">基本信息</a></li>
+                #foreach($source in $sources)
+                    <li role="presentation" class="pjax-url #if($source.getType()==$currentSource) active #else #end">
+                        <a class="pjax-url "
+                           href="/crawler/view?id=$!book.id&source=$source.getType()">$source.getDescription()</a></li>
+                #end
+            </ul>
+
+            <section class="panel">
+                <header class="panel-heading">
+                    基本信息
+                    <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <a href="javascript:;" class="fa fa-times"></a>
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <form class="form-horizontal dt-form" role="form" action="/crawler/save" method="post">
+                        #if(!$currentSource)
+                             #parse("/crawler/ipbook_basic_info.vm")
+                        #else
+                            #foreach($source in $sources)
+                                #if($source.getType() == $currentSource)
+                                    #set($prefix="/crawler/ipbook_crawler_info_")
+                                    #set($sufix=".vm")
+                                    #set($model = "$prefix$source.getName()$sufix")
+                                    #parse($model)
+                                #end
+                            #end
+                        #end
+                    </form>
+
+                </div>
+            </section>
+
+
+        </div>
+    </div>
+</div>

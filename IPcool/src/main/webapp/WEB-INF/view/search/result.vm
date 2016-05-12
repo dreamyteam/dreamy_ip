@@ -1,0 +1,84 @@
+<!--main-->
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--搜索框 end-->
+    <section class="search_count">
+        #if ($!{content.length()} > 0)
+            <p>找到<span class="count">$!{page.totalNum}</span>个与[<span class="name">$!{content}</span>]相关的内容</p>
+        #else
+            <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
+        #end
+
+    </section>
+    <section class="search_result">
+
+        <div class="hidden" id="search-attach">
+
+            <input type="hidden" name="status" value="1">
+            <input type="hidden" name="type" value="8">
+
+        </div>
+
+        #if($list)
+
+            #foreach($view in $list)
+                <div class="sresult_ip clearfix">
+                    <a class="sresult_ip_img_cointainer" href="/index/detail.html?ip=${view.id}"><img
+                            src="$!{view.imageUrl}"></a>
+
+                    <div class="sresult_content">
+                        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
+
+                        <span class="type">
+                            #foreach($bookType in $typeEnums)
+                               #if($bookType.getType() == $view.getType())
+                                $bookType.getDescription()
+                            #end
+                            #end
+                        </span>
+                        </h2>
+                        <h6>作者: $!{view.author}</h6>
+                        <ul class="quotient">
+                            <li>
+                                <h6>开发潜力</h6>
+                                <span>$!{view.developIndex}</span>
+                            </li>
+                            <li>
+                                <h6>传播指数</h6>
+                                <span>$!{view.propagateIndex}</span>
+                            </li>
+                            <li>
+                                <h6>热度指数</h6>
+                                <span>$!{view.hotIndex}</span>
+                            </li>
+                            <li>
+                                <h6>受众口碑</h6>
+                                <span>$!{view.reputationIndex}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="overall">
+                        <h6>文学排名</h6>
+                        <span>$!rankMap.get($view.getBookId())</span>
+                    </div>
+                </div>
+            #end
+        #else
+            <div class="sresult_none clearfix">
+                <h5>"<span class="name">$!{content}</span>"可能不具备分析价值或暂未被收录</h5>
+                <h6>您可以:</h6>
+                <a href="/apply">
+                    <button>提交收录申请</button>
+                </a>
+
+            </div>
+        #end
+    </section>
+    <!--分页器 -->
+    <div class="paging" id="paging"
+         data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize,"content":"$!content"}'>
+    </div>
+
+    <!--分页器-->
+</div>

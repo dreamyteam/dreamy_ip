@@ -2,11 +2,18 @@ package com.dreamy.admin.interceptor;
 
 import com.dreamy.admin.controller.DashboardBaseController;
 import com.dreamy.admin.controller.RootController;
+import com.dreamy.admin.service.RoleNavService;
 import com.dreamy.beans.UserSession;
+import com.dreamy.domain.admin.SysModel;
+import com.dreamy.service.iface.admin.SysModelService;
 import com.dreamy.utils.HttpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DashboardWebContentInterceptor extends WebContentInterceptor {
 
+    @Autowired
+    private RoleNavService roleNavService;
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg) throws Exception {
         if (super.preHandle(request, response, arg)) {
@@ -31,6 +40,11 @@ public class DashboardWebContentInterceptor extends WebContentInterceptor {
                                 + HttpUtils.encodeUrl(HttpUtils.getFullUrl(request)));
                         return Boolean.FALSE;
                     }
+
+                    String currentUrl = request.getRequestURI();
+
+                    Map<String, Map<String, String>> leftNavs = roleNavService.getLeftNavsByRoleId(1);
+                    request.setAttribute("leftNavs", leftNavs);
                     request.setAttribute(RootController.REQUEST_ATTRIBUTE_USERSESSION, userSession);
                 }
 

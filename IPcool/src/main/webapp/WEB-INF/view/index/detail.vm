@@ -1,0 +1,393 @@
+<input id="getIpid" type="hidden" value="$!{view.bookId}">
+
+<div class="container">
+    #parse("/index/common.vm")
+    <!--指数综合-->
+    <section class="program_values">
+        <!-- 综合价值 -->
+        <div class="values_content comprehensive_value">
+            <h2 class="program_title">综合价值指数</h2>
+
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    以IP质量、热度、传播、潜力、粉丝活跃为关键指标，通过科学分析计算出的IP价值加权数。
+                </div>
+            </div>
+            <h5 class="number">$!{view.compositeIndex}</h5>
+        ##            <em class="warning">数据异常偏大，仅供基本参考</em>
+            <h6>在<span class="program_type">小说</span>中排<span class="ranking">$!{crank}</span>名</h6>
+        </div>
+        <!-- 开发潜力 热度趋势 -->
+        <div class="values_content potential_trend">
+            <h2 class="program_title">开发潜力指数</h2>
+
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    综合IP本身质量，市场表现，可开发空间和受众人群价值，通过科学分析计算的加权数。用来衡量开发价值的大小。
+                </div>
+            </div>
+            <h5 class="number">$!{view.developIndex}  <span class="rank">$!{drank}</span></h5>
+
+            <h2 class="program_title" style="margin-top: 25px;">热度趋势指数</h2>
+
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    以用户在网络上近期的搜索量为数据基础，以关键词为统计对象，科学分析出各个关键词搜索频次的加权数。用来衡量当下的热门程度。
+                </div>
+            </div>
+            <h5 class="number">$!{view.hotIndex}  <span class="rank">$!{hrank}</span></h5>
+        </div>
+        <!-- 传播能力 用户活跃 -->
+        <div class="values_content propagation_liveness">
+            <h2 class="program_title">传播能力指数</h2>
+
+            <div class="tooltip">
+                ?
+                <div class="tooltip_info">
+                    以新闻社交媒体的相关内容数量，综合地域和人群属性，通过分析计算的加权数。用来衡量市场传播表现。
+                </div>
+            </div>
+            <h5 class="number">$!{view.propagateIndex} <span class="rank">$!{prank}</span></h5>
+
+            #if($bookType.getType() == 2)
+                <h2 class="program_title" style="margin-top: 25px;">用户活跃指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以社交平台粉丝人群为基数，综合相关内容生产数量和频率，通过分析和标准化的加权数。用来衡量粉丝的活跃程度。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.activityIndex} <span class="rank">$!{arank}</span></h5>
+            #end
+            <div>
+    </section>
+    <!--综合价值-->
+    <section>
+        <h1 class="title">综合价值</h1>
+
+        <div class="values_container"  id="composite_values">
+            <!--综合指数 -->
+            <div class="values_content">
+                <h2 class="program_title">综合指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以IP质量、热度、传播、潜力、粉丝活跃为关键指标，通过科学分析计算出的IP价值加权数。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.compositeIndex}<span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">小说排名</h2>
+                <h5 class="number">$!{crank}</h5>
+            </div>
+        </div>
+        <!--综合价值 图表 -->
+        <div id="chart_comprehensive_value" class="line_charts" data-fetch-url="/comprehensive/history?ip=$!{view.bookId}"></div>
+        <div class="program_tab" id="program_tab">
+            <h3 class="title">市场地位</h3>
+            <ul class="tab_tags">
+                <li class="active">全部</li>
+            </ul>
+
+            <ul class="tab_contents">
+                <li class="clearfix show">
+                    <div class="ipstatus">
+                        <h3>在全部文学中所处的地位</h3>
+
+                        <div class="pre_bar">
+
+                            #foreach($bookLevel in $bookLevels)
+
+                                #if($bookLevel.getLevel() == $crankLevel)
+                                    <span class="current"> $bookLevel.getDescription()</span>
+                                    #set($percent=$bookLevel.getDescription())
+                                #else
+                                    <span class=""> $bookLevel.getDescription()</span>
+                                #end
+
+                            #end
+                            #set($length = 35)
+                            #set($topValue = $crankLevel - 1)
+                            #set($top = $topValue * $length)
+                            <i style="top: ${top}px;">当前</i>
+                        </div>
+                        <h6>[$!{view.name}]在全部小说中,　属于${percent}的优质级内容</h6>
+                    </div>
+                    <div class="iprank clearfix">
+                        <h3>在全部文学中的排名</h3>
+                        <a class="show_rank_list" href="/rank/list.html">查看排行榜 ></a>
+                        <table>
+                            <tr>
+                                <th>排名</th>
+                                <th>名称</th>
+                                <th>价值指数</th>
+                                <th>趋势</th>
+                            </tr>
+
+                            #foreach($rankPosition in $rankPositions)
+                                <tr
+                                    #if($rankPosition.getBookView().getBookId() == $view.getBookId())
+                                            class="current"
+                                        #set($trend=$rankPosition.getTrend())
+                                    #end>
+                                    <td>$rankPosition.getCompositeRank()</td>
+                                    <td>$rankPosition.getBookView().getName()</td>
+                                    <td>$rankPosition.getBookView().getCompositeIndex()</td>
+                                    <td>
+                                        #if($rankPosition.getTrend() == 0)
+                                            -
+                                            #elseif($rankPosition.getTrend() == 1)
+                                            ↑
+                                            #else
+                                            ↓
+                                        #end
+                                    </td>
+                                </tr>
+                            #end
+
+                        </table>
+                        <h6>[$!{view.name}]在全小说价值排名第 ${crank} 位, 并有
+                            #foreach($trendEnum in $trendEnums)
+                                #if($trendEnum.getType() == $trend)
+                                    $trendEnum.getDescription()
+                                #end
+                            #end
+                            趋势</h6>
+                    </div>
+                </li>
+##                <li>
+##                    <p>同类内容</p>
+##                </li>
+##                <li>
+##                    <p>同期内容</p>
+##                </li>
+            </ul>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/comprehensive.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+
+    <!-- 开发潜力 -->
+    <section>
+        <h1 class="title">开发潜力</h1>
+        <!-- 指数们 -->
+        <div class="values_container" id="develop_values">
+            <!--综合指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前潜力指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        综合IP本身质量，市场表现，可开发空间和受众人群价值，通过科学分析计算的加权数。用来衡量开发价值的大小。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.developIndex}<span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名</h2>
+                <h5 class="number highest_histroy_value">$!{drank}</h5>
+            </div>
+        </div>
+        <!-- 潜力模型图表 -->
+        <div id="chart_potential_model" data-fetch-url="/developIndex/history?ip=$!{view.bookId}"></div>
+        <!-- 最受期待的开发项目 -->
+        <div class="vote_container">
+            <h3>最受期待的开发项目</h3>
+            <h6>投票查看结果</h6>
+
+            #parse("/index/develop_intention.vm")
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/potential?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+
+    <!-- 热度趋势 -->
+    <section>
+        <h1 class="title">热度趋势</h1>
+        <!-- 指数们 -->
+        <div class="values_container" id="hot_values">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以用户在网络上近期的搜索量为数据基础，以关键词为统计对象，科学分析出各个关键词搜索频次的加权数。用来衡量当下的热门程度。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.hotIndex} <span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{hrank}</h5>
+            </div>
+        </div>
+        <!-- 热度趋势图表 -->
+        <div id="chart_heat_trend" class="line_charts" data-fetch-url="/hotIndex/history?ip=${view.bookId}"></div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+
+    <!-- 传播能力 -->
+    <section>
+        <h1 class="title">传播能力</h1>
+        <!-- 指数们 -->
+        <div class="values_container" id="propagate_values">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">传播指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以新闻社交媒体的相关内容数量，综合地域和人群属性，通过分析计算的加权数。用来衡量市场传播表现。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.propagateIndex} <span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{prank}</h5>
+            </div>
+        </div>
+        <!-- 传播指数图表 -->
+        <div id="chart_transmission_index" class="line_charts" data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}"></div>
+        <!-- 新闻平台 社交平台 饼图 容器-->
+        <div class="col_2_container">
+            <!--新闻平台图表-->
+            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}"></div>
+            <!--社交平台图表-->
+            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+
+    <!--用户活跃-->
+    <section  #if($view.getType() == 1) class="hidden" #end>
+        <h1 class="title">用户活跃</h1>
+        <!-- 指数们 -->
+        <div class="values_container" id="reputation_values">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">用户活跃指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以社交平台粉丝人群为基数，综合相关内容生产数量和频率，通过分析和标准化的加权数。用来衡量粉丝的活跃程度。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{arank}</h5>
+            </div>
+        </div>
+        <!-- 用户活跃度图表 -->
+        <div id="chart_user_vitalty" class="line_charts" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+
+
+    <!--用户分析-->
+    <section>
+        <h1 class="title">用户分析</h1>
+        <!-- 受众年龄分布 容器-->
+        <div class="col_2_container">
+            <!--男女比例分布 图表-->
+            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=$!{view.bookId}"></div>
+            <!--年龄分布 图表-->
+            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
+        </div>
+        <!-- 查看全部 -->
+        <div class="program_showMore hidden">
+            <a href="/index/persona.html?ip=$!{view.id}">查看全部</a>
+        </div>
+    </section>
+    <!-- 点评 -->
+    <section>
+        <h1 class="title">点评</h1>
+        <!-- 点评指数 图表 容器 -->
+        <div class="review_container">
+            <div class="review_value">
+                <h2>综合口碑</h2>
+                <h5>$!{view.reputationIndex} </h5>
+                <h6>大多数人觉得很好</h6>
+            </div>
+            <div class="review_chart">
+##                <button>写点评</button>
+                <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
+            </div>
+        </div>
+        <ul class="comments_container">
+            #foreach($coment in $comments)
+                <li class="comment">
+                    <img class="comment_avatar" src="$!{coment.image}">
+
+                    <h3 class="comment_title">$!{coment.title}</h3>
+                    <h4 class="comment_author">$!{coment.author} -- 来自豆瓣</h4>
+
+                    <p class="comment_content">
+                        $!{coment.content}
+
+                    <p class="clearfix">
+                        <a class="comment_more" target="_blank" href="$!{coment.url}">查看全文>></a>
+                    </p>
+                </li>
+            #end
+        </ul>
+    </section>
+
+</div>

@@ -1,0 +1,89 @@
+    <!--main-->
+    <div class="container">
+        <!--搜索框-->
+        #parse("/common/search.vm")
+        <!--搜索框 end-->
+        <section class="rank_detail">
+            <h2 class="title">热门排行</h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th class="author">作者/主要人物</th>
+                    <th class="author">指数</th>
+                    <th class="trend">涨跌</th>
+                </tr>
+                <tr class="top_three">
+                    <td class="rank_num">1</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↓</td>
+                </tr>
+                <tr class="top_three">
+                    <td class="rank_num">2</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                <tr class="top_three">
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">—</td>
+                </tr>
+                <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+                 <tr>
+                    <td class="rank_num">3</td>
+                    <td class="content">太阳的后裔</td>
+                    <td class="author">土豆</td>
+                    <td class="author">2345676</td>
+                    <td class="trend">↑</td>
+                </tr>
+
+            </table>
+        </section>
+    </div>

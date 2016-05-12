@@ -1,0 +1,118 @@
+
+    <div class="container clearfix">
+        <!-- 用户中心 左侧导航 -->
+        #parse("/common/user_center_left.vm")
+        <!-- 用户中心 右侧部分 -->
+        <div class="sidebar_content">
+            <h1 class="title">我关注的</h1>
+            <!-- <ul class="ip_pic_list">
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+					<li>
+						<button class="cancle"></button>
+						<img src="../../assets/images/pic.png">
+						<h2 class="ip_pic_title">斗破苍穹</h2>
+					</li>
+				</ul> -->
+            <div class="ip_nofollow">
+                <span class="ip_nofollow_pic"></span>
+                <h6>暂时没有关注的内容</h6>
+            </div>
+            <h1 class="title">最新热门IP</h1>
+            <ul class="ip_pic_list">
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+                <li>
+                    <button class="cancle"></button>
+                    <img src="../../assets/images/pic.png">
+                    <h2 class="ip_pic_title">斗破苍穹</h2>
+                </li>
+            </ul>
+        </div>
+    </div>

@@ -1,0 +1,38 @@
+<div class="container">
+    #parse("/index/common.vm")
+    <!-- 热度趋势 -->
+    <section>
+        <h1 class="title">热度指数概况</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前指数指数 -->
+            <div class="values_content">
+                <h2 class="program_title">当前热度指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以用户在网络上近期的搜索量为数据基础，以关键词为统计对象，科学分析出各个关键词搜索频次的加权数。用来衡量当下的热门程度。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.hotIndex}  <span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">当前排名</h2>
+                <h5 class="number">$!{hrank}</h5>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h1 class="title">热度趋势 <span class="date_region">$!{startDate}至$!{endDate}</span></h1>
+        <!-- 热度趋势图表 -->
+        <div id="chart_heat_trend" data-fetch-url="/hotIndex/history?ip=$!{view.bookId}"></div>
+
+    </section>
+</div>

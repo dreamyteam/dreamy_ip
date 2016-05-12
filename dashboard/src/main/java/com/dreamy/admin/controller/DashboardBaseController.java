@@ -1,6 +1,6 @@
 package com.dreamy.admin.controller;
 
-import com.dreamy.admin.handler.CookieHandler;
+import com.dreamy.handlers.CookieHandler;
 import com.dreamy.beans.UserSession;
 import com.dreamy.beans.UserSessionContainer;
 import com.dreamy.domain.admin.AdminUser;

@@ -1,48 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-       xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
-       xmlns:context="http://www.springframework.org/schema/context" 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans  
        http://www.springframework.org/schema/beans/spring-beans.xsd  
        http://www.springframework.org/schema/rabbit  
        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
        http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd">  
-  
-    <rabbit:connection-factory 
-    	id="connectionFactory"
-		host="${rabbit_host}" 
-		port="${rabbit_port}" 
-		username="${rabbit_username}" 
-		password="${rabbit_password}"
-		channel-cache-size="${channel_cache_size}" />  
-  
-	<rabbit:admin connection-factory="connectionFactory" />
-	
-	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	
-	<rabbit:direct-exchange name="">
-	    <rabbit:bindings>
-	        <rabbit:binding queue="${queue_crawler_event}"/>
-	    </rabbit:bindings>
-	</rabbit:direct-exchange>
-	
-	<bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter" />
-	<bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter" />
+    <rabbit:connection-factory
+            id="connectionFactory"
+            host="${rabbit_host}"
+            port="${rabbit_port}"
+            username="${rabbit_username}"
+            password="${rabbit_password}"
+            channel-cache-size="${channel_cache_size}"/>
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+
+
+    <rabbit:direct-exchange name="">
+        <rabbit:bindings>
+            <rabbit:binding queue="${queue_crawler_publish_book}"/>
+            <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
+            <rabbit:binding queue="${queue_crawler_comment}"/>
+            <rabbit:binding queue="${queue_crawler_keyword}"/>
+
+            <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
+            <rabbit:binding queue="${queue_crawler_so_index}"/>
+            <rabbit:binding queue="${queue_crawler_news_sougou}"/>
+
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
+    <bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
 
 
     <!-- 数据转化 -->
 
     <!--队列声明-->
-    <rabbit:queue name="${queue_crawler_event}"/>
+    <rabbit:queue name="${queue_crawler_publish_book}"/>
+    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
+    <rabbit:queue name="${queue_crawler_comment}"/>
+    <rabbit:queue name="${queue_crawler_keyword}"/>
+    <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
+    <rabbit:queue name="${queue_crawler_so_index}"/>
+    <rabbit:queue name="${queue_crawler_news_sougou}"/>
+
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
-    <bean id="contentEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+    <bean id="crawlerEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+
+    <bean id="crawlerAmazonQueueHandler" class="com.dreamy.listen.CrawlerAmazonQueueHandler"/>
+
+
+    <bean id="commentEventQueueHandler" class="com.dreamy.listen.CommentEventQueueHandler"/>
+
+    <bean id="keyWordEventQueueHandler" class="com.dreamy.listen.KeyWordEventQueueHandler"/>
+
+    <bean id="keyWordWeiXinEventQueueHandler" class="com.dreamy.listen.KeyWordWeiXinEventQueueHandler"/>
+
+    <bean id="soIndexEventQueueHandler" class="com.dreamy.listen.SoIndexEventQueueHandler"/>
+
+    <bean id="newsMediaQueueHandler" class="com.dreamy.listen.NewsMediaQueueHandler"/>
+
 
     <!--队列监听-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerEventQueueHandler" method="onMessage" queues="${queue_crawler_publish_book}"/>
+    </rabbit:listener-container>
+
     <rabbit:listener-container
             connection-factory="connectionFactory"
             auto-startup="true"
@@ -51,8 +91,63 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="contentEventQueueHandler" method="onMessage" queues="${queue_crawler_event}"/>
+        <rabbit:listener ref="crawlerAmazonQueueHandler" method="onMessage" queues="${queue_crawler_publish_book_amazon}"/>
     </rabbit:listener-container>
 
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_crawler_comment}"/>
+    </rabbit:listener-container>
+
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin} "/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="5"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>
+    </rabbit:listener-container>
 
 </beans>  

@@ -2,13 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:rabbit="http://www.springframework.org/schema/rabbit"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans  
        http://www.springframework.org/schema/beans/spring-beans.xsd  
        http://www.springframework.org/schema/rabbit  
-       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
-       http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <!--队列服务-->
     <bean id="queueService" class="com.dreamy.service.mq.QueueServiceImpl">
@@ -34,18 +31,28 @@
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
 
     <!--队列声明-->
-    <rabbit:queue name="${queue_crawler_event}"/>
-
-
+    <rabbit:queue name="${queue_crawler_publish_book}"/>
+    <rabbit:queue name="${queue_crawler_comment}"/>
+    <rabbit:queue name="${queue_crawler_keyword}"/>
+    <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
+    <rabbit:queue name="${queue_crawler_so_index}"/>
+    <rabbit:queue name="${queue_crawler_news_sougou}"/>
+    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
     <!--交换器声明-->
-    <rabbit:direct-exchange name="data.listen" >
+    <rabbit:direct-exchange name="data.listen">
         <rabbit:bindings>
-            <rabbit:binding queue="${queue_crawler_event}"/>
+            <rabbit:binding queue="${queue_crawler_publish_book}"/>
+            <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
+            <rabbit:binding queue="${queue_crawler_comment}"/>
+            <rabbit:binding queue="${queue_crawler_keyword}"/>
+            <rabbit:binding queue="${queue_crawler_so_index}"/>
+            <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
+            <rabbit:binding queue="${queue_crawler_news_sougou}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
 
-    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter" />
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
 
     <bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
 

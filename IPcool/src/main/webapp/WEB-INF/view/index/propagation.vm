@@ -1,0 +1,58 @@
+<div class="container">
+    #parse("/index/common.vm")
+    <!-- 传播能力 -->
+    <section class="propagation">
+        <h1 class="title">传播能力概况</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <div class="values_content">
+                <h2 class="program_title">传播指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以新闻社交媒体的相关内容数量，综合地域和人群属性，通过分析计算的加权数。用来衡量市场传播表现。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.propagateIndex} <span class="arrow">↑</span></h5>
+            </div>
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <div class="values_content">
+                <h2 class="program_title">传播排名 <span class="date">2015/03/24</span></h2>
+                <h5 class="number">$!{prank}</h5>
+            </div>
+##            <div class="values_content">
+##                <h2 class="program_title">媒体关注度</h2>
+##                <h5 class="number">4357</h5>
+##            </div>
+##            <div class="values_content">
+##                <h2 class="program_title">关注度排名</h2>
+##                <h5 class="number">84</h5>
+##            </div>
+        </div>
+    </section>
+    <section>
+        <h1 class="title">媒体关注度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
+        <h6 class="trend_introduction">长期稳健型趋势，有持续的内容来推动，总体有热度下降的走势</h6>
+        <!-- 传播指数图表 -->
+        <div id="chart_transmission_index" data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}"></div>
+    </section>
+    <section>
+        <h1 class="title">市场传播媒体构成</h1>
+        <!-- 新闻平台 社交平台 饼图 容器-->
+        <div class="col_2_container">
+            <!--新闻平台图表-->
+            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}"></div>
+            <!--社交平台图表-->
+            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
+        </div>
+    </section>
+    <section>
+        <h1 class="title">传播地域分布图</h1>
+
+        <div id="chart_media_map_china"></div>
+    </section>
+</div>

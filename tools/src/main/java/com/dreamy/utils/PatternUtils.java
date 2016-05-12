@@ -14,10 +14,17 @@ public final class PatternUtils {
      * @return
      */
     public static String getNum(String str){
-
         String regEx="[^0-9]";
         Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
-        return  m.replaceAll("").trim();
+        if(StringUtils.isNotEmpty(str)) {
+
+            Matcher m = p.matcher(str);
+            return m.replaceAll("").trim();
+        }
+        else {
+            return "0";
+        }
     }
+
+
 }

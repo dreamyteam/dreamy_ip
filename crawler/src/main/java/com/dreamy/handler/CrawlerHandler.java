@@ -9,7 +9,7 @@ public interface CrawlerHandler {
 
 
 
-    public int getId();
+    public Integer getId();
 
 
 

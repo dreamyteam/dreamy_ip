@@ -1,6 +1,8 @@
 package com.dreamy.handler;
 
 import com.dreamy.mogodb.beans.BookInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -13,12 +15,14 @@ import java.util.Map;
 public class CrawlerManage {
 
 
+
+
     private Map<Integer, CrawlerHandler> handlers = new HashMap<Integer, CrawlerHandler>();
 
     private CrawlerHandler DEFAULT_HANDLER = new CrawlerHandler() {
 
         @Override
-        public int getId() {
+        public Integer getId() {
             return 0;
         }
 

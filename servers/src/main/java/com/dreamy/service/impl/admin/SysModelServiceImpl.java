@@ -31,7 +31,7 @@ public class SysModelServiceImpl implements SysModelService {
     public List<SysModel> getSysModelPage(SysModel sysModel, Page page) {
 
         new HashMap<String, Object>();
-        Map<String, Object> params = BeanUtils.toMap(sysModel);
+        Map<String, Object> params = BeanUtils.toQueryMap(sysModel);
         SysModelConditions conditions = new SysModelConditions();
         conditions.createCriteria().addByMap(params);
         if (page != null) {
@@ -54,12 +54,21 @@ public class SysModelServiceImpl implements SysModelService {
 
     @Override
     public List<SysModel> getByUserId(Integer userId) {
-       List<UserRole> list=userRoleService.getUserToRoleList(userId);
-        List<Integer> roles = new ArrayList<Integer>();
-        for (UserRole roleUser : list) {
-            roles.add(roleUser.getRoleId());
+//       List<UserRole> list=userRoleService.getUserToRoleList(userId);
+//        List<Integer> roles = new ArrayList<Integer>();
+//        for (UserRole roleUser : list) {
+//            roles.add(roleUser.getRoleId());
+//        }
+//        return queryByRoles(roles);
+        List<SysModel> sysModels=new ArrayList<>();
+        if(userId==1)
+        {
+            sysModels=getAll();
         }
-        return queryByRoles(roles);
+        else{
+            sysModels= getByUserId(userId);
+        }
+        return sysModels;
     }
 
     @Override

@@ -1,0 +1,84 @@
+<!--main-->
+<div class="container">
+    <!--搜索框-->
+    #parse("/common/search.vm")
+    <!--搜索框 end-->
+    <section class="rank_list">
+        <div class="rank_list_table">
+            <h2 class="title">综合排行<span class="date">榜单更新日期: $!{date}</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+
+                #foreach($view in $clist)
+                    <tr class="top_three">
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
+                    </tr>
+                #end
+
+
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">潜力排行<span class="date">榜单更新日期: $!{date}</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $dlist)
+                    <tr class="top_three">
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
+                    </tr>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">热度排行<span class="date">榜单更新日期: $!{date}</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $hlist)
+                    <tr class="top_three">
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
+                    </tr>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+        <div class="rank_list_table">
+            <h2 class="title">传播排行<span class="date">榜单更新日期: $!{date}</span></h2>
+            <table>
+                <tr>
+                    <th class="rank_num">排名</th>
+                    <th class="content">内容</th>
+                    <th>指数</th>
+                </tr>
+                #foreach($view in $plist)
+                    <tr class="top_three">
+                        <td class="rank_num">$!{view.rank}</td>
+                        <td class="content">$!{view.name}</td>
+                        <td>$!{view.rankIndex}</td>
+                    </tr>
+                #end
+            </table>
+            <a class="show_top50" href="#">排名前十</a>
+        </div>
+    </section>
+</div>
+

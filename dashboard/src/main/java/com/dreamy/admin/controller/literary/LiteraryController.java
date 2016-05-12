@@ -1,6 +1,6 @@
 package com.dreamy.admin.controller.literary;
 
-import com.dreamy.admin.controller.DashboardBaseController;
+import com.dreamy.admin.controller.DashboardController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/literary")
-public class LiteraryController extends DashboardBaseController {
+public class LiteraryController extends DashboardController {
     /**
      * 出版文学
      * @return

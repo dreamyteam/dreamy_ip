@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 /**
  * Created by wangyongxing on 16/4/11.
  */
-@Repository("IpBookDao")
+@Repository("ipBookDao")
 public class IpBookDaoImpl  extends BaseDaoImpl<IpBook,Integer,IpBookConditions>implements IpBookDao {
 
     @Resource

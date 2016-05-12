@@ -1,16 +1,24 @@
 package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
-import com.dreamy.dao.iface.ipcool.BookCrawlerInfoDao;
 import com.dreamy.dao.iface.ipcool.IpBookDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.ipcool.IpBookConditions;
+import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.enums.QueueRoutingKeyEnums;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +29,30 @@ import java.util.Map;
 public class IpBookServiceImpl implements IpBookService {
     @Resource
     private IpBookDao ipBookDao;
+
     @Resource
-    private BookCrawlerInfoDao bookCrawlerInfoDao;
+    private QueueService queueService;
+
+    @Autowired
+    private BookCrawlerInfoService bookCrawlerInfoService;
+
+    @Value("${queue_crawler_publish_book}")
+    private String queueName;
+
+    @Value("${queue_crawler_comment}")
+    private String commentQueueName;
+
+
+    @Value("${queue_crawler_publish_book_amazon}")
+    private String amazonQueueName;
+
     @Override
-    public IpBook save(IpBook ipBook,List<BookCrawlerInfo> list) {
+    public IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         ipBookDao.save(ipBook);
         for (BookCrawlerInfo bookCrawlerInfo : list) {
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
-            bookCrawlerInfoDao.save(bookCrawlerInfo);
+            bookCrawlerInfoService.save(bookCrawlerInfo);
         }
         return ipBook;
     }
@@ -40,42 +63,86 @@ public class IpBookServiceImpl implements IpBookService {
     }
 
     @Override
-    public List<IpBook> getIpBookList(IpBook ipBook, Page page)
-    {
-        Map<String,Object> params= BeanUtils.toQueryMap(ipBook);
-        IpBookConditions conditions=new IpBookConditions();
-
+    public List<IpBook> getIpBookList(IpBook ipBook, Page page) {
+        Map<String, Object> params = BeanUtils.toQueryMap(ipBook);
+        IpBookConditions conditions = new IpBookConditions();
+        if (params.get("id") != null) {
+            conditions.createCriteria().andIdLessThan((Integer) params.get("id"));
+            params.remove("id");
+        }
         conditions.createCriteria().addByMap(params);
-        if(page!=null){
-            int row=ipBookDao.countByExample(conditions);
+        conditions.setOrderByClause("id desc");
+        if (page != null) {
+            int row = ipBookDao.countByExample(conditions);
             page.setTotalNum(row);
             conditions.setPage(page);
 
         }
-        List<IpBook> list=ipBookDao.selectByExample(conditions);
+        List<IpBook> list = ipBookDao.selectByExample(conditions);
         return list;
     }
 
     @Override
-    public int update(IpBook ipBook,List<BookCrawlerInfo> list) {
+    public int updateRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         for (BookCrawlerInfo bookCrawlerInfo : list) {
-            bookCrawlerInfo.status(1);
             bookCrawlerInfo.setBookId(ipBook.getId());
-            bookCrawlerInfoDao.save(bookCrawlerInfo);
+            bookCrawlerInfo.status(CrawlerTaskStatusEnums.waitting.getStatus());
+
+            Integer id = bookCrawlerInfo.getId();
+            if (id > 0) {
+                BookCrawlerInfo info = bookCrawlerInfoService.getById(id);
+                if (info != null && !info.getUrl().equals(bookCrawlerInfo.getUrl())) {
+                    bookCrawlerInfo.status(CrawlerTaskStatusEnums.starting.getStatus());
+                    bookCrawlerInfoService.update(bookCrawlerInfo);
+                }
+            } else {
+                bookCrawlerInfoService.save(bookCrawlerInfo);
+            }
         }
         return ipBookDao.update(ipBook);
     }
 
     @Override
-    public int del(List<Integer> ids) {
-        for(Integer id:ids)
-        {
-            IpBook ipBook=new IpBook().status(-1).id(id);
+    public int delByIds(List<Integer> ids) {
+        for (Integer id : ids) {
+            IpBook ipBook = new IpBook().status(-1).id(id);
             ipBookDao.update(ipBook);
-            BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo().bookId(id).status(-1);
-            bookCrawlerInfoDao.update(bookCrawlerInfo);
-
+            BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(id).status(-1);
+            bookCrawlerInfoService.update(bookCrawlerInfo);
         }
+
         return 0;
+    }
+
+    @Override
+    public Integer updateByRecord(IpBook ipBook) {
+        return ipBookDao.update(ipBook);
+    }
+
+    @Override
+    public void doCrawler(BookCrawlerInfo info) {
+        if (StringUtils.isNotEmpty(info.getUrl())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", info.getSource());
+            map.put("url", info.getUrl());
+            map.put("ipId", info.getBookId());
+            map.put("crawlerId", info.getId());
+            if (info.getSource().equals(CrawlerSourceEnums.amazon.getType())) {
+                queueService.push(amazonQueueName, map);
+            } else {
+                queueService.push(queueName, map);
+            }
+
+
+            if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
+                queueService.push(commentQueueName, map);
+            }
+
+            info.status(CrawlerTaskStatusEnums.starting.getStatus());
+            bookCrawlerInfoService.update(info);
+        } else {
+            info.status(CrawlerTaskStatusEnums.success.getStatus());
+            bookCrawlerInfoService.update(info);
+        }
     }
 }

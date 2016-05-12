@@ -14,15 +14,16 @@
         <logback.version>0.9.29</logback.version>
         <autoconfig-plugin-version>1.2</autoconfig-plugin-version>
         <org.apache.poi>3.7</org.apache.poi>
+        <package.environment>dev</package.environment>
     </properties>
     <modules>
         <module>tools</module>
-
         <module>servers</module>
         <module>dashboard</module>
         <module>crawler</module>
-
+        <module>IPcool</module>
     </modules>
+
 
 
 </project>

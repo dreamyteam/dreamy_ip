@@ -1,0 +1,74 @@
+<div class="container">
+    #parse("/index/common.vm")
+    <!-- 人群概况 -->
+    <section class="persona">
+        <h1 class="title">人群概况</h1>
+        <!-- 指数们 -->
+        <div class="values_container">
+            <!--当前潜力指数 -->
+            <div class="values_content">
+                <h2 class="program_title">用户活跃指数</h2>
+
+                <div class="tooltip">
+                    ?
+                    <div class="tooltip_info">
+                        以社交平台粉丝人群为基数，综合相关内容生产数量和频率，通过分析和标准化的加权数。用来衡量粉丝的活跃程度。
+                    </div>
+                </div>
+                <h5 class="number">$!{view.activityIndex}<span class="arrow">↑</span></h5>
+            </div>
+            <!-- 历史最高 -->
+            <div class="values_content">
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h5 class="number highest_histroy_value"></h5>
+            </div>
+            <!--同类排名 -->
+            <div class="values_content">
+                <h2 class="program_title">排名</h2>
+                <h5 class="number">$!{arank}</h5>
+            </div>
+            <div class="values_content">
+                <h2 class="program_title">主要年龄段</h2>
+                <h5 class="number">20-30</h5>
+            </div>
+            <div class="values_content">
+                <h2 class="program_title">性别偏好</h2>
+                <h5 class="number">女性</h5>
+            </div>
+        </div>
+    </section>
+    <!-- 活跃度趋势图表 -->
+    <section>
+        <h1 class="title">活跃度趋势 <span class="date_region">2015/03/24至2016/03/23</span></h1>
+        <!-- 热度趋势图表 -->
+        <div id="chart_vitality_trend"></div>
+    </section>
+    <section class="persona">
+        <h1 class="title">人群画像</h1>
+
+        <div class="col_2_container">
+            <!--男女比例分布 图表-->
+            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=$!{view.bookId}"></div>
+            <!--年龄分布 图表-->
+            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
+            <!-- 用户偏好图表 -->
+            <div class="col" id="chart_user_preference"></div>
+            <!-- 关键词 -->
+            <div class="col">
+                <h3 class="title">关键词</h3>
+                <h4 class="sub_title">受众比较均衡，更多偏向于男性年轻人</h4>
+
+                <div class="tags">
+                    <span><a href="#">搞笑</a></span>
+                    <span><a href="#">星爷</a></span>
+                    <span><a href="#">2016</a></span>
+                    <span><a href="#">环保</a></span>
+                    <span><a href="#">搞笑</a></span>
+                    <span><a href="#">星爷</a></span>
+                    <span><a href="#">2016</a></span>
+                    <span><a href="#">环保</a></span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

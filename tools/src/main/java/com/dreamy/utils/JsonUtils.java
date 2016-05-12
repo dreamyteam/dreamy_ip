@@ -8,6 +8,8 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,7 +21,7 @@ import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class JsonUtils {
-
+    private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     static {
         OBJECT_MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -79,7 +81,7 @@ public class JsonUtils {
             try {
                 return OBJECT_MAPPER.writeValueAsString(obj);
             } catch (Throwable e) {
-                e.printStackTrace();
+                log.error("json字符串转变 error "+obj,e);
             }
         }
 
@@ -100,7 +102,7 @@ public class JsonUtils {
             try {
                 return OBJECT_MAPPER.readValue(json, clazz);
             } catch (Throwable e) {
-                e.printStackTrace();
+                log.error("json字符串转变 error "+json,e);
             }
         }
 

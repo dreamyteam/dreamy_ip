@@ -11,13 +11,49 @@ import java.util.List;
  */
 public interface IpBookService {
 
-    IpBook save(IpBook ipBook,List<BookCrawlerInfo> list);
+    /**
+     * @param ipBook
+     * @param list
+     * @return
+     */
+    IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list);
 
+    /**
+     * @param id
+     * @return
+     */
     IpBook getById(Integer id);
 
+    /**
+     * @param ipBook
+     * @param page
+     * @return
+     */
     List<IpBook> getIpBookList(IpBook ipBook, Page page);
 
-    int update(IpBook ipBook,List<BookCrawlerInfo> list);
+    /**
+     * @param ipBook
+     * @param list
+     * @return
+     */
+    int updateRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list);
 
-    int del(List<Integer> ids);
+    /**
+     *
+     * @param ipBook
+     * @return
+     */
+    Integer updateByRecord(IpBook ipBook);
+
+    /**
+     * @param ids
+     * @return
+     */
+    int delByIds(List<Integer> ids);
+
+    /**
+     *
+     * @param bookCrawlerInfo
+     */
+    void doCrawler(BookCrawlerInfo bookCrawlerInfo);
 }
