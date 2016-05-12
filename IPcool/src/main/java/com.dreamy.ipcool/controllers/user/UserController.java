@@ -48,18 +48,9 @@ public class UserController extends IpcoolController {
             map.put("pageName", request.getParameter("pageName"));
             return "/user/bio";
         }
-        return null;
 
-    }
+        return redirect("/");
 
-    @RequestMapping("/following")
-    public String followList() {
-        return "/user/following";
-    }
-
-    @RequestMapping("/view/history")
-    public String history() {
-        return "/user/history";
     }
 
     @RequestMapping("/modify/password")
@@ -75,7 +66,7 @@ public class UserController extends IpcoolController {
             }
         }
 
-        return null;
+        return redirect("/");
     }
 
     @RequestMapping("/modify/password/do")
@@ -103,12 +94,7 @@ public class UserController extends IpcoolController {
             }
         }
 
-        return null;
-    }
-
-    @RequestMapping("/logout")
-    public String logout() {
-        return "/homepage/homepage";
+        return redirect("/");
     }
 
     @RequestMapping("/update")
@@ -134,6 +120,6 @@ public class UserController extends IpcoolController {
             }
 
         }
-        return null;
+        return redirect("/");
     }
 }
