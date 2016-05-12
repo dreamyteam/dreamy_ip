@@ -1,3 +1,5 @@
+<input id="getIpid" type="hidden" value="$!{view.bookId}">
+
 <div class="container">
     #parse("/index/common.vm")
     <section>
