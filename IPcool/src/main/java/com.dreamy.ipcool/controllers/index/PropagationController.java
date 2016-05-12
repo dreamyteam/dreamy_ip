@@ -199,7 +199,7 @@ public class PropagationController extends IpcoolController {
     @RequestMapping("/developIndex/history")
     public void developIndexHistroy(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
         InterfaceBean bean = new InterfaceBean().success();
-        BookView bookView = bookViewService.getById(bookId);
+        BookView bookView = bookViewService.getByBookId(bookId);
         Map<String,Object> indicator=new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (bookView != null) {
