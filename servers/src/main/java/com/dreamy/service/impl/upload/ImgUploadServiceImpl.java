@@ -76,11 +76,14 @@ public class ImgUploadServiceImpl implements ImgUploadService {
         if (upfile == null) {
             bean.failure(ErrorCodeEnums.image_upload_failed.getErrorCode(), "图片文件不存在");
         } else {
-
             String imageType = upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".") + 1).toLowerCase();
-
             if (!imageType.equals("jpg") && !imageType.equals("png")) {
                 bean.failure(ErrorCodeEnums.image_upload_failed.getErrorCode(), "图片支持jpg和png格式");
+            } else {
+                long fileSize = upfile.getSize();
+                if (fileSize > 1024 * 1024 * 10) {
+                    bean.failure(ErrorCodeEnums.image_upload_failed.getErrorCode(), "图片大小不能超过10M");
+                }
             }
         }
 
