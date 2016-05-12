@@ -59,7 +59,7 @@
                         </ul>
                     </div>
                     <div class="overall">
-                        <h6>文学综合排名</h6>
+                        <h6>文学排名</h6>
                         <span>$!rankMap.get($view.getBookId())</span>
                     </div>
                 </div>
