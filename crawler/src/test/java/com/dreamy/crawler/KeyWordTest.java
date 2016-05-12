@@ -2,27 +2,13 @@ package com.dreamy.crawler;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.IpBook;
-import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.handler.keyword.KeyWordHandler;
 import com.dreamy.handler.keyword.KeyWordWeiXinHandler;
-import com.dreamy.handler.keyword.sina.CrawSina;
-import com.dreamy.handler.keyword.sina.SinaHttpUtils;
 import com.dreamy.service.iface.ipcool.BookViewService;
-import com.dreamy.service.iface.ipcool.IpBookService;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -49,7 +35,7 @@ public class KeyWordTest extends BaseJunitTest {
 //            List<BookView> list = bookViewService.getList(bookView, page);
 //
 //            for (BookView book : list) {
-//                keyWordWeiXinHandler.crawler(book.getName() + " " + book.getAuthor(), book.getBookId());
+//                keyWordHandler.crawler(book.getName() + " " + book.getAuthor(), book.getBookId());
 //                Thread.sleep(getRandom(50000));
 //
 //            }
