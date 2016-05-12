@@ -43,17 +43,21 @@
     <!-- 数据转化 -->
 
     <!--队列声明-->
-    <rabbit:queue name="${queue_crawler_event}"/>
+    <rabbit:queue name="${queue_crawler_publish_book}"/>
+    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
     <rabbit:queue name="${queue_crawler_comment}"/>
-    <rabbit:queue name="${queue_crawler_keyword_event}"/>
-    <rabbit:queue name="${queue_crawler_keyword_weixin_event}"/>
-    <rabbit:queue name="${queue_crawler_so_index_event}"/>
-    <rabbit:queue name="${queue_crawler_news_sougou_event}"/>
+    <rabbit:queue name="${queue_crawler_keyword}"/>
+    <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
+    <rabbit:queue name="${queue_crawler_so_index}"/>
+    <rabbit:queue name="${queue_crawler_news_sougou}"/>
 
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
-    <bean id="contentEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+    <bean id="crawlerEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+
+    <bean id="crawlerAmazonQueueHandler" class="com.dreamy.listen.CrawlerAmazonQueueHandler"/>
+
 
     <bean id="commentEventQueueHandler" class="com.dreamy.listen.CommentEventQueueHandler"/>
 
@@ -75,7 +79,18 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="contentEventQueueHandler" method="onMessage" queues="${queue_crawler_event}"/>
+        <rabbit:listener ref="crawlerEventQueueHandler" method="onMessage" queues="${queue_crawler_publish_book}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerAmazonQueueHandler" method="onMessage" queues="${queue_crawler_publish_book_amazon}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -98,7 +113,7 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_event}"/>
+        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -109,7 +124,7 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index_event}"/>
+        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -120,7 +135,7 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin_event} "/>
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin} "/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -131,7 +146,7 @@
             concurrency="5"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou_event}"/>
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>
     </rabbit:listener-container>
 
 </beans>  

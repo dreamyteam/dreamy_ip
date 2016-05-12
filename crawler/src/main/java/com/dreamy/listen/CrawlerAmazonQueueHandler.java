@@ -3,6 +3,7 @@ package com.dreamy.listen;
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.handler.AmazonCrawlerHandler;
 import com.dreamy.handler.CrawlerHandler;
 import com.dreamy.handler.CrawlerManage;
 import com.dreamy.mogodb.beans.BookInfo;
@@ -16,14 +17,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Random;
-
 /**
  * Created by wangyongxing on 16/4/18.
  */
 @Component
-public class CrawlerEventQueueHandler extends AbstractQueueHandler {
+public class CrawlerAmazonQueueHandler extends AbstractQueueHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(CrawlerEventQueueHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(CrawlerAmazonQueueHandler.class);
 
     private Date lastRuntime = null;
 
@@ -34,7 +34,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
     private BookCrawlerInfoService bookCrawlerInfoService;
 
     @Autowired
-    private CrawlerManage crawlerManage;
+    private AmazonCrawlerHandler amazonCrawlerHandler;
 
     @Override
     public void consume(JSONObject jsonObject) {
@@ -68,8 +68,8 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
 
         BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
         try {
-            CrawlerHandler handler = crawlerManage.getHandler(type);
-            BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
+
+            BookInfo bookInfo =amazonCrawlerHandler.getByUrl(url);
             if (bookInfo != null) {
                 bookInfo.setCrawlerId(crawlerId);
                 bookInfo.setSource(type);
@@ -78,12 +78,12 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
             } else {
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-                log.warn("crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
+                log.warn("amazon crawler event failed: type:" + type + ",url:" + url + ",id:" + crawlerId);
             }
             bookCrawlerInfoService.update(bookCrawlerInfo);
         } catch (Exception e) {
             bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.failed.getStatus());
-            log.error("crawler event exception" + type + ",url:" + url + ",id:" + crawlerId, e);
+            log.error(" amazon crawler event exception" + type + ",url:" + url + ",id:" + crawlerId, e);
             bookCrawlerInfoService.update(bookCrawlerInfo);
         }
     }
