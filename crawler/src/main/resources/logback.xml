@@ -9,9 +9,9 @@
     </appender>
 	
 	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/home/dreamy/project/logs/crawler.log</file>
+		<file>${logPath}/crawler.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/home/dreamy/project/logs/crawler.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${logPath}/crawler.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>3</maxHistory>
 		</rollingPolicy>
 		<encoder>
