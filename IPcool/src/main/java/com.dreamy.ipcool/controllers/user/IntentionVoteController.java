@@ -84,9 +84,9 @@ public class IntentionVoteController extends IpcoolController {
         }
 
         Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
+        List<Integer> typeOne = new LinkedList<Integer>();
+        List<Integer> typeTwo = new LinkedList<Integer>();
         if (CollectionUtils.isNotEmpty(list)) {
-            List<Integer> typeOne = new LinkedList<Integer>();
-            List<Integer> typeTwo = new LinkedList<Integer>();
             for (IntentionVote each : list) {
                 if (each.getUserChoice() == 1) {
                     typeOne.add(each.getType());
@@ -95,9 +95,9 @@ public class IntentionVoteController extends IpcoolController {
                 }
             }
 
-            map.put("1", typeOne);
-            map.put("2", typeTwo);
         }
+        map.put("1", typeOne);
+        map.put("2", typeTwo);
         bean.setData(map);
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
