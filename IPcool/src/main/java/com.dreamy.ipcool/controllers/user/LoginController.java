@@ -43,8 +43,6 @@ public class LoginController extends IpcoolController {
             bean.failure(errorCodeEnums);
         }
 
-//        if(StringUtils.isNotEmpty()){}
-
         User user = userService.getUserByMobile(param.getMobile());
         Boolean isPasswordValid = PasswordUtils.isPasswordInvalid(user.getPassword(), param.getPassword());
         if (isPasswordValid) {
@@ -57,6 +55,8 @@ public class LoginController extends IpcoolController {
             session.setSex(user.getSex());
 
             userSessionContainer.set(getUserSessionId(request), session);
+        }else{
+            bean.failure(ErrorCodeEnums.login_failed.getErrorCode(),"账号或密码错误");
         }
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
