@@ -11,6 +11,15 @@ public class LoginParams {
     private String password;
     private String ip;
     private String sessionId;
+    private String rememberPwd;
+
+    public String getRememberPwd() {
+        return rememberPwd;
+    }
+
+    public void setRememberPwd(String rememberPwd) {
+        this.rememberPwd = rememberPwd;
+    }
 
     public String getIp() {
         return ip;

@@ -10,6 +10,7 @@ import com.dreamy.service.iface.user.LoginService;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.PasswordUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,8 @@ public class LoginController extends IpcoolController {
         if (errorCodeEnums.getErrorCode() > 0) {
             bean.failure(errorCodeEnums);
         }
+
+//        if(StringUtils.isNotEmpty()){}
 
         User user = userService.getUserByMobile(param.getMobile());
         Boolean isPasswordValid = PasswordUtils.isPasswordInvalid(user.getPassword(), param.getPassword());
