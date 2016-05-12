@@ -7,6 +7,8 @@
     #if($!{cssName})
         <link href="/static/css/$!{cssName}.css" rel="stylesheet" type="text/css"/>
     #end
+    <link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/pace-theme-minimal.css">
+    <script type="text/javascript" src="http://ipcool.me/dist/pace.min.js"></script>
 </head>
 <body>
 
