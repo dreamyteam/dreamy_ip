@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "bookInfo")
 @TypeAlias("bookInfo")
 public class BookInfo {
-    @Id
+
     private Integer crawlerId;
     /**
      * 作品名称
@@ -69,7 +69,7 @@ public class BookInfo {
      */
     private Integer source;
 
-
+    @Id
     private String ISBN;
 
     public Integer getCrawlerId() {

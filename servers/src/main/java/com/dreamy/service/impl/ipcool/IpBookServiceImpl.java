@@ -145,4 +145,9 @@ public class IpBookServiceImpl implements IpBookService {
             bookCrawlerInfoService.update(info);
         }
     }
+
+    @Override
+    public void save(IpBook ipBook) {
+        ipBookDao.save(ipBook);
+    }
 }

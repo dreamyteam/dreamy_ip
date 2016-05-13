@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Created by wangyongxing on 16/4/11.
  */
-@Service
 public class QueueServiceImpl implements QueueService {
     private static final Logger log = LoggerFactory.getLogger(QueueService.class);
 
