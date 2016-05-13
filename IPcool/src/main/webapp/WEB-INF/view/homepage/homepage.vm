@@ -10,7 +10,7 @@
         <div class="head_front">
             <div class="inner">
                 <h1 class="main_title">让IP有序 让文创有依</h1>
-                <h6 class="sub_text">已分析文学 IP 10000+</h6>
+                <h6 class="sub_text">输入作品名称开始查询</h6>
                 <form class="search_bar_container" action="/search.html">
 
                     <input id="category_all" type="radio" name="type" value="all"  checked="checked"/>

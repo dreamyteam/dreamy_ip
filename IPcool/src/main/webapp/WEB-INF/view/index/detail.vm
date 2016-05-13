@@ -94,7 +94,7 @@
             </div>
         </div>
         <!--综合价值 图表 -->
-        <div id="chart_comprehensive_value" class="line_charts" data-fetch-url="http://localhost:8082/comprehensive/history?ip=55"></div>
+        <div id="chart_comprehensive_value" class="line_charts" data-fetch-url="/comprehensive/history?ip=55"></div>
         <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
