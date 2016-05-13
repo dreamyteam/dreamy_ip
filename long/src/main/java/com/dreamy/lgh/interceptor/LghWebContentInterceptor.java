@@ -35,10 +35,7 @@ public class LghWebContentInterceptor extends WebContentInterceptor {
                 }
 
                 return Boolean.TRUE;
-
-
             }
-
         }
         return Boolean.TRUE;
     }
