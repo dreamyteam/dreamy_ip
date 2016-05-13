@@ -17,4 +17,5 @@ public final class ObjectUtils {
     public static <T> T nullToDefault(T value, T def) {
         return value == null ? def : value;
     }
+
 }

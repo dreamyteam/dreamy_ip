@@ -82,7 +82,7 @@ public class RankController {
                 for (IpBook book : list) {
                     Integer bookId = book.getId();
                     BookView bookView = bookViewService.getByBookId(bookId);
-                    if (bookView.getId() != null) {
+                    if (bookView != null) {
                         if (bookView.getHotIndex() == 0) {
                             String score = bookScoreService.getBookHotIndexByBookId(book.getId());
                             map.put(book.getId(), score);

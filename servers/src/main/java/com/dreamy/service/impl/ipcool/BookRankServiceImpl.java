@@ -79,13 +79,14 @@ public class BookRankServiceImpl implements BookRankService {
         if (CollectionUtils.isNotEmpty(bookRanks)) {
             for (BookRank r : bookRanks) {
                 BookView bookview = bookViewService.getByBookId(r.getBookId());
+                if(bookview != null) {
+                    BookViewWithExt bookViewWithExt = new BookViewWithExt();
+                    bookViewWithExt.setBookView(bookview);
+                    bookViewWithExt.setCompositeRank(r.getRank());
+                    bookViewWithExt.setTrend(getRankTrendByBookIdAndTypeAndIndex(r.getBookId(), rankType, r.getRankIndex()));
 
-                BookViewWithExt bookViewWithExt = new BookViewWithExt();
-                bookViewWithExt.setBookView(bookview);
-                bookViewWithExt.setCompositeRank(r.getRank());
-                bookViewWithExt.setTrend(getRankTrendByBookIdAndTypeAndIndex(r.getBookId(), rankType, r.getRankIndex()));
-
-                bookViewWithExts.add(bookViewWithExt);
+                    bookViewWithExts.add(bookViewWithExt);
+                }
             }
         }
 
