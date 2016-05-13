@@ -73,6 +73,7 @@
         <property name="cookiePath" value="/"/>
         <property name="httpOnly" value="true"/>
     </bean>
+
     <import resource="classpath:applicationContext-dao.xml"/>
     <import resource="classpath:mongodb.xml"/>
 </beans>

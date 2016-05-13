@@ -75,14 +75,14 @@
         </property>
     </bean>
 
-
+    <mvc:resources location="/static/" mapping="/static/**"/>
     <mvc:interceptors>
         <bean class="com.dreamy.lgh.interceptor.UserSessionInterceptor">
             <property name="userSessionContainer" ref="userSessionContainer"/>
             <property name="cookieHandler" ref="sessionCookieHandler"/>
 
         </bean>
-        <bean class="com.dreamy.lgh.interceptor.IpcoolWebContentInterceptor"/>
+        <bean class="com.dreamy.lgh.interceptor.LghWebContentInterceptor"/>
 
     </mvc:interceptors>
 
