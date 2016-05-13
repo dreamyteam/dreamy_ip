@@ -29,7 +29,7 @@ public class DouBanBookCrawlerHandler {
 
     public BookInfo crawler(String url) {
 
-        String html = HttpUtils.getHtmlGetByProxy(url,"115.28.244.117",80,null);
+        String html = HttpUtils.getHtmlGetByProxy(url,null,0,null);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
