@@ -1,6 +1,5 @@
 package com.dreamy.mogodb.beans;
 
-import com.sun.tools.corba.se.idl.StringGen;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
