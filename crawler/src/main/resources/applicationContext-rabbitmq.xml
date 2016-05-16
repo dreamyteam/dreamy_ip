@@ -27,7 +27,7 @@
 
 
     <!--默认配置模版-->
-    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange="fanoutExchange"/>
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange="fanoutExchange" message-converter="jsonMessageConverter"/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
@@ -36,9 +36,9 @@
             <rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>
             <rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>
             <rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>
-
         </rabbit:bindings>
     </rabbit:fanout-exchange>
+
     <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
             <rabbit:binding queue="${queue_crawler_publish_book}"/>
@@ -74,6 +74,7 @@
     <rabbit:queue name="${queue_crawler_douban_book_tag}"/>
 
     <rabbit:queue name="${crawler_book_isbn_jd}" />
+
     <rabbit:queue name="${crawler_book_isbn_amazon}" />
 
     <rabbit:queue name="${crawler_book_isbn_dangdang}" />

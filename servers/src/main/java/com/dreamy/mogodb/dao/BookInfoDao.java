@@ -60,7 +60,7 @@ public class BookInfoDao extends MongoGenDao<BookInfo> {
             }
         }
 
-        this.updateMulti(Query.query(Criteria.where("_id").is(bookInfo.getCrawlerId())), update);
+        this.updateMulti(Query.query(Criteria.where("_id").is(bookInfo.getId())), update);
     }
 
     public void updateInser(BookInfo bookInfo) {
@@ -69,7 +69,7 @@ public class BookInfoDao extends MongoGenDao<BookInfo> {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             update.set(entry.getKey(), entry.getValue());
         }
-        this.updateInser(Query.query(Criteria.where("_id").is(bookInfo.getCrawlerId())), update);
+        this.updateInser(Query.query(Criteria.where("_id").is(bookInfo.getId())), update);
     }
 
 

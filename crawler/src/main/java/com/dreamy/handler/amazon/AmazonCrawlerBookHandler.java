@@ -34,7 +34,7 @@ public class AmazonCrawlerBookHandler {
         if (amazonBean != null) {
             List<String> list = amazonBean.getUrls();
             if (CollectionUtils.isNotEmpty(list)) {
-                crawlerUrl = list.get(1);
+                crawlerUrl = list.get(0);
             }
 
         }
