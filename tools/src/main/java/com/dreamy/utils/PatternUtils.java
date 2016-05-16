@@ -26,5 +26,17 @@ public final class PatternUtils {
         }
     }
 
+    public static String date(String content) {
+        String date = "";
+        Pattern p = Pattern.compile("[0-9]{4}[年|\\-|/][0-9]{1,2}[月|\\-|/]");
+        Matcher m = p.matcher(content);
+        while (m.find()) {
+            if (!"".equals(m.group())) {
+                date = m.group();
+            }
+        }
+        return date;
+    }
+
 
 }

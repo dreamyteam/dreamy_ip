@@ -25,13 +25,21 @@
         <property name="rabbitTemplate" ref="defaultTemplate"/>
     </bean>
 
+
     <!--默认配置模版-->
-    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange="fanoutExchange"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
+    <rabbit:fanout-exchange name="fanoutExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>
+            <rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>
+            <rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>
 
-    <rabbit:direct-exchange name="">
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+    <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
             <rabbit:binding queue="${queue_crawler_publish_book}"/>
             <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
@@ -42,6 +50,8 @@
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_douban_book}"/>
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
+            <rabbit:binding queue="${queue_crawler_douban_book_tag}"/>
+            <!--<rabbit:binding queue="${crawler_book_isbn}"/>-->
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -61,8 +71,13 @@
     <rabbit:queue name="${queue_crawler_news_sougou}"/>
 
     <rabbit:queue name="${queue_crawler_douban_book}"/>
+    <rabbit:queue name="${queue_crawler_douban_book_tag}"/>
 
-    <rabbit:queue name="${crawler_book_isbn}"/>
+    <rabbit:queue name="${crawler_book_isbn_jd}" />
+    <rabbit:queue name="${crawler_book_isbn_amazon}" />
+
+    <rabbit:queue name="${crawler_book_isbn_dangdang}" />
+
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
@@ -81,7 +96,19 @@
 
     <bean id="newsMediaQueueHandler" class="com.dreamy.listen.NewsMediaQueueHandler"/>
 
+    <bean id="douBanBookTagQueueHandler" class="com.dreamy.listen.DouBanBookTagQueueHandler"/>
+
+
     <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.listen.CrawlerDoubanBookQueueHandler"/>
+
+    <bean id="amazonBookISBMQueueHandler" class="com.dreamy.listen.AmazonBookISBMQueueHandler"/>
+
+    <bean id="jdBookISBMQueueHandler" class="com.dreamy.listen.JdBookISBMQueueHandler"/>
+
+    <bean id="dangBookISBMQueueHandler" class="com.dreamy.listen.DangDangBookISBMQueueHandler"/>
+
+
+
     <!--队列监听-->
     <rabbit:listener-container
             connection-factory="connectionFactory"
@@ -161,6 +188,19 @@
         <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>
     </rabbit:listener-container>
 
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="douBanBookTagQueueHandler" method="onMessage" queues="${queue_crawler_douban_book_tag}"/>
+    </rabbit:listener-container>
+
+
     <rabbit:listener-container
             connection-factory="connectionFactory"
             auto-startup="true"
@@ -170,6 +210,39 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerDoubanBookQueueHandler" method="onMessage" queues="${queue_crawler_douban_book}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="jdBookISBMQueueHandler" method="onMessage" queues="${crawler_book_isbn_jd}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="amazonBookISBMQueueHandler" method="onMessage" queues="${crawler_book_isbn_amazon}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="dangBookISBMQueueHandler" method="onMessage" queues="${crawler_book_isbn_dangdang}"/>
     </rabbit:listener-container>
 
 </beans>  

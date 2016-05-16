@@ -7,6 +7,8 @@ import com.dreamy.utils.StringUtils;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
@@ -26,34 +28,42 @@ public class DouBanBookHandler {
     @Autowired
     CommonService commonService;
 
+
+    @Autowired
+    private ListOperations<String, String> listOperations;
+
     @Value("${queue_crawler_douban_book}")
     private String queueName;
 
-    public void crawler() throws Exception {
-
-
+    public void crawler(String title){
         int pageSize = 20;
         String value = "";
-        for (int i = 4; i < 50; i++) {
+        boolean check = false;
+        for (int i = 0; i < 50; i++) {
             int start = pageSize * i;
-            value = test(start, value);
+            while (true) {
+                if (StringUtils.isEmpty(value)) {
+                    value = listOperations.leftPop("proxy_ips_list");
+                }
+                check = crawlering(start, value,title);
+                if (check) {
+                    break;
+                }
+                value = "";
+
+            }
 
 
         }
 
     }
 
-    private String test(int start, String value) throws Exception {
-        String cc = "";
-        if (StringUtils.isEmpty(value)) {
-            cc = "ips" + NumberUtils.randomInt(1, 90);
-            value = (String) commonService.getCacheService().get(cc);
-        }
+    private boolean crawlering(int start, String value,String title) {
         if (StringUtils.isNotEmpty(value)) {
             String arr[] = value.split(":");
             String hostname = arr[0];
             int port = Integer.valueOf(arr[1]);
-            String url = "https://book.douban.com/tag/文学?type=T&start=" + start;
+            String url = "https://book.douban.com/tag/"+title+"?type=T&start=" + start;
             OOSpider ooSpider = OOSpider.create(Site.me().setHttpProxy(new HttpHost(hostname, port)), DouBan.class);
             DouBan douBan = ooSpider.<DouBan>get(url);
             ooSpider.close();
@@ -66,18 +76,15 @@ public class DouBanBookHandler {
                     map.put("url", douBan.getUrls().get(j));
                     queueService.push(queueName, map);
                 }
+                return true;
+            } else {
+                return false;
+            }
 
-            }
-            else {
-                commonService.getCacheService().remove(cc);
-                test(start, "");
-            }
-        }
-        else{
-            test(start, "");
+        } else {
+            return false;
         }
 
-
-        return value;
     }
+
 }

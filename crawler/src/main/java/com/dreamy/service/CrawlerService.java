@@ -8,7 +8,10 @@ import java.util.List;
 public interface CrawlerService {
 
 
-    public void push(String isbn);
+    public void pushAll(String isbn);
+
+
+
 
 
 }

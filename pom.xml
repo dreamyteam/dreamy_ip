@@ -22,6 +22,5 @@
         <module>dashboard</module>
         <module>crawler</module>
         <module>IPcool</module>
-        <module>long</module>
     </modules>
 </project>

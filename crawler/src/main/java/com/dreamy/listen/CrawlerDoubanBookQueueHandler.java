@@ -49,7 +49,7 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
             ipBook.setCode(bookInfo.getISBN());
             ipBookService.save(ipBook);
             if(StringUtils.isNotEmpty(bookInfo.getISBN())) {
-                crawlerService.push(bookInfo.getISBN());
+                crawlerService.pushAll(bookInfo.getISBN());
             }
             else{
                 System.out.println(bookInfo.getTitle());
