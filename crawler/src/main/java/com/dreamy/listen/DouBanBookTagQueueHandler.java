@@ -22,7 +22,7 @@ public class DouBanBookTagQueueHandler extends AbstractQueueHandler {
 
     private static final Logger log = LoggerFactory.getLogger(DouBanBookTagQueueHandler.class);
 
-
+    @Autowired
     DouBanBookHandler douBanBookHandler;
 
 
