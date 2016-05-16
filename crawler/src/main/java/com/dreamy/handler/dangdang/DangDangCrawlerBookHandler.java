@@ -48,6 +48,7 @@ public class DangDangCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
+                bean.setUrl(url);
                 getTitle(bean, document);
                 info(bean, document);
                 image(bean, document);

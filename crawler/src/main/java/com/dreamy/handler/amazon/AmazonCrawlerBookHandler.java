@@ -1,8 +1,6 @@
 package com.dreamy.handler.amazon;
 
 
-import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.handler.AbstractCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
@@ -38,7 +36,6 @@ public class AmazonCrawlerBookHandler {
             }
 
         }
-
         BookInfo bookInfo = crawler(crawlerUrl);
         return bookInfo;
     }
@@ -49,6 +46,7 @@ public class AmazonCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
+                bean.setUrl(url);
                 getName(bean, document);
                 getAuthor(bean, document);
                 getPressAndPublishTime(bean, document);

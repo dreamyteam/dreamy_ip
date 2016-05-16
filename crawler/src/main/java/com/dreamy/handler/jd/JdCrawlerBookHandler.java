@@ -46,6 +46,7 @@ public class JdCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
+                bean.setUrl(url);
                 author(bean, document);
                 imageAndTitle(bean, document);
 

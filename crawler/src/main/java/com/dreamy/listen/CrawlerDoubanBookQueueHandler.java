@@ -63,7 +63,7 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
             bookCrawlerInfo.url(url);
             bookCrawlerInfoService.save(bookCrawlerInfo);
             if(StringUtils.isNotEmpty(bookInfo.getISBN())) {
-                crawlerService.pushAll(bookInfo.getISBN(),url);
+                crawlerService.pushAll(bookInfo.getISBN(),url,ipBook.getId());
             }
             else{
                 System.out.println(bookInfo.getTitle());

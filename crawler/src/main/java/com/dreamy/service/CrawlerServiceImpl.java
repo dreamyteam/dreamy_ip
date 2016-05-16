@@ -32,10 +32,11 @@ public class CrawlerServiceImpl implements CrawlerService {
     private String commentQueueName;
 
     @Override
-    public void pushAll(String isbn,String url) {
-        Map<String,String> map=new HashMap<String, String>();
+    public void pushAll(String isbn,String url,Integer bookId) {
+        Map<String,Object> map=new HashMap<String, Object>();
         map.put("isbn",isbn);
         map.put("url",url);
+        map.put("bookId",bookId);
         queueService.push(queueNameJd,map);
         queueService.push(queueNameAmazon,map);
         queueService.push(queueNameDangDang,map);
