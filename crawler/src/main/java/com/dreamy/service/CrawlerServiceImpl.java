@@ -19,14 +19,28 @@ public class CrawlerServiceImpl implements CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerServiceImpl.class);
     @Autowired
     private QueueService queueService;
-//    @Value("${crawler_book_isbn_jd}")
-//    private String queueName;
+    @Value("${crawler_book_isbn_jd}")
+    private String queueNameJd;
+
+    @Value("${crawler_book_isbn_amazon}")
+    private String queueNameAmazon;
+
+    @Value("${crawler_book_isbn_dangdang}")
+    private String queueNameDangDang;
+
+    @Value("${queue_crawler_comment}")
+    private String commentQueueName;
 
     @Override
-    public void pushAll(String isbn) {
+    public void pushAll(String isbn,String url) {
         Map<String,String> map=new HashMap<String, String>();
         map.put("isbn",isbn);
-        queueService.pushDefault(map);
+        map.put("url",url);
+        queueService.push(queueNameJd,map);
+        queueService.push(queueNameAmazon,map);
+        queueService.push(queueNameDangDang,map);
+        queueService.push(commentQueueName,map);
+
     }
 
 

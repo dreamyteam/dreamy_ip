@@ -42,7 +42,7 @@ public class DangDangCrawlerBookHandler {
     }
 
     private BookInfo crawler(String url) {
-        String html = HttpUtils.getHtmlGet(url);
+        String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);

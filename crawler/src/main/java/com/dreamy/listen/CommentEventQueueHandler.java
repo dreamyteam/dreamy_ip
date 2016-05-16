@@ -29,16 +29,19 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
     @Override
     public void consume(JSONObject jsonObject) {
         //获取类型
-        Integer type = jsonObject.getInteger("type");
-        Integer ipId=jsonObject.getInteger("ipId");
-        Integer crawlerId=jsonObject.getInteger("crawlerId");
+//        Integer type = jsonObject.getInteger("type");
+//        Integer ipId=jsonObject.getInteger("ipId");
+//        Integer crawlerId=jsonObject.getInteger("crawlerId");
+//        String url=jsonObject.getString("url");
+
+        String isbn=jsonObject.getString("isbn");
         String url=jsonObject.getString("url");
 
         List<Comment> commentList= commentHandler.getByUrl(url);
         if(CollectionUtils.isNotEmpty(commentList))
         {
             Comments comment=new Comments();
-            comment.setIpId(ipId);
+            comment.setIsbn(isbn);
             comment.setComments(commentList);
             commentDao.save(comment);
         }

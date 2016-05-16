@@ -29,6 +29,7 @@ public class JdCrawlerBookHandler {
         Elements books = document.select("div.goods-list-v1>ul.gl-warp>li.gl-item>div.gl-i-wrap>div.p-img>a");
         if (books != null && books.size() > 0) {
             String crawlerUrl = books.get(0).attr("href");
+            crawlerUrl="http:"+crawlerUrl;
             BookInfo bookInfo = crawler(crawlerUrl);
             return bookInfo;
         }

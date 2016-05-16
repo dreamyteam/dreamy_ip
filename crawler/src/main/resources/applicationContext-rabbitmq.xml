@@ -27,17 +27,17 @@
 
 
     <!--默认配置模版-->
-    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange="fanoutExchange" message-converter="jsonMessageConverter"/>
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter"/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
-    <rabbit:fanout-exchange name="fanoutExchange">
-        <rabbit:bindings>
-            <rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>
-            <rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>
-            <rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>
-        </rabbit:bindings>
-    </rabbit:fanout-exchange>
+    <!--<rabbit:fanout-exchange name="fanoutExchange">-->
+        <!--<rabbit:bindings>-->
+            <!--<rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>-->
+            <!--<rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>-->
+            <!--<rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>-->
+        <!--</rabbit:bindings>-->
+    <!--</rabbit:fanout-exchange>-->
 
     <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
@@ -51,7 +51,9 @@
             <rabbit:binding queue="${queue_crawler_douban_book}"/>
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_douban_book_tag}"/>
-            <!--<rabbit:binding queue="${crawler_book_isbn}"/>-->
+            <rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>
+            <rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>
+            <rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 

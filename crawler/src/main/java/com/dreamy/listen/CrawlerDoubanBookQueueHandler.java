@@ -1,11 +1,13 @@
 package com.dreamy.listen;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.handler.book.DouBanBookCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.CrawlerService;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.NumberUtils;
@@ -13,6 +15,8 @@ import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 /**
  * Created by wangyongxing on 16/4/18.
@@ -31,6 +35,9 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
     @Autowired
     private IpBookService ipBookService;
 
+    @Resource
+    private BookCrawlerInfoService bookCrawlerInfoService;
+
 
     @Override
     public void consume(JSONObject jsonObject) {
@@ -40,6 +47,7 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
         try {
             BookInfo bookInfo = douBanBookCrawlerHandler.crawler(url);
             bookInfo.setSource(CrawlerSourceEnums.douban.getType());
+            bookInfo.setId(bookInfo.getISBN()+"_"+CrawlerSourceEnums.douban.getType());
             bookInfoService.updateInser(bookInfo);
             IpBook ipBook=new IpBook();
             ipBook.setType(1);
@@ -48,8 +56,14 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
             ipBook.name(title);
             ipBook.setCode(bookInfo.getISBN());
             ipBookService.save(ipBook);
+            BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();
+            bookCrawlerInfo.status(1);
+            bookCrawlerInfo.bookId(ipBook.getId());
+            bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+            bookCrawlerInfo.url(url);
+            bookCrawlerInfoService.save(bookCrawlerInfo);
             if(StringUtils.isNotEmpty(bookInfo.getISBN())) {
-                crawlerService.pushAll(bookInfo.getISBN());
+                crawlerService.pushAll(bookInfo.getISBN(),url);
             }
             else{
                 System.out.println(bookInfo.getTitle());

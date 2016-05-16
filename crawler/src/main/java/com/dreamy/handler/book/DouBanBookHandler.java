@@ -44,6 +44,9 @@ public class DouBanBookHandler {
             while (true) {
                 if (StringUtils.isEmpty(value)) {
                     value = listOperations.leftPop("proxy_ips_list");
+                    if (StringUtils.isEmpty(value)){
+                        break;
+                    }
                 }
                 check = crawlering(start, value,title);
                 if (check) {

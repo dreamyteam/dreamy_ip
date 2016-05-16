@@ -1,5 +1,6 @@
 package com.dreamy.mogodb.beans;
 
+import com.sun.tools.corba.se.idl.StringGen;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,8 @@ import java.util.List;
 @TypeAlias("comment")
 public class Comments {
     @Id
+    private String isbn;
+
     private Integer ipId;
     private List<Comment> comments;
 
@@ -31,5 +34,13 @@ public class Comments {
     public void setIpId(Integer ipId) {
         this.ipId = ipId;
 
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 }
