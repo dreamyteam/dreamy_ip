@@ -1,6 +1,7 @@
-package com.dreamy.handler;
+package com.dreamy.handler.book;
 
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.handler.AbstractCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
@@ -13,22 +14,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by wangyongxing on 16/4/6.
  */
 @Component
-public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
+public class DouBanBookCrawlerHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(DouBanCrawlerHandler.class);
-    @Override
-    public Integer getId() {
-        return CrawlerSourceEnums.douban.getType();
-    }
+    private static final Logger log = LoggerFactory.getLogger(DouBanBookCrawlerHandler.class);
 
-    @Override
-    public BookInfo getByUrl(String url) {
 
-        String html = HttpUtils.getHtmlGetByProxy(url,"58.214.5.229",80,null);
+    public BookInfo crawler(String url) {
+
+        String html = HttpUtils.getHtmlGetByProxy(url,null,0,null);
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -40,6 +41,7 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
                 getAuthorInfo(bean, document);
                 getTags(bean, document);
                 getScore(bean, document);
+                getISBN(bean, document);
                 return bean;
 
             }
@@ -48,6 +50,31 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
 
         return bean;
 
+    }
+
+    /**
+     * 解析ISBN
+     *
+     * @param bookInfo
+     * @param document
+     */
+    private void getISBN(BookInfo bookInfo, Document document) {
+        try {
+            Element element = document.getElementById("info");
+            if (element != null) {
+                String str = element.text().replace(" ", "");
+                Pattern p = Pattern.compile("ISBN:([0-9]*)");
+                Matcher m = p.matcher(str);
+                String result = "";
+                while (m.find()) {
+                    result = m.group(1);
+                }
+                bookInfo.setISBN(result);
+            }
+        } catch (Exception e) {
+            log.error("解析 ISBN 异常", e);
+
+        }
     }
 
     /**
@@ -102,12 +129,12 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
             if (elements != null && elements.size() > 0) {
                 Element element = elements.get(0);
                 bookInfo.setInfo(element.text());
-                if(elements.size()>1) {
+                if (elements.size() > 1) {
                     element = elements.get(1);
                     bookInfo.setAuthorInfo(element.text());
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("解析 作者简介 内容简介 异常", e);
 
 
@@ -165,12 +192,6 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
             bookInfo.setScore(element.text());
         }
 
-    }
-
-
-    @Override
-    public String analyeUrl(String url) {
-        return null;
     }
 
 

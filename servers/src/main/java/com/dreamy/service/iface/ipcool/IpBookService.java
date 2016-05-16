@@ -56,4 +56,6 @@ public interface IpBookService {
      * @param bookCrawlerInfo
      */
     void doCrawler(BookCrawlerInfo bookCrawlerInfo);
+
+    void save(IpBook ipBook);
 }

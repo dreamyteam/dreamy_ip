@@ -19,6 +19,14 @@
             channel-cache-size="${channel_cache_size}"/>
 
     <rabbit:admin connection-factory="connectionFactory"/>
+    <!--队列服务-->
+    <bean id="queueService" class="com.dreamy.service.mq.QueueServiceImpl">
+        <property name="template" ref="amqpTemplate"/>
+        <property name="rabbitTemplate" ref="defaultTemplate"/>
+    </bean>
+
+    <!--默认配置模版-->
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
 
@@ -29,11 +37,11 @@
             <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
             <rabbit:binding queue="${queue_crawler_comment}"/>
             <rabbit:binding queue="${queue_crawler_keyword}"/>
-
             <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
             <rabbit:binding queue="${queue_crawler_so_index}"/>
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
-
+            <rabbit:binding queue="${queue_crawler_douban_book}"/>
+            <rabbit:binding queue="${queue_crawler_news_sougou}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -52,6 +60,9 @@
     <rabbit:queue name="${queue_crawler_so_index}"/>
     <rabbit:queue name="${queue_crawler_news_sougou}"/>
 
+    <rabbit:queue name="${queue_crawler_douban_book}"/>
+
+    <rabbit:queue name="${crawler_book_isbn}"/>
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
@@ -70,7 +81,7 @@
 
     <bean id="newsMediaQueueHandler" class="com.dreamy.listen.NewsMediaQueueHandler"/>
 
-
+    <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.listen.CrawlerDoubanBookQueueHandler"/>
     <!--队列监听-->
     <rabbit:listener-container
             connection-factory="connectionFactory"
@@ -148,6 +159,17 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerDoubanBookQueueHandler" method="onMessage" queues="${queue_crawler_douban_book}"/>
     </rabbit:listener-container>
 
 </beans>  
