@@ -25,7 +25,7 @@ public class BookIndexDataServiceImpl implements BookIndexDataService {
 
     @Override
     public BookIndexData getById(Integer id) {
-         return bookIndexDataDao.getById(id);
+         return bookIndexDataDao.queryById(id);
     }
 
     @Override

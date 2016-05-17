@@ -31,8 +31,5 @@ public class BookIndexDataDao extends MongoGenDao<BookIndexData> {
     }
 
 
-    public BookIndexData getById(Integer id){
-        return  null;
-    }
 
 }

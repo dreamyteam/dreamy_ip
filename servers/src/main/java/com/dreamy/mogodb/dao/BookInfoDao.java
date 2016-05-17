@@ -72,6 +72,14 @@ public class BookInfoDao extends MongoGenDao<BookInfo> {
         this.updateInser(Query.query(Criteria.where("_id").is(bookInfo.getId())), update);
     }
 
+    public BookInfo getByStringId(String id){
+        Query query = new Query();
+        Criteria criteria = Criteria.where("_id").is(id);
+        query.addCriteria(criteria);
+        return super.mongoTemplate.findOne(query, this.getEntityClass());
+
+    }
+
 
 }
 

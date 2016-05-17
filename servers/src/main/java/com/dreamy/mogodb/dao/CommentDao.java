@@ -13,9 +13,5 @@ public class CommentDao extends MongoGenDao<Comments> {
         return Comments.class;
     }
 
-    public Comments getById(Integer id)
-    {
-        return null;
-    }
 
 }

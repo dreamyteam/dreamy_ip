@@ -30,7 +30,7 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Override
     public BookInfo getById(String id) {
-        return bookInfoDao.queryById(id);
+        return bookInfoDao.getByStringId(id);
     }
 
     @Override

@@ -31,7 +31,7 @@ public abstract class MongoGenDao<T> {
      * @param id
      * @return
      */
-    public T queryById(String id) {
+    public T queryById(Integer id) {
         Query query = new Query();
         Criteria criteria = Criteria.where("_id").is(id);
         query.addCriteria(criteria);
