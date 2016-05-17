@@ -64,6 +64,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         Integer type = jsonObject.getInteger("type");
         String url = jsonObject.getString("url");
         Integer ipId = jsonObject.getInteger("ipId");
+        String isbn = jsonObject.getString("isbn");
         Integer crawlerId = jsonObject.getInteger("crawlerId");
 
         BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
@@ -74,6 +75,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
                 bookInfo.setCrawlerId(crawlerId);
                 bookInfo.setSource(type);
                 bookInfo.setIpId(ipId);
+                bookInfo.setId(isbn+"_"+type);
                 bookInfoService.updateInser(bookInfo);
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
             } else {

@@ -25,13 +25,12 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-        url = HttpUtils.toUtf8String(url);
-//        String html = HttpUtils.getHtmlGetByProxy(url,null, 0, userAgentService.getOneByRandom().getUserAgent());
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
+                bean.setUrl(url);
                 getName(bean, document);
                 getAuthor(bean, document);
                 getPressAndPublishTime(bean, document);
@@ -40,15 +39,13 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 getCoverImg(bean, document);
                 getIpDescription(bean, document);
                 getCategories(bean, document);
+                getAuthorDescrition(bean, document);
                 getEditorComments(bean, document);
                 getTags(bean, document);
-                getAuthorDescrition(bean, document);
-
                 return bean;
             }
 
         }
-
         return null;
     }
 
@@ -59,10 +56,15 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getName(BookInfo bean, Document document) {
-        Element element = document.getElementById("productTitle");
-        if (element != null) {
-            bean.setTitle(element.text());
+        try {
+            Element element = document.getElementById("productTitle");
+            if (element != null) {
+                bean.setTitle(element.text());
+            }
+        } catch (Exception e) {
+            log.error("解析 amazon 标题失败", e);
         }
+
     }
 
     /**
@@ -73,7 +75,6 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
      */
     private void getAuthor(BookInfo bean, Document document) {
         String author = "";
-
         Elements elements = document.getElementsByClass("author");
         try {
             for (Element element : elements) {
@@ -83,7 +84,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 }
             }
         } catch (Exception e) {
-            log.error("解析am作者失败", e);
+            log.error("解析 amazon 作者失败", e);
         } finally {
             bean.setAuthor(author);
         }
@@ -113,7 +114,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
 
             }
         } catch (Exception e) {
-            log.error("解析am出版社和出版时间 异常", e);
+            log.error("解析 amazon 出版社和出版时间 异常", e);
         } finally {
             bean.setPushTime(publishTime);
             bean.setPress(press);
@@ -140,7 +141,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 score = scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1);
             }
         } catch (NumberFormatException e) {
-            log.error("解析am评论总数和评分异常", e);
+            log.error("解析amazon评论总数和评分异常", e);
         } finally {
             bean.setCommentNum(commentNumString);
             bean.setScore(score);
@@ -162,7 +163,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             saleSort = saleRank[1].substring(0, saleRank[1].length() - 3);
 
         } catch (Exception e) {
-            log.error("解析 图书销售排名 异常", e);
+            log.error("解析 amazon 图书销售排名 异常", e);
         } finally {
             bean.setSaleSort(PatternUtils.getNum(saleSort));
         }
@@ -182,7 +183,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             String dynamicImages = element.attr("data-a-dynamic-image");
             imageUrl = (dynamicImages.split("\""))[1];
         } catch (Exception e) {
-            log.error("解析 封面 异常", e);
+            log.error("解析 amazon 封面 异常", e);
         } finally {
             bean.setImage(imageUrl);
         }
@@ -203,7 +204,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 description = noscripts.get(1).text();
             }
         } catch (Exception e) {
-            log.error("解析am图书描述", e);
+            log.error("解析 amazon 图书描述", e);
         } finally {
             bean.setInfo(description);
         }
@@ -222,7 +223,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             Element element = document.getElementById("SalesRank");
             if (element != null) {
                 Elements elements = element.getElementsByClass("zg_hrsr_item");
-                Integer size = elements.size();
+                int size = elements.size();
                 if (size > 0) {
                     for (int i = 0; i < size; i++) {
                         Element currentElement = elements.get(i);
@@ -237,13 +238,12 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                             categories += parentCategory + ":" + rank + ",";
                         }
                     }
-
                     categories = categories.substring(0, categories.length() - 1);
                 }
             }
 
         } catch (Exception e) {
-            log.error("解析 获取分类 异常", e);
+            log.error("解析 amazon 获取分类 异常", e);
         } finally {
             bean.setCategories(categories);
         }
@@ -264,7 +264,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 comment = element.child(1).text();
             }
         } catch (Exception e) {
-            log.error("解析am编辑推荐异常", e);
+            log.error("解析 amazon 编辑推荐异常", e);
         } finally {
             bean.setEditorComment(comment);
         }
@@ -294,16 +294,14 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
         try {
             Element element = document.getElementById("detail_bullets_id");
             if (element != null) {
-                Elements elements = element.select("div>ul>li");
                 String asin = "";
-
+                Elements elements = element.select("div>ul>li");
                 for (Element e : elements) {
                     if (e.text().contains("ASIN: ")) {
                         asin = e.text().substring(6);
                         String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin);
                         if (StringUtils.isNotEmpty(html)) {
                             Document userInfoDocument = Jsoup.parse(html);
-
                             Elements es = userInfoDocument.getElementsByClass("s-content");
                             for (Element one : es) {
                                 String text = one.text();
@@ -320,7 +318,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             }
 
         } catch (Exception e) {
-            log.error("解析 作者描述 异常", e);
+            log.error("解析 amazon 作者描述 异常", e);
         } finally {
             bean.setAuthorInfo(authorDescription);
         }

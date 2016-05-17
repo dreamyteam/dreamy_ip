@@ -48,19 +48,19 @@ public class BookInfoDao extends MongoGenDao<BookInfo> {
 
     public void updateMulti(BookInfo bookInfo) throws Exception {
         Update update = new Update();
-        if (null == bookInfo.getCrawlerId()) {
-            //如果主键为空,则不进行修改
-            throw new Exception("Update data Id is " +
-                    "Null");
-        }
-        Map<String, Object> map = BeanUtils.toQueryMap(bookInfo);
+//        if (null == bookInfo.getCrawlerId()) {
+//            //如果主键为空,则不进行修改
+//            throw new Exception("Update data Id is " +
+//                    "Null");
+//        }
+        Map<String, Object> map = BeanUtils.toMongodbMap(bookInfo);
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if(!entry.getKey().equals("crawlerId")) {
+            if(!entry.getKey().equals("ISBN")) {
                 update.set(entry.getKey(), entry.getValue());
             }
         }
 
-        this.updateMulti(Query.query(Criteria.where("_id").is(bookInfo.getId())), update);
+        this.updateMulti(Query.query(Criteria.where("ISBN").is(bookInfo.getISBN())), update);
     }
 
     public void updateInser(BookInfo bookInfo) {

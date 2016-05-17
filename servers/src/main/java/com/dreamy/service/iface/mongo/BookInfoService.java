@@ -2,6 +2,7 @@ package com.dreamy.service.iface.mongo;
 
 import com.dreamy.beans.Page;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.utils.PatternUtils;
 
 import java.util.List;
 
@@ -25,14 +26,14 @@ public interface BookInfoService {
      * @param id
      * @return
      */
-    BookInfo getById(Integer id);
+    BookInfo getById(String id);
 
 
     /**
      *
      * @param id
      */
-    void delById(Integer id);
+    void delById(String id);
 
 
     /**
@@ -55,6 +56,10 @@ public interface BookInfoService {
      * @param bookInfo
      */
     public void updateInser(BookInfo bookInfo);
- 
+
+    public List<BookInfo> getListByISBN(String isbn);
+
+    public  void udpate(BookInfo bookInfo) throws Exception;
+
 
 }

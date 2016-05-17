@@ -9,13 +9,15 @@ import java.util.List;
 /**
  * Created by wangyongxing on 16/4/18.
  */
-@Document(collection="comment")
+@Document(collection = "comment")
 @TypeAlias("comment")
 public class Comments {
+
     @Id
+    private Integer ipId;
+
     private String isbn;
 
-    private Integer ipId;
     private List<Comment> comments;
 
     public Integer getIpId() {

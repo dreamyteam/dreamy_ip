@@ -31,7 +31,6 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-        url = url + "#comment";
         String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
@@ -61,11 +60,17 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void saleSort(BookInfo bean, Document document) {
-        Element element = document.getElementById("summary-order");
-        if (element != null) {
-            String sort = PatternUtils.getNum(element.text());
-            bean.setSaleSort(sort);
+        try {
+            Element element = document.getElementById("summary-order");
+            if (element != null) {
+                String sort = PatternUtils.getNum(element.text());
+                bean.setSaleSort(sort);
+            }
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 

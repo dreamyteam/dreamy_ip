@@ -36,12 +36,14 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
 
         String isbn=jsonObject.getString("isbn");
         String url=jsonObject.getString("url");
+        Integer bookId=jsonObject.getInteger("bookId");
 
         List<Comment> commentList= commentHandler.getByUrl(url);
         if(CollectionUtils.isNotEmpty(commentList))
         {
             Comments comment=new Comments();
             comment.setIsbn(isbn);
+            comment.setIpId(bookId);
             comment.setComments(commentList);
             commentDao.save(comment);
         }
