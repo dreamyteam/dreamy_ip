@@ -44,7 +44,7 @@ public class JdBookISBMQueueHandler extends AbstractQueueHandler {
             BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.bookId(bookId);
-            bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+            bookCrawlerInfo.setSource(CrawlerSourceEnums.jd.getType());
             bookCrawlerInfo.url(bookInfo.getUrl());
             bookCrawlerInfoService.save(bookCrawlerInfo);
         }

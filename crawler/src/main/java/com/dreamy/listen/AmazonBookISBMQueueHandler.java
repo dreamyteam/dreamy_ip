@@ -48,7 +48,7 @@ public class AmazonBookISBMQueueHandler extends AbstractQueueHandler {
             BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();
             bookCrawlerInfo.status(1);
             bookCrawlerInfo.bookId(bookId);
-            bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+            bookCrawlerInfo.setSource(CrawlerSourceEnums.amazon.getType());
             bookCrawlerInfo.url(bookInfo.getUrl());
             bookCrawlerInfoService.save(bookCrawlerInfo);
         }
