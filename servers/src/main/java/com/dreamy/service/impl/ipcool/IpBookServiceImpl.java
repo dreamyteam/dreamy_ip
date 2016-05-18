@@ -72,6 +72,7 @@ public class IpBookServiceImpl implements IpBookService {
         }
         conditions.createCriteria().addByMap(params);
         conditions.setOrderByClause("id desc");
+        conditions.setDistinct(true);
         if (page != null) {
             int row = ipBookDao.countByExample(conditions);
             page.setTotalNum(row);

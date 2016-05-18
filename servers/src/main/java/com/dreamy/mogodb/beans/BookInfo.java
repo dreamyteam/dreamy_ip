@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "bookInfo")
 @TypeAlias("bookInfo")
 public class BookInfo {
+    @Id
+    private String id;
 
     private Integer crawlerId;
     /**
@@ -69,8 +71,9 @@ public class BookInfo {
      */
     private Integer source;
 
-    @Id
     private String ISBN;
+
+    private String url;
 
     public Integer getCrawlerId() {
         return crawlerId;
@@ -215,5 +218,21 @@ public class BookInfo {
 
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

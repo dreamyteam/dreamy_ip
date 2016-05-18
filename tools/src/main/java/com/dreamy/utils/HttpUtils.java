@@ -132,8 +132,8 @@ public class HttpUtils {
         if (StringUtils.isNotEmpty(proxyHost)) {
             client.getHostConfiguration().setProxy(proxyHost, proxyPort);
         }
-        client.getHttpConnectionManager().getParams().setConnectionTimeout(60000);
-        client.getHttpConnectionManager().getParams().setSoTimeout(120000);
+        client.getHttpConnectionManager().getParams().setConnectionTimeout(30000);
+        client.getHttpConnectionManager().getParams().setSoTimeout(10000);
         StringBuilder sb = new StringBuilder();
         GetMethod method = new GetMethod(tempurl);
         method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
@@ -177,12 +177,12 @@ public class HttpUtils {
                 }
             } else {
                 sb.append(statusCode);
-                LOGGER.error("Response Code: " + statusCode);
+                LOGGER.error(" tempurl: "+tempurl+" Response Code: " + statusCode);
             }
         } catch (HttpException e) {
-            LOGGER.error("HttpException error: " + e);
+            LOGGER.error(" tempurl: "+tempurl+"  HttpException error: " + e);
         } catch (IOException e) {
-            LOGGER.error("IOException error: " + e);
+            LOGGER.error(" tempurl: "+tempurl+" IOException error: " + e);
         } finally {
             method.releaseConnection();
         }
@@ -585,7 +585,7 @@ public class HttpUtils {
         return outBuffer.toString();
     }
 
-    public static final String CHARSET = "UTF-8";
+    public static final String CHARSET = "utf-8";
 
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36 AlexaToolbar/alxg-3.1";
 

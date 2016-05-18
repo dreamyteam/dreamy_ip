@@ -1,6 +1,5 @@
-package com.dreamy.handler;
+package com.dreamy.handler.dangdang;
 
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
@@ -10,31 +9,47 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.model.OOSpider;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/6.
  */
 @Component
-public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
+public class DangDangCrawlerBookHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(DangDangCrawlerHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(DangDangCrawlerBookHandler.class);
 
 
-    @Override
-    public Integer getId() {
-        return CrawlerSourceEnums.dangdang.getType();
+    public BookInfo getByISBN(String isbn) {
+
+        String url = "http://search.dangdang.com/?act=input&key=" + isbn;
+        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), DangdangBean.class);
+        DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
+        ooSpider.close();
+        if (dangdangBean != null) {
+            List<String> list = dangdangBean.getUrls();
+            if (CollectionUtils.isNotEmpty(list)) {
+                String crawlerUrl = list.get(0);
+                BookInfo bookInfo = crawler(crawlerUrl);
+                return bookInfo;
+            }
+        }
+        return null;
     }
 
-    @Override
-    public BookInfo getByUrl(String url) {
+    private BookInfo crawler(String url) {
         String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
+                bean.setUrl(url);
+                getTitle(bean, document);
                 info(bean, document);
                 image(bean, document);
                 authorInfo(bean, document);
@@ -42,7 +57,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 getAuthor(bean, document);
                 getClickNum(bean, document);
                 getCategories(bean, document);
-                getTitle(bean, document);
                 saleSort(bean, document);
                 getScore(bean, document);
             }
@@ -50,7 +64,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
         }
         return bean;
-
     }
 
     /**
@@ -91,8 +104,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
      */
     private void authorInfo(BookInfo bean, Document document) {
         try {
-
-
             Element authorintro = document.getElementById("authorintro");
             if (authorintro != null) {
                 Elements elements = authorintro.getElementsByTag("textarea");
@@ -102,7 +113,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 }
             }
         } catch (Exception e) {
-            log.error("解析 作者信息 异常", e);
+            log.error("解析 dangdang 作者信息 异常", e);
         }
 
     }
@@ -122,7 +133,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 editorComment = content.text();
             }
         } catch (Exception e) {
-            log.error("解析 编辑推荐 异常", e);
+            log.error("解析  dangdang 编辑推荐 异常", e);
         } finally {
             bean.setEditorComment(editorComment);
         }
@@ -209,7 +220,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
             String product_id = element.attr("product_id");
             String url = " http://product.dangdang.com/pricestock/callback.php?type=getpublishbangv2&product_id=" + product_id;
             String result = HttpUtils.getHtmlGet(url, "gbk");
-            System.out.println(result);
             String str[] = result.split(";");
             if (str != null && str.length > 1) {
                 String s = str[str.length - 1];
@@ -244,19 +254,12 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                         }
                     }
                 }
-
-
             }
         } catch (Exception e) {
-            log.error("解析 评分 异常", e);
+            log.error("解析  dangdang 评分 异常", e);
         }
 
     }
 
-
-    @Override
-    public String analyeUrl(String url) {
-        return null;
-    }
 
 }

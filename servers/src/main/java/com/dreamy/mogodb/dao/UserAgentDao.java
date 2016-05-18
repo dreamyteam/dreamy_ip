@@ -15,4 +15,8 @@ public class UserAgentDao extends MongoGenDao<UserAgents>{
     protected Class<UserAgents> getEntityClass() {
         return UserAgents.class;
     }
+
+    public UserAgents getById(Integer id){
+        return null;
+    }
 }

@@ -1,8 +1,8 @@
-package com.dreamy.handler;
+package com.dreamy.handler.amazon;
 
 
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
@@ -13,18 +13,34 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.model.OOSpider;
+
+import java.util.List;
 
 @Component
-public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
-    private static final Logger log = LoggerFactory.getLogger(AmazonCrawlerHandler.class);
+public class AmazonCrawlerBookHandler {
+    private static final Logger log = LoggerFactory.getLogger(AmazonCrawlerBookHandler.class);
 
-    @Override
-    public Integer getId() {
-        return CrawlerSourceEnums.amazon.getType();
+    public BookInfo getByISBN(String isbn) {
+
+        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn;
+        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), AmazonBean.class);
+        AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
+        ooSpider.close();
+        String crawlerUrl = "";
+        if (amazonBean != null) {
+            List<String> list = amazonBean.getUrls();
+            if (CollectionUtils.isNotEmpty(list)) {
+                crawlerUrl = list.get(0);
+            }
+
+        }
+        BookInfo bookInfo = crawler(crawlerUrl);
+        return bookInfo;
     }
 
-    @Override
-    public BookInfo getByUrl(String url) {
+    private BookInfo crawler(String url) {
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
@@ -39,8 +55,8 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
                 getCoverImg(bean, document);
                 getIpDescription(bean, document);
                 getCategories(bean, document);
-                getAuthorDescrition(bean, document);
                 getEditorComments(bean, document);
+                getAuthorDescrition(bean, document);
                 getTags(bean, document);
                 return bean;
             }
@@ -61,7 +77,7 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
             if (element != null) {
                 bean.setTitle(element.text());
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             log.error("解析 amazon 标题失败", e);
         }
 
@@ -325,9 +341,6 @@ public class AmazonCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
-    @Override
-    public String analyeUrl(String url) {
-        return null;
-    }
+
 
 }

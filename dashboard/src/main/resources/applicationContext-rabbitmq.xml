@@ -38,6 +38,7 @@
     <rabbit:queue name="${queue_crawler_so_index}"/>
     <rabbit:queue name="${queue_crawler_news_sougou}"/>
     <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
+    <rabbit:queue name="${queue_crawler_douban_book_tag}"/>
     <!--交换器声明-->
     <rabbit:direct-exchange name="data.listen">
         <rabbit:bindings>
@@ -48,6 +49,8 @@
             <rabbit:binding queue="${queue_crawler_so_index}"/>
             <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
+            <rabbit:binding queue="${queue_crawler_douban_book_tag}"/>
+
         </rabbit:bindings>
     </rabbit:direct-exchange>
 

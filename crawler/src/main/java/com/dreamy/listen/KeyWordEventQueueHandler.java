@@ -34,7 +34,7 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
             lastRuntime = new Date();
         }
 
-        int timeRange=NumberUtils.randomInt(8000,20000);
+        int timeRange=NumberUtils.randomInt(1000,5000);
         while (true) {
             Date currentTime = new Date();
             if (TimeUtils.diff(lastRuntime, currentTime) > (long) timeRange) {
@@ -48,7 +48,6 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
                 } catch (Exception e) {
                     log.warn("keyWordHandler  failed: bookId:" + ipId + " word:" + word);
                 }
-
                 break;
             }
         }

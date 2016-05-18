@@ -1,6 +1,5 @@
-package com.dreamy.handler;
+package com.dreamy.handler.jd;
 
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.selenium.SeleniumDownloader;
 import com.dreamy.utils.HttpUtils;
@@ -10,7 +9,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
@@ -21,27 +19,40 @@ import us.codecraft.webmagic.Task;
  * Created by wangyongxing on 16/4/6.
  */
 @Component
-public class JdCrawlerHandler extends AbstractCrawlerHandler {
+public class JdCrawlerBookHandler {
 
 
-    @Override
-    public Integer getId() {
-        return CrawlerSourceEnums.jd.getType();
+    public BookInfo getByISBN(String isbn) {
+        String url = "http://search.jd.com/Search?keyword=" + isbn + "&enc=utf-8&pvid=x00em9oi.5otj5i";
+        String html = HttpUtils.getHtmlGet(url);
+        Document document = Jsoup.parse(html);
+        Elements books = document.select("div.goods-list-v1>ul.gl-warp>li.gl-item>div.gl-i-wrap>div.p-img>a");
+        if (books != null && books.size() > 0) {
+            String crawlerUrl = books.get(0).attr("href");
+            crawlerUrl="http:"+crawlerUrl;
+            BookInfo bookInfo = crawler(crawlerUrl);
+            return bookInfo;
+        }
+
+        return null;
     }
 
-    @Override
-    public BookInfo getByUrl(String url) {
+
+    public BookInfo crawler(String url) {
+        url = url + "#comment";
         String html = seleniumDownloader(url);//HttpUtils.getHtmlGetBycharSet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
-                imageAndTitle(bean, document);
+                bean.setUrl(url);
                 author(bean, document);
-                pushTime(bean, document);
+                imageAndTitle(bean, document);
+
                 infoAndAuthorInfo(bean, document);
                 saleSort(bean, document);
+                pushTime(bean, document);
                 score(bean, document);
                 commentNum(bean, document);
 
@@ -60,17 +71,11 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void saleSort(BookInfo bean, Document document) {
-        try {
-            Element element = document.getElementById("summary-order");
-            if (element != null) {
-                String sort = PatternUtils.getNum(element.text());
-                bean.setSaleSort(sort);
-            }
+        Element element = document.getElementById("summary-order");
+        if (element != null) {
+            String sort = PatternUtils.getNum(element.text());
+            bean.setSaleSort(sort);
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
 
     }
 
@@ -87,10 +92,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
             if (StringUtils.isNotEmpty(result)) {
                 bean.setCommentNum(Integer.valueOf(result));
             }
-
-
         }
-
 
     }
 
@@ -146,26 +148,23 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void pushTime(BookInfo bookInfo, Document document) {
-
         Elements types = document.select("ul.p-parameter-list>li");
         if (types != null && types.size() > 0) {
-            for(Element element:types){
-                String coment=element.text().replace("：",":");
-                String arr[]=coment.split(":");
-                if(arr.length>1)
-                    if(arr[0].equals("出版社")){
+            for (Element element : types) {
+                String coment = element.text().replace("：", ":");
+                String arr[] = coment.split(":");
+                if (arr.length > 1)
+                    if (arr[0].equals("出版社")) {
                         bookInfo.setPress(arr[1]);
-                    }
-                    else if(arr[0].equals("ISBN")){
+                    } else if (arr[0].equals("ISBN")) {
                         bookInfo.setISBN(arr[1]);
-                    }
-                    else if(arr[0].equals("出版时间")){
+                    } else if (arr[0].equals("出版时间")) {
                         bookInfo.setPushTime(arr[1]);
                     }
-                }
-
-
             }
+
+
+        }
 
 //            bookInfo.setPress(types.get(0).attr("title"));
 //            if (types.size() >7) {
@@ -183,16 +182,14 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
     private void infoAndAuthorInfo(BookInfo bookInfo, Document document) {
         Elements comments = document.getElementsByClass("book-detail-item");
         if (comments != null && comments.size() > 0) {
-            for(Element element:comments){
-               String name=element.attr("text");
-                if(name.equals("编辑推荐")){
-                    bookInfo.setEditorComment(element.text().replace(name,""));
-                }
-                else if(name.equals("内容简介")){
-                    bookInfo.setInfo(element.text().replace(name,""));
-                }
-                else if(name.equals("作者简介")){
-                    bookInfo.setAuthorInfo(element.text().replace(name,""));
+            for (Element element : comments) {
+                String name = element.attr("text");
+                if (name.equals("编辑推荐")) {
+                    bookInfo.setEditorComment(element.text().replace(name, ""));
+                } else if (name.equals("内容简介")) {
+                    bookInfo.setInfo(element.text().replace(name, ""));
+                } else if (name.equals("作者简介")) {
+                    bookInfo.setAuthorInfo(element.text().replace(name, ""));
                 }
             }
         }
@@ -206,7 +203,7 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
             Page page = seleniumDownloader.download(new Request(url), new Task() {
                 @Override
                 public String getUUID() {
-                    return "http://item.jd.com/";
+                    return "http://www.jd.com/";
                 }
 
                 @Override
@@ -224,14 +221,6 @@ public class JdCrawlerHandler extends AbstractCrawlerHandler {
         }
 
 
-
-
-    }
-
-
-    @Override
-    public String analyeUrl(String url) {
-        return null;
     }
 
 

@@ -30,4 +30,6 @@ public class BookIndexDataDao extends MongoGenDao<BookIndexData> {
         this.updateInser(Query.query(Criteria.where("_id").is(data.getId())), update);
     }
 
+
+
 }
