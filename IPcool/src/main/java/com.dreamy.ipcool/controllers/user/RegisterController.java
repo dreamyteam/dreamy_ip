@@ -8,6 +8,7 @@ import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ShortMessageService;
 import com.dreamy.service.iface.VerificationCodeService;
+import com.dreamy.service.iface.user.RegisterService;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.service.impl.user.RegisterServiceImpl;
 import com.dreamy.utils.JsonUtils;
@@ -33,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController extends IpcoolController {
 
     @Autowired
-    private RegisterServiceImpl registerService;
+    private RegisterService registerService;
 
     @Autowired
     private UserService userService;
