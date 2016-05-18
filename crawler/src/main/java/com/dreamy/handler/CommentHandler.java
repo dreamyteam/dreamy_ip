@@ -3,15 +3,17 @@ package com.dreamy.handler;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.StringUtils;
+import org.apache.commons.httpclient.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,8 @@ import java.util.List;
 @Component
 public class CommentHandler {
     private static final Logger log = LoggerFactory.getLogger(CommentHandler.class);
-
+    @Autowired
+    private ListOperations<String, String> listOperations;
 
     public List<Comment> getByUrlBak(String url) {
         List<Comment> comments = new ArrayList<Comment>();
@@ -74,26 +77,76 @@ public class CommentHandler {
 
 
     public List<Comment> getByUrl(String url) {
+        boolean check = false;
         List<Comment> comments = new ArrayList<Comment>();
+        while (true) {
+            String value = listOperations.leftPop("proxy_ips_list");
+            if (StringUtils.isEmpty(value)) {
+                break;
+            }
+            check = crawleringByProxy(comments, url, value);
+            if (check) {
+                listOperations.leftPush("proxy_ips_list", value);
+                break;
+            }
+        }
+
+    return comments;
+}
+
+    private boolean crawlering(List<Comment> comments, String url, String value) {
+
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
+            System.out.println(html);
             if (document != null) {
                 Elements elements = document.getElementsByClass("tlst");
                 for (Element element : elements) {
                     Comment bean = new Comment();
-                    getAuthorAndImage(bean, element);
                     getTitleAndUrl(bean, element);
+                    getAuthorAndImage(bean, element);
                     getContent(bean, element);
-                    getCreateTime(bean,element);
+                    getCreateTime(bean, element);
                     comments.add(bean);
 
                 }
 
             }
         }
-        return comments;
+        return false;
+
     }
+
+
+    private boolean crawleringByProxy(List<Comment> comments, String url, String value) {
+        String arr[] = value.split(":");
+        String hostname = arr[0];
+        int port = Integer.valueOf(arr[1]);
+        String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
+        if (StringUtils.isNotEmpty(html)&&!html.equals("400")) {
+            if (html.equals(HttpStatus.SC_FORBIDDEN)) {
+                return false;
+            } else {
+                Document document = Jsoup.parse(html);
+                if (document != null) {
+                    Elements elements = document.getElementsByClass("tlst");
+                    for (Element element : elements) {
+                        Comment bean = new Comment();
+                        getAuthorAndImage(bean, element);
+                        getContent(bean, element);
+                        getCreateTime(bean, element);
+                        getTitleAndUrl(bean, element);
+                        comments.add(bean);
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+
+    }
+
 
     /**
      * 获取评论人和图片
@@ -153,12 +206,13 @@ public class CommentHandler {
 
     /**
      * 获取评论发布时间
+     *
      * @param comment
      * @param element
      */
     private void getCreateTime(Comment comment, Element element) {
         try {
-            Elements elements =element.select("div.clst>div.review-short>div>span>span");
+            Elements elements = element.select("div.clst>div.review-short>div>span>span");
             if (elements != null && elements.size() > 0) {
                 Element first = elements.first();
                 comment.setCreateTime(first.text());
@@ -169,8 +223,6 @@ public class CommentHandler {
         }
 
     }
-
-
 
 
 }
