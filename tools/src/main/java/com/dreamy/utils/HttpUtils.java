@@ -177,12 +177,12 @@ public class HttpUtils {
                 }
             } else {
                 sb.append(statusCode);
-                LOGGER.error("Response Code: " + statusCode);
+                LOGGER.error(" tempurl Response Code: " + statusCode);
             }
         } catch (HttpException e) {
-            LOGGER.error("HttpException error: " + e);
+            LOGGER.error(" tempurl HttpException error: " + e);
         } catch (IOException e) {
-            LOGGER.error("IOException error: " + e);
+            LOGGER.error(" tempurl IOException error: " + e);
         } finally {
             method.releaseConnection();
         }

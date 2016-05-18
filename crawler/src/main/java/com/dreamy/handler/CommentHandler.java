@@ -91,15 +91,14 @@ public class CommentHandler {
             }
         }
 
-    return comments;
-}
+        return comments;
+    }
 
-    private boolean crawlering(List<Comment> comments, String url, String value) {
+    private void crawlering(List<Comment> comments, String url) {
 
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
-            System.out.println(html);
             if (document != null) {
                 Elements elements = document.getElementsByClass("tlst");
                 for (Element element : elements) {
@@ -109,12 +108,10 @@ public class CommentHandler {
                     getContent(bean, element);
                     getCreateTime(bean, element);
                     comments.add(bean);
-
                 }
-
             }
         }
-        return false;
+
 
     }
 
@@ -124,7 +121,7 @@ public class CommentHandler {
         String hostname = arr[0];
         int port = Integer.valueOf(arr[1]);
         String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
-        if (StringUtils.isNotEmpty(html)&&!html.equals("400")) {
+        if (StringUtils.isNotEmpty(html) && !html.equals("400")) {
             if (html.equals(HttpStatus.SC_FORBIDDEN)) {
                 return false;
             } else {
