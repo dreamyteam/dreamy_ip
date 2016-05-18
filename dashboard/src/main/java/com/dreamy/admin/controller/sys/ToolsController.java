@@ -91,10 +91,10 @@ public class ToolsController extends DashboardController {
             if (StringUtils.isNotEmpty(option.getCodeValue())) {
                 String arr[] = option.getCodeValue().split(",");
                 int length = arr.length;
-                for(int i=0;i<length;i++){
-                    HashMap<String,Object> map=new HashMap<>();
-                    map.put("title",arr[i]);
-                    queueService.push("douban_book_tag_develop",map);
+                for (int i = 0; i < length; i++) {
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("title", arr[i]);
+                    queueService.push("douban_book_tag_develop", map);
                 }
             }
         }
@@ -102,91 +102,109 @@ public class ToolsController extends DashboardController {
     }
 
 
-            /**
-             *  全部爬取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/all")
-            public String crawlingAll () {
-                ipBookCrawlerTask.crawler();
-                return redirect("/system/call.html");
-            }
+    /**
+     * 全部爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/all")
+    public String crawlingAll() {
+        ipBookCrawlerTask.crawler();
+        return redirect("/system/call.html");
+    }
 
-            /**
-             *  关键词搜索爬取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/keyword")
-            public String crawlingKeyWord () {
-                keyWorkTask.crawler();
-                return redirect("/system/call.html");
-            }
+    /**
+     * 关键词搜索爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/keyword")
+    public String crawlingKeyWord() {
+        keyWorkTask.crawler();
+        return redirect("/system/call.html");
+    }
 
-            /**
-             *
-             * weixin关键词搜索爬取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/keyword_weixin")
-            public String crawlingKeyWordWeiXin () {
-                keyWorkTask.crawlerWeiXin();
-                return redirect("/system/call.html");
-            }
+    /**
+     * weibo关键词搜索爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/keyword_weibo")
+    public String crawlingKeyWordWeiBo() {
+        keyWorkTask.crawlerWeiBo();
+        return redirect("/system/call.html");
+    }
 
-            /**
-             *  360指数爬取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/soindex")
-            public String soindex () {
-                soIndexTask.crawler();
-                return redirect("/system/call.html");
-            }
+    /**
+     * weixin关键词搜索爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/keyword_weixin")
+    public String crawlingKeyWordWeiXin() {
+        keyWorkTask.crawlerWeiXin();
+        return redirect("/system/call.html");
+    }
 
-            /**
-             * news.sougou 五大新闻媒体数量爬取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/newsMedia")
-            public String newsSogou () {
-                newsMediaTask.crawler();
-                return redirect("/system/call.html");
-            }
+    /**
+     * 360指数爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/soindex")
+    public String soindex() {
+        soIndexTask.crawler();
+        return redirect("/system/call.html");
+    }
 
-            /**
-             * news.sougou 积分 排名抽取
-             * @return
-             */
-            @RequestMapping(value = "/crawler/score")
-            public String score () {
-                bookScoreTask.crawler();
-                return redirect("/system/call.html");
-            }
+    /**
+     * news.sougou 五大新闻媒体数量爬取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/newsMedia")
+    public String newsSogou() {
+        newsMediaTask.crawler();
+        return redirect("/system/call.html");
+    }
 
-
-            /**
-             * 计算指数
-             * @return
-             */
-            @RequestMapping(value = "/index/hotIndex")
-            public String hotIndex () {
-                hotIndexesCreateTask.run();
-                developIndexesCreateTask.run();
-                propagationIndexesCreareTask.run();
-                reputationIndexesCreateTask.run();
-                compositeIndexexCreateTask.run();
-                bookIndexHistoryTask.copy();
-                return redirect("/system/call.html");
-            }
+    /**
+     * news.sougou 积分 排名抽取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/crawler/score")
+    public String score() {
+        bookScoreTask.crawler();
+        return redirect("/system/call.html");
+    }
 
 
-            /**
-             * 计算排名
-             * @return
-             */
-            @RequestMapping(value = "/index/rank")
-            public String rank () {
-                bookRankCreateTask.run();
-                return redirect("/system/call.html");
-            }
-        }
+    /**
+     * 计算指数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/index/hotIndex")
+    public String hotIndex() {
+        hotIndexesCreateTask.run();
+        developIndexesCreateTask.run();
+        propagationIndexesCreareTask.run();
+        reputationIndexesCreateTask.run();
+        compositeIndexexCreateTask.run();
+        bookIndexHistoryTask.copy();
+        return redirect("/system/call.html");
+    }
+
+
+    /**
+     * 计算排名
+     *
+     * @return
+     */
+    @RequestMapping(value = "/index/rank")
+    public String rank() {
+        bookRankCreateTask.run();
+        return redirect("/system/call.html");
+    }
+}

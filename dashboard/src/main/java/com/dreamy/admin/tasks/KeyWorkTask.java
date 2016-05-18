@@ -39,6 +39,9 @@ public class KeyWorkTask {
     @Value("${queue_crawler_keyword_weixin}")
     private String weiXinQueueName;
 
+    @Value("${queue_crawler_keyword_weibo}")
+    private String weiBoQueueName;
+
 
     public void crawler() {
 
@@ -103,6 +106,36 @@ public class KeyWorkTask {
             log.error("KeyWorkTask is error", e);
         }
     }
+    public void crawlerWeiBo() {
+        try {
+            BookView entity = new BookView().type(1);
+            int currentPage = 1;
+            while (true) {
+                Page page = new Page();
+                page.setPageSize(50);
+                page.setCurrentPage(currentPage);
+                List<BookView> list = bookViewService.getList(entity, page);
+                for (BookView bookView : list) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("source", bookView.getType());
+                    map.put("bookId", bookView.getBookId());
+                    if (StringUtils.isNotEmpty(bookView.getAuthor())) {
+                        map.put("word", bookView.getName() + " " + bookView.getAuthor());
+                    } else {
+                        map.put("word", bookView.getName());
+                    }
+                    queueService.push(weiBoQueueName, map);
+                }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+            }
+        } catch (Exception e) {
+            log.error("KeyWorkTask is error", e);
+        }
+    }
+
 
 //    public void crawlerWeiXin(final List<BookView> list) {
 //        AsynchronousService.submit(new ObjectCallable() {

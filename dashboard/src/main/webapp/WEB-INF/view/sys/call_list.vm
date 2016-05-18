@@ -56,6 +56,10 @@
                             关键词搜索爬取
                         </a>
 
+                        <a class="btn btn-default" href="/crawler/keyword_weibo">
+                            微博关键词搜索爬取
+                        </a>
+
                         <a class="btn btn-default" href="/crawler/keyword_weixin">
                             微信关键词搜索爬取
                         </a>
