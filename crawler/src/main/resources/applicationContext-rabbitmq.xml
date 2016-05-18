@@ -27,16 +27,17 @@
 
 
     <!--默认配置模版-->
-    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter"/>
+    <rabbit:template id="defaultTemplate" connection-factory="connectionFactory"
+                     message-converter="jsonMessageConverter"/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
     <!--<rabbit:fanout-exchange name="fanoutExchange">-->
-        <!--<rabbit:bindings>-->
-            <!--<rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>-->
-            <!--<rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>-->
-            <!--<rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>-->
-        <!--</rabbit:bindings>-->
+    <!--<rabbit:bindings>-->
+    <!--<rabbit:binding queue="${crawler_book_isbn_amazon}"></rabbit:binding>-->
+    <!--<rabbit:binding queue="${crawler_book_isbn_jd}"></rabbit:binding>-->
+    <!--<rabbit:binding queue="${crawler_book_isbn_dangdang}"></rabbit:binding>-->
+    <!--</rabbit:bindings>-->
     <!--</rabbit:fanout-exchange>-->
 
     <rabbit:direct-exchange name="directExchange">
@@ -46,6 +47,7 @@
             <rabbit:binding queue="${queue_crawler_comment}"/>
             <rabbit:binding queue="${queue_crawler_keyword}"/>
             <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
+            <rabbit:binding queue="${queue_crawler_keyword_weibo}"/>
             <rabbit:binding queue="${queue_crawler_so_index}"/>
             <rabbit:binding queue="${queue_crawler_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_douban_book}"/>
@@ -69,47 +71,47 @@
     <rabbit:queue name="${queue_crawler_comment}"/>
     <rabbit:queue name="${queue_crawler_keyword}"/>
     <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
+    <rabbit:queue name="${queue_crawler_keyword_weibo}"/>
     <rabbit:queue name="${queue_crawler_so_index}"/>
     <rabbit:queue name="${queue_crawler_news_sougou}"/>
-
     <rabbit:queue name="${queue_crawler_douban_book}"/>
     <rabbit:queue name="${queue_crawler_douban_book_tag}"/>
-
-    <rabbit:queue name="${crawler_book_isbn_jd}" />
-
-    <rabbit:queue name="${crawler_book_isbn_amazon}" />
-
-    <rabbit:queue name="${crawler_book_isbn_dangdang}" />
+    <rabbit:queue name="${crawler_book_isbn_jd}"/>
+    <rabbit:queue name="${crawler_book_isbn_amazon}"/>
+    <rabbit:queue name="${crawler_book_isbn_dangdang}"/>
 
 
     <bean id="listenerErrorHandler" class="com.dreamy.listen.ListenerErrorHandler"/>
 
-    <bean id="crawlerEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
 
+    <bean id="crawlerEventQueueHandler" class="com.dreamy.listen.CrawlerEventQueueHandler"/>
+    <!--亚马逊-->
     <bean id="crawlerAmazonQueueHandler" class="com.dreamy.listen.CrawlerAmazonQueueHandler"/>
 
+    <bean id="amazonBookISBMQueueHandler" class="com.dreamy.listen.AmazonBookISBMQueueHandler"/>
+    <!--豆瓣-->
+    <bean id="douBanBookTagQueueHandler" class="com.dreamy.listen.DouBanBookTagQueueHandler"/>
 
+    <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.listen.CrawlerDoubanBookQueueHandler"/>
+    <!--当当-->
+    <bean id="dangBookISBMQueueHandler" class="com.dreamy.listen.DangDangBookISBMQueueHandler"/>
+    <!--京东-->
+    <bean id="jdBookISBMQueueHandler" class="com.dreamy.listen.JdBookISBMQueueHandler"/>
+    <!--评论-->
     <bean id="commentEventQueueHandler" class="com.dreamy.listen.CommentEventQueueHandler"/>
+    <!--关键词-->
 
     <bean id="keyWordEventQueueHandler" class="com.dreamy.listen.KeyWordEventQueueHandler"/>
 
     <bean id="keyWordWeiXinEventQueueHandler" class="com.dreamy.listen.KeyWordWeiXinEventQueueHandler"/>
 
+    <bean id="keyWordWeiBoCrawlerQueueHandler" class="com.dreamy.listen.KeyWordWeiBoCrawlerQueueHandler"/>
+
+    <!--360指数-->
+
     <bean id="soIndexEventQueueHandler" class="com.dreamy.listen.SoIndexEventQueueHandler"/>
-
+    <!--新闻媒体 news.sougou-->
     <bean id="newsMediaQueueHandler" class="com.dreamy.listen.NewsMediaQueueHandler"/>
-
-    <bean id="douBanBookTagQueueHandler" class="com.dreamy.listen.DouBanBookTagQueueHandler"/>
-
-
-    <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.listen.CrawlerDoubanBookQueueHandler"/>
-
-    <bean id="amazonBookISBMQueueHandler" class="com.dreamy.listen.AmazonBookISBMQueueHandler"/>
-
-    <bean id="jdBookISBMQueueHandler" class="com.dreamy.listen.JdBookISBMQueueHandler"/>
-
-    <bean id="dangBookISBMQueueHandler" class="com.dreamy.listen.DangDangBookISBMQueueHandler"/>
-
 
 
     <!--队列监听-->
@@ -118,7 +120,7 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="5"
+            concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerEventQueueHandler" method="onMessage" queues="${queue_crawler_publish_book}"/>
@@ -132,7 +134,8 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="crawlerAmazonQueueHandler" method="onMessage" queues="${queue_crawler_publish_book_amazon}"/>
+        <rabbit:listener ref="crawlerAmazonQueueHandler" method="onMessage"
+                         queues="${queue_crawler_publish_book_amazon}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -152,7 +155,7 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="5"
+            concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword}"/>
@@ -166,7 +169,8 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword_weixin} "/>
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage"
+                         queues="${queue_crawler_keyword_weixin} "/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -174,7 +178,19 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="5"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordWeiBoCrawlerQueueHandler" method="onMessage"
+                         queues="${queue_crawler_keyword_weibo} "/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_crawler_so_index}"/>
@@ -185,7 +201,7 @@
             auto-startup="true"
             acknowledge="auto"
             prefetch="1"
-            concurrency="5"
+            concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>

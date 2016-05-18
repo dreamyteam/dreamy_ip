@@ -32,6 +32,7 @@ public class SinaLoginService {
             if (StringUtils.isNotEmpty(option.getCodeValue())) {
                 String arr[] = option.getCodeValue().split(",");
                 int length = arr.length;
+                commonService.getCacheService().put("cookie_size",length);
                 int j=1;
                 for (int i = 0; i < length; i++) {
                     String values[] = arr[i].split("\\|");

@@ -6,6 +6,7 @@ import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.mogodb.dao.CommentDao;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,6 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
 
     @Override
     public void consume(JSONObject jsonObject) {
-        //获取类型
-//        Integer type = jsonObject.getInteger("type");
-//        Integer ipId=jsonObject.getInteger("ipId");
-//        Integer crawlerId=jsonObject.getInteger("crawlerId");
-//        String url=jsonObject.getString("url");
 
         String isbn=jsonObject.getString("isbn");
         String url=jsonObject.getString("url");
@@ -46,6 +42,11 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
             comment.setIpId(bookId);
             comment.setComments(commentList);
             commentDao.save(comment);
+        }
+        try {
+            Thread.sleep(NumberUtils.randomInt(1000,5000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }

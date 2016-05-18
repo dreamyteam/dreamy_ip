@@ -91,6 +91,9 @@ public class CommentHandler {
             }
         }
 
+
+        //crawlering(comments,url);
+
         return comments;
     }
 
