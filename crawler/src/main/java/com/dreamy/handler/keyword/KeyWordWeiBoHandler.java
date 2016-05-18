@@ -87,7 +87,12 @@ public class KeyWordWeiBoHandler {
     }
 
     private String getCookies() throws Exception {
-        int num=(Integer) commonService.getCacheService().get("cookie_size");
+        String value=(String) commonService.getCacheService().get("cookie_size");
+        int num=3;
+        if(StringUtils.isNotEmpty(value))
+        {
+            num=Integer.valueOf(value);
+        }
         String name = "sinacookie" + NumberUtils.randomInt(1,num);
         String cookie = (String) commonService.getCacheService().get(name);
         if (StringUtils.isNotEmpty(cookie)) {
