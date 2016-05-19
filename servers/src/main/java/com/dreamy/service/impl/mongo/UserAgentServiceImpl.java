@@ -22,7 +22,7 @@ public class UserAgentServiceImpl implements UserAgentService {
 
     @Override
     public UserAgents getById(Integer id) {
-        return userAgentDao.getById(id);
+        return userAgentDao.queryById(id);
     }
 
     @Override
