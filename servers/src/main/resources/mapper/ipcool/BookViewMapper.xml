@@ -11,8 +11,8 @@
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="composite_index" property="compositeIndex" jdbcType="INTEGER" />
     <result column="hot_index" property="hotIndex" jdbcType="INTEGER" />
-    <result column="activity_index" property="activityIndex" jdbcType="INTEGER" />
     <result column="propagate_index" property="propagateIndex" jdbcType="INTEGER" />
+    <result column="activity_index" property="activityIndex" jdbcType="INTEGER" />
     <result column="develop_index" property="developIndex" jdbcType="INTEGER" />
     <result column="reputation_index" property="reputationIndex" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
@@ -82,8 +82,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, book_id, name, author, score, status, type, composite_index, hot_index, activity_index, 
-    propagate_index, develop_index, reputation_index, created_at, updated_at, image_url, 
+    id, book_id, name, author, score, status, type, composite_index, hot_index, propagate_index, 
+    activity_index, develop_index, reputation_index, created_at, updated_at, image_url, 
     remark
   </sql>
   <sql id="Blob_Column_List" >
@@ -142,14 +142,14 @@
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookView" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book_view (book_id, name, author, 
       score, status, type, 
-      composite_index, hot_index, activity_index, 
-      propagate_index, develop_index, reputation_index, 
+      composite_index, hot_index, propagate_index, 
+      activity_index, develop_index, reputation_index, 
       created_at, updated_at, image_url, 
       remark, introduction)
     values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
       #{score,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{compositeIndex,jdbcType=INTEGER}, #{hotIndex,jdbcType=INTEGER}, #{activityIndex,jdbcType=INTEGER}, 
-      #{propagateIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{reputationIndex,jdbcType=INTEGER}, 
+      #{compositeIndex,jdbcType=INTEGER}, #{hotIndex,jdbcType=INTEGER}, #{propagateIndex,jdbcType=INTEGER}, 
+      #{activityIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{reputationIndex,jdbcType=INTEGER}, 
       #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{imageUrl,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR})
   </insert>
@@ -180,11 +180,11 @@
       <if test="hotIndex != null" >
         hot_index,
       </if>
-      <if test="activityIndex != null" >
-        activity_index,
-      </if>
       <if test="propagateIndex != null" >
         propagate_index,
+      </if>
+      <if test="activityIndex != null" >
+        activity_index,
       </if>
       <if test="developIndex != null" >
         develop_index,
@@ -233,11 +233,11 @@
       <if test="hotIndex != null" >
         #{hotIndex,jdbcType=INTEGER},
       </if>
-      <if test="activityIndex != null" >
-        #{activityIndex,jdbcType=INTEGER},
-      </if>
       <if test="propagateIndex != null" >
         #{propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="activityIndex != null" >
+        #{activityIndex,jdbcType=INTEGER},
       </if>
       <if test="developIndex != null" >
         #{developIndex,jdbcType=INTEGER},
@@ -298,11 +298,11 @@
       <if test="record.hotIndex != null" >
         hot_index = #{record.hotIndex,jdbcType=INTEGER},
       </if>
-      <if test="record.activityIndex != null" >
-        activity_index = #{record.activityIndex,jdbcType=INTEGER},
-      </if>
       <if test="record.propagateIndex != null" >
         propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityIndex != null" >
+        activity_index = #{record.activityIndex,jdbcType=INTEGER},
       </if>
       <if test="record.developIndex != null" >
         develop_index = #{record.developIndex,jdbcType=INTEGER},
@@ -341,8 +341,8 @@
       type = #{record.type,jdbcType=INTEGER},
       composite_index = #{record.compositeIndex,jdbcType=INTEGER},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
-      activity_index = #{record.activityIndex,jdbcType=INTEGER},
       propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
+      activity_index = #{record.activityIndex,jdbcType=INTEGER},
       develop_index = #{record.developIndex,jdbcType=INTEGER},
       reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
@@ -365,8 +365,8 @@
       type = #{record.type,jdbcType=INTEGER},
       composite_index = #{record.compositeIndex,jdbcType=INTEGER},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
-      activity_index = #{record.activityIndex,jdbcType=INTEGER},
       propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
+      activity_index = #{record.activityIndex,jdbcType=INTEGER},
       develop_index = #{record.developIndex,jdbcType=INTEGER},
       reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
@@ -404,11 +404,11 @@
       <if test="hotIndex != null" >
         hot_index = #{hotIndex,jdbcType=INTEGER},
       </if>
-      <if test="activityIndex != null" >
-        activity_index = #{activityIndex,jdbcType=INTEGER},
-      </if>
       <if test="propagateIndex != null" >
         propagate_index = #{propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="activityIndex != null" >
+        activity_index = #{activityIndex,jdbcType=INTEGER},
       </if>
       <if test="developIndex != null" >
         develop_index = #{developIndex,jdbcType=INTEGER},
@@ -444,8 +444,8 @@
       type = #{type,jdbcType=INTEGER},
       composite_index = #{compositeIndex,jdbcType=INTEGER},
       hot_index = #{hotIndex,jdbcType=INTEGER},
-      activity_index = #{activityIndex,jdbcType=INTEGER},
       propagate_index = #{propagateIndex,jdbcType=INTEGER},
+      activity_index = #{activityIndex,jdbcType=INTEGER},
       develop_index = #{developIndex,jdbcType=INTEGER},
       reputation_index = #{reputationIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
@@ -465,8 +465,8 @@
       type = #{type,jdbcType=INTEGER},
       composite_index = #{compositeIndex,jdbcType=INTEGER},
       hot_index = #{hotIndex,jdbcType=INTEGER},
-      activity_index = #{activityIndex,jdbcType=INTEGER},
       propagate_index = #{propagateIndex,jdbcType=INTEGER},
+      activity_index = #{activityIndex,jdbcType=INTEGER},
       develop_index = #{developIndex,jdbcType=INTEGER},
       reputation_index = #{reputationIndex,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
