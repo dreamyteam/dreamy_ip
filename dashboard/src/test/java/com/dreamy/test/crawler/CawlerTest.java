@@ -7,9 +7,11 @@ import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,22 +27,28 @@ public class CawlerTest extends BaseJunitTest {
     QueueService queueService;
 
     @Test
-    public void test(){
+    public void test() {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo(), null);
 
-        for(BookCrawlerInfo info:list)
-        {
-            Map<String,Object> map=new HashMap<>();
-            if(StringUtils.isNotEmpty(info.getUrl())) {
+        for (BookCrawlerInfo info : list) {
+            Map<String, Object> map = new HashMap<>();
+            if (StringUtils.isNotEmpty(info.getUrl())) {
                 map.put("type", info.getSource());
                 map.put("url", info.getUrl());
                 map.put("ipId", info.getBookId());
-                map.put("crawlerId",info.getId());
+                map.put("crawlerId", info.getId());
                 queueService.push(QueueRoutingKeyEnums.publish_book.getKey(), map);
                 if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
                     queueService.push(QueueRoutingKeyEnums.publish_book_comment.getKey(), map);
                 }
             }
         }
+    }
+
+    @Test
+    public void tt() {
+        Date d = new Date();
+        String aa = TimeUtils.toString("yyyyMMddhhmmss", d) + "1000" + "0000" + "0000" + "0000" + "00";
+        System.err.println("aa");
     }
 }

@@ -84,14 +84,14 @@ public class IpBookTest extends BaseJunitTest {
 
         }
     }
-    @Test
-    public void updateInser() {
-        BookInfo bookInfo = bookInfoService.getById(20000);
-        bookInfo.setCrawlerId(20000);
-        bookInfo.setCommentNum(21212);
-        bookInfo.setAuthor("测试");
-        bookInfo.setSaleSort("12");
-        bookInfo.setInfo("adadads");
-        bookInfoService.updateInser(bookInfo);
-    }
+//    @Test
+//    public void updateInser() {
+//        BookInfo bookInfo = bookInfoService.getById(20000);
+//        bookInfo.setCrawlerId(20000);
+//        bookInfo.setCommentNum(21212);
+//        bookInfo.setAuthor("测试");
+//        bookInfo.setSaleSort("12");
+//        bookInfo.setInfo("adadads");
+//        bookInfoService.updateInser(bookInfo);
+//    }
 }
