@@ -2,6 +2,7 @@ package com.dreamy.handler.keyword;
 
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
+import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
@@ -57,18 +58,18 @@ public class KeyWordWeiXinHandler {
         name = HttpUtils.encodeUrl(name);
         String url = "http://weixin.sogou.com/weixin?type=2&ie=utf8&query=" + name;
         int num=1;
-        String value=rawValueOperations.get("cookie_size");
+        String value=rawValueOperations.get(RedisConstEnums.sougouweixin.getCacheKey());
         if(StringUtils.isNotEmpty(value)){
             num=Integer.valueOf(value);
         }
-        String key= "weixin_cookies"+NumberUtils.randomInt(1,num);
+        String key=RedisConstEnums.sougouweixinCookieName.getCacheKey()+NumberUtils.randomInt(1,num);
         String cookie = rawValueOperations.get(key);
-        crawleringByProxy(url, cookie, bookId);
+        crawleringByProxy(url, cookie, bookId,key);
 
 
     }
 
-    public boolean crawleringByProxy(String url, String value, Integer bookId) {
+    public boolean crawleringByProxy(String url, String value, Integer bookId,String key) {
         //value="SNUID=CC381923525761791A52B38D53BBB0D6;SUID=9F6A4A70E518920A00000000573D4FAC;SUV=003823E673C1A1355703368E72E2B579";
         String html = HttpUtils.getHtmlGetChangeCookie(url, value);
         if (StringUtils.isNotEmpty(html)) {
@@ -87,8 +88,9 @@ public class KeyWordWeiXinHandler {
                     Elements elements = document.select("div.content-box");
                     if(elements!=null&&elements.size()>0){
                         element=elements.first();
+                        rawValueOperations.getOperations().delete(key);
                         System.out.println(element.text());
-                        log.error(" weixin.sogou.com  crawler book "+bookId+" error ",element.text());
+                        log.error(" weixin.sogou.com  crawler book "+bookId+" error "+element.text());
                     }
 
 

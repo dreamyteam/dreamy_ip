@@ -5,16 +5,26 @@ import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.*;
 import com.dreamy.admin.tasks.index.*;
 import com.dreamy.admin.tasks.rank.BookRankCreateTask;
+import com.dreamy.admin.thread.ExtractBookViewService;
+import com.dreamy.admin.thread.ExtractThread;
+import com.dreamy.admin.thread.ExtractThreadManager;
+import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.sys.SysOption;
+import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.sys.SysOptionService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.asynchronous.AsynchronousService;
+import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by wangyongxing on 16/5/11.
@@ -60,6 +70,21 @@ public class ToolsController extends DashboardController {
     @Autowired
     QueueService queueService;
 
+    @Autowired
+    private ExtractBookViewService extractBookViewService;
+    @Autowired
+    private IpBookService ipBookService;
+
+
+    @Autowired
+    private TaskExecutor threadPool;
+
+
+    @RequestMapping("/system/call")
+    public String call() {
+
+        return "/sys/call_list";
+    }
 
     /**
      * 新浪登录
@@ -71,13 +96,6 @@ public class ToolsController extends DashboardController {
         sinaLoginService.init();
         return "/sys/call_list";
     }
-
-    @RequestMapping("/system/call")
-    public String call() {
-
-        return "/sys/call_list";
-    }
-
 
     /**
      * 爬取豆瓣
@@ -207,4 +225,33 @@ public class ToolsController extends DashboardController {
         bookRankCreateTask.run();
         return redirect("/system/call.html");
     }
+    @RequestMapping(value = "/tools/createView")
+    public String createView() {
+        int current = 1;
+        IpBook ipBook = new IpBook();
+        while (true) {
+            Page page = new Page();
+            page.setPageSize(200);
+            page.setCurrentPage(current);
+            final List<IpBook> list = ipBookService.getIpBookList(ipBook, page);
+            AsynchronousService.submit(new ObjectCallable() {
+                @Override
+                public Object run() throws Exception {
+                    extractBookViewService.extract(list);
+                    return null;
+                }
+            });
+//            ExtractThread extractThread = new ExtractThread(extractBookViewService, list);
+//            ExtractThreadManager.run(extractThread);
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            current++;
+
+        }
+
+        return redirect("/system/call.html");
+    }
+
+
 }

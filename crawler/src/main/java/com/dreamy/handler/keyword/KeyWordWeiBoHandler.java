@@ -2,12 +2,12 @@ package com.dreamy.handler.keyword;
 
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
+import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.NumberUtils;
-import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.sina.CrawSina;
 import com.dreamy.utils.sina.LoginSina;
@@ -16,9 +16,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +57,7 @@ public class KeyWordWeiBoHandler {
      */
     public void getSina(String name, Integer bookId) {
         try {
+
             name = HttpUtils.encodeUrl(name);
             HttpClient client = new DefaultHttpClient();
             String url = "http://s.weibo.com/weibo/" + name;
@@ -73,12 +71,13 @@ public class KeyWordWeiBoHandler {
             if (StringUtils.isNotEmpty(result)) {
                 KeyWord keyWord = new KeyWord();
                 keyWord.bookId(bookId);
-
                 keyWord.indexNum(Integer.valueOf(result.replace(",", "")));
                 keyWord.source(KeyWordEnums.weibo.getType());
                 keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 微博搜索结果 "+responseText);
+                if(check(responseText)) {
+                    log.info(bookId + " 微博搜索结果 " + responseText);
+                }
             }
         } catch (Exception e) {
             log.error("微博搜索结果 失败 ", e);
@@ -87,23 +86,23 @@ public class KeyWordWeiBoHandler {
     }
 
     private String getCookies() throws Exception {
-        String value=(String) commonService.getCacheService().get("cookie_size");
-        int num=3;
+        String value=(String) commonService.getCacheService().get(RedisConstEnums.weibo.getCacheKey());
+        int num=5;
         if(StringUtils.isNotEmpty(value))
         {
             num=Integer.valueOf(value);
         }
-        String name = "sinacookie" + NumberUtils.randomInt(1,num);
+        String name =RedisConstEnums.weiboCookieName.getCacheKey()+ NumberUtils.randomInt(1,num);
         String cookie = (String) commonService.getCacheService().get(name);
         if (StringUtils.isNotEmpty(cookie)) {
             return cookie;
         } else {
             init();
-            cookie = (String) commonService.getCacheService().get("sinacookie1");
+            cookie = (String) commonService.getCacheService().get(RedisConstEnums.sougouweixinCookieName.getCacheKey()+1);
             if (StringUtils.isEmpty(cookie)) {
                 LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
                 ls.dologinSina();
-                commonService.getCacheService().put("sinacookie1", CrawSina.Cookie);
+                commonService.getCacheService().put(RedisConstEnums.sougouweixinCookieName.getCacheKey()+1, CrawSina.Cookie);
                 cookie = CrawSina.Cookie;
             }
             return cookie;
@@ -121,6 +120,15 @@ public class KeyWordWeiBoHandler {
         return result;
 
     }
+
+    public static boolean check(String str) {
+
+
+        boolean result=str.contains("我真滴不是机器人");
+
+        return result;
+
+    }
     public void init() {
 
         int i = 1;
@@ -130,7 +138,7 @@ public class KeyWordWeiBoHandler {
             ls.dologinSina();
             if(StringUtils.isNotEmpty(CrawSina.Cookie))
             {
-                commonService.getCacheService().set("sinacookie" + i, CrawSina.Cookie,3600);
+                commonService.getCacheService().set(RedisConstEnums.sougouweixinCookieName.getCacheKey()+ + i, CrawSina.Cookie,3600);
                 i++;
             }
 

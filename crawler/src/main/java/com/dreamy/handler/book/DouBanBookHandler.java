@@ -1,5 +1,6 @@
 package com.dreamy.handler.book;
 
+import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.HttpUtils;
@@ -41,30 +42,9 @@ public class DouBanBookHandler {
     private String queueName;
 
 
-    public void crawlerTest(String title) {
-        int pageSize = 20;
-        String value = "";
-        boolean check = false;
-        for (int i = 0; i < 50; i++) {
-            int start = pageSize * i;
-            String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
-            OOSpider ooSpider = OOSpider.create(Site.me(), DouBan.class);
-            DouBan douBan = ooSpider.<DouBan>get(url);
-            ooSpider.close();
-            if (douBan != null) {
-                List<String> list = douBan.getUrls();
-                int size = list.size();
-                for (int j = 0; j < size; j++) {
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("title", douBan.getNames().get(j));
-                    map.put("url", douBan.getUrls().get(j));
-                    queueService.push(queueName, map);
-                }
-            }
+    @Value("${crawler_proxy}")
+    private Boolean proxy;
 
-        }
-
-    }
 
     public void crawler(String title) {
         int pageSize = 20;
@@ -73,57 +53,83 @@ public class DouBanBookHandler {
         boolean check = false;
         for (int i = 0; i < 50; i++) {
             int start = pageSize * i;
-            while (true) {
-                if (StringUtils.isEmpty(value)) {
-                    value = listOperations.leftPop("proxy_ips_list");
+            if (proxy) {
+                while (true) {
                     if (StringUtils.isEmpty(value)) {
+                        value = listOperations.leftPop(RedisConstEnums.proxIpList.getCacheKey());
+                        if (StringUtils.isEmpty(value)) {
+                            break;
+                        }
+                    }
+                    check = crawlerByProxy(start, value, title);
+                    if (check) {
                         break;
                     }
-                }
-                check = crawlering(start, value, title);
-                if (check) {
-                    break;
-                }
-                value = "";
+                    value = "";
 
+                }
+            } else {
+                crawler(start, title);
             }
 
 
         }
+
 
     }
 
-    private boolean crawlering(int start, String value, String title) {
-        if (StringUtils.isNotEmpty(value)) {
-            String arr[] = value.split(":");
-            String hostname = arr[0];
-            int port = Integer.valueOf(arr[1]);
-            String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
-            String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
-            if (StringUtils.isNotEmpty(html)) {
-                Document document = Jsoup.parse(html);
-                Elements elements = document.select("ul.subject-list>li.subject-item>div.info>h2>a");
-                if (elements != null && elements.size() > 0) {
-                    int size = elements.size();
-                    for (int j = 0; j < size; j++) {
-                        Element element = elements.get(j);
-                        if (element != null) {
-                            Map<String, Object> map = new HashMap<String, Object>();
-                            System.out.println(element.attr("href"));
-                            map.put("title", element.attr("title"));
-                            map.put("url", element.attr("href"));
-                            queueService.push(queueName, map);
-                        }
+    private boolean crawlerByProxy(int start, String value, String title) {
+        String arr[] = value.split(":");
+        String hostname = arr[0];
+        int port = Integer.valueOf(arr[1]);
+        String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
+        String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
+        if (StringUtils.isNotEmpty(html)) {
+            Document document = Jsoup.parse(html);
+            Elements elements = document.select("ul.subject-list>li.subject-item>div.info>h2>a");
+            if (elements != null && elements.size() > 0) {
+                int size = elements.size();
+                for (int j = 0; j < size; j++) {
+                    Element element = elements.get(j);
+                    if (element != null) {
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("title", element.attr("title"));
+                        map.put("url", element.attr("href"));
+                        queueService.push(queueName, map);
                     }
-                    return true;
                 }
-            } else {
-                return false;
+                return true;
             }
-            return false;
         } else {
             return false;
         }
+        return true;
+
+
+    }
+
+
+    private boolean crawler(int start, String title) {
+
+        String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
+        String html = HttpUtils.getHtmlGet(url);
+        if (StringUtils.isNotEmpty(html)) {
+            Document document = Jsoup.parse(html);
+            Elements elements = document.select("ul.subject-list>li.subject-item>div.info>h2>a");
+            if (elements != null && elements.size() > 0) {
+                int size = elements.size();
+                for (int j = 0; j < size; j++) {
+                    Element element = elements.get(j);
+                    if (element != null) {
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("url", element.attr("href"));
+                        map.put("title", element.attr("title"));
+                        queueService.push(queueName, map);
+                    }
+                }
+            }
+        }
+        return true;
 
 
     }
