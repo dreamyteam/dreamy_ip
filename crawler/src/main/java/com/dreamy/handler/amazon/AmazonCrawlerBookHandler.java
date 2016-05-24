@@ -25,19 +25,24 @@ public class AmazonCrawlerBookHandler {
     public BookInfo getByISBN(String isbn) {
 
         String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn;
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), AmazonBean.class);
-        AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
-        ooSpider.close();
-        String crawlerUrl = "";
-        if (amazonBean != null) {
-            List<String> list = amazonBean.getUrls();
-            if (CollectionUtils.isNotEmpty(list)) {
-                crawlerUrl = list.get(0);
+        try {
+            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
+            AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
+            ooSpider.close();
+            String crawlerUrl = "";
+            if (amazonBean != null) {
+                List<String> list = amazonBean.getUrls();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    crawlerUrl = list.get(0);
+                }
+                BookInfo bookInfo = crawler(crawlerUrl);
+                return bookInfo;
             }
-
+        } catch (Exception e) {
+            log.error("DangDangCrawlerBookHandler getByISBN url:" + url, e);
         }
-        BookInfo bookInfo = crawler(crawlerUrl);
-        return bookInfo;
+        return null;
+
     }
 
     private BookInfo crawler(String url) {
@@ -77,7 +82,7 @@ public class AmazonCrawlerBookHandler {
             if (element != null) {
                 bean.setTitle(element.text());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("解析 amazon 标题失败", e);
         }
 
@@ -339,8 +344,6 @@ public class AmazonCrawlerBookHandler {
             bean.setAuthorInfo(authorDescription);
         }
     }
-
-
 
 
 }

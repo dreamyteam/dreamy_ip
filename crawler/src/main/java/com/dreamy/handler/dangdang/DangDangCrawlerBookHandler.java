@@ -25,19 +25,25 @@ public class DangDangCrawlerBookHandler {
 
 
     public BookInfo getByISBN(String isbn) {
-
         String url = "http://search.dangdang.com/?act=input&key=" + isbn;
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), DangdangBean.class);
-        DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
-        ooSpider.close();
-        if (dangdangBean != null) {
-            List<String> list = dangdangBean.getUrls();
-            if (CollectionUtils.isNotEmpty(list)) {
-                String crawlerUrl = list.get(0);
-                BookInfo bookInfo = crawler(crawlerUrl);
-                return bookInfo;
+        try {
+            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), DangdangBean.class);
+            DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
+            ooSpider.close();
+            if (dangdangBean != null) {
+                List<String> list = dangdangBean.getUrls();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    String crawlerUrl = list.get(0);
+                    BookInfo bookInfo = crawler(crawlerUrl);
+                    return bookInfo;
+                }
             }
         }
+        catch (Exception e){
+            log.error("DangDangCrawlerBookHandler getByISBN url:"+url, e);
+        }
+
+
         return null;
     }
 

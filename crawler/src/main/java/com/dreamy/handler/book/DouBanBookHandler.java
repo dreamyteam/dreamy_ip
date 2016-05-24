@@ -55,7 +55,7 @@ public class DouBanBookHandler {
         String value = "";
         title = HttpUtils.encodeUrl(title);
         boolean check = false;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 34; i < 50; i++) {
             int start = pageSize * i;
             if (proxy) {
                 while (true) {

@@ -72,7 +72,7 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
             Thread.sleep(1000 + NumberUtils.randomInt(1000, 2000));
         } catch (Exception e) {
 
-            log.error("crawler event exception" + title + ",url:" + url, e);
+            log.error("CrawlerDoubanBookQueueHandler event exception" + title + ",url:" + url, e);
 
         }
     }
