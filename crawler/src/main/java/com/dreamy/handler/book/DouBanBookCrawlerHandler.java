@@ -6,12 +6,16 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
+import org.apache.commons.httpclient.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,32 +29,81 @@ import java.util.regex.Pattern;
 public class DouBanBookCrawlerHandler {
 
     private static final Logger log = LoggerFactory.getLogger(DouBanBookCrawlerHandler.class);
+    @Value("${crawler_proxy}")
+    private Boolean proxy;
 
+    @Autowired
+    private ListOperations<String, String> listOperations;
 
     public BookInfo crawler(String url) {
-
-        String html = HttpUtils.getHtmlGetByProxy(url,null,0,null);
         BookInfo bean = null;
-        if (StringUtils.isNotEmpty(html)) {
-            Document document = Jsoup.parse(html);
-            if (document != null) {
-                bean = new BookInfo();
-                getAuthorAndPressAndPublishTime(bean, document);
-                getCommentNum(bean, document);
-                getImage(bean, document);
-                getAuthorInfo(bean, document);
-                getTags(bean, document);
-                getScore(bean, document);
-                getISBN(bean, document);
-                return bean;
-
+        boolean check = false;
+        if (proxy) {
+            while (true) {
+                String value = listOperations.leftPop("proxy_ips_list");
+                if (StringUtils.isEmpty(value)) {
+                    break;
+                }
+                check = crawleringByProxy(bean, url, value);
+                if (check) {
+                    listOperations.leftPush("proxy_ips_list", value);
+                    break;
+                }
             }
+        } else {
+            crawlering(bean, url);
         }
 
 
         return bean;
 
     }
+
+    private void crawlering(BookInfo bean, String url) {
+        String html = HttpUtils.getHtmlGet(url);
+
+        if (StringUtils.isNotEmpty(html)) {
+            Document document = Jsoup.parse(html);
+            if (document != null) {
+                bean = new BookInfo();
+                getAuthorAndPressAndPublishTime(bean, document);
+                getCommentNum(bean, document);
+                getAuthorInfo(bean, document);
+                getImage(bean, document);
+                getTags(bean, document);
+                getScore(bean, document);
+                getISBN(bean, document);
+            }
+        }
+    }
+
+    private boolean crawleringByProxy(BookInfo bean, String url, String value) {
+        String arr[] = value.split(":");
+        String hostname = arr[0];
+        int port = Integer.valueOf(arr[1]);
+        String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
+        if (StringUtils.isNotEmpty(html) && !html.equals("400")) {
+            if (html.equals(HttpStatus.SC_FORBIDDEN)) {
+                return false;
+            } else {
+                Document document = Jsoup.parse(html);
+                if (document != null) {
+                    bean = new BookInfo();
+                    getAuthorAndPressAndPublishTime(bean, document);
+                    getImage(bean, document);
+                    getCommentNum(bean, document);
+                    getAuthorInfo(bean, document);
+                    getTags(bean, document);
+                    getScore(bean, document);
+                    getISBN(bean, document);
+
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 解析ISBN

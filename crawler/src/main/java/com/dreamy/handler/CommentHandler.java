@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,9 @@ public class CommentHandler {
     private static final Logger log = LoggerFactory.getLogger(CommentHandler.class);
     @Autowired
     private ListOperations<String, String> listOperations;
+
+    @Value("${crawler_proxy}")
+    private Boolean proxy;
 
     public List<Comment> getByUrlBak(String url) {
         List<Comment> comments = new ArrayList<Comment>();
@@ -79,20 +83,24 @@ public class CommentHandler {
     public List<Comment> getByUrl(String url) {
         boolean check = false;
         List<Comment> comments = new ArrayList<Comment>();
-        while (true) {
-            String value = listOperations.leftPop("proxy_ips_list");
-            if (StringUtils.isEmpty(value)) {
-                break;
+        if (proxy) {
+            while (true) {
+                String value = listOperations.leftPop("proxy_ips_list");
+                if (StringUtils.isEmpty(value)) {
+                    break;
+                }
+                check = crawleringByProxy(comments, url, value);
+                if (check) {
+                    listOperations.leftPush("proxy_ips_list", value);
+                    break;
+                }
             }
-            check = crawleringByProxy(comments, url, value);
-            if (check) {
-                listOperations.leftPush("proxy_ips_list", value);
-                break;
-            }
+        }else{
+            crawlering(comments,url);
         }
 
 
-        //crawlering(comments,url);
+
 
         return comments;
     }

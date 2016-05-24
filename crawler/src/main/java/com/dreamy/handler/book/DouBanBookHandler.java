@@ -100,10 +100,11 @@ public class DouBanBookHandler {
                 }
                 return true;
             }
-        } else {
+        }
+            else {
             return false;
         }
-        return true;
+        return false;
 
 
     }
