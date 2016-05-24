@@ -6,11 +6,14 @@ import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.HttpHost;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
@@ -28,6 +31,7 @@ import java.util.Map;
  */
 @Component
 public class DouBanBookHandler {
+    private static final Logger log = LoggerFactory.getLogger(DouBanBookHandler.class);
 
     @Autowired
     QueueService queueService;
@@ -72,7 +76,11 @@ public class DouBanBookHandler {
                 crawler(start, title);
             }
 
-
+            try {
+                Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -84,25 +92,26 @@ public class DouBanBookHandler {
         int port = Integer.valueOf(arr[1]);
         String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
         String html = HttpUtils.getHtmlGetByProxy(url, hostname, port, null);
-        if (StringUtils.isNotEmpty(html)) {
-            Document document = Jsoup.parse(html);
-            Elements elements = document.select("ul.subject-list>li.subject-item>div.info>h2>a");
-            if (elements != null && elements.size() > 0) {
-                int size = elements.size();
-                for (int j = 0; j < size; j++) {
-                    Element element = elements.get(j);
-                    if (element != null) {
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        map.put("title", element.attr("title"));
-                        map.put("url", element.attr("href"));
-                        queueService.push(queueName, map);
+        if (StringUtils.isNotEmpty(html) && !html.equals("400")) {
+            if (html.equals(HttpStatus.SC_FORBIDDEN)) {
+                return false;
+            } else {
+                Document document = Jsoup.parse(html);
+                Elements elements = document.select("ul.subject-list>li.subject-item>div.info>h2>a");
+                if (elements != null && elements.size() > 0) {
+                    int size = elements.size();
+                    for (int j = 0; j < size; j++) {
+                        Element element = elements.get(j);
+                        if (element != null) {
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            map.put("title", element.attr("title"));
+                            map.put("url", element.attr("href"));
+                            queueService.push(queueName, map);
+                        }
                     }
+                    return true;
                 }
-                return true;
             }
-        }
-            else {
-            return false;
         }
         return false;
 
@@ -110,7 +119,7 @@ public class DouBanBookHandler {
     }
 
 
-    private boolean crawler(int start, String title) {
+    private void crawler(int start, String title) {
 
         String url = "https://book.douban.com/tag/" + title + "?type=T&start=" + start;
         String html = HttpUtils.getHtmlGet(url);
@@ -129,10 +138,10 @@ public class DouBanBookHandler {
                     }
                 }
             }
+            else{
+                log.error("DouBanBookHandler http is error "+html);
+            }
         }
-        return true;
-
-
     }
 
     private boolean crawleringBak(int start, String value, String title) {
