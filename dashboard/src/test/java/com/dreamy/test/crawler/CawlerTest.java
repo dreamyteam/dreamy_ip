@@ -1,5 +1,7 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.service.SinaLoginService;
+import com.dreamy.admin.tasks.KeyWorkTask;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.QueueRoutingKeyEnums;
@@ -23,6 +25,11 @@ public class CawlerTest extends BaseJunitTest {
     private BookCrawlerInfoService bookCrawlerInfoService;
     @Autowired
     QueueService queueService;
+    @Autowired
+    KeyWorkTask keyWorkTask;
+
+    @Autowired
+    private SinaLoginService sinaLoginService;
 
     @Test
     public void test(){
@@ -42,5 +49,10 @@ public class CawlerTest extends BaseJunitTest {
                 }
             }
         }
+    }
+    @Test
+    public void crawlerWeiXin(){
+        sinaLoginService.init();
+        keyWorkTask.crawlerWeiBo();
     }
 }
