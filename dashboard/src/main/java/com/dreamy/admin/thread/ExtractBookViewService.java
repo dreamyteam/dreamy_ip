@@ -49,15 +49,6 @@ public class ExtractBookViewService {
             bookView.imageUrl(bookInfo.getImage());
             bookView.introduction(bookInfo.getInfo());
             bookViewService.save(bookView);
-            BookInfo bookInfo1 = new BookInfo();
-            bookInfo1.setISBN(bookInfo.getISBN());
-            bookInfo1.setIpId(ipBook.getId());
-            try {
-                bookInfoService.udpate(bookInfo1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             tagAnalysis(ipBook.getCode(), ipBook.getId());
         }
 
