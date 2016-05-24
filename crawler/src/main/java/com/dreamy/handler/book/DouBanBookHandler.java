@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Site;
@@ -38,13 +37,11 @@ public class DouBanBookHandler {
     @Autowired
     CommonService commonService;
 
-
     @Autowired
     private ListOperations<String, String> listOperations;
 
     @Value("${queue_crawler_douban_book}")
     private String queueName;
-
 
     @Value("${crawler_proxy}")
     private Boolean proxy;
@@ -55,7 +52,7 @@ public class DouBanBookHandler {
         String value = "";
         title = HttpUtils.encodeUrl(title);
         boolean check = false;
-        for (int i = 34; i < 50; i++) {
+        for (int i = 0; i < 50; i++) {
             int start = pageSize * i;
             if (proxy) {
                 while (true) {
@@ -79,7 +76,7 @@ public class DouBanBookHandler {
             try {
                 Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("DouBanBookHandler crawler is error ",e);
             }
         }
 

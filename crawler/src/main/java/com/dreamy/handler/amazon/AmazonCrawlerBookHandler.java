@@ -39,7 +39,7 @@ public class AmazonCrawlerBookHandler {
                 return bookInfo;
             }
         } catch (Exception e) {
-            log.error("DangDangCrawlerBookHandler getByISBN url:" + url, e);
+            log.error("AmazonCrawlerBookHandler getByISBN url:" + url, e);
         }
         return null;
 

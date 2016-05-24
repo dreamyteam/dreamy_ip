@@ -1,7 +1,5 @@
 package com.dreamy.handler.book;
 
-import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.handler.AbstractCrawlerHandler;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
