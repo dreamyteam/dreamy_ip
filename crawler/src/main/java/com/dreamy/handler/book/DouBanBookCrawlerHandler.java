@@ -44,6 +44,7 @@ public class DouBanBookCrawlerHandler {
                 if (StringUtils.isEmpty(value)) {
                     break;
                 }
+                 bean = new BookInfo();
                 check = crawleringByProxy(bean, url, value);
                 if (check) {
                     listOperations.leftPush("proxy_ips_list", value);
@@ -51,6 +52,7 @@ public class DouBanBookCrawlerHandler {
                 }
             }
         } else {
+            bean=new BookInfo();
             crawlering(bean, url);
         }
 
@@ -65,7 +67,6 @@ public class DouBanBookCrawlerHandler {
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
-                bean = new BookInfo();
                 getAuthorAndPressAndPublishTime(bean, document);
                 getCommentNum(bean, document);
                 getAuthorInfo(bean, document);
@@ -88,7 +89,6 @@ public class DouBanBookCrawlerHandler {
             } else {
                 Document document = Jsoup.parse(html);
                 if (document != null) {
-                    bean = new BookInfo();
                     getAuthorAndPressAndPublishTime(bean, document);
                     getImage(bean, document);
                     getCommentNum(bean, document);

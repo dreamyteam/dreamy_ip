@@ -46,29 +46,30 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
         String url = jsonObject.getString("url");
         try {
             BookInfo bookInfo = douBanBookCrawlerHandler.crawler(url);
-            bookInfo.setSource(CrawlerSourceEnums.douban.getType());
-            bookInfo.setId(bookInfo.getISBN()+"_"+CrawlerSourceEnums.douban.getType());
-            bookInfoService.updateInser(bookInfo);
-            IpBook ipBook=new IpBook();
-            ipBook.setType(1);
-            ipBook.setStatus(1);
-            ipBook.setTitle(title);
-            ipBook.name(title);
-            ipBook.setCode(bookInfo.getISBN());
-            ipBookService.save(ipBook);
-            BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();
-            bookCrawlerInfo.status(1);
-            bookCrawlerInfo.bookId(ipBook.getId());
-            bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
-            bookCrawlerInfo.url(url);
-            bookCrawlerInfoService.save(bookCrawlerInfo);
-            if(StringUtils.isNotEmpty(bookInfo.getISBN())) {
-                crawlerService.pushAll(bookInfo.getISBN(),url,ipBook.getId());
+            if (bookInfo != null && StringUtils.isNotEmpty(bookInfo.getTitle())) {
+                bookInfo.setSource(CrawlerSourceEnums.douban.getType());
+                bookInfo.setId(bookInfo.getISBN() + "_" + CrawlerSourceEnums.douban.getType());
+                bookInfoService.updateInser(bookInfo);
+                IpBook ipBook = new IpBook();
+                ipBook.setType(1);
+                ipBook.setStatus(1);
+                ipBook.setTitle(title);
+                ipBook.name(title);
+                ipBook.setCode(bookInfo.getISBN());
+                ipBookService.save(ipBook);
+                BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
+                bookCrawlerInfo.status(1);
+                bookCrawlerInfo.bookId(ipBook.getId());
+                bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+                bookCrawlerInfo.url(url);
+                bookCrawlerInfoService.save(bookCrawlerInfo);
+                if (StringUtils.isNotEmpty(bookInfo.getISBN())) {
+                    crawlerService.pushAll(bookInfo.getISBN(), url, ipBook.getId());
+                } else {
+                    System.out.println(bookInfo.getTitle());
+                }
             }
-            else{
-                System.out.println(bookInfo.getTitle());
-            }
-            Thread.sleep(1000+ NumberUtils.randomInt(1000,2000));
+            Thread.sleep(1000 + NumberUtils.randomInt(1000, 2000));
         } catch (Exception e) {
 
             log.error("crawler event exception" + title + ",url:" + url, e);
