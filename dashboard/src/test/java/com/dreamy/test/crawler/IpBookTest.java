@@ -84,6 +84,7 @@ public class IpBookTest extends BaseJunitTest {
 
         }
     }
+
     @Test
     public void updateInser() {
         BookInfo bookInfo = bookInfoService.getById("");
