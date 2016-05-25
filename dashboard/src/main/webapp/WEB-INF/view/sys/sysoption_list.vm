@@ -61,7 +61,7 @@
                                         <input type="checkbox" value="$!{option.id}">
                                     </td>
                                     <td class="center">$!{option.name}</td>
-                                    <td class="center">$!{option.codeValue}</td>
+                                    <td class="center"></td>
                                     <td class="center">$!{option.description}</td>
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$option.updatedAt)</td>

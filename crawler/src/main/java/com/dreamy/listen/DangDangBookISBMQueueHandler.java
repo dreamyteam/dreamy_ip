@@ -39,6 +39,7 @@ public class DangDangBookISBMQueueHandler extends AbstractQueueHandler {
         if (bookInfo != null) {
             bookInfo.setSource(CrawlerSourceEnums.dangdang.getType());
             bookInfo.setISBN(isbn);
+            bookInfo.setIpId(bookId);
             bookInfo.setId(isbn + "_" + CrawlerSourceEnums.dangdang.getType());
             bookInfoService.updateInser(bookInfo);
             BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();

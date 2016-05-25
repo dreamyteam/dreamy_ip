@@ -43,6 +43,7 @@ public class AmazonBookISBMQueueHandler extends AbstractQueueHandler {
         if (bookInfo != null) {
             bookInfo.setSource(CrawlerSourceEnums.amazon.getType());
             bookInfo.setISBN(isbn);
+            bookInfo.setIpId(bookId);
             bookInfo.setId(isbn+"_"+CrawlerSourceEnums.amazon.getType());
             bookInfoService.updateInser(bookInfo);
             BookCrawlerInfo bookCrawlerInfo=new BookCrawlerInfo();

@@ -73,6 +73,7 @@ public class KeyWordWeiXinHandler {
             if (document != null) {
                 Element element = document.getElementById("scd_num");
                 if (element != null) {
+
                     String result = element.text();
                     String num = PatternUtils.getNum(result);
                     KeyWord keyWord = new KeyWord();

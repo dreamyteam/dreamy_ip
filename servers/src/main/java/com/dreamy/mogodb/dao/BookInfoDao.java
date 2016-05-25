@@ -46,7 +46,7 @@ public class BookInfoDao extends MongoGenDao<BookInfo> {
         return result;
     }
 
-    public void updateMulti(BookInfo bookInfo) throws Exception {
+    public void updateMulti(BookInfo bookInfo) {
         Update update = new Update();
 //        if (null == bookInfo.getCrawlerId()) {
 //            //如果主键为空,则不进行修改

@@ -47,9 +47,6 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
         try {
             BookInfo bookInfo = douBanBookCrawlerHandler.crawler(url);
             if (bookInfo != null && StringUtils.isNotEmpty(bookInfo.getTitle())) {
-                bookInfo.setSource(CrawlerSourceEnums.douban.getType());
-                bookInfo.setId(bookInfo.getISBN() + "_" + CrawlerSourceEnums.douban.getType());
-                bookInfoService.updateInser(bookInfo);
                 IpBook ipBook = new IpBook();
                 ipBook.setType(1);
                 ipBook.setStatus(1);
@@ -57,6 +54,10 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
                 ipBook.name(title);
                 ipBook.setCode(bookInfo.getISBN());
                 ipBookService.save(ipBook);
+                bookInfo.setSource(CrawlerSourceEnums.douban.getType());
+                bookInfo.setIpId(ipBook.getId());
+                bookInfo.setId(bookInfo.getISBN() + "_" + CrawlerSourceEnums.douban.getType());
+                bookInfoService.updateInser(bookInfo);
                 BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
                 bookCrawlerInfo.status(1);
                 bookCrawlerInfo.bookId(ipBook.getId());
@@ -65,11 +66,9 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
                 bookCrawlerInfoService.save(bookCrawlerInfo);
                 if (StringUtils.isNotEmpty(bookInfo.getISBN())) {
                     crawlerService.pushAll(bookInfo.getISBN(), url, ipBook.getId());
-                } else {
-                    System.out.println(bookInfo.getTitle());
                 }
             }
-            Thread.sleep(1000 + NumberUtils.randomInt(1000, 2000));
+            Thread.sleep(NumberUtils.randomInt(1000, 3000));
         } catch (Exception e) {
 
             log.error("CrawlerDoubanBookQueueHandler event exception" + title + ",url:" + url, e);

@@ -72,14 +72,14 @@ public class KeyWorkTask {
             }
         } catch (Exception e) {
 
-            log.error("KeyWorkTask is error", e);
+            log.error("crawler is error", e);
         }
 
     }
 
     public void crawlerWeiXin() {
         try {
-            BookView entity = new BookView().type(1);
+            BookView entity = new BookView().type(2);
             int currentPage = 1;
             while (true) {
                 Page page = new Page();
@@ -90,11 +90,7 @@ public class KeyWorkTask {
                     Map<String, Object> map = new HashMap<>();
                     map.put("bookId", bookView.getBookId());
                     map.put("source", bookView.getType());
-                    if (StringUtils.isNotEmpty(bookView.getAuthor())) {
-                        map.put("word", bookView.getName() + " " + bookView.getAuthor());
-                    } else {
-                        map.put("word", bookView.getName());
-                    }
+                    map.put("word", bookView.getName());
                     queueService.push(weiXinQueueName, map);
                 }
                 if (!page.isHasNextPage()) {
@@ -103,9 +99,10 @@ public class KeyWorkTask {
                 currentPage++;
             }
         } catch (Exception e) {
-            log.error("KeyWorkTask is error", e);
+            log.error("crawlerWeiXin is error", e);
         }
     }
+
     public void crawlerWeiBo() {
         try {
             BookView entity = new BookView().type(1);
@@ -132,7 +129,7 @@ public class KeyWorkTask {
                 currentPage++;
             }
         } catch (Exception e) {
-            log.error("KeyWorkTask is error", e);
+            log.error("crawlerWeiBo is error", e);
         }
     }
 

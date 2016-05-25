@@ -38,6 +38,7 @@ public class JdBookISBMQueueHandler extends AbstractQueueHandler {
         if (bookInfo != null) {
             bookInfo.setSource(CrawlerSourceEnums.jd.getType());
             bookInfo.setISBN(isbn);
+            bookInfo.setIpId(bookId);
             bookInfo.setId(isbn + "_" + CrawlerSourceEnums.jd.getType());
             bookInfoService.updateInser(bookInfo);
 

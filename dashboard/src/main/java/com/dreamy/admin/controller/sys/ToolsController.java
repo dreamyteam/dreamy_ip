@@ -76,10 +76,6 @@ public class ToolsController extends DashboardController {
     private IpBookService ipBookService;
 
 
-    @Autowired
-    private TaskExecutor threadPool;
-
-
     @RequestMapping("/system/call")
     public String call() {
 

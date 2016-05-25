@@ -42,29 +42,37 @@ public class CompositeIndexexCreateTask {
         if (!isTaskActive) {
             return;
         }
-
         try {
             Page page = new Page();
-            page.setPageSize(1000);
-            List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
-            if (CollectionUtils.isNotEmpty(bookViews)) {
-                for (BookView bookView : bookViews) {
-                    Integer hotIndex = bookView.getHotIndex();
-                    Integer propatationIndex = bookView.getPropagateIndex();
-                    Integer reputationIndex = bookView.getReputationIndex();
-                    Integer developIndex = bookView.getDevelopIndex();
+            page.setPageSize(200);
+            int current = 1;
+            while (true) {
+                page.setCurrentPage(current);
+                List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
+                if (CollectionUtils.isNotEmpty(bookViews)) {
+                    for (BookView bookView : bookViews) {
+                        Integer hotIndex = bookView.getHotIndex();
+                        Integer propatationIndex = bookView.getPropagateIndex();
+                        Integer reputationIndex = bookView.getReputationIndex();
+                        Integer developIndex = bookView.getDevelopIndex();
 
-                    Double compositeIndex = 0.1 * (3 * (hotIndex + propatationIndex) + 2 * (reputationIndex + developIndex));
+                        Double compositeIndex = 0.1 * (3 * (hotIndex + propatationIndex) + 2 * (reputationIndex + developIndex));
 
-                    bookView.compositeIndex(compositeIndex.intValue());
-                    bookViewService.update(bookView);
+                        bookView.compositeIndex(compositeIndex.intValue());
+                        bookViewService.update(bookView);
+                    }
+                    BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
+                    if (bookIndexTaskLog.getId() != null) {
+                        Integer oldRunTime = bookIndexTaskLog.getRunTime();
+                        bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
+                        bookIndexTaskLogService.update(bookIndexTaskLog);
+                    }
+                    if (!page.isHasNextPage()) {
+                        break;
+                    }
+                    current++;
                 }
-                BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
-                if (bookIndexTaskLog.getId() != null) {
-                    Integer oldRunTime = bookIndexTaskLog.getRunTime();
-                    bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
-                    bookIndexTaskLogService.update(bookIndexTaskLog);
-                }
+
             }
 
 
