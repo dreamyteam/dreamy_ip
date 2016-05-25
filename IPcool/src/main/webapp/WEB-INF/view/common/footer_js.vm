@@ -1,9 +1,9 @@
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/jquery.min.js"></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/echarts.min.js"></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/all.js"></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/index.js "></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/program_detail.js "></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/searchresult.js "></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/user.js "></script>
-<script type="text/javascript" src="http://ipcool.me/ipcool/dist/pace.min.js"></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/jquery.min.js"></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/echarts.min.js"></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/all.js"></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/index.js "></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/program_detail.js "></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/searchresult.js "></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/user.js "></script>
+<script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/pace.min.js"></script>
 
