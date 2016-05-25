@@ -1,0 +1,38 @@
+footer{
+	width:780px;
+	margin: 80px auto 40px auto;
+	font-size: 0;
+	nav ul li{
+		display:inline-block;
+		width: 14.2%;
+		text-align: center;
+		a{
+			font-size: 14px; 
+			color: #979797;
+		}
+	}
+	
+	.copyright{
+		margin-top: 50px;
+		.logo{
+			display:inline-block;
+			background: url("../assets/images/logo_bottom_gray.png") no-repeat;
+			background-size: 153px;
+			width: 153px;
+			height: 46px;
+			vertical-align: middle;
+		}
+		p{
+			vertical-align: middle;
+			display:inline-block;
+			font-size: 14px;
+			color: #979797;
+			margin-left: 85px;
+			line-height: 46px;
+		}
+	}
+
+
+
+
+}

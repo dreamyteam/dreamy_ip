@@ -1,0 +1,178 @@
+@import "./common/reset.scss";
+@import "./common/common.scss";
+@import "./components/header.scss";
+@import "./components/footer.scss";
+@import "./components/searchbar.scss";
+section.rank_list {
+    position: relative;
+    padding: 24px 40px 0 40px;
+    font-size: 0;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url("../assets/images/colorfulbar.png") no-repeat;
+        background-size: 540px;
+        width: 540px;
+        height: 4px;
+    }
+    .rank_list_table {
+        display: inline-block;
+        font-size: 16px;
+        width: 50%;
+        margin-bottom: 49px;
+        .title {
+            font-size: 16px;
+            color: #2b2c2e;
+            position: relative;
+            .date {
+                position: absolute;
+                right: 30px;
+                bottom: 0;
+                font-size: 12px;
+                line-height: 16px;
+                color: #9b9b9b;
+            }
+        }
+        .show_top50 {
+            display: block;
+            border: 1px solid #9b9b9b;
+            border-radius: 2px;
+            width: 400px;
+            height: 33px;
+            font-size: 14px;
+            line-height: 33px;
+            color: #9b9b9b;
+            text-align: center;
+            transition: border 300ms ease, color 300ms ease;
+            &:hover {
+                border: 1px solid #00a69d;
+                color: #00a69d;
+            }
+        }
+    }
+    .rank_list_table:nth-child(2n) {
+        padding-left: 30px;
+        .title .date {
+            right: 0;
+        }
+    }
+    table {
+        margin-top: 13px;
+        margin-bottom: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 40px;
+        width: 400px;
+        padding-right: 60px;
+        border-collapse: collapse;
+        tr.top_three {
+            td.rank_num {
+                color: #00a69d;
+            }
+            td {
+                color: #2b2c2e;
+            }
+        }
+        tr {
+            cursor: pointer;
+            transition: background 300ms ease;
+            &:hover {
+                background: #f9f9f9;
+            }
+        }
+        .rank_num {
+        	font-size: 16px;
+            width: 60px;
+            text-align: center;
+        }
+        .content {
+            width: 275px;
+        }
+        th {
+            font-size: 12px;
+            font-weight: normal;
+            color: #9b9b9b;
+            background: #f7f7f7;
+            border-bottom: 1px solid #cbcbcb;
+            border-top: 1px solid #cbcbcb;
+        }
+        td {
+            // padding-left: 9px;
+            // border-bottom: 1px solid #cbcbcb;
+            color: #9b9b9b;
+        }
+    }
+}
+
+section.rank_detail {
+    position: relative;
+    padding: 24px 20px;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url("../assets/images/colorfulbar.png") no-repeat;
+        background-size: 540px;
+        width: 540px;
+        height: 4px;
+    }
+    h2.title {
+        font-size: 16px;
+        color: #2b2c2e;
+    }
+    table {
+        margin-top: 13px;
+        margin-bottom: 4px;
+        font-size: 16px;
+        line-height: 50px;
+        width: 100%;
+        padding-right: 60px;
+        border-collapse: collapse;
+        th {
+            line-height: 37px;
+        }
+        tr.top_three {
+            td {
+                color: #00a69d;
+            }
+        }
+        tr {
+            cursor: pointer;
+            transition: background 300ms ease;
+            &:hover {
+                background: #f9f9f9;
+            }
+        }
+        .rank_num {
+            width: 60px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .content {
+            width: 450px;
+        }
+        .author {
+            width: 233px;
+        }
+        .trend {
+            width: 60px;
+            text-align: center;
+        }
+        th {
+            font-size: 12px;
+            font-weight: normal;
+            color: #9b9b9b;
+            background: #f7f7f7;
+            border-bottom: 1px solid #cbcbcb;
+            border-top: 1px solid #cbcbcb;
+        }
+        td {
+            // padding-left: 9px;
+            // border-bottom: 1px solid #cbcbcb;
+            color: #9b9b9b;
+        }
+    }
+}

@@ -1,0 +1,312 @@
+.popup_mask {
+    // display: none;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+}
+
+.popup_box {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 0px 20px 60px 0px rgba(0, 0, 0, 0.50);
+    border-radius: 4px;
+    width: 600px;
+    z-index: 99999;
+    left: 50%;
+    top: 50%;
+    margin: 0 auto;
+    button.close {
+        position: absolute;
+        background: url("../assets/images/pooup_close_btn_normal@2x.png") no-repeat;
+        background-size: 54px;
+        width: 54px;
+        height: 54px;
+        right: -27px;
+        top: -27px;
+        transition: all 300ms ease;
+
+        &:hover{
+            transform:rotate(30deg);
+        }
+    }
+}
+
+.popup_box.active {
+    animation: popup 300ms ease forwards;
+}
+
+@keyframes popup {
+    from {
+        transform: translateY(20px)
+    }
+    to {
+        transform: translateY(0)
+    }
+}
+
+//登陆注册
+.sign {
+    padding: 38px 99px 34px 99px;
+    text-align: center;
+    height: 540px;
+    margin-left: -300px;
+    margin-top: -270px;
+    .logo {
+        display: inline-block;
+        background: url("../assets/images/logo_bottom_gray.png") no-repeat;
+        background-size: 153px;
+        width: 153px;
+        height: 46px;
+    }
+    .err_msg {
+        position: absolute;
+        top: 105px;
+        left: 50%;
+        margin-left: -201px;
+        display: block;
+        text-align: left;
+        background: #f2dede;
+        border: 1px solid #efd3d7;
+        border-radius: 3px;
+        width: 402px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        color: #bb4945;
+        padding-left: 19px;
+    }
+    #signForm {
+        text-align: left;
+        position: relative;
+        padding-top: 63px;
+        .sign_form {
+            .sign_container {
+                font-size: 0;
+                padding-left: 47px;
+                position: relative;
+                margin-top: 18px;
+                label {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    display: block;
+                    background: #eeeeee;
+                    border: 1px solid #cccccc;
+                    border-right: none;
+                    border-radius: 2px 0px 0px 2px;
+                    width: 47px;
+                    height: 45px;
+                }
+                label.icon_phone_number {
+                    background: url("../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
+                    background-size: 12px;
+                }
+                label.icon_password {
+                    background: url("../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
+                    background-size: 17px;
+                }
+                label.icon_verify {
+                    background: url("../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
+                    background-size: 16px;
+                }
+                input[type=text],
+                input[type=password] {
+                    display: block;
+                    width: 100%;
+                    padding-left: 12px;
+                    background: #ffffff;
+                    border: 1px solid #cccccc;
+                    box-shadow: inset 0px 1px 0px 0px #ececec;
+                    border-radius: 0px 2px 2px 0px;
+                    height: 45px;
+                    font-size: 18px;
+                    color: #999999;
+                    &.active {
+                        background: #FCF8E2;
+                    }
+                }
+            }
+            .verify {
+                padding-right: 127px;
+                input[type=text] {
+                    border-radius: 0px;
+                    width: 228px;
+                }
+                .btn_send_verify_code {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    z-index: 9999;
+                    background: #eeeeee;
+                    border: 1px solid #cccccc;
+                    border-left: none;
+                    text-align: center;
+                    border-radius: 0px 2px 2px 0px;
+                    width: 127px;
+                    line-height: 45px;
+                    height: 45px;
+                    font-size: 18px;
+                    color: #999999;
+                    transition: all 300ms ease;
+                }
+                .btn_send_verify_code.active {
+                    color: #FFF;
+                    border: 1px solid #00a69d;
+                    background: #00a69d;
+                }
+            }
+            button.solid {
+                border-radius: 5px;
+                width: 100%;
+                height: 43px;
+                font-size: 18px;
+                text-align: center;
+                margin-top: 58px;
+                background: #fff;
+                border: 1px solid #00a69d;
+                color: #00a69d;
+                transition: all 300ms ease;
+                &.active {
+                    border: none;
+                    background: #00a69d;
+                    color: #fff;
+                }
+            }
+            p.tips_bottom {
+                font-size: 12px;
+                color: #4a4a4a;
+                display: inline;
+            }
+            button.tips_bottom_btn {
+                display: inline;
+                padding: 0;
+                margin: 0;
+                font-size: 14px;
+                background: transparent;
+                border: none;
+                color: #00a69d;
+            }
+            .remember_pwd_container {
+                label,
+                a {
+                    display: inline-block;
+                    vertical-align: bottom;
+                    font-size: 14px;
+                    color: #4a4a4a;
+                    line-height: 14px;
+                }
+                a {
+                    margin-top: 10px;
+                    float: right;
+                    vertical-align: bottom;
+                }
+            }
+        }
+    }
+    .register,
+    .login {
+        display: none;
+    }
+    .infos {
+        margin-top: 51px;
+        a {
+            margin: 0 15px;
+            font-size: 14px;
+            color: #9b9b9b;
+        }
+    }
+}
+
+//投票
+.pop_up_vote {
+    width: 800px;
+    padding: 30px;
+    margin-left: -400px;
+    h2.title {
+        font-size: 20px;
+        color: #2b2c2e;
+    }
+    .vote_textarea {
+        padding: 10px;
+        margin-top: 30px;
+        display: block;
+        width: 100%;
+        height: 94px;
+        border: 1px solid #979797;
+    }
+    .btn_vote {
+        margin-top: 22px;
+        display: block;
+        float: right;
+        width: 120px;
+        height: 40px;
+        background: #00a69d;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 14px;
+    }
+}
+
+input[type=checkbox] {
+    margin: 0;
+    display: inline-block;
+    vertical-align: bottom;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+input[type=checkbox]:checked {
+    background: url("../assets/images/icon_verify@2x.png") center center no-repeat;
+    background-size: 12px;
+}
+
+//头像上传
+.avatar {
+    width: 400px;
+    height: 600px;
+    margin-left: -200px;
+    margin-right: -300px;
+    .img_upload_container {
+        padding: 28px 47px;
+        text-align: center;
+        h5 {
+            font-size: 34px;
+            color: #000000;
+            margin-bottom: 34px;
+        }
+        .avatar_container {
+            display: block;
+            margin: 0 auto;
+            width: 295px;
+            height: 295px;
+            background: #f2f2f2;
+            img {
+                max-width: 100%;
+            }
+        }
+        p {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #848484;
+            text-align: justify;
+        }
+        .submit {
+            margin-top: 40px;
+            display: inline-block;
+            background: #00a69d;
+            border-radius: 5px;
+            width: 295px;
+            height: 43px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+    }
+}

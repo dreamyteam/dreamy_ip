@@ -1,0 +1,77 @@
+#gotoTop {
+    position: fixed;
+    bottom: 100px;
+    width: 50px;
+    right: 20px;
+    height: 110px;
+    button.back_to_top,
+    a.feedback {
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        background: #84d2cd;
+        border-radius: 3px;
+        color: #fff;
+        position: relative;
+        transition: all 1s linear;
+        box-shadow: 0px 2px 2px 0px rgba(209, 209, 209, 0.5);
+        &:hover {
+            background: #00a69d;
+        }
+    }
+    button.back_to_top {
+        font-size: 28px;
+        line-height: 50px;
+        margin-bottom: 10px;
+        &::after {
+            position: absolute;
+            content: '';
+            width: 30px;
+            height: 31px;
+            background: url("../assets/images/uparror.png") no-repeat;
+            background-size: 30px;
+            left: 10px;
+            top: 10px;
+        }
+        &:hover {
+            &::after {
+                animation: uparr 2s linear infinite;
+            }
+        }
+    }
+    a.feedback {
+        padding: 5px;
+        &::after {
+            position: absolute;
+            content: '';
+            width: 30px;
+            height: 31px;
+            background: url("../assets/images/yijianfankui.png") no-repeat;
+            background-size: 30px;
+            left: 10px;
+            top: 10px;
+        }
+        &:hover {
+            &::after {
+                content: '意见反馈';
+                font-size: 14px;
+                line-height: 16px;
+                background: none;
+            }
+        }
+    }
+}
+
+@keyframes uparr {
+    0% {
+        transform: translateY(0px)
+    }
+    50% {
+        transform: translateY(-2px)
+    }
+    100% {
+        transform: translateY(0px)
+    }
+}

@@ -1,0 +1,173 @@
+@import "./common/reset.scss";
+@import "./common/common.scss";
+@import "./components/header.scss";
+@import "./components/footer.scss";
+@import "./components/searchbar.scss";
+@import "./components/popup_box.scss";
+@import "./components/backtotop.scss";
+section.search_count {
+    padding: 22px 30px;
+    font-size: 14px;
+    color: #5E5E5E;
+    .count {
+        color: #00A69D;
+        font-weight: 800;
+    }
+}
+
+section.search_result {
+    padding: 0 30px 24px 30px;
+    .sresult_ip {
+        border-bottom: 1px solid #BEBEBE;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        &:last-child {
+            border: none;
+            padding-bottom: 0;
+        }
+        .sresult_ip_img_cointainer {
+            display: block;
+            width: 120px;
+            height: 168px;
+            float: left;
+            margin-right: 30px;
+            background: #F2F2F2;
+            img {
+                width: 120px;
+                transition: all 300ms ease;
+            }
+            &:hover {
+                img {
+                    transform: translate(-3px, -3px);
+                    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.50);
+                }
+            }
+        }
+        .sresult_content {
+            float: left;
+            padding-top: 14px;
+            h2 {
+                font-size: 24px;
+                a {
+                    display: inline-block;
+                    transition: color 300ms ease;
+                    color: #5E5E5E;
+                    &:hover {
+                        color: #00a69d;
+                    }
+                }
+                span {
+                    display: inline-block;
+                    margin-left: 10px;
+                    border: 1px solid #00A69D;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    color: #00A69D;
+                    padding: 2px 3px;
+                    vertical-align: middle;
+                }
+            }
+            h6 {
+                font-size: 14px;
+                color: #717171;
+            }
+            .quotient {
+                margin-top: 40px;
+                li {
+                    width: 140px;
+                    overflow: hidden;
+                    display: inline-block;
+                    h6 {
+                        color: #5E5E5E;
+                        font-size: 14px;
+                    }
+                    span {
+                        color: #9B9B9B;
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+        .overall {
+            float: right;
+            text-align: center;
+            margin: 25px 20px 0 0;
+            h6 {
+                font-size: 14px;
+                color: #5E5E5E;
+            }
+            span {
+                font-size: 64px;
+                color: #00A69D;
+            }
+        }
+    }
+    .sresult_none {
+        padding: 45px 0 58px 0;
+        text-align: center;
+        h5 {
+            font-size: 18px;
+            color: #878787;
+            .name {
+                color: #666666;
+            }
+        }
+        h6 {
+            margin: 20px 0;
+            font-size: 18px;
+            color: #878787;
+        }
+        button {
+            cursor: pointer;
+            width: 210px;
+            height: 40px;
+            font-size: 14px;
+            color: #00A69D;
+            background: transparent;
+            border: 1px solid #00A69D;
+            border-radius: 4px;
+        }
+        button.disabled {
+            cursor: auto;
+            color: #878787;
+            border: 1px solid #878787;
+        }
+    }
+}
+
+.paging {
+    margin-top: 48px;
+    ul {
+        text-align: center;
+        li {
+            display: inline-block;
+            font-size: 14px;
+            border: 1px solid #979797;
+            border-radius: 3px;
+            text-align: center;
+            margin: 0 4px;
+            transition: all 300ms ease;
+            &:hover {
+                background: #84d2cd;
+                border: 1px solid #84d2cd;
+                a {
+                    color: #fff
+                }
+            }
+            a {
+                display: block;
+                width: 32px;
+                height: 34px;
+                line-height: 34px;
+                color: #979797;
+            }
+        }
+        li.active {
+            a {
+                color: #fff;
+            }
+            border:1px solid #00A69D;
+            background: #00A69D;
+        }
+    }
+}

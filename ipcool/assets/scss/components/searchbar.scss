@@ -1,0 +1,35 @@
+.searchbar{
+	margin: 55px auto;
+    text-align: center;
+
+	.form_search{
+    	font-size: 0;
+	    input{
+	      display: inline;
+	      vertical-align: top;
+	      background: #fff;
+	    }
+	    .search{
+	      padding: 0 0 0 10px;
+	      font-size: 16px;
+	      color: #848484;
+	      width: 60%;
+	      max-width: 700px;
+	      height: 50px;
+	      border: 1px solid #848484;
+	      border-radius: 5px 0 0 5px;
+	      border-right: none;
+	    }
+	    .submit{
+	      cursor: pointer;
+	      background: url("../assets/images/search_main_ico.png") no-repeat center center, #fff;
+	      background-size: 20px 20px;
+	      border: 1px solid #848484;
+	      border-radius: 0 5px 5px 0;
+	      border-left: none;
+	      padding: 0;
+	      width: 43px;
+	      height: 50px;
+    	}
+    }	
+}

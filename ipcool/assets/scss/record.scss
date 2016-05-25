@@ -1,0 +1,173 @@
+    @import "./common/reset.scss";
+    @import "./common/common.scss";
+    @import "./components/header.scss";
+    @import "./components/footer.scss";
+    section.record {
+        position: relative;
+        padding: 40px 175px;
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url("../assets/images/colorfulbar.png") no-repeat;
+            background-size: 540px;
+            width: 540px;
+            height: 4px;
+        }
+        .record_content {
+            padding-bottom: 97px;
+            border-bottom: 1px solid #bebebe;
+            .title {
+                margin-top: 30px;
+                font-size: 24px;
+                color: #262626;
+                text-align: center;
+            }
+            .sub_title {
+                font-size: 16px;
+                color: #9b9b9b;
+                text-align: center;
+                margin-bottom: 30px;
+                margin-top: 10px;
+            }
+            label {
+                display: block;
+                font-size: 14px;
+                color: #9b9b9b;
+                margin-bottom: 5px;
+            }
+            input {
+                display: block;
+                border: 1px solid #9b9b9b;
+                border-radius: 2px;
+                width: 270px;
+                height: 45px;
+                font-size: 14px;
+                color: #2b2c2e;
+                line-height: 45px;
+                padding-left: 11px;
+            }
+            .ip_name {
+                background: #fcf8e2;
+            }
+            // 验证码
+            .verify_container {
+                .verify_code {
+                    float: right;
+                    margin-top: 37px;
+                    border: 1px solid #979797;
+                    width: 100px;
+                    height: 30px;
+                    font-size: 14px;
+                    line-height: 30px;
+                    border-radius: 0;
+                }
+            }
+            input[type=submit] {
+                cursor: pointer;
+                display: block;
+                margin: 79px auto 0 auto;
+                background: #00a69d;
+                border: 1px solid #48af46;
+                border-radius: 5px;
+                width: 300px;
+                height: 43px;
+                line-height: 43px;
+                font-size: 18px;
+                color: #ffffff;
+            }
+            select {
+                position: relative;
+                appearance: none;
+                cursor: pointer;
+                padding-left: 11px;
+                display: block;
+                background: url("../assets/images/selectbg.png") 95% center no-repeat, #ebebeb;
+                background-size: 9px;
+                border: 1px solid #bfbfbf;
+                border-radius: 2px;
+                width: 270px;
+                height: 45px;
+                font-size: 14px;
+            }
+            .input_container {
+                margin-bottom: 11px;
+                font-size: 0;
+                .input_content {
+                    position: relative;
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 50%;
+                    .err_msg {
+                        right: 25px;
+                    }
+                }
+                .input_content:nth-child(2n) {
+                    padding-left: 25px;
+                    .err_msg {
+                        right: 0;
+                    }
+                }
+            }
+            .input_content {
+                margin-top: 12px;
+                position: relative;
+                display: inline-block;
+                vertical-align: middle;
+                width: 100%;
+                .err_msg {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    font-size: 14px;
+                    color: #bb4945;
+                }
+                input {
+                    width: 100%;
+                }
+            }
+        }
+        .record_content:last-child {
+            border: none;
+        }
+        span.record_result {
+            width: 70px;
+            height: 70px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 80px;
+            margin-bottom: 50px;
+        }
+        span.record_result.success {
+            background: url("../assets/images/done_ico@2x.png") no-repeat;
+            background-size: 70px;
+        }
+        span.record_result.error {
+            background: url("../assets/images/erroc_ico@2x.png") no-repeat;
+            background-size: 70px;
+        }
+        .record_result_title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #262626;
+            text-align: center;
+        }
+        .record_result_subtitle {
+            font-size: 16px;
+            color: #9b9b9b;
+            text-align: center;
+        }
+        .back_home {
+            display: block;
+            margin: 50px auto;
+            background: #00a69d;
+            border-radius: 5px;
+            width: 300px;
+            height: 43px;
+            font-size: 18px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 43px;
+        }
+    }

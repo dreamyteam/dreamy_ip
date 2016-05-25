@@ -1,0 +1,252 @@
+
+html,
+body {
+    font-family: 'Pingfang SC', 'Myriad Pro', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+    background: #F6F6F6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+input,
+button {
+    outline: none;
+    border: none;
+}
+
+// 去掉chrome表单自动填充后黄色背景
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.disable {
+    color: gray;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.container {
+    width: 940px;
+    margin: 0 auto;
+}
+
+section {
+    background: #FFFFFF;
+    padding: 30px;
+    box-shadow: 0px 2px 2px 0px rgba(209, 209, 209, 0.50);
+    margin: 20px auto;
+    // 大标题
+    h1.title {
+        font-size: 20px;
+        color: #4a4a4a;
+        margin-left: -10px;
+        margin-bottom: 50px;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 5px;
+            width: 6px;
+            height: 20px;
+            background: #00A69D;
+            border-radius: 0 4px 4px 0;
+        }
+        .date_region {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #9b9b9b;
+        }
+    }
+    h6.trend_introduction {
+        font-size: 14px;
+        color: #9b9b9b;
+    }
+    .values_container {
+        font-size: 0;
+        .number {
+            margin-top: 20px;
+            font-family: Helvetica;
+            font-size: 44px;
+            color: #4a4a4a;
+            .arrow {
+                font-family: LucidaGrande;
+                font-size: 24px;
+                color: #00a69d;
+            }
+        }
+        h2.program_title {
+            .date {
+                position: absolute;
+                width: 200px;
+                left: 0;
+                top: 20px;
+                font-size: 14px;
+                color: #9b9b9b;
+            }
+        }
+    }
+    // 3等分数据
+    .values_content {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 33.3%;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+    // 数据标题
+    h2.program_title {
+        position: relative;
+        display: inline-block;
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+    //tooltip提示
+    .tooltip {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+        font-family: Avenir-Medium;
+        font-size: 10px;
+        color: #979797;
+        border: 1px solid #979797;
+        line-height: 12px;
+        text-align: center;
+        width: 12px;
+        height: 12px;
+        border-radius: 100%;
+        &:hover {
+            .tooltip_info {
+                display: block;
+            }
+        }
+        .tooltip_info {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            margin-left: -130px;
+            display: none;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: 100;
+            color: #ffffff;
+            line-height: 14px;
+            background: #4a4a4a;
+            border-radius: 3px;
+            width: 260px;
+            text-align: left;
+            &::after {
+                content: '';
+                left: 50%;
+                margin-left: -4px;
+                bottom: -4px;
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 4px solid #4a4a4a;
+            }
+        }
+    }
+    //查看全部
+    .program_showMore {
+        margin: 60px -20px -30px -20px;
+        padding: 23px 0;
+        text-align: center;
+        border-top: 1px solid #bebebe;
+        a {
+            font-size: 18px;
+            color: #00a69d;
+        }
+    }
+}
+
+// 2等分
+.col_2_container {
+    font-size: 0;
+    padding: 0 20px;
+    margin-top: 49px;
+    .col {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        text-align: center;
+        font-size: 14px;
+        height: 370px;
+        h3.title {
+            font-size: 14px;
+            color: #4a4a4a;
+            line-height: 16px;
+        }
+        h4.sub_title {
+            font-size: 14px;
+            color: #9b9b9b;
+            margin-bottom: 22px;
+        }
+        .tags {
+            span {
+                display: inline-block;
+                margin-right: 10px;
+                width: 40px;
+                border-radius: 31px;
+                border: 1px solid #979797;
+                text-align: center;
+                line-height: 18px;
+                a {
+                    cursor: pointer;
+                    line-height: 18px;
+                    font-size: 12px;
+                    color: #979797;
+                }
+            }
+        }
+    }
+}
+
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.pace-inactive {
+    display: none;
+}
+
+.pace .pace-progress {
+    background: rgba(0,166,157,0.5);
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 2px;
+}

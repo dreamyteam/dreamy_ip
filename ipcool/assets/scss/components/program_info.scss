@@ -1,0 +1,125 @@
+section.program_info {
+    position: relative;
+    padding: 17px 30px 17px 17px;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url("../assets/images/colorfulbar.png") no-repeat;
+        background-size: 540px;
+        width: 540px;
+        height: 4px;
+    }
+    .level_flag {
+        position: absolute;
+        width: 112px;
+        height: 66px;
+        background: #f5a623;
+        right: 30px;
+        top: -6px;
+        font-family: Avenir-Black, helvetica, Arial;
+        font-size: 20px;
+        color: #f2f2f2;
+        text-align: center;
+        line-height: 66px;
+        span {
+            font-size: 14px;
+            line-height: 14px;
+            position: absolute;
+            left: 50%;
+            top: 5px;
+            transform: translateX(-50%);
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            left: -3px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-right: 3px solid #AC6D05;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            margin-left: -56px;
+            bottom: 0;
+            width: 0px;
+            height: 0px;
+            line-height: 0px;
+            border-left: 56px solid transparent;
+            border-right: 56px solid transparent;
+            border-bottom: 12px solid #fff;
+        }
+    }
+    img {
+        display: block;
+        float: left;
+        width: 140px;
+        height: 196px;
+    }
+    .content {
+        float: left;
+        padding-top: 42px;
+        padding-left: 23px;
+        h1.name {
+            display: inline-block;
+            font-size: 24px;
+            color: #5e5e5e;
+             vertical-align: middle;
+        }
+        span.type {
+            margin-left: 10px;
+            display: inline-block;
+            border: 1px solid #00A69D;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #00A69D;
+            padding: 2px 3px;
+            vertical-align: middle;
+        }
+        h6 {
+            font-size: 14px;
+            color: #979797;
+        }
+        p.info {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #5e5e5e;
+        }
+        .tags {
+            span {
+                display: inline-block;
+                margin-right: 20px;
+                border-radius: 31px;
+                padding:0 5px;
+                border: 1px solid #979797;
+                text-align: center;
+                line-height: 18px;
+                a {
+                    cursor: pointer;
+                    line-height: 18px;
+                    font-size: 12px;
+                    color: #979797;
+                }
+            }
+        }
+    }
+    .update_time {
+        float: right;
+        margin-top: 130px;
+        h6 {
+            font-size: 14px;
+            color: #5e5e5e;
+            text-align: right;
+        }
+        span {
+            font-size: 18px;
+            color: #9b9b9b;
+            text-align: right;
+        }
+    }
+}

@@ -1,0 +1,489 @@
+@import "./common/reset.scss";
+@import "./common/common.scss";
+@import "./components/header.scss";
+@import "./components/footer.scss";
+@import "./components/popup_box.scss";
+@import "./components/searchbar.scss";
+@import "./components/program_info.scss";
+@import "./components/program_nav.scss";
+@import "./components/comments.scss";
+@import "./components/backtotop.scss";
+// 指数综合
+section.program_values {
+    font-size: 0;
+    .comprehensive_value {
+        .number {
+            margin-top: 23px;
+            font-family: Helvetica;
+            font-size: 44px;
+            color: #4a4a4a;
+        }
+        .warning {
+            position: absolute;
+            padding: 2px 4px;
+            font-size: 12px;
+            font-style: normal;
+            color: #bb4945;
+            line-height: 18px;
+            background: #f2dede;
+        }
+        h6 {
+            margin-top: 22px;
+            font-size: 14px;
+            color: #9b9b9b;
+            .ranking {
+                font-size: 24px;
+                color: #00a69d;
+            }
+        }
+    }
+    .values_content {
+        .number {
+            font-family: Helvetica;
+            font-size: 34px;
+            color: #000000;
+            .rank {
+                &::before {
+                    content: '排名';
+                }
+                vertical-align: middle;
+                display: inline-block;
+                color: #9b9b9b;
+                border-radius: 2px;
+                border: 1px solid #9b9b9b;
+                font-size: 12px;
+                padding: 0 2px;
+            }
+        }
+    }
+}
+
+//tab
+.program_tab {
+    margin: 59px -30px 0;
+    h3.title {
+        margin: 0 50px 8px 50px;
+        font-size: 16px;
+        color: #4a4a4a;
+    }
+    .tab_tags {
+        padding-left: 50px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+        li {
+            display: inline-block;
+            cursor: pointer;
+            border: 1px solid #eee;
+            background: #eee;
+            line-height: 36px;
+            width: 80px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: -1px;
+            transition: background 0.4s;
+        }
+        li.active {
+            box-shadow: inset 0px 4px 0px 0px #00a69d;
+            cursor: default;
+            background: #fff;
+            border-bottom-color: #ffffff;
+            color: #00a69d;
+        }
+    }
+    .tab_contents {
+        position: relative;
+        padding-top: 50px;
+        padding-left: 50px;
+        li {
+            position: relative;
+            left: 0;
+            top: 0;
+            display: none;
+            h3 {
+                display: inline-block;
+                font-size: 16px;
+                color: #4a4a4a;
+            }
+            h6 {
+                font-size: 14px;
+                color: #9b9b9b;
+            }
+            .ipstatus {
+                width: 350px;
+                position: relative;
+                float: left;
+                .pre_bar {
+                    position: relative;
+                    padding-left: 68px;
+                }
+                i {
+                    font-style: normal;
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    line-height: 30px;
+                    background: #1FB1A9;
+                    border-radius: 3px 0 0 3px;
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 200;
+                    width: 45px;
+                    padding: 0 8px;
+                    transition: top 300ms ease;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        right: -15px;
+                        width: 0;
+                        height: 0;
+                        border-top: 15px solid transparent;
+                        border-bottom: 15px solid transparent;
+                        border-left: 15px solid #1FB1A9;
+                    }
+                }
+                span {
+                    display: block;
+                    font-family: HelveticaNeue;
+                    font-weight: 100;
+                    font-size: 14px;
+                    padding-left: 10px;
+                    margin: 5px 0;
+                    line-height: 30px;
+                    color: #9b9b9b;
+                    background: #eee;
+                }
+                span.current {
+                    color: #fff;
+                    background: #1fb1a9;
+                }
+                span:nth-child(1) {
+                    width: 42px;
+                }
+                span:nth-child(2) {
+                    width: 80px;
+                }
+                span:nth-child(3) {
+                    width: 155px;
+                }
+                span:nth-child(4) {
+                    width: 198px;
+                }
+                span:nth-child(5) {
+                    width: 226px;
+                }
+            }
+            .iprank {
+                float: left;
+                padding-left: 38px;
+                a.show_rank_list {
+                    display: inline-block;
+                    float: right;
+                    font-size: 14px;
+                    color: #9b9b9b;
+                }
+                table {
+                    margin-top: 13px;
+                    margin-bottom: 4px;
+                    font-size: 14px;
+                    width: 407px;
+                    line-height: 31px;
+                    border-collapse: collapse;
+                    tr.current {
+                        td {
+                            color: #00a69d;
+                        }
+                    }
+                    th {
+                        padding-left: 9px;
+                        font-size: 12px;
+                        font-weight: normal;
+                        color: #4a4a4a;
+                        background: #f7f7f7;
+                        border-bottom: 1px solid #cbcbcb;
+                        border-top: 1px solid #cbcbcb;
+                    }
+                    td {
+                        padding-left: 9px;
+                        border-bottom: 1px solid #cbcbcb;
+                        color: #9b9b9b;
+                    }
+                }
+            }
+        }
+        .show {
+            display: block;
+        }
+    }
+}
+
+//投票
+.vote_container {
+    padding: 0 20px;
+    h3 {
+        font-size: 20px;
+        color: #4a4a4a;
+    }
+    h6 {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+    .vote_content {
+        font-size: 0;
+        margin-top: 49px;
+        .vote {
+            font-size: 14px;
+            display: inline-block;
+            width: 16.6%;
+            text-align: center;
+            span {
+                display: inline-block;
+                margin-bottom: 11px;
+                width: 30px;
+                height: 30px;
+            }
+            h5 {
+                font-size: 14px;
+                line-height: 14px;
+                color: #bebebe;
+                margin-bottom: 30px;
+            }
+            .vote_btns {
+                font-size: 0;
+                button {
+                    cursor: pointer;
+                    font-size: 14px;
+                    line-height: 24px;
+                    color: #bebebe;
+                    background: transparent;
+                    display: inline-block;
+                    width: 50px;
+                    padding: 0;
+                    text-align: center;
+                    border: 1px solid #bebebe;
+                    transition: border 300ms ease, background 300ms ease, color 300ms ease;
+                    &:hover {
+                        border: 1px solid #00a69d;
+                        background: #00a69d;
+                        color: #fff;
+                    }
+                    &.active {
+                        border: 1px solid #00a69d;
+                        background: #00a69d;
+                        color: #fff;
+                    }
+                }
+                .expext {
+                    border-radius: 4px 0 0 4px;
+                }
+                .wantDevelop {
+                    border-radius: 0 4px 4px 0;
+                    border-left: none;
+                }
+            }
+        }
+        .vote.movie span {
+            background: url("../assets/images/movie_ico@2x.png") no-repeat;
+            background-size: 30px;
+        }
+        .vote.tvshow span {
+            background: url("../assets/images/tv_show_ico@2x.png") no-repeat;
+            background-size: 30px;
+        }
+        .vote.mobilegame span {
+            background: url("../assets/images/mobile_game_ico@2x.png") no-repeat;
+            background-size: 30px;
+        }
+        .vote.game span {
+            background: url("../assets/images/game_ico@2x.png") no-repeat;
+            background-size: 30px;
+        }
+        .vote.peripheral span {
+            background: url("../assets/images/peripheral_ico@2x.png") no-repeat;
+            background-size: 30px;
+        }
+        .vote.others span {
+            background: url("../assets/images/others@2x.png") no-repeat;
+            background-size: 30px;
+        }
+    }
+}
+
+.review_container {
+    font-size: 0;
+    .review_value {
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 20px;
+        width: 30%;
+        h2 {
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+        h5 {
+            margin-top: 20px;
+            font-family: Helvetica;
+            font-size: 44px;
+            line-height: 53px;
+            color: #4a4a4a;
+        }
+        h6 {
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+    }
+    .review_chart {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        width: 70%;
+        height: 175px;
+        button {
+            cursor: pointer;
+            position: absolute;
+            padding: 0;
+            background: transparent;
+            font-size: 14px;
+            right: 0;
+            top: 0;
+            line-height: 28px;
+            color: #00a69d;
+            text-align: center;
+            border: 1px solid #26b4ac;
+            border-radius: 33px;
+            width: 82px;
+        }
+    }
+}
+
+// 简介
+.introduction {
+    h2.title {
+        font-family: PingFangSC-Regular;
+        font-size: 16px;
+        color: #4a4a4a;
+        margin-bottom: 9px;
+    }
+    p {
+        font-size: 14px;
+        color: #4a4a4a;
+        line-height: 25px;
+    }
+}
+
+// 综合指数细节
+section.comprehensive .values_container .values_content,
+section.potential_trend .values_container .values_content {
+    width: 25%;
+}
+
+//传播能力细节
+section.propagation .values_container .values_content,
+section.persona .values_container .values_content {
+    width: 20%;
+}
+
+section.persona .tags {
+    padding-left: 50px;
+    text-align: left;
+    span {
+        display: inline-block;
+        margin-right: 20px;
+        width: 40px;
+        border-radius: 31px;
+        border: 1px solid #979797;
+        text-align: center;
+        line-height: 18px;
+        margin-bottom: 13px;
+        a {
+            cursor: pointer;
+            line-height: 18px;
+            font-size: 12px;
+            color: #979797;
+        }
+    }
+}
+
+section.user_reviews {
+    .review_container {
+        margin-right: -30px;
+        border-bottom: 1px solid #bebebe;
+        padding-bottom: 44px;
+        .review_chart {
+            padding-right: 30px;
+            button {
+                right: 30px;
+            }
+        }
+    }
+}
+
+// 综合指数图表
+.line_charts {
+    position: relative;
+    margin-top: 67px;
+    height: 305px;
+    padding: 0 20px;
+}
+
+// 潜力模型图表
+#chart_potential_model {
+    &::before {
+        content: '潜力模型';
+        position: absolute;
+        left: 22px;
+        font-size: 20px;
+        color: #4a4a4a;
+    }
+    position: relative;
+    padding: 50px 0;
+    height: 440px;
+}
+
+#chart_heat_trend {
+    &::before {
+        content: '一周热度指数趋势';
+        position: absolute;
+        left: 20px;
+        top: -20px;
+        font-size: 16px;
+        color: #4a4a4a;
+    }
+}
+
+#chart_user_vitalty {
+    &::before {
+        content: '用户活跃度趋势';
+        position: absolute;
+        left: 20px;
+        top: -20px;
+        font-size: 16px;
+        color: #4a4a4a;
+    }
+}
+
+#chart_potential_model_small {
+    height: 110px;
+}
+
+#chart_reviews {
+    width: 500px;
+    height: 175px;
+    position: relative;
+    &::before {
+        content: '评分明细';
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+}
+
+//中国地图
+#chart_media_map_china,
+#chart_similar_contrast {
+    width: 100%;
+    height: 470px;
+    position: relative;
+}
