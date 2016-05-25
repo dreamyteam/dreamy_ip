@@ -4,9 +4,6 @@
     #parse("/common/html_head.vm")
 
     <link rel="stylesheet" type="text/css" href="http://ipcool.me/ipcool/dist/index.css">
-    #if($!{cssName})
-        <link href="http://ipcool.me$!{cssName}.css" rel="stylesheet" type="text/css"/>
-    #end
 </head>
 <body>
 
