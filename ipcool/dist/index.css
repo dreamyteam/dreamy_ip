@@ -1229,7 +1229,7 @@ html.fp-enabled, .fp-enabled body {
     background: #303747; }
     .sec_7 .sec_7_footer .inner {
       width: 1280px;
-      height: 256px;
+      height: 236px;
       margin: 54px auto 0 auto;
       font-size: 0; }
       .sec_7 .sec_7_footer .inner .sec_7_section_left {
@@ -1272,6 +1272,15 @@ html.fp-enabled, .fp-enabled body {
             margin-bottom: 20px;
             font-size: 14px;
             color: #ffffff; }
+    .sec_7 .sec_7_footer .sub_footer {
+      width: 100%;
+      height: 50px;
+      background: #262a36; }
+      .sec_7 .sec_7_footer .sub_footer p {
+        color: #5d7694;
+        font-size: 14px;
+        line-height: 50px;
+        text-align: center; }
 
 @media screen and (max-width: 1440px) {
   .sec_1 .main_title {
@@ -1359,7 +1368,7 @@ html.fp-enabled, .fp-enabled body {
   .sec_6 .sec_6_product {
     position: absolute;
     left: 50%;
-    margin-left: -655px;
+    margin-left: -490px;
     width: 980px;
     height: 490px;
     bottom: 60px; }
@@ -1380,17 +1389,68 @@ html.fp-enabled, .fp-enabled body {
             .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo {
               margin-top: 22px;
               height: 127px; }
-          .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_info {
-            margin-top: 45px;
-            width: 100%;
-            height: 230px; }
-            .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_info li {
-              margin-top: 32px;
-              font-size: 14px; }
-          .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_btn {
-            width: 190px;
-            line-height: 52px;
-            font-size: 19px; } }
+            .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_info {
+              margin-top: 20px;
+              width: 100%;
+              height: 175px; }
+              .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_info li {
+                margin-top: 28px;
+                font-size: 14px; }
+            .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_btn {
+              width: 190px;
+              line-height: 52px;
+              font-size: 19px; }
+  .sec_7 {
+    padding-top: 70px; }
+    .sec_7 .title {
+      font-size: 40px; }
+    .sec_7 .summary {
+      font-size: 24px;
+      margin-top: 30px; }
+    .sec_7 .two_in_one_form {
+      width: 500px;
+      margin: 40px auto 0 auto; }
+      .sec_7 .two_in_one_form .two_in_one_form_content {
+        margin-top: 20px;
+        position: relative; }
+        .sec_7 .two_in_one_form .two_in_one_form_content input {
+          height: 60px;
+          font-size: 20px;
+          padding: 0 35px; }
+      .sec_7 .two_in_one_form .submit {
+        height: 60px;
+        font-size: 24px; }
+      .sec_7 .two_in_one_form .info {
+        font-size: 14px; }
+    .sec_7 .sec_7_footer {
+      width: 100%;
+      height: 300px;
+      position: absolute;
+      bottom: 0;
+      background: #303747; }
+      .sec_7 .sec_7_footer .inner {
+        width: 980px;
+        height: 220px;
+        margin: 50px auto 0 auto; }
+        .sec_7 .sec_7_footer .inner .sec_7_section_left {
+          width: 174px;
+          font-size: 18px;
+          color: #fff; }
+          .sec_7 .sec_7_footer .inner .sec_7_section_left li {
+            margin-bottom: 18px; }
+        .sec_7 .sec_7_footer .inner .sec_7_section_right ul {
+          margin-top: 30px; }
+          .sec_7 .sec_7_footer .inner .sec_7_section_right ul li {
+            margin-bottom: 14px; }
+      .sec_7 .sec_7_footer .sub_footer {
+        width: 100%;
+        height: 30px;
+        background: #262a36; }
+        .sec_7 .sec_7_footer .sub_footer p {
+          color: #5d7694;
+          font-size: 14px;
+          line-height: 30px;
+          text-align: center; } }
 
 @-webkit-keyframes fadeUp {
   from {

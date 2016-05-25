@@ -1,0 +1,16 @@
+ipcool/node_modules
+lgh/node_modules
+ipcool/src
+ipcool/views
+ipcool/webpack.config.js
+ipcool/README.md
+ipcool/gulpfile.js
+ipcool/package.json
+ipcool/npm-debug.log
+lgh/info.txt
+lgh/views
+lgh/test.html
+lgh/gulpfile.js
+lgh/package.json
+lgh/index.html
+lgh/src

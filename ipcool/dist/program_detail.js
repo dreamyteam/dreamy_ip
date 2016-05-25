@@ -46,11 +46,11 @@
 
 	'use strict';
 
-	var _get_value_history = __webpack_require__(5);
+	var _get_value_history = __webpack_require__(6);
 
 	var _get_value_history2 = _interopRequireDefault(_get_value_history);
 
-	var _fix_top = __webpack_require__(6);
+	var _fix_top = __webpack_require__(7);
 
 	var _fix_top2 = _interopRequireDefault(_fix_top);
 
@@ -58,27 +58,27 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
-	var _line = __webpack_require__(7);
+	var _line = __webpack_require__(8);
 
 	var _line2 = _interopRequireDefault(_line);
 
-	var _radar = __webpack_require__(9);
+	var _radar = __webpack_require__(10);
 
 	var _radar2 = _interopRequireDefault(_radar);
 
-	var _pieMutiple = __webpack_require__(10);
+	var _pieMutiple = __webpack_require__(11);
 
 	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
 
-	var _pieDouble = __webpack_require__(11);
+	var _pieDouble = __webpack_require__(12);
 
 	var _pieDouble2 = _interopRequireDefault(_pieDouble);
 
-	var _barVertical = __webpack_require__(12);
+	var _barVertical = __webpack_require__(13);
 
 	var _barVertical2 = _interopRequireDefault(_barVertical);
 
-	var _barComment = __webpack_require__(13);
+	var _barComment = __webpack_require__(14);
 
 	var _barComment2 = _interopRequireDefault(_barComment);
 
@@ -86,7 +86,7 @@
 
 	var Tab = __webpack_require__(4);
 
-	var VoteProto = __webpack_require__(14); //投票
+	var VoteProto = __webpack_require__(15); //投票
 
 
 	$(function () {
@@ -302,7 +302,8 @@
 	exports.default = Tab;
 
 /***/ },
-/* 5 */
+/* 5 */,
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -387,7 +388,7 @@
 	exports.default = GetHistory;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -435,7 +436,7 @@
 	exports.default = FixTop;
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -446,7 +447,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -593,7 +594,7 @@
 	exports.default = Line;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -683,7 +684,7 @@
 	exports.default = Chart;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -694,7 +695,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -795,7 +796,7 @@
 	exports.default = Radar;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -806,7 +807,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -910,7 +911,7 @@
 	exports.default = pieMutiple;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -921,7 +922,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -1063,7 +1064,7 @@
 	exports.default = pieDouble;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1074,7 +1075,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -1241,7 +1242,7 @@
 	exports.default = barVertical;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1252,7 +1253,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(8);
+	var _baseChart = __webpack_require__(9);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -1364,7 +1365,7 @@
 	exports.default = barCommit;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	"use strict";

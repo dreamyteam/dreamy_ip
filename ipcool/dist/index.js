@@ -40,9 +40,8 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51,7 +50,7 @@
 
 	var _tab2 = _interopRequireDefault(_tab);
 
-	var _slide_tab = __webpack_require__(17);
+	var _slide_tab = __webpack_require__(5);
 
 	var _slide_tab2 = _interopRequireDefault(_slide_tab);
 
@@ -79,8 +78,10 @@
 	});
 
 /***/ },
-
-/***/ 4:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -144,8 +145,7 @@
 	exports.default = Tab;
 
 /***/ },
-
-/***/ 17:
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -246,5 +246,4 @@
 	exports.default = SlideTab;
 
 /***/ }
-
-/******/ });
+/******/ ]);
