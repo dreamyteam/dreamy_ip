@@ -5,4 +5,5 @@
 <script type="text/javascript" src="http://ipcool.me/ipcool/dist/program_detail.js "></script>
 <script type="text/javascript" src="http://ipcool.me/ipcool/dist/searchresult.js "></script>
 <script type="text/javascript" src="http://ipcool.me/ipcool/dist/user.js "></script>
+<script type="text/javascript" src="http://ipcool.me/ipcool/dist/pace.min.js"></script>
 
