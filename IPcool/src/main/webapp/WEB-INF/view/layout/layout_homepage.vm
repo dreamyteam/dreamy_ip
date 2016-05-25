@@ -3,7 +3,7 @@
 <head>
     #parse("/common/html_head.vm")
 
-    <link rel="stylesheet" type="text/css" href="http://ipcool.me/ipcool/dist/index.css">
+    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
 </head>
 <body>
 
