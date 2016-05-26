@@ -1,18 +1,13 @@
 package com.dreamy.admin.tasks.rank;
 
 import com.dreamy.beans.Page;
-import com.dreamy.beans.params.BookCrawlerParams;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookIndexTypeEnums;
-import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
-import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.iface.mongo.HotWordService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
@@ -72,7 +67,7 @@ public class RankUpdateTask {
     @Value("${queue_index_wx}")
     private String wxIndexQueue;
 
-    @Scheduled(fixedDelay = 1000 * 6)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void run() {
         Page page = new Page();
         page.setPageSize(200);
@@ -100,69 +95,82 @@ public class RankUpdateTask {
                             }
                         }
 
-                        String flag = "wwxss:" + bookId;
-                        if (CollectionUtils.isNotEmpty(salePlatformUrls)) {
-                            Integer count = redisClientService.get(flag);
-                            if (count == null || count == 0) {
-                                redisClientService.set(flag, 0);
+                        String flag = "book:update:" + bookId;
+                        String action = "update";
+                        try {
+                            if (CollectionUtils.isNotEmpty(salePlatformUrls)) {
 
-                                if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
+                                Long count = redisClientService.getNumber(flag);
+                                if (count == null || count == 0) {
+                                    Long stepValue = new Long(1);
+                                    redisClientService.setNumber(flag, (long) 0);
+
+                                    if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", "" + bookId);
+                                        params.put("flag", flag);
+                                        params.put("action", action);
+                                        params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
+                                        queueService.push(amazonQueue, params);
+                                        redisClientService.incrBy(flag, stepValue);
+                                    }
+
+                                    if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", "" + bookId);
+                                        params.put("flag", flag);
+                                        params.put("action", action);
+                                        params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
+                                        queueService.push(jdQueue, params);
+                                        redisClientService.incrBy(flag, stepValue);
+                                    }
+
+                                    if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", "" + bookId);
+                                        params.put("flag", flag);
+                                        params.put("action", action);
+                                        params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
+                                        queueService.push(dangdangQueue, params);
+                                        redisClientService.incrBy(flag, stepValue);
+                                    }
+
+                                    if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", "" + bookId);
+                                        params.put("flag", flag);
+                                        params.put("action", action);
+                                        params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
+                                        queueService.push(doubanQueue, params);
+                                        redisClientService.incrBy(flag, stepValue);
+                                    }
+
+                                    HotWord hotWord = hotWordService.getById(bookId);
+                                    if (hotWord != null) {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", "" + bookId);
+                                        params.put("flag", flag);
+                                        params.put("action", action);
+                                        params.put("cookie", hotWord.getCookie());
+                                        queueService.push(doubanQueue, params);
+                                        redisClientService.incrBy(flag, stepValue);
+                                    }
+
                                     Map<String, String> params = new HashMap<>();
                                     params.put("id", "" + bookId);
                                     params.put("flag", flag);
-                                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
-                                    queueService.push(amazonQueue, params);
-                                    redisClientService.incrBy(flag, (long) 1);
-                                }
+                                    params.put("name", bookView.getName());
+                                    params.put("action", action);
+                                    queueService.push(s360IndexQueue, params);
+                                    redisClientService.incrBy(flag, stepValue);
 
-                                if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("id", "" + bookId);
                                     params.put("flag", flag);
-                                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
-                                    queueService.push(jdQueue, params);
-                                    redisClientService.incrBy(flag, (long) 1);
+                                    queueService.push(wxIndexQueue, params);
+                                    redisClientService.incrBy(flag, stepValue);
                                 }
-
-                                if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("id", "" + bookId);
-                                    params.put("flag", flag);
-                                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
-                                    queueService.push(dangdangQueue, params);
-                                    redisClientService.incrBy(flag, (long) 1);
-                                }
-
-                                if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("id", "" + bookId);
-                                    params.put("flag", flag);
-                                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
-                                    queueService.push(doubanQueue, params);
-                                    redisClientService.incrBy(flag, (long) 1);
-                                }
-
-                                HotWord hotWord = hotWordService.getById(bookId);
-                                if (hotWord != null) {
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("id", "" + bookId);
-                                    params.put("flag", flag);
-                                    params.put("cookie", hotWord.getCookie());
-                                    queueService.push(doubanQueue, params);
-                                    redisClientService.incrBy(flag, (long) 1);
-                                }
-
-                                Map<String, String> params = new HashMap<>();
-                                params.put("id", "" + bookId);
-                                params.put("flag", flag);
-                                params.put("name", bookView.getName());
-                                queueService.push(s360IndexQueue, params);
-                                redisClientService.incrBy(flag, (long) 1);
-
-                                params.put("flag", flag);
-                                queueService.push(wxIndexQueue, params);
-                                redisClientService.incrBy(flag, (long) 1);
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                     }
