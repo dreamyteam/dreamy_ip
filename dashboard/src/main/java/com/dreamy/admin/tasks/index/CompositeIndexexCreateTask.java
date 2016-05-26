@@ -35,7 +35,7 @@ public class CompositeIndexexCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    @Scheduled(fixedDelay = 1000 * 8)
+//    @Scheduled(fixedDelay = 1000 * 8)
     public void run() {
         Integer type = BookIndexTypeEnums.composite.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);

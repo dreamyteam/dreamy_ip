@@ -44,7 +44,7 @@ public class BookViewCreateTask {
     @Autowired
     private BookTagsService bookTagsService;
 
-    @Scheduled(fixedDelay = 8000)
+//    @Scheduled(fixedDelay = 8000)
     public void run() {
         try {
             BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();

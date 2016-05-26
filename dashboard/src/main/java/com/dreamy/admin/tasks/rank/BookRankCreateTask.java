@@ -45,7 +45,7 @@ public class BookRankCreateTask {
     @Autowired
     private BookRankHistoryService bookRankHistoryService;
 
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+//    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void run() {
         Page page = new Page();
         page.setPageSize(1000);

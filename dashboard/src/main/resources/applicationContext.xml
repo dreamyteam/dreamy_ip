@@ -25,7 +25,7 @@
         <property name="queueCapacity" value="10" />
     </bean>
 
-    <!--<task:annotation-driven/>-->
+    <task:annotation-driven/>
 
     <bean id="jacksonMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>

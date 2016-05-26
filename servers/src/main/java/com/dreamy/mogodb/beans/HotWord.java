@@ -11,6 +11,15 @@ public class HotWord {
     private String wid;
     private String wname;
     private String title;
+    private String cookie;
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 
     public Integer getId() {
         return id;
