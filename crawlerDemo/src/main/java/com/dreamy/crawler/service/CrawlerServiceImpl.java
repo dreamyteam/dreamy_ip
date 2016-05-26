@@ -136,6 +136,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId) {
+        System.out.println(1111);
         long num = rawValueOperations.increment(key, -1);
         if (num <= 0) {
             Map<String, Object> map = new HashMap<String, Object>();

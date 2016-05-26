@@ -33,7 +33,6 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-
         String title = jsonObject.getString("title");
         String url = jsonObject.getString("url");
         String isbn = jsonObject.getString("isbn");
@@ -41,10 +40,8 @@ public class CrawlerDoubanBookQueueHandler extends AbstractQueueHandler {
         String operation = jsonObject.getString("operation");
         String key = jsonObject.getString("key");
         try {
-            BookInfo bookInfo = douBanCrawlerBookHandler.crawler(url,operation);
-            if (bookInfo != null && StringUtils.isNotEmpty(bookInfo.getTitle())) {
-                crawlerService.Operation(operation,key,bookInfo,title,bookId,url);
-            }
+            BookInfo bookInfo = douBanCrawlerBookHandler.crawler(url, operation);
+            crawlerService.Operation(operation, key, bookInfo, title, bookId, url);
             Thread.sleep(NumberUtils.randomInt(1000, 3000));
         } catch (Exception e) {
             log.error("CrawlerDoubanBookQueueHandler event exception" + title + ",url:" + url, e);

@@ -30,7 +30,7 @@
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory"
                      message-converter="jsonMessageConverter"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange" />
 
 
     <!--队列声明-->
@@ -56,7 +56,7 @@
 
 
     <!--交换器声明-->
-    <rabbit:direct-exchange name="data.listen">
+    <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
             <!--<rabbit:binding queue="${queue_crawler_publish_book}"/>-->
             <!--<rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>-->

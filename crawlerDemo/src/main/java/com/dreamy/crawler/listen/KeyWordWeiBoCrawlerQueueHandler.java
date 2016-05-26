@@ -24,7 +24,6 @@ public class KeyWordWeiBoCrawlerQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-
         String title = jsonObject.getString("title");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");

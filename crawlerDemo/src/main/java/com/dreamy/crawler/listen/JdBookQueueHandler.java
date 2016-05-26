@@ -5,6 +5,7 @@ import com.dreamy.crawler.handler.info.jd.JdCrawlerBookHandler;
 import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
@@ -44,7 +45,7 @@ public class JdBookQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         BookInfo bookInfo = null;
         //判断动作  crawler 抓取 update 更新
-        if (operation.equals("crawler")) {
+        if (operation.equals(OperationEnums.crawler.getCode())){
             bookInfo = jdCrawlerBookHandler.getByISBN(isbn, operation);
         } else {
             bookInfo = jdCrawlerBookHandler.crawler(url, operation);
