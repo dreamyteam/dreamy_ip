@@ -8,6 +8,10 @@ import java.util.List;
 public interface CrawlerService {
 
 
+    public void pushAll(String isbn,String url,Integer bookId);
+
+
+
 
 
 }

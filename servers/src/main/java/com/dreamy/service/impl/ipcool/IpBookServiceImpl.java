@@ -14,6 +14,7 @@ import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +36,16 @@ public class IpBookServiceImpl implements IpBookService {
     @Autowired
     private BookCrawlerInfoService bookCrawlerInfoService;
 
+    @Value("${queue_crawler_publish_book}")
+    private String queueName;
+
+    @Value("${queue_crawler_comment}")
+    private String commentQueueName;
+
+
+    @Value("${queue_crawler_publish_book_amazon}")
+    private String amazonQueueName;
+
     @Override
     public IpBook saveRecordAndCrawlerInfo(IpBook ipBook, List<BookCrawlerInfo> list) {
         ipBookDao.save(ipBook);
@@ -55,8 +66,8 @@ public class IpBookServiceImpl implements IpBookService {
     public List<IpBook> getIpBookList(IpBook ipBook, Page page) {
         Map<String, Object> params = BeanUtils.toQueryMap(ipBook);
         IpBookConditions conditions = new IpBookConditions();
-        if(params.get("id")!=null){
-            conditions.createCriteria().andIdLessThan((Integer)params.get("id"));
+        if (params.get("id") != null) {
+            conditions.createCriteria().andIdLessThan((Integer) params.get("id"));
             params.remove("id");
         }
         conditions.createCriteria().addByMap(params);
@@ -116,11 +127,15 @@ public class IpBookServiceImpl implements IpBookService {
             map.put("url", info.getUrl());
             map.put("ipId", info.getBookId());
             map.put("crawlerId", info.getId());
+            if (info.getSource().equals(CrawlerSourceEnums.amazon.getType())) {
+                queueService.push(amazonQueueName, map);
+            } else {
+                queueService.push(queueName, map);
+            }
 
-            queueService.push(QueueRoutingKeyEnums.publish_book.getKey(), map);
 
             if (info.getSource().equals(CrawlerSourceEnums.douban.getType())) {
-                queueService.push(QueueRoutingKeyEnums.publish_book_comment.getKey(), map);
+                queueService.push(commentQueueName, map);
             }
 
             info.status(CrawlerTaskStatusEnums.starting.getStatus());
@@ -129,5 +144,10 @@ public class IpBookServiceImpl implements IpBookService {
             info.status(CrawlerTaskStatusEnums.success.getStatus());
             bookCrawlerInfoService.update(info);
         }
+    }
+
+    @Override
+    public void save(IpBook ipBook) {
+        ipBookDao.save(ipBook);
     }
 }

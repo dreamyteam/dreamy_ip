@@ -35,7 +35,7 @@ public class DevelopIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    @Scheduled(fixedDelay = 10000*10)
+    @Scheduled(fixedDelay = 10000 * 10)
     public void run() {
         Integer type = BookIndexTypeEnums.develop.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);
@@ -45,21 +45,30 @@ public class DevelopIndexesCreateTask {
 
         try {
             Page page = new Page();
-            page.setPageSize(1000);
-            List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
-            if (CollectionUtils.isNotEmpty(bookViews)) {
-                for (BookView bookView : bookViews) {
-                    String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-                    bookView.developIndex(Integer.parseInt(developIndex));
-                    bookViewService.update(bookView);
+            page.setPageSize(200);
+            int current = 1;
+            while (true) {
+                page.setCurrentPage(current);
+                List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
+                if (CollectionUtils.isNotEmpty(bookViews)) {
+                    for (BookView bookView : bookViews) {
+                        String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
+                        bookView.developIndex(Integer.parseInt(developIndex));
+                        bookViewService.update(bookView);
+                    }
                 }
-            }
 
-            BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
-            if (bookIndexTaskLog.getId() != null) {
-                Integer oldRunTime = bookIndexTaskLog.getRunTime();
-                bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
-                bookIndexTaskLogService.update(bookIndexTaskLog);
+                BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
+                if (bookIndexTaskLog.getId() != null) {
+                    Integer oldRunTime = bookIndexTaskLog.getRunTime();
+                    bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
+                    bookIndexTaskLogService.update(bookIndexTaskLog);
+                }
+                if (!page.isHasNextPage()) {
+
+                    break;
+                }
+                current++;
             }
 
         } catch (NumberFormatException e) {

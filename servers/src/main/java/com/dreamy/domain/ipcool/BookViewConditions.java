@@ -677,66 +677,6 @@ public class BookViewConditions {
             return (Criteria) this;
         }
 
-        public Criteria andActivityIndexIsNull() {
-            addCriterion("activity_index is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexIsNotNull() {
-            addCriterion("activity_index is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexEqualTo(Integer value) {
-            addCriterion("activity_index =", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexNotEqualTo(Integer value) {
-            addCriterion("activity_index <>", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexGreaterThan(Integer value) {
-            addCriterion("activity_index >", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexGreaterThanOrEqualTo(Integer value) {
-            addCriterion("activity_index >=", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexLessThan(Integer value) {
-            addCriterion("activity_index <", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexLessThanOrEqualTo(Integer value) {
-            addCriterion("activity_index <=", value, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexIn(List<Integer> values) {
-            addCriterion("activity_index in", values, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexNotIn(List<Integer> values) {
-            addCriterion("activity_index not in", values, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexBetween(Integer value1, Integer value2) {
-            addCriterion("activity_index between", value1, value2, "activityIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andActivityIndexNotBetween(Integer value1, Integer value2) {
-            addCriterion("activity_index not between", value1, value2, "activityIndex");
-            return (Criteria) this;
-        }
-
         public Criteria andPropagateIndexIsNull() {
             addCriterion("propagate_index is null");
             return (Criteria) this;
@@ -794,6 +734,66 @@ public class BookViewConditions {
 
         public Criteria andPropagateIndexNotBetween(Integer value1, Integer value2) {
             addCriterion("propagate_index not between", value1, value2, "propagateIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexIsNull() {
+            addCriterion("activity_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexIsNotNull() {
+            addCriterion("activity_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexEqualTo(Integer value) {
+            addCriterion("activity_index =", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexNotEqualTo(Integer value) {
+            addCriterion("activity_index <>", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexGreaterThan(Integer value) {
+            addCriterion("activity_index >", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("activity_index >=", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexLessThan(Integer value) {
+            addCriterion("activity_index <", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexLessThanOrEqualTo(Integer value) {
+            addCriterion("activity_index <=", value, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexIn(List<Integer> values) {
+            addCriterion("activity_index in", values, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexNotIn(List<Integer> values) {
+            addCriterion("activity_index not in", values, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexBetween(Integer value1, Integer value2) {
+            addCriterion("activity_index between", value1, value2, "activityIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andActivityIndexNotBetween(Integer value1, Integer value2) {
+            addCriterion("activity_index not between", value1, value2, "activityIndex");
             return (Criteria) this;
         }
 

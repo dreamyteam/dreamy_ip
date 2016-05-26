@@ -68,4 +68,13 @@
         <constructor-arg name="template" ref="rawRedisTemplate"></constructor-arg>
     </bean>
 
+    <bean id="listOperations" class="org.springframework.data.redis.core.DefaultListOperations">
+        <constructor-arg name="template" ref="rawRedisTemplate"></constructor-arg>
+    </bean>
+
+    <bean id="hashOperationsString" class="org.springframework.data.redis.core.DefaultHashOperations">
+        <constructor-arg name="template" ref="rawRedisTemplate"></constructor-arg>
+    </bean>
+
+
 </beans>

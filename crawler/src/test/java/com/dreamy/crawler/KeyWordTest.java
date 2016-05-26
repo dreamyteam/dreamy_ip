@@ -3,8 +3,10 @@ package com.dreamy.crawler;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.handler.keyword.KeyWordHandler;
+import com.dreamy.handler.keyword.KeyWordWeiBoHandler;
 import com.dreamy.handler.keyword.KeyWordWeiXinHandler;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.utils.NumberUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +19,7 @@ import java.util.Random;
 public class KeyWordTest extends BaseJunitTest {
 
     @Autowired
-    KeyWordHandler keyWordHandler;
+    KeyWordWeiBoHandler keyWordWeiBoHandler;
     @Autowired
     KeyWordWeiXinHandler keyWordWeiXinHandler;
     @Autowired
@@ -25,21 +27,23 @@ public class KeyWordTest extends BaseJunitTest {
 
     @Test
     public void crawler() throws InterruptedException {
-        keyWordHandler.init();
-//        BookView bookView = new BookView().type(1);
-//        int currentPage =  1;
-//        while (true) {
-//            Page page = new Page();
-//            page.setPageSize(200);
-//            page.setCurrentPage(currentPage);
-//            List<BookView> list = bookViewService.getList(bookView, page);
-//
-//            for (BookView book : list) {
-//                keyWordHandler.crawler(book.getName() + " " + book.getAuthor(), book.getBookId());
-//                Thread.sleep(getRandom(50000));
-//
-//            }
-//        }
+
+        //keyWordWeiBoHandler.init();
+        BookView bookView = new BookView().type(2);
+        int currentPage = 8;
+        while (true) {
+            Page page = new Page();
+
+            page.setPageSize(50);
+            page.setCurrentPage(currentPage);
+            List<BookView> list = bookViewService.getList(bookView, page);
+
+            for (BookView book : list) {
+                keyWordWeiXinHandler.crawler(book.getName(), book.getBookId());
+                Thread.sleep(NumberUtils.randomInt(1000,5000));
+            }
+            System.out.println(111);
+        }
 //        IpBook ipBook = new IpBook().type(1);
 //        int currentPage =  1;
 //        while (true) {
@@ -62,6 +66,10 @@ public class KeyWordTest extends BaseJunitTest {
         Random random=new Random();
         int result=random.nextInt(size);
         return result;
+    }
+    @Test
+    public  void test(){
+        keyWordWeiBoHandler.crawler("围城",111);
     }
 
 

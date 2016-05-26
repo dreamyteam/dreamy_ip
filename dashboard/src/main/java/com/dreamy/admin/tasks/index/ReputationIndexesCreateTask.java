@@ -44,22 +44,31 @@ public class ReputationIndexesCreateTask {
         }
 
         try {
-            Page page = new Page();
-            page.setPageSize(1000);
-            List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
-            if (CollectionUtils.isNotEmpty(bookViews)) {
-                for (BookView bookView : bookViews) {
-                    String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-                    bookView.reputationIndex(Integer.parseInt(reputationIndex));
-                    bookViewService.update(bookView);
-                }
-            }
 
-            BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
-            if (bookIndexTaskLog.getId() != null) {
-                Integer oldRunTime = bookIndexTaskLog.getRunTime();
-                bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
-                bookIndexTaskLogService.update(bookIndexTaskLog);
+            Page page = new Page();
+            page.setPageSize(200);
+            int current = 1;
+            while (true) {
+                page.setCurrentPage(current);
+                List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
+                if (CollectionUtils.isNotEmpty(bookViews)) {
+                    for (BookView bookView : bookViews) {
+                        String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
+                        bookView.reputationIndex(Integer.parseInt(reputationIndex));
+                        bookViewService.update(bookView);
+                    }
+                }
+
+                BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
+                if (bookIndexTaskLog.getId() != null) {
+                    Integer oldRunTime = bookIndexTaskLog.getRunTime();
+                    bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
+                    bookIndexTaskLogService.update(bookIndexTaskLog);
+                }
+                if(!page.isHasNextPage()){
+                    break;
+                }
+                current++;
             }
 
         } catch (NumberFormatException e) {

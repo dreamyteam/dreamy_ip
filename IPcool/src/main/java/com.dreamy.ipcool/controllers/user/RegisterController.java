@@ -8,6 +8,7 @@ import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ShortMessageService;
 import com.dreamy.service.iface.VerificationCodeService;
+import com.dreamy.service.iface.user.RegisterService;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.service.impl.user.RegisterServiceImpl;
 import com.dreamy.utils.JsonUtils;
@@ -33,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController extends IpcoolController {
 
     @Autowired
-    private RegisterServiceImpl registerService;
+    private RegisterService registerService;
 
     @Autowired
     private UserService userService;
@@ -49,19 +50,28 @@ public class RegisterController extends IpcoolController {
     @ResponseBody
     public void getVerificationCode(RegisterParams param, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
+        String mobile = param.getMobile();
+        if (StringUtils.isEmpty(mobile)) {
+            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
+        } else {
+            User user = userService.getUserByMobile(param.getMobile());
+            if (user.getId() != null) {
+            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
+            } else {
+                AsynchronousService.submit(new ObjectCallable(mobile) {
+                    @Override
+                    public Object run() throws Exception {
+                        String code = verificationCodeService.createVerificationCode(4);
+                        if (StringUtils.isNotEmpty(code)) {
+                            verificationCodeService.saveCodeToCache(name, code);
+                            shortMessageService.send(name, "【IP库】您的验证码是" + code);
+                        }
 
-        AsynchronousService.submit(new ObjectCallable(param.getMobile()) {
-            @Override
-            public Object run() throws Exception {
-                String code = verificationCodeService.createVerificationCode(4);
-                if (StringUtils.isNotEmpty(code)) {
-                    verificationCodeService.saveCodeToCache(name, code);
-                    shortMessageService.send(name, "【IP库】您的验证码是" + code);
-                }
-
-                return null;
+                        return null;
+                    }
+                });
             }
-        });
+        }
 
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
@@ -70,7 +80,7 @@ public class RegisterController extends IpcoolController {
 
     @RequestMapping(value = "/user/register")
     @ResponseBody
-    public void register(RegisterParams param,HttpServletRequest request, HttpServletResponse response) {
+    public void register(RegisterParams param, HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
         ErrorCodeEnums errorCodeEnums = registerService.checkRegisterParam(param);
         if (errorCodeEnums.getErrorCode() > 0) {

@@ -127,7 +127,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testGetMongo() {
-        Object object = bookInfoService.getById(1);
+        Object object = bookInfoService.getById("");
         if (object != null) {
 
         }
@@ -218,7 +218,7 @@ public class test extends BaseJunitTest {
     @Test
     public void bookIndexDataFind() throws UnsupportedEncodingException {
 
-        BookIndexData bookIndexData = bookIndexDataDao.queryById(110);
+        BookIndexData bookIndexData = bookIndexDataDao.queryById(11);
 
         System.out.println(bookIndexData);
 

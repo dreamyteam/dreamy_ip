@@ -32,7 +32,7 @@ public class BookIndexHistoryTask {
         bookIndexHistoryService.delByDate(new Date());
         while (true) {
             Page page = new Page();
-            page.setPageSize(100);
+            page.setPageSize(200);
             page.setCurrentPage(currentPage);
             List<BookView> list = bookViewService.getList(entity, page);
             for(BookView info:list){

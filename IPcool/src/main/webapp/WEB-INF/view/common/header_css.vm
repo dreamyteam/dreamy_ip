@@ -1,8 +1,8 @@
-##<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/index.css">
-<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/rank_list.css">
-<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/record.css">
-<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/searchresult.css">
-<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/program_detail_page.css">
-<link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/sidebar.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/rank_list.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/record.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/searchresult.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/program_detail_page.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/sidebar.css">
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/pace-theme-minimal.css">
 
 

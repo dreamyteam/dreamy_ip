@@ -2,6 +2,9 @@ package com.dreamy.service.iface.user;
 
 import com.dreamy.domain.user.User;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
@@ -37,4 +40,11 @@ public interface UserService {
      * @return
      */
     Integer updateByRecord(User user);
+
+    /**
+     *
+     * @param response
+     * @param user
+     */
+    Cookie rememerPwd(User user);
 }

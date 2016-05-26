@@ -199,7 +199,7 @@ public class PropagationController extends IpcoolController {
     @RequestMapping("/developIndex/history")
     public void developIndexHistroy(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
         InterfaceBean bean = new InterfaceBean().success();
-        BookView bookView = bookViewService.getById(bookId);
+        BookView bookView = bookViewService.getByBookId(bookId);
         Map<String,Object> indicator=new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (bookView != null) {
@@ -332,14 +332,15 @@ public class PropagationController extends IpcoolController {
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", bookIndexData.getAge());
-            map.put("name", "平均分布");
+            map.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
             re.add(map);
+
+            //@todo
             Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", bookIndexData.getAge());
-            male.put("name", "斗破苍穹");
+            male.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
             re.add(male);
         }
+
         bean.setData(re);
         interfaceReturn(response, JsonUtils.toString(bean), callback);
 

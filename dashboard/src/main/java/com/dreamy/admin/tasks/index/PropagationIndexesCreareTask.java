@@ -36,7 +36,7 @@ public class PropagationIndexesCreareTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    @Scheduled(fixedDelay = 1000*10)
+    @Scheduled(fixedDelay = 1000 * 10)
     public void run() {
 
         Integer type = BookIndexTypeEnums.propagate.getType();
@@ -47,21 +47,29 @@ public class PropagationIndexesCreareTask {
 
         try {
             Page page = new Page();
-            page.setPageSize(1000);
-            List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
-            if (CollectionUtils.isNotEmpty(bookViews)) {
-                for (BookView bookView : bookViews) {
-                    String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-                    bookView.propagateIndex(Integer.parseInt(propagateIndex));
-                    bookViewService.update(bookView);
+            page.setPageSize(200);
+            int current = 1;
+            while (true) {
+                page.setCurrentPage(current);
+                List<BookView> bookViews = bookViewService.getListByPageAndOrder(page, "id asc");
+                if (CollectionUtils.isNotEmpty(bookViews)) {
+                    for (BookView bookView : bookViews) {
+                        String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
+                        bookView.propagateIndex(Integer.parseInt(propagateIndex));
+                        bookViewService.update(bookView);
+                    }
                 }
-            }
 
-            BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
-            if (bookIndexTaskLog.getId() != null) {
-                Integer oldRunTime = bookIndexTaskLog.getRunTime();
-                bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
-                bookIndexTaskLogService.update(bookIndexTaskLog);
+                BookIndexTaskLog bookIndexTaskLog = bookIndexTaskLogService.getByIndexType(type);
+                if (bookIndexTaskLog.getId() != null) {
+                    Integer oldRunTime = bookIndexTaskLog.getRunTime();
+                    bookIndexTaskLog.status(BookIndexStatusEnums.finished.getStatus()).runTime(oldRunTime + 1);
+                    bookIndexTaskLogService.update(bookIndexTaskLog);
+                }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                current++;
             }
 
         } catch (NumberFormatException e) {

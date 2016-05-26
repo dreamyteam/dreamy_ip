@@ -12,7 +12,7 @@ public class NewsSougou {
     @ExtractBy("//div[@class=\"filt-sort filt-sort-from\"]//a/@href")
     private List<String> urls;
 
-    @ExtractBy("//div[@class=\"mun\"]/text()")
+    @ExtractBy("//span[@class=\"filt-result\"]/text()")
     private String info;
 
     private String num;

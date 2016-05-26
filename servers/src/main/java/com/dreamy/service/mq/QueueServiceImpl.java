@@ -71,6 +71,11 @@ public class QueueServiceImpl implements QueueService {
         }
     }
 
+    @Override
+    public void pushDefault(Object data) {
+        rabbitTemplate.convertSendAndReceive(data);
+    }
+
 
 }
 

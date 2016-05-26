@@ -10,6 +10,7 @@ import com.dreamy.service.iface.user.LoginService;
 import com.dreamy.service.iface.user.UserService;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.PasswordUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,8 @@ public class LoginController extends IpcoolController {
             session.setSex(user.getSex());
 
             userSessionContainer.set(getUserSessionId(request), session);
+        }else{
+            bean.failure(ErrorCodeEnums.login_failed.getErrorCode(),"账号或密码错误");
         }
 
         interfaceReturn(response, JsonUtils.toString(bean), "");

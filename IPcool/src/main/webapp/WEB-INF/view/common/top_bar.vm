@@ -55,11 +55,11 @@
         <div class="sign_form" id="register_form">
             <div class="sign_container">
                 <label class="icon_phone_number"></label>
-                <input type="text" name="phone_number" placeholder="手机号码" value=""/>
+                <input type="text" name="phone_number" maxlength="11" placeholder="手机号码" value=""/>
             </div>
             <div class="sign_container">
                 <label class="icon_password"></label>
-                <input type="password" name="password" placeholder="密码"/>
+                <input type="password" name="password"  maxlength="16" placeholder="密码"/>
             </div>
             <div class="sign_container verify">
                 <label class="icon_verify"></label>
@@ -74,14 +74,14 @@
         <div class="sign_form" id="login_form">
             <div class="sign_container">
                 <label class="icon_phone_number"></label>
-                <input type="text" name="phone_number" placeholder="手机号码" value=""/>
+                <input type="text" name="phone_number" maxlength="11" placeholder="手机号码" value=""/>
             </div>
             <div class="sign_container">
                 <label class="icon_password"></label>
-                <input type="password" name="password" placeholder="密码"/>
+                <input type="password" name="password" maxlength="16" placeholder="密码"/>
             </div>
             <div class="remember_pwd_container">
-                <input type="checkbox" name="remenber_pwd" />
+                <input type="checkbox" name="remember_pwd" />
                 <label class="icon_verify">记住密码</label>
                 <a href="#">忘记密码?</a>
             </div>

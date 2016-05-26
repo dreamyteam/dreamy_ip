@@ -85,7 +85,7 @@ public class LoginSina {
     }
     //登录微博
     public void dologinSina(){
-        String url="http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.5)";//v1.3.17
+        String url="http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.8)";//v1.3.17
         Map<String,String> headers=new HashMap<String,String>();
         Map<String,String> params=new HashMap<String,String>();
 
@@ -226,7 +226,7 @@ public class LoginSina {
         builder.append("http://login.sina.com.cn/sso/prelogin.php?")
                 .append("entry=weibo&callback=sinaSSOController.preloginCallBack&")
                 .append("su="+getEncodedU())
-                .append("&rsakt=mod&checkpin=1&client=ssologin.js(v1.4.5)&_="+System.currentTimeMillis());
+                .append("&rsakt=mod&checkpin=1&client=ssologin.js(v1.4.8)&_="+System.currentTimeMillis());
         return builder.toString();
     }
 }

@@ -18,10 +18,7 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * Created with IntelliJ IDEA.
- * User: yaojiafeng
- * Date: 15/7/15
- * Time: 上午10:34
+ * Created by wangyongxing on 16/4/18.
  */
 @Component
 public class CrawlerEventQueueHandler extends AbstractQueueHandler {
@@ -67,6 +64,7 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
         Integer type = jsonObject.getInteger("type");
         String url = jsonObject.getString("url");
         Integer ipId = jsonObject.getInteger("ipId");
+        String isbn = jsonObject.getString("isbn");
         Integer crawlerId = jsonObject.getInteger("crawlerId");
 
         BookCrawlerInfo bookCrawlerInfo = bookCrawlerInfoService.getById(crawlerId);
@@ -74,15 +72,10 @@ public class CrawlerEventQueueHandler extends AbstractQueueHandler {
             CrawlerHandler handler = crawlerManage.getHandler(type);
             BookInfo bookInfo = (BookInfo) handler.getByUrl(url);
             if (bookInfo != null) {
-
-//                BookInfo old = bookInfoService.getById(crawlerId);
-//                if (old != null) {
-//                    bookInfoService.delById(crawlerId);
-//                }
-
                 bookInfo.setCrawlerId(crawlerId);
                 bookInfo.setSource(type);
                 bookInfo.setIpId(ipId);
+                bookInfo.setId(isbn+"_"+type);
                 bookInfoService.updateInser(bookInfo);
                 bookCrawlerInfo.setStatus(CrawlerTaskStatusEnums.success.getStatus());
             } else {

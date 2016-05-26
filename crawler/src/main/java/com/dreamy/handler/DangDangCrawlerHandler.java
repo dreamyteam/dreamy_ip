@@ -2,7 +2,6 @@ package com.dreamy.handler;
 
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.selenium.SeleniumDownloader;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,15 +10,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
-import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Task;
 
-import java.util.Collections;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by wangyongxing on 16/4/6.
@@ -30,7 +22,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     private static final Logger log = LoggerFactory.getLogger(DangDangCrawlerHandler.class);
 
 
-
     @Override
     public Integer getId() {
         return CrawlerSourceEnums.dangdang.getType();
@@ -38,7 +29,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
-//        String html = seleniumDownloader(url);
         String html = HttpUtils.getHtmlGet(url, "gbk");
         BookInfo bean = null;
         if (StringUtils.isNotEmpty(html)) {
@@ -49,7 +39,6 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
                 image(bean, document);
                 authorInfo(bean, document);
                 comment(bean, document);
-
                 getAuthor(bean, document);
                 getClickNum(bean, document);
                 getCategories(bean, document);
@@ -157,7 +146,7 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
 //                bookInfo.setPress(content.get(1).text());
 //            }
             if (size >= 3) {
-                bookInfo.setPushTime(date(content.get(2).text()));
+                bookInfo.setPushTime(PatternUtils.date(content.get(2).text()));
             }
 
         }
@@ -265,55 +254,9 @@ public class DangDangCrawlerHandler extends AbstractCrawlerHandler {
     }
 
 
-    public static String date(String content) {
-        String result = "";
-        Pattern p = Pattern
-                .compile("[0-9]{4}[年|\\-|/][0-9]{1,2}[月|\\-|/]");
-        Matcher m = p.matcher(content);
-        while (m.find()) {
-            if (!"".equals(m.group())) {
-                result = m.group();
-            }
-        }
-        return result;
-    }
-
-    private String seleniumDownloader(String url) {
-        SeleniumDownloader seleniumDownloader = new SeleniumDownloader();
-        String html = "";
-        try {
-            Page page = seleniumDownloader.download(new Request(url), new Task() {
-                @Override
-                public String getUUID() {
-                    return "http://product.dangdang.com/";
-                }
-
-                @Override
-                public Site getSite() {
-                    return Site.me();
-                }
-            });
-
-            html = page.getRawText();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            seleniumDownloader.close();
-            return html;
-        }
-
-
-
-
-    }
     @Override
     public String analyeUrl(String url) {
         return null;
     }
-
-    public static void main(String[] args) {
-
-    }
-
 
 }

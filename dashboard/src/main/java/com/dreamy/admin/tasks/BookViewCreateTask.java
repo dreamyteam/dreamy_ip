@@ -48,7 +48,7 @@ public class BookViewCreateTask {
     public void run() {
         try {
             BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
-            conditions.createCriteria().andStatusEqualTo(CrawlerTaskStatusEnums.success.getStatus());
+            conditions.createCriteria().andStatusEqualTo(CrawlerTaskStatusEnums.waitting.getStatus());
             conditions.setOrderByClause("book_id asc");
             List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getByCondition(conditions);
             if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
@@ -67,7 +67,7 @@ public class BookViewCreateTask {
                             }
 
                             BookView oldBookView = bookViewService.getByBookId(currentId);
-                            if (oldBookView.getId() == null) {
+                            if (oldBookView == null) {
                                 BookView bookView = getBookViewByBookId(bookInfoMap);
                                 bookView.setType(1);
                                 bookView.setStatus(0);

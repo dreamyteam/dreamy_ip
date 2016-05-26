@@ -23,9 +23,9 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
 
     private Integer hotIndex;
 
-    private Integer activityIndex;
-
     private Integer propagateIndex;
+
+    private Integer activityIndex;
 
     private Integer developIndex;
 
@@ -115,20 +115,20 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         this.hotIndex = hotIndex;
     }
 
-    public Integer getActivityIndex() {
-        return activityIndex;
-    }
-
-    public void setActivityIndex(Integer activityIndex) {
-        this.activityIndex = activityIndex;
-    }
-
     public Integer getPropagateIndex() {
         return propagateIndex;
     }
 
     public void setPropagateIndex(Integer propagateIndex) {
         this.propagateIndex = propagateIndex;
+    }
+
+    public Integer getActivityIndex() {
+        return activityIndex;
+    }
+
+    public void setActivityIndex(Integer activityIndex) {
+        this.activityIndex = activityIndex;
     }
 
     public Integer getDevelopIndex() {
@@ -208,8 +208,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getCompositeIndex() == null ? other.getCompositeIndex() == null : this.getCompositeIndex().equals(other.getCompositeIndex()))
             && (this.getHotIndex() == null ? other.getHotIndex() == null : this.getHotIndex().equals(other.getHotIndex()))
-            && (this.getActivityIndex() == null ? other.getActivityIndex() == null : this.getActivityIndex().equals(other.getActivityIndex()))
             && (this.getPropagateIndex() == null ? other.getPropagateIndex() == null : this.getPropagateIndex().equals(other.getPropagateIndex()))
+            && (this.getActivityIndex() == null ? other.getActivityIndex() == null : this.getActivityIndex().equals(other.getActivityIndex()))
             && (this.getDevelopIndex() == null ? other.getDevelopIndex() == null : this.getDevelopIndex().equals(other.getDevelopIndex()))
             && (this.getReputationIndex() == null ? other.getReputationIndex() == null : this.getReputationIndex().equals(other.getReputationIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
@@ -232,8 +232,8 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getCompositeIndex() == null) ? 0 : getCompositeIndex().hashCode());
         result = prime * result + ((getHotIndex() == null) ? 0 : getHotIndex().hashCode());
-        result = prime * result + ((getActivityIndex() == null) ? 0 : getActivityIndex().hashCode());
         result = prime * result + ((getPropagateIndex() == null) ? 0 : getPropagateIndex().hashCode());
+        result = prime * result + ((getActivityIndex() == null) ? 0 : getActivityIndex().hashCode());
         result = prime * result + ((getDevelopIndex() == null) ? 0 : getDevelopIndex().hashCode());
         result = prime * result + ((getReputationIndex() == null) ? 0 : getReputationIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
@@ -289,13 +289,13 @@ public class BookView extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public BookView activityIndex(Integer value) {
-        this.activityIndex = value;
+    public BookView propagateIndex(Integer value) {
+        this.propagateIndex = value;
         return this;
     }
 
-    public BookView propagateIndex(Integer value) {
-        this.propagateIndex = value;
+    public BookView activityIndex(Integer value) {
+        this.activityIndex = value;
         return this;
     }
 

@@ -37,4 +37,7 @@ public interface QueueService {
     void pushDefault(String routingKey, Object data);
 
 
+    void pushDefault(Object data);
+
+
 }
