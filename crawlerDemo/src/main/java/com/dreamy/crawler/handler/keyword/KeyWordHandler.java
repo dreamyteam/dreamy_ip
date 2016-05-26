@@ -2,13 +2,16 @@ package com.dreamy.crawler.handler.keyword;
 
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
-import com.dreamy.utils.sina.CrawSina;
-import com.dreamy.utils.sina.LoginSina;
-import com.dreamy.utils.sina.SinaHttpUtils;
 import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
-import com.dreamy.utils.*;
+import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.NumberUtils;
+import com.dreamy.utils.PatternUtils;
+import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.sina.CrawSina;
+import com.dreamy.utils.sina.LoginSina;
+import com.dreamy.utils.sina.SinaHttpUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -73,9 +76,9 @@ public class KeyWordHandler {
                 String result = element.text();
                 String num = PatternUtils.getNum(result);
                 keyWord = new KeyWord();
-                keyWord.source(KeyWordEnums.baidu.getType());
                 keyWord.bookId(bookId);
                 keyWord.indexNum(Integer.valueOf(num));
+                keyWord.source(KeyWordEnums.baidu.getType());
                 keyWordService.saveOrUpdate(keyWord);
             } else {
                 log.info(bookId + " 百度搜索结果 "+html);

@@ -27,6 +27,9 @@ public abstract class AbstractQueueHandler implements MessageListener {
                     log.error("处理异常JSON[" + json + "]", e);
 
                 }
+                finally {
+                    System.out.println(2);
+                }
             } else {
                 log.error("************ message is null!");
             }

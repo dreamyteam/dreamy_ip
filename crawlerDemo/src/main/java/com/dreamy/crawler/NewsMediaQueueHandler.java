@@ -1,8 +1,7 @@
 package com.dreamy.crawler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.handler.CrawlerManage;
-import com.dreamy.handler.sougou.NewsSougouHandler;
+import com.dreamy.crawler.handler.sougou.NewsSougouHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

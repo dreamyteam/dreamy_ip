@@ -1,7 +1,7 @@
 package com.dreamy.crawler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.handler.keyword.KeyWordHandler;
+import com.dreamy.crawler.handler.keyword.KeyWordHandler;
 import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
@@ -22,33 +22,16 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
     @Autowired
     KeyWordHandler keyWordHandler;
 
-    private Date lastRuntime = null;
-
     @Override
     public void consume(JSONObject jsonObject) {
-
-        if (lastRuntime == null) {
-            lastRuntime = new Date();
+        Integer ipId = jsonObject.getInteger("bookId");
+        String word = jsonObject.getString("word");
+        try {
+            keyWordHandler.crawler(word, ipId);
+        } catch (Exception e) {
+            log.warn("keyWordHandler  failed: bookId:" + ipId + " word:" + word);
         }
 
-        int timeRange=NumberUtils.randomInt(8000,20000);
-        while (true) {
-            Date currentTime = new Date();
-            if (TimeUtils.diff(lastRuntime, currentTime) > (long) timeRange) {
-                lastRuntime = currentTime;
-                //获取类型
-                Integer type = jsonObject.getInteger("source");
-                Integer ipId = jsonObject.getInteger("bookId");
-                String word = jsonObject.getString("word");
-                try {
-                  keyWordHandler.crawler(word, ipId);
-                } catch (Exception e) {
-                    log.warn("keyWordHandler  failed: bookId:" + ipId + " word:" + word);
-                }
-
-                break;
-            }
-        }
 
     }
 }

@@ -1,7 +1,7 @@
 package com.dreamy.crawler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.handler.CommentHandler;
+import com.dreamy.crawler.handler.CommentHandler;
 import com.dreamy.mogodb.beans.Comment;
 import com.dreamy.mogodb.beans.Comments;
 import com.dreamy.mogodb.dao.CommentDao;
@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/18.
+ *  爬取评论
  */
 @Component
 public class CommentEventQueueHandler  extends  AbstractQueueHandler{
@@ -28,18 +29,16 @@ public class CommentEventQueueHandler  extends  AbstractQueueHandler{
 
     @Override
     public void consume(JSONObject jsonObject) {
-        //获取类型
-        Integer type = jsonObject.getInteger("type");
-        Integer ipId=jsonObject.getInteger("ipId");
-        Integer crawlerId=jsonObject.getInteger("crawlerId");
+
+        Integer bookId=jsonObject.getInteger("ipId");
         String url=jsonObject.getString("url");
 
         List<Comment> commentList= commentHandler.getByUrl(url);
         if(CollectionUtils.isNotEmpty(commentList))
         {
             Comments comment=new Comments();
-            comment.setIpId(ipId);
             comment.setComments(commentList);
+            comment.setIpId(bookId);
             commentDao.save(comment);
         }
 

@@ -12,9 +12,6 @@ import java.util.Map;
 @Component
 public class CrawlerManage {
 
-
-
-
     private Map<Integer, CrawlerHandler> handlers = new HashMap<Integer, CrawlerHandler>();
 
     private CrawlerHandler DEFAULT_HANDLER = new CrawlerHandler() {
@@ -26,15 +23,10 @@ public class CrawlerManage {
 
 
         @Override
-        public BookInfo getByUrl(String url) {
+        public BookInfo crawler(String url) {
             return null;
         }
 
-
-        @Override
-        public String analyeUrl(String url) {
-            return null;
-        }
     };
 
     public synchronized void register(CrawlerHandler handler) {
@@ -50,7 +42,6 @@ public class CrawlerManage {
         }
         return handler != null ? handler : DEFAULT_HANDLER;
     }
-
 
 
     public Map<Integer, CrawlerHandler> getHandlerMap() {

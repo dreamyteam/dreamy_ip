@@ -1,8 +1,7 @@
 package com.dreamy.crawler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.handler.keyword.KeyWordHandler;
-import com.dreamy.handler.keyword.KeyWordWeiXinHandler;
+import com.dreamy.crawler.handler.keyword.KeyWordWeiXinHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by wangyongxing on 16/4/28.
+ * 微信文章关键字搜索
  */
 @Component
 public class KeyWordWeiXinEventQueueHandler extends AbstractQueueHandler {
@@ -21,13 +21,11 @@ public class KeyWordWeiXinEventQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-
-        Integer type = jsonObject.getInteger("source");
         Integer ipId = jsonObject.getInteger("bookId");
         String word = jsonObject.getString("word");
         keyWordWeiXinHandler.crawler(word, ipId);
 
 
-            }
+    }
 }
 

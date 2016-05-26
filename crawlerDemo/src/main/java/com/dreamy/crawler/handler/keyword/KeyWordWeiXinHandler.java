@@ -44,7 +44,6 @@ public class KeyWordWeiXinHandler {
     public void getWeiXin(String name, Integer bookId) {
         name = HttpUtils.encodeUrl(name);
         KeyWord keyWord = null;
-        String cookie = "SUIR=1462265639;SUID=CCB2C7736A20900A0000000057286727;";
         String url = "http://weixin.sogou.com/weixin?type=2&ie=utf8&query=" + name;
         String html = HttpUtils.getHtmlGetByProxy(url, null, 0, userAgentService.getOneByRandom().getUserAgent());
         Document document = Jsoup.parse(html);
@@ -55,8 +54,8 @@ public class KeyWordWeiXinHandler {
                 String num = PatternUtils.getNum(result);
                 keyWord = new KeyWord();
                 keyWord.bookId(bookId);
-                keyWord.source(KeyWordEnums.weixin.getType());
                 keyWord.indexNum(Integer.valueOf(num));
+                keyWord.source(KeyWordEnums.weixin.getType());
                 keyWordService.saveOrUpdate(keyWord);
             } else {
                 log.info(bookId + " 360 微信文章搜索结果 " + html);

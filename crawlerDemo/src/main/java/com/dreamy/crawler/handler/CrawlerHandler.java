@@ -11,8 +11,6 @@ public interface CrawlerHandler {
 
     public Integer getId();
 
-
-
     /**
      * 解析链接获得信息
      *
@@ -20,14 +18,7 @@ public interface CrawlerHandler {
      * 目标链接地址
      * @return
      */
-    public BookInfo getByUrl(String url);
+    public BookInfo crawler(String url);
 
 
-    /**
-     * 解析下载链接
-     *
-     * @param url
-     * @return
-     */
-    public String analyeUrl(String url);
 }
