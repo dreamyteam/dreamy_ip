@@ -48,9 +48,9 @@ public class AmazonBookQueueHandler extends AbstractQueueHandler {
         BookInfo bookInfo = null;
         //判断动作  crawler 抓取 update 更新
         if (operation.equals("crawler")) {
-            bookInfo = amazonCrawlerBookHandler.getByISBN(isbn);
+            bookInfo = amazonCrawlerBookHandler.getByISBN(isbn,operation);
         } else {
-            bookInfo = amazonCrawlerBookHandler.crawler(url);
+            bookInfo = amazonCrawlerBookHandler.crawler(url,operation);
         }
         crawlerService.operationBook(operation, key, bookInfo, bookId, url);
     }
