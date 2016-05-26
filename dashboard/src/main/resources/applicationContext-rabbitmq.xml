@@ -31,27 +31,44 @@
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
 
     <!--队列声明-->
-    <rabbit:queue name="${queue_crawler_publish_book}"/>
-    <rabbit:queue name="${queue_crawler_comment}"/>
-    <rabbit:queue name="${queue_crawler_keyword}"/>
-    <rabbit:queue name="${queue_crawler_keyword_weixin}"/>
-    <rabbit:queue name="${queue_crawler_keyword_weibo}"/>
-    <rabbit:queue name="${queue_crawler_so_index}"/>
-    <rabbit:queue name="${queue_crawler_news_sougou}"/>
-    <rabbit:queue name="${queue_crawler_publish_book_amazon}"/>
-    <rabbit:queue name="${queue_crawler_douban_book_tag}"/>
+    <!--<rabbit:queue name="${queue_crawler_publish_book}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_comment}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_keyword}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_keyword_weixin}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_keyword_weibo}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_so_index}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_news_sougou}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_publish_book_amazon}"/>-->
+    <!--<rabbit:queue name="${queue_crawler_douban_book_tag}"/>-->
+    <rabbit:queue name="${queue_amazon_crawler}"/>
+    <rabbit:queue name="${queue_jd_crawler}"/>
+    <rabbit:queue name="${queue_dangdang_crawler}"/>
+    <rabbit:queue name="${queue_douban_crawler}"/>
+    <rabbit:queue name="${queue_index_baidu}"/>
+    <rabbit:queue name="${queue_index_360}"/>
+    <rabbit:queue name="${queue_index_wb}"/>
+    <rabbit:queue name="${queue_index_wx}"/>
+
+
     <!--交换器声明-->
     <rabbit:direct-exchange name="data.listen">
         <rabbit:bindings>
-            <rabbit:binding queue="${queue_crawler_publish_book}"/>
-            <rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>
-            <rabbit:binding queue="${queue_crawler_comment}"/>
-            <rabbit:binding queue="${queue_crawler_keyword}"/>
-            <rabbit:binding queue="${queue_crawler_so_index}"/>
-            <rabbit:binding queue="${queue_crawler_keyword_weixin}"/>
-            <rabbit:binding queue="${queue_crawler_keyword_weibo}"/>
-            <rabbit:binding queue="${queue_crawler_news_sougou}"/>
-            <rabbit:binding queue="${queue_crawler_douban_book_tag}"/>
+            <!--<rabbit:binding queue="${queue_crawler_publish_book}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_publish_book_amazon}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_comment}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_keyword}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_so_index}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_keyword_weixin}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_keyword_weibo}"/>-->
+            <!--<rabbit:binding queue="${queue_crawler_news_sougou}"/>-->
+            <rabbit:binding queue="${queue_amazon_crawler}"/>
+            <rabbit:binding queue="${queue_jd_crawler}"/>
+            <rabbit:binding queue="${queue_douban_crawler}"/>
+            <rabbit:binding queue="${queue_dangdang_crawler}"/>
+            <rabbit:binding queue="${queue_index_baidu}"/>
+            <rabbit:binding queue="${queue_index_360}"/>
+            <rabbit:binding queue="${queue_index_wb}"/>
+            <rabbit:binding queue="${queue_index_wx}"/>
 
         </rabbit:bindings>
     </rabbit:direct-exchange>

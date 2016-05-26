@@ -35,7 +35,7 @@ public class DevelopIndexesCreateTask {
     @Autowired
     private BookIndexTaskLogService bookIndexTaskLogService;
 
-    @Scheduled(fixedDelay = 10000 * 10)
+//    @Scheduled(fixedDelay = 10000 * 10)
     public void run() {
         Integer type = BookIndexTypeEnums.develop.getType();
         Boolean isTaskActive = bookIndexTaskLogService.isTaskActive(type);
