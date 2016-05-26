@@ -54,7 +54,6 @@ public class KeyWordHandler {
     public void crawler(String word, Integer bookId) {
         getBaidu(word, bookId);
         getSo(word, bookId);
-        getSina(word, bookId);
     }
 
     /**
@@ -63,7 +62,6 @@ public class KeyWordHandler {
      * @param word
      */
     public void getBaidu(String word, Integer bookId) {
-
         word = HttpUtils.encodeUrl(word);
         String url = "https://www.baidu.com/s?wd=" + word;
         String html = HttpUtils.getHtmlGet(url);
@@ -116,91 +114,12 @@ public class KeyWordHandler {
         }
     }
 
-    /**
-     *  微博搜索结果
-     *
-     * @param name
-     * @throws IOException
-     */
-    public void getSina(String name, Integer bookId) {
-        try {
-            name = HttpUtils.encodeUrl(name);
-            HttpClient client = new DefaultHttpClient();
-            String url = "http://s.weibo.com/weibo/" + name;
-            HttpGet request = new HttpGet(url);
-            request.setHeader("Cookie", getCookies());
-            HttpResponse response = client.execute(request);
-            String responseText = SinaHttpUtils.getStringFromResponse(response);
-            client.getConnectionManager().shutdown();
-            responseText = HttpUtils.decodeUnicode(responseText);
-            String result = getResult(responseText);
-            if (StringUtils.isNotEmpty(result)) {
-                KeyWord keyWord = new KeyWord();
-                keyWord.bookId(bookId);
-                keyWord.source(KeyWordEnums.weibo.getType());
-                keyWord.indexNum(Integer.valueOf(result.replace(",", "")));
-                keyWordService.saveOrUpdate(keyWord);
-            } else {
-                log.info(bookId + " 微博搜索结果 "+responseText);
-            }
-        } catch (Exception e) {
-            log.error("微博搜索结果 失败 ", e);
-        }
-
-    }
-
-    private static int getRandom(int size) {
-        Random random = new Random();
-        int result = random.nextInt(size);
-        return result;
-    }
-
-    private String getCookies() throws Exception {
-        String name = "sinacookie" + NumberUtils.randomInt(1,3);
-        String cookie = (String) commonService.getCacheService().get(name);
-        if (StringUtils.isNotEmpty(cookie)) {
-            return cookie;
-        } else {
-            init();
-            cookie = (String) commonService.getCacheService().get("sinacookie1");
-            if (StringUtils.isEmpty(cookie)) {
-                LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
-                ls.dologinSina();
-                commonService.getCacheService().put("sinacookie1", CrawSina.Cookie);
-                cookie = CrawSina.Cookie;
-            }
-            return cookie;
-        }
-
-    }
 
 
-    public static String getResult(String str) {
-        String result = "";
-        Pattern p = Pattern.compile("找到(.*?)条结果");
-        Matcher m = p.matcher(str);
-        while (m.find()) {
-            result = m.group(1);
-        }
-        return result;
-
-    }
 
 
-    public void init() {
-
-        int i = 1;
-        for (Map.Entry<String, String> entry : CrawSina.SINA_USERS.entrySet()) {
-
-            LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
-            ls.dologinSina();
-            if(StringUtils.isNotEmpty(CrawSina.Cookie))
-            {
-                commonService.getCacheService().set("sinacookie" + i, CrawSina.Cookie,3600);
-                i++;
-            }
 
 
-        }
-    }
+
+
 }

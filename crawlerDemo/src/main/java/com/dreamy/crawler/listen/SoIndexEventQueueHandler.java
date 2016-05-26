@@ -1,7 +1,8 @@
-package com.dreamy.crawler;
+package com.dreamy.crawler.listen;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.handler.so.SoHandler;
+import com.dreamy.crawler.handler.so.SoHandler;
+import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.dao.BookIndexDataDao;
 import com.dreamy.utils.NumberUtils;
@@ -27,21 +28,30 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
     @Autowired
     BookIndexDataDao bookIndexDataDao;
 
+    @Autowired
+    private CrawlerService crawlerService;
+
     @Override
     public void consume(JSONObject jsonObject) {
         //获取类型
-        Integer type = jsonObject.getInteger("source");
-        Integer ipId=jsonObject.getInteger("bookId");
-        String word=jsonObject.getString("word");
+        String title = jsonObject.getString("title");
+        String url = jsonObject.getString("url");
+        Integer bookId = jsonObject.getInteger("bookId");
+        String isbn = jsonObject.getString("isbn");
+        String operation = jsonObject.getString("operation");
+        String key = jsonObject.getString("key");
         try {
-            BookIndexData bookIndexData = soHandler.getByUrl(word, "全国");
-            bookIndexData.setId(ipId);
-            bookIndexData.setSource(type);
+            BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
+            bookIndexData.setId(bookId);
+            bookIndexData.setSource(2);
             bookIndexData.setUpdatedAt(new Date());
             bookIndexDataDao.updateInser(bookIndexData);
-            Thread.sleep(NumberUtils.randomInt(30000,50000));
+            Thread.sleep(NumberUtils.randomInt(1000,5000));
         }catch (Exception e){
-            log.warn("SoIndexEventQueueHandler  failed: bookId:" + ipId+" word:"+word);
+            log.error("SoIndexEventQueueHandler  failed: bookId:" + bookId+" word:"+title,e);
+        }
+        finally {
+            crawlerService.check(key,bookId);
         }
 
 

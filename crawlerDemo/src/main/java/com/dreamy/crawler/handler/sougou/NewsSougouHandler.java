@@ -33,17 +33,16 @@ public class NewsSougouHandler {
         CRAWL_SOURCES.put(5, "网易");
 
     }
+
     @Resource
-     NewsMediaService newsMediaService;
-
-
+    NewsMediaService newsMediaService;
 
     public void crawler(String word, int bookId) {
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
-        word=word.replace(" ","");
+        OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(6000), NewsSougou.class);
+        word = word.replace(" ", "");
         String url = "http://news.sogou.com/news?query=" + word;
         NewsSougou sougou = ooSpider.<NewsSougou>get(url);
-        if(sougou!=null) {
+        if (sougou != null) {
             List<String> list = sougou.getUrls();
             ooSpider.close();
             if (CollectionUtils.isNotEmpty(list)) {
@@ -63,10 +62,10 @@ public class NewsSougouHandler {
             OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), NewsSougou.class);
             NewsSougou sougou = ooSpider.<NewsSougou>get(url);
             if (sougou != null) {
-                NewsMedia newsMedia=new NewsMedia();
-                newsMedia.type(1);
-                newsMedia.source(source+1);
+                NewsMedia newsMedia = new NewsMedia();
                 newsMedia.bookId(bookId);
+                newsMedia.type(1);
+                newsMedia.source(source + 1);
                 newsMedia.num(Integer.valueOf(PatternUtils.getNum(sougou.getNum())));
                 newsMediaService.save(newsMedia);
             }

@@ -1,12 +1,14 @@
-package com.dreamy.crawler;
+package com.dreamy.crawler.listen;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.MessageUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +16,7 @@ public abstract class AbstractQueueHandler implements MessageListener {
 
 
     private static final Logger log = LoggerFactory.getLogger(AbstractQueueHandler.class);
+
 
     @Override
     public void onMessage(Message message) {
@@ -27,15 +30,11 @@ public abstract class AbstractQueueHandler implements MessageListener {
                     log.error("处理异常JSON[" + json + "]", e);
 
                 }
-                finally {
-                    System.out.println(2);
-                }
-            } else {
-                log.error("************ message is null!");
             }
         } catch (Throwable e) {
             log.error("json pars error,json body:" + message.getBody(), e);
         }
+
     }
 
     /**
@@ -44,5 +43,6 @@ public abstract class AbstractQueueHandler implements MessageListener {
      * @param jsonObject
      */
     public abstract void consume(JSONObject jsonObject);
+
 
 }

@@ -1,7 +1,8 @@
-package com.dreamy.crawler;
+package com.dreamy.crawler.listen;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.sougou.NewsSougouHandler;
+import com.dreamy.crawler.service.CrawlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +17,25 @@ public class NewsMediaQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     NewsSougouHandler newsSougouHandler;
-
+    @Autowired
+    private CrawlerService crawlerService;
 
     @Override
     public void consume(JSONObject jsonObject) {
 
-        Integer type = jsonObject.getInteger("source");
+        String title = jsonObject.getString("title");
+        String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
-        String word = jsonObject.getString("word");
+        String isbn = jsonObject.getString("isbn");
+        String operation = jsonObject.getString("operation");
+        String key = jsonObject.getString("key");
         try {
-            newsSougouHandler.crawler(word, bookId);
+            newsSougouHandler.crawler(title, bookId);
         } catch (Exception e) {
-            log.warn("NewsMediaQueueHandler  failed: bookId:" + bookId + " word:" + word);
+            log.warn("NewsMediaQueueHandler  failed: bookId:" + bookId + " word:" + bookId);
+        } finally {
+            crawlerService.check(key, bookId);
         }
-
 
 
     }
