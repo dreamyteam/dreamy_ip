@@ -5,6 +5,7 @@ import com.dreamy.crawler.handler.info.dangdang.DangDangCrawlerBookHandler;
 import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
@@ -40,7 +41,7 @@ public class DangDangBookQueueHandler extends AbstractQueueHandler {
 
         BookInfo bookInfo = null;
         //判断动作  crawler 抓取 update 更新
-        if (operation.equals("crawler")) {
+        if (operation.equals(OperationEnums.crawler.getCode())) {
             bookInfo = dangDangCrawlerBookHandler.getByISBN(isbn, operation);
         } else {
             bookInfo = dangDangCrawlerBookHandler.crawler(url, operation);

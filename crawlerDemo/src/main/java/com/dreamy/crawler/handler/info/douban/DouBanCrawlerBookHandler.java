@@ -1,5 +1,6 @@
 package com.dreamy.crawler.handler.info.douban;
 
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.HttpUtils;
@@ -64,7 +65,7 @@ public class DouBanCrawlerBookHandler {
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
-                if (operation.equals("crawler")) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {
                     getAuthorAndPressAndPublishTime(bean, document);
                     getAuthorInfo(bean, document);
                     getImage(bean, document);

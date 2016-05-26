@@ -5,6 +5,7 @@ import com.dreamy.crawler.handler.info.amazon.AmazonCrawlerBookHandler;
 import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
@@ -38,7 +39,6 @@ public class AmazonBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-
         String isbn = jsonObject.getString("isbn");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
@@ -47,7 +47,7 @@ public class AmazonBookQueueHandler extends AbstractQueueHandler {
 
         BookInfo bookInfo = null;
         //判断动作  crawler 抓取 update 更新
-        if (operation.equals("crawler")) {
+        if (operation.equals(OperationEnums.crawler.getCode())) {
             bookInfo = amazonCrawlerBookHandler.getByISBN(isbn,operation);
         } else {
             bookInfo = amazonCrawlerBookHandler.crawler(url,operation);
