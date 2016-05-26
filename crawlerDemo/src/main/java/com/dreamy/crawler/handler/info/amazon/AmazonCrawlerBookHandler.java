@@ -1,6 +1,7 @@
 package com.dreamy.crawler.handler.info.amazon;
 
 
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
+import us.codecraft.webmagic.model.annotation.ComboExtract;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
 public class AmazonCrawlerBookHandler {
     private static final Logger log = LoggerFactory.getLogger(AmazonCrawlerBookHandler.class);
 
-    public BookInfo getByISBN(String isbn) {
+    public BookInfo getByISBN(String isbn, String operation) {
 
         String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn;
         try {
@@ -35,7 +37,7 @@ public class AmazonCrawlerBookHandler {
                 if (CollectionUtils.isNotEmpty(list)) {
                     crawlerUrl = list.get(0);
                 }
-                BookInfo bookInfo = crawler(crawlerUrl);
+                BookInfo bookInfo = crawler(crawlerUrl, operation);
                 return bookInfo;
             }
         } catch (Exception e) {
@@ -45,24 +47,26 @@ public class AmazonCrawlerBookHandler {
 
     }
 
-    public BookInfo crawler(String url) {
+    public BookInfo crawler(String url, String operation) {
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
-                bean.setUrl(url);
-                getName(bean, document);
-                getAuthor(bean, document);
-                getPressAndPublishTime(bean, document);
+                if (operation.equals(OperationEnums.update.getCode())) {
+                    bean.setUrl(url);
+                    getName(bean, document);
+                    getAuthor(bean, document);
+                    getPressAndPublishTime(bean, document);
+                    getCoverImg(bean, document);
+                    getIpDescription(bean, document);
+                    getCategories(bean, document);
+                    getEditorComments(bean, document);
+                    getAuthorDescrition(bean, document);
+                    getTags(bean, document);
+                }
                 getSaleSort(bean, document);
                 getTotalCommentNumAndScore(bean, document);
-                getCoverImg(bean, document);
-                getIpDescription(bean, document);
-                getCategories(bean, document);
-                getEditorComments(bean, document);
-                getAuthorDescrition(bean, document);
-                getTags(bean, document);
                 return bean;
             }
 
@@ -76,6 +80,7 @@ public class AmazonCrawlerBookHandler {
      * @param bean
      * @param document
      */
+
     private void getName(BookInfo bean, Document document) {
         try {
             Element element = document.getElementById("productTitle");

@@ -29,24 +29,24 @@ public class CrawlerServiceImpl implements CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerServiceImpl.class);
     @Autowired
     private QueueService queueService;
-    @Value("${crawler_book_isbn_jd}")
-    private String queueNameJd;
-
-    @Value("${crawler_book_isbn_amazon}")
-    private String queueNameAmazon;
-
-    @Value("${crawler_book_isbn_dangdang}")
-    private String queueNameDangDang;
-
-    @Value("${queue_crawler_comment}")
-    private String commentQueueName;
+//    @Value("${crawler_book_isbn_jd}")
+//    private String queueNameJd;
+//
+//    @Value("${crawler_book_isbn_amazon}")
+//    private String queueNameAmazon;
+//
+//    @Value("${crawler_book_isbn_dangdang}")
+//    private String queueNameDangDang;
+//
+//    @Value("${queue_crawler_comment}")
+//    private String commentQueueName;
 
     @Autowired
     @Qualifier("rawValueOperations")
     private ValueOperations<String, Integer> rawValueOperations;
 
 
-    @Value("${over_queue}")
+    @Value("${queue_crawler_over}")
     private String queueName;
 
 
@@ -64,10 +64,10 @@ public class CrawlerServiceImpl implements CrawlerService {
         map.put("isbn", isbn);
         map.put("url", url);
         map.put("bookId", bookId);
-        queueService.push(queueNameJd, map);
-        queueService.push(queueNameAmazon, map);
-        queueService.push(queueNameDangDang, map);
-        queueService.push(commentQueueName, map);
+//        queueService.push(queueNameJd, map);
+//        queueService.push(queueNameAmazon, map);
+//        queueService.push(queueNameDangDang, map);
+//        queueService.push(commentQueueName, map);
 
     }
 

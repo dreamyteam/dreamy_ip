@@ -15,10 +15,10 @@ import java.util.List;
 
 /**
  * Created by wangyongxing on 16/4/18.
- *  爬取评论
+ * 爬取评论
  */
 @Component
-public class CommentEventQueueHandler  extends AbstractQueueHandler {
+public class CommentEventQueueHandler extends AbstractQueueHandler {
 
     private static final Logger log = LoggerFactory.getLogger(CommentEventQueueHandler.class);
 
@@ -43,9 +43,5 @@ public class CommentEventQueueHandler  extends AbstractQueueHandler {
 
     }
 
-    @Override
-    public void check(String key, int bookId) {
-
-    }
 
 }
