@@ -38,7 +38,7 @@ public class SoIndexTest extends BaseJunitTest {
         List<IpBook> list = ipBookService.getIpBookList(ipBook, page);
         for (IpBook book : list) {
             BookIndexData bookIndexData = soHandler.getByUrl(book.getName(), "全国");
-            bookIndexData.setId(book.getId());
+            bookIndexData.setId(book.getId()+"_"+2);
             bookIndexData.setSource(2);
             bookIndexDataDao.updateInser(bookIndexData);
             Thread.sleep(1000);
@@ -52,7 +52,7 @@ public class SoIndexTest extends BaseJunitTest {
 
         IpBook book = ipBookService.getById(52);
         BookIndexData bookIndexData = soHandler.getByUrl(book.getName(), "全国");
-        bookIndexData.setId(book.getId());
+        bookIndexData.setId(book.getId()+"_"+2);
         bookIndexData.setSource(2);
         bookIndexDataDao.updateInser(bookIndexData);
         //Thread.sleep(1000);

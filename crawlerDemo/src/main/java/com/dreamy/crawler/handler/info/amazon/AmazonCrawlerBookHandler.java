@@ -53,7 +53,7 @@ public class AmazonCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
-                if (operation.equals(OperationEnums.crawler.getCode())) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {//判断抓取还是更新操作
                     bean.setUrl(url);
                     getName(bean, document);
                     getAuthor(bean, document);
@@ -157,7 +157,6 @@ public class AmazonCrawlerBookHandler {
     private void getTotalCommentNumAndScore(BookInfo bean, Document document) {
         Integer commentNumString = 0;
         String score = "0";
-
         try {
             Element star = document.getElementById("summaryStars");
             if (star != null) {
