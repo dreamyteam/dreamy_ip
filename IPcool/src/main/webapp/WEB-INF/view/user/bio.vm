@@ -1,3 +1,5 @@
+#set($layout = "/layout/layout_about_user.vm")
+
 <div class="container clearfix" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <!-- 用户中心 左侧导航 -->
     #parse("/common/user_center_left.vm")

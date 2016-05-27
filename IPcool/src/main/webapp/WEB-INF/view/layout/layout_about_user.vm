@@ -5,6 +5,7 @@
     <title>IP库 | IPCool</title>
     #parse("/common/all_css.vm")
     #parse("/common/all_js.vm")
+    #parse("/common/about_user_css.vm")
 </head>
 <body>
 
@@ -17,4 +18,3 @@
     #parse("/common/all_js_noneindex.vm")
 </body>
 </html>
-

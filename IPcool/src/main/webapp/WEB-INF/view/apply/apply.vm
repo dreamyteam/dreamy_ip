@@ -1,3 +1,6 @@
+<link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/record.css">
+
+
 <!--main-->
 <div class="container">
     <section class="record">

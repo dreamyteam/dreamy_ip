@@ -5,6 +5,7 @@
     <title>IP库 | IPCool</title>
     #parse("/common/all_css.vm")
     #parse("/common/all_js.vm")
+    #parse("/rank/rank_css.vm")
 </head>
 <body>
 

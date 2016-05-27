@@ -1,0 +1,30 @@
+#set($layout = "/layout/layout_about_user.vm")
+
+
+<div class="container clearfix">
+		<!-- 关于我们 左侧导航 -->
+		<ul class="sidebar_nav">
+			<li class="active"><a href="#">关于我们</a></li>
+			<li><a href="/about/feedback">意见反馈</a></li>
+			<li><a href="/about/agreement">用户协议</a></li>
+            <li><a href="/about/contact">联系我们</a></li>
+		</ul>
+		
+		<!-- 关于我们 右侧部分 -->
+			
+		<div class="sidebar_content">
+			<h1 class="title">关于IP库</h1>
+			<p>
+                2015年12月杭州耀岩网络科技公司正式企业成立，于2016年5月正式上线WEB产品“IPcool”。
+			</p>
+			<p>
+                杭州耀岩网络科技有限公司致力于运用大数据技术，为IP拥有者（网络文学平台、动漫影视开发机构、作者、编剧）、IP购买者（投资机构、游戏开发公司、影视制作团队）、IP开发商（导演、副导演、制片人、招商代表），IP周边使用者（潜在赞助商、植入IP内容的企业品牌、电商品牌等），影视发行单位，相关从业者等，提供决策支持，人才招聘，项目对接，宣传发行及代理教育服务。
+			</p>
+
+			<h1 class="title">愿景</h1>
+			<p>
+                让IP有价 让市场有序 让文创有依
+            </p>
+		</div>
+
+	</div>

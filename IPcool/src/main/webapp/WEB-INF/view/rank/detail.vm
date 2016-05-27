@@ -1,4 +1,7 @@
-    <!--main-->
+#set($layout = "/layout/layout_rank.vm")
+
+
+<!--main-->
     <div class="container">
         <!--搜索框-->
         #parse("/common/search.vm")

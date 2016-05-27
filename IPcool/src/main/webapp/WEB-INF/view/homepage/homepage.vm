@@ -1,331 +1,470 @@
 #set($layout = "/layout/layout_homepage.vm")
-#set($cssName="/dist/index")
-    <div class="index_head">
-        <div class="head_bg">
-            <video autoplay muted loop id="bg-video">
-                <source src="http://$!assetsDomain/ipcool/assets/video/33.mp4">
-            </video>
-            <div class="color_mask"></div>
+
+<div id="home_page">
+    <div class="section sec_1">
+        <div class="background_layer"></div>
+        <header>
+            <nav class="clearfix">
+                <span class="logo"></span>
+                <ul class="home_page_nav_left">
+                    <li><a href="">首页</a></li>
+                    <li><a href="">排行</a></li>
+                    <li><a href="">机遇</a></li>
+                    <li><a href="">人才</a></li>
+                    <li><a href="">关于</a></li>
+                </ul>
+                <ul class="home_page_nav_right">
+                    <!-- case 1 -->
+                    <li>
+                        <button id="login">登录</button>
+                    </li>
+                    <li>
+                        <button id="register">免费注册</button>
+                    </li>
+                    <!-- case 2 -->
+                    <!-- <li><a href="#">认证</a></li> -->
+                    <!-- <li><span>Jeff</span><img src="../assets/images/avatar.png"></li> -->
+                </ul>
+            </nav>
+        </header>
+        <span class="main_title"></span>
+        <form class="search_bar_container" action="/search.html">
+            <div class="serarch_bar_content">
+                <input type="text" class="search" name="content" value="$!{content}" placeholder="搜索 书、影视作品、人物、机构" />
+                <input type="submit" class="submit" value="" />
+            </div>
+        </form>
+    </div>
+    <div class="section sec_2">
+        <h1 class="title">多维IP一站式收录 数据价值全面分析</h1>
+        <div class="sec_2_container clearfix" id="sec_2_tab">
+            <ul class="tab_nav">
+                <li class="active">文学作品</li>
+                <li>影视剧作</li>
+                <li>人物角色</li>
+                <li>企业机构</li>
+            </ul>
+            <ul class="tab_content">
+                <li class="active">
+                    <h2 class="tab_content_title">网络小说 出版文学 卡通动画</h2>
+                    <p class="tab_summary">
+                        通过以下价值维度衡量每个IP的投资开发潜力，为文创行业从业者提供便捷高效的数据服务
+                    </p>
+                    <div class="tab_list">
+                        <div class="tab_list_content">
+                            <span class="icon icon_trend"></span>
+                            <h3 class="tab_list_title">潜力评估</h3>
+                            <p class="tab_list_summary">
+                                综合 IP 自身品质，市场表现，可开发空间，和受众人群价值，通过科学的加权分析方式，来衡量潜力大小
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heat"></span>
+                            <h3 class="tab_list_title">热度追踪</h3>
+                            <p class="tab_list_summary">
+                                通过监控IP全网搜索指数，以及该作品在其原有的产品销售平台的实际被消费情况，用于衡量其在大众认知下的火热程度
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_prop"></span>
+                            <h3 class="tab_list_title">传播监控</h3>
+                            <p class="tab_list_summary">
+                                布控所有的社交媒体，官方媒体，新闻平台，获取该IP的消费人群的覆盖广度和深度和二次传播能力
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heart"></span>
+                            <h3 class="tab_list_title">口碑</h3>
+                            <p class="tab_list_summary">
+                                综合各大UGC用户平台的作品评价， 采用理性的加权算法计算该作品在受众心目中的感性得分
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h2 class="tab_content_title">电影电视 动漫综艺 话剧表演</h2>
+                    <p class="tab_summary">
+                        通过以下价值维度衡量每部影视剧作的市场表现，为影视从业者提供宣发传播成本的各方面参考依据
+                    </p>
+                    <div class="tab_list">
+                        <div class="tab_list_content">
+                            <span class="icon icon_movie"></span>
+                            <h3 class="tab_list_title">票房收视统计</h3>
+                            <p class="tab_list_summary">
+                                作为衡量影视剧作的最直接标准，完成票房收视的深度跟踪和统计，可为投资推广再次传播提供基本依据
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heat"></span>
+                            <h3 class="tab_list_title">热度追踪</h3>
+                            <p class="tab_list_summary">
+                                通过监控作品全网搜索指数，以及该作品在其原有的产品销售平台的实际被消费情况，用于衡量其在大众认知下的火热程度
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_prop"></span>
+                            <h3 class="tab_list_title">传播监控</h3>
+                            <p class="tab_list_summary">
+                                布控所有的社交媒体，官方媒体，新闻平台，获取该作品的消费人群的覆盖广度和深度和二次传播能力
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_users"></span>
+                            <h3 class="tab_list_title">阵容强度</h3>
+                            <p class="tab_list_summary">
+                                不同于文学作品，影视作品的最终成就很大程度受限于其参演和开发阵容的根本实力
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h2 class="tab_content_title">虚拟角色 名人明星 企业大佬</h2>
+                    <p class="tab_summary">
+                        IPcool同样分析人物角色行业影响力，提供一个可深度了解同行前辈的快速通道
+                    </p>
+                    <div class="tab_list">
+                        <div class="tab_list_content">
+                            <span class="icon icon_tag"></span>
+                            <h3 class="tab_list_title">人物标签</h3>
+                            <p class="tab_list_summary">
+                                结合每个人物在性格特点，行为特点，外形特点以及所经历的社会经验多方为其标注专属于他的特点和标签
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heat"></span>
+                            <h3 class="tab_list_title">热度追踪</h3>
+                            <p class="tab_list_summary">
+                                监控该人物全网搜索指数，媒体报道热度，用于衡量其在大众认知下的火热程度
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_prop"></span>
+                            <h3 class="tab_list_title">传播监控</h3>
+                            <p class="tab_list_summary">
+                                布控所有的社交媒体，官方媒体，新闻平台，获取该名人粉丝人群的覆盖广度和深度和二次传播能力
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heart"></span>
+                            <h3 class="tab_list_title">粉丝活跃</h3>
+                            <p class="tab_list_summary">
+                                评价粉丝自发的创作与该名人有相关性的UGC内容的频繁度和人群占比，高活跃度粉丝有着更广阔的粉丝效应
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <h2 class="tab_content_title">投资机构 影视企业 版权公司</h2>
+                    <p class="tab_summary">
+                        为每一个企业机构在社会中的口碑，热度，价值做基本衡量
+                    </p>
+                    <div class="tab_list">
+                        <div class="tab_list_content">
+                            <span class="icon icon_tag"></span>
+                            <h3 class="tab_list_title">企业标签</h3>
+                            <p class="tab_list_summary">
+                                结合每个企业在经营范围，经营特点以及所表现的社会责任多方为其标注专属于它的特点和标签
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heat"></span>
+                            <h3 class="tab_list_title">热度追踪</h3>
+                            <p class="tab_list_summary">
+                                综合企业自身品质，市场表现以及其产出的产品影响力，通过科学的加权分析方式，来衡量热度价值
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_prop"></span>
+                            <h3 class="tab_list_title">传播监控</h3>
+                            <p class="tab_list_summary">
+                                综合企业自身品牌，市场口碑，和企业社会影响力，来衡量该企业的知名度的传播能力
+                            </p>
+                        </div>
+                        <div class="tab_list_content">
+                            <span class="icon icon_heart"></span>
+                            <h3 class="tab_list_title">作品收录</h3>
+                            <p class="tab_list_summary">
+                                收录该企业产出的所有作品，通过作品表现可间接衡量其企业在专业度上的成就和发展
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="head_front">
+        <div class="sec_2_background">
+            <div class="inner clearfix">
+                <span class="sec_2_computer"></span>
+                <h3 class="plus">100,000+ <span>&nbsp;数据分析结果</span></h3>
+                <a href="#" class="example_report">查看示例报告</a>
+            </div>
+        </div>
+    </div>
+    <div class="section sec_3" id="sec_3_tab">
+        <div class="sec_3_background">
+            <h2 class="title">文娱IP的分析价值</h2>
+            <p class="summary">提升投资决策的可靠性，从业机会匹配度，价值评估的体系化</p>
+        </div>
+        <ul class="sec_3_list">
+            <li class="active">
+                <span class="list_pic people"></span>
+                <span class="list_title">行业人才</span>
+            </li>
+            <li>
+                <span class="list_pic investor"></span>
+                <span class="list_title">投资机构</span>
+            </li>
+            <li>
+                <span class="list_pic creation"></span>
+                <span class="list_title">版权创作</span>
+            </li>
+            <li>
+                <span class="list_pic issue"></span>
+                <span class="list_title">渠道发行</span>
+            </li>
+        </ul>
+        <ul class="sec_3_list_summary">
+            <li class="active">
+                <p>
+                    无论是导演还是作家都不会否认，他们做出来的东西是给人看的，然而在大数据时代，定位精准的产品和营销，保证了产品在推出之前就知道有人会买单。代价是，导演和作家都得遵循大数据安排。
+                </p>
+            </li>
+            <li>
+                <p>
+                    凭借大数据技术的评估能力与效率，平台不仅可以洞悉行业市场的发展方向与用户喜好的改变，更重要的是相较其他同业者来说，平台将帮助使用者率先锁定优秀的IP并进行孵化
+                </p>
+            </li>
+            <li>
+                <p>
+                    随着大数据分析与挖掘技术的成熟应用，一些影视制作公司和在线视频网站已通过自动化精准分析来进行IP开发的科学指导、视频制作、采买及精细化运营。可以说，影视行业对于大数据技术的应用是有更多需求空间的
+                </p>
+            </li>
+            <li>
+                <p>
+                    大数据以其强大的数据储存与分析手段影响了影视文学的创作与评估,使影视文学的主题日益多样化,并带有娱乐化、大众化的倾向
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="section sec_4">
+        <div class="sec_4_section employment">
+            <div class="mask"></div>
+            <h2 class="title">收获从业机遇</h2>
+            <div class="sec_4_info">
+                <p class="summary">展示从业经历 匹配参演机会</p>
+                <ul class="icons_list">
+                    <li><span class="sec_4_icon icon_tv"></span><em>作品</em></li>
+                    <li><span class="sec_4_icon icon_award"></span><em>奖项</em></li>
+                    <li><span class="sec_4_icon icon_star"></span><em>创意</em></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sec_4_section invest">
+            <div class="mask"></div>
+            <h2 class="title">帮助投资决策</h2>
+            <div class="sec_4_info">
+                <p class="summary">一键生成数据报告 最为直观的市场表现</p>
+                <ul class="icons_list">
+                    <li><span class="sec_4_icon icon_report"></span><em>报告</em></li>
+                    <li><span class="sec_4_icon icon_data"></span><em>数据</em></li>
+                    <li><span class="sec_4_icon icon_charts"></span><em>图表</em></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sec_4_section copyright">
+            <div class="mask"></div>
+            <h2 class="title">量化版权价值</h2>
+            <div class="sec_4_info">
+                <p class="summary">展示作品热度 提供作品对比</p>
+                <ul class="icons_list">
+                    <li><span class="sec_4_icon icon_heart"></span><em>热度</em></li>
+                    <li><span class="sec_4_icon icon_trend"></span><em>潜力</em></li>
+                    <li><span class="sec_4_icon icon_rank"></span><em>对比</em></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sec_4_section distribution">
+            <div class="mask"></div>
+            <h2 class="title">挑选发行渠道</h2>
+            <div class="sec_4_info">
+                <p class="summary">宣发资源汇总 匹配渠道资源</p>
+                <ul class="icons_list">
+                    <li><span class="sec_4_icon icon_prop"></span><em>传播</em></li>
+                    <li><span class="sec_4_icon icon_publish"></span><em>发行</em></li>
+                    <li><span class="sec_4_icon icon_channel"></span><em>渠道</em></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section sec_5" id="sec_5_tab_slide">
+        <div class="background">
+            <h3 class="title">互联网+IP</h3>
+            <p class="summary">大数据分析已经成为IP开发运营不可或缺的技术手段</p>
+            <div class="sec_5_tab_slide">
+                <ul class="sec_5_tab_slide_nav">
+                    <li class="single_logo"><span class="logo logo_ls"></span></li>
+                    <li class="single_logo"><span class="logo logo_yw"></span></li>
+                    <li class="single_logo"><span class="logo logo_ne"></span></li>
+                    <li class="single_logo"><span class="logo logo_bd"></span></li>
+                    <li class="single_logo"><span class="logo logo_al"></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sec_5_tab_slide_content_container">
+            <ul class="sec_5_tab_slide_content">
+                <li class="active">
+                    <h3 class="sec_5_tab_slide_title">乐视影业</h3>
+                    <h6 class="sec_5_tab_slide_subtitle">中国电影互联网产业的领军企业</h6>
+                    <p class="sec_5_tab_slide_summery">
+                        乐视影业建立自己的数据中心，为影片进行精准定位。之后，再通过互联网社会化媒体进行口碑营销。大数据在文娱产业中的地位将越来越重要，未来，大数据将成为文娱产业的核心资产。
+                    </p>
+                </li>
+                <li>
+                    <h3 class="sec_5_tab_slide_title">阅文集团</h3>
+                    <h6 class="sec_5_tab_slide_subtitle">全球最大的互联网中文原创平台</h6>
+                    <p class="sec_5_tab_slide_summery">
+                        阅文的版权编辑会将内部大数据评分系统筛选出来的作品制作成简历，推荐给擅长不同领域的影视、游戏等公司，接下来再进行细致化的观察和改编等事宜。
+                    </p>
+                </li>
+                <li>
+                    <h3 class="sec_5_tab_slide_title">NETFLIX</h3>
+                    <h6 class="sec_5_tab_slide_subtitle">美国最大的在线影像租赁公司</h6>
+                    <p class="sec_5_tab_slide_summery">
+                        Netflix上的电影和电视节目被贴上了数以百计的标签，它们都是受委托对演员、情节、基调、类型，以及其他很多很多方面进行描述的观众加上去的。现在，Netflix开始制作原创内容，因为它能够先于观众知道他们想要什么
+                    </p>
+                </li>
+                <li>
+                    <h3 class="sec_5_tab_slide_title">百度糯米</h3>
+                    <h6 class="sec_5_tab_slide_subtitle">国内领先的在线电影平台</h6>
+                    <p class="sec_5_tab_slide_summery">
+                        百度积累了海量的影视行业相关数据及用户偏好行为数据，基于此，百度糯米影业可利用技术手段形成影片观影人群画像、用户关注度及口碑等，快速高效洞察观影人群的需求，助力电影宣发有的放矢。
+                    </p>
+                </li>
+                <li>
+                    <h3 class="sec_5_tab_slide_title">阿里文学</h3>
+                    <h6 class="sec_5_tab_slide_subtitle">阿里巴巴集团旗下的顶级互联网文化娱乐品牌</h6>
+                    <p class="sec_5_tab_slide_summery">
+                        大数据将通过数据平台，快速地收集巨大的运营数据，然后反馈给作家，让他们知道哪些题材和情节是读者喜欢和需要的，提高创作效率，也有利于优质内容浮出水面。
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="section sec_6">
+        <h2 class="title">你需要的一切，我们都已经准备好</h2>
+        <h3 class="subtitle">大数据体系下的文娱分析工具</h3>
+        <div class="sec_6_product" id="sec_6_product">
+            <button class="prev"></button>
+            <button class="next"></button>
+            <div class="sec_6_product_list_container">
+                <ul class="sec_6_product_list">
+                    <li class="single_product">
+                        <div class="product_container">
+                            <h3 class="product_title">排片小助手</h3>
+                            <div class="product_logo film_row_piece"></div>
+                            <ul class="product_info">
+                                <li>全年排片容量查询</li>
+                                <li>协助票房收益最大化</li>
+                            </ul>
+                            <a class="product_btn film_row_piece" href="#">即将上线</a>
+                        </div>
+                    </li>
+                    <li class="single_product">
+                        <div class="product_container">
+                            <h3 class="product_title ">电影时光机</h3>
+                            <div class="product_logo time_machine"></div>
+                            <ul class="product_info">
+                                <li>往期票房分析对比</li>
+                                <li>科学预测票房趋势</li>
+                                <li>预测票房</li>
+                            </ul>
+                            <a class="product_btn time_machine" href="#">即将上线</a>
+                        </div>
+                    </li>
+                    <li class="single_product">
+                        <div class="product_container">
+                            <h3 class="product_title ">票房模拟器</h3>
+                            <div class="product_logo simulator"></div>
+                            <ul class="product_info">
+                                <li>智能演员整容组件</li>
+                                <li>制作成本预算</li>
+                                <li>模拟上线票房预测</li>
+                            </ul>
+                            <a class="product_btn simulator" href="#">即将上线</a>
+                        </div>
+                    </li>
+                    <li class="single_product">
+                        <div class="product_container">
+                            <h3 class="product_title ">机遇</h3>
+                            <div class="product_logo changce"></div>
+                            <ul class="product_info">
+                                <li>项目招募信息</li>
+                                <li>发表期待与参与意愿</li>
+                            </ul>
+                            <a class="product_btn changce" href="#">即将上线</a>
+                        </div>
+                    </li>
+                    <li class="single_product">
+                        <div class="product_container">
+                            <h3 class="product_title ">通告发布平台</h3>
+                            <div class="product_logo announce"></div>
+                            <ul class="product_info">
+                                <li>企业人才入驻</li>
+                                <li>招募信息发布</li>
+                                <li>专业人才对接</li>
+                            </ul>
+                            <a class="product_btn announce" href="#">即将上线</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section sec_7">
+        <h2 class="title">现在，开始你的IP大数据之旅</h2>
+        <p class="summary">全国数百万文创工作者的青睐的全国数百万文创工作者的青睐的</p>
+        <button class="submit" id="regBottom">立刻体验</button>
+        <footer class="sec_7_footer">
             <div class="inner">
-                <h1 class="main_title">让IP有序 让文创有依</h1>
-                <h6 class="sub_text">输入作品名称开始查询</h6>
-                <form class="search_bar_container" action="/search.html">
-
-                    <input id="category_all" type="radio" name="type" value="all"  checked="checked"/>
-                    <label for="category_all">全部</label>
-
-                    <input id="category_literature" type="radio" name="type" value="literature"  disabled="disabled"  />
-                    <label for="category_literature">文学</label>
-
-                    <input id="category_film" type="radio" name="type" value="film" disabled="disabled"/>
-                    <label for="category_film">影视</label>
-
-                    <input id="category_character" type="radio" name="type" value="character"  disabled="disabled"/>
-                    <label for="category_character">人物</label>
-
-                    <input id="category_mechanism" type="radio" name="type" value="mechanism"  disabled="disabled"/>
-                    <label for="category_mechanism">机构</label>
-
-                    <div class="serarch_bar_content">
-                        <input type="text" name="content" placeholder="输入关键词查询" />
-                        <input type="submit" value="搜索" />
-                    </div>
-                </form>
+                <div class="sec_7_section_left">
+                    <ul>
+                        <li>首页</li>
+                        <li><a href="/rank/list">排行</a></li>
+                        <li><a href="">机遇</a></li>
+                        <li><a href="">人才</a></li>
+                    </ul>
+                </div>
+                <div class="sec_7_section_left">
+                    <ul>
+                        <li>关于 IPcool</li>
+                        <li><a href="/about/us">关于我们</a></li>
+                        <li><a href="/about/agreement">隐私政策</a></li>
+                        <li><a href="/about/contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="sec_7_section_left">
+                    <ul>
+                        <li>帮助中心</li>
+                        <li><a href="/about/feedback">意见反馈</a></li>
+                    </ul>
+                </div>
+                <div class="sec_7_section_left">
+                    <ul>
+                        <li>关注我们</li>
+                        <li><span class="dreamy_ewm"></span></li>
+                    </ul>
+                </div>
+                <div class="sec_7_section_right">
+                    <span class="ipcool_logo"></span>
+                    <ul>
+                        <li>电话：0571-87660085</li>
+                        <li>邮箱：connect@ipcool.me</li>
+                        <li>地址：杭州市西湖区文三西路月桂花园1-12</li>
+                    </ul>
+                </div>
             </div>
-        </div>
+            <div class="sub_footer">
+                <p>杭州耀岩网络科技有限公司 | 网络经营许可证 浙ICP备11024601号-1© Copyright 2006-2016 IPcool.me Inc. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
-    <div class="index_section p1">
-        <div class="inner">
-            <h2 class="title">一站式IP全收录 商业价值全面分析平台</h2>
-            <h3 class="sub_title">影视、文创、角色、机构多维度评估预测价值，包罗最全IP数据</h3>
-            <img class="pic" src="http://$!assetsDomain/ipcool/assets/images/index/frontp1.png">
-        </div>
-    </div>
-    <div class="ip_section literature">
-        <div class="inner">
-            <div class="title_container">
-                <div class="type_pic">
-                    <span></span>
-                </div>
-                <h2 class="title"> 文学IP <span>网络文学 出版文学 热门小说</span></h2>
-            </div>
-            <div class="content clearfix">
-                <img src="http://$!assetsDomain/ipcool/assets/images/index/dpcq.png">
-                <div class="ip_info">
-                    <div class="rank_container">
-                        <h5 class="rank_now">IP当前排名</h5>
-                        <!--
-							rise 上升趋势
-							drop 下降趋势
-							impartial 持平趋势
-						 -->
-                        <div class="rank_num rise">1</div>
-                        <h5 class="rank_history">历史最高第23名</h5>
-                    </div>
-                    <h1 class="ip_name">《斗破苍穹》</h1>
-                    <p class="ip_describe">起点网总点击超1.3亿，被认为是天蚕土豆的巅峰之作，奠定了其在网络原创界难以动摇的顶级作家地位。
-                    </p>
-                    <a href="#" class="watch_more">查看详情</a>
-                    <div class="values_container">
-                        <div class="value potential_trend">
-                            <h5 class="value_title">潜力指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value heat">
-                            <h5 class="value_title">热度指数</h5>
-                            <h6 class="value_num">8634</h6>
-                        </div>
-                        <div class="value spread">
-                            <h5 class="value_title">传播指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value praise">
-                            <h5 class="value_title">口碑指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value comprehensive">
-                            <h5 class="value_title">综合指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ip_section film">
-        <div class="inner">
-            <div class="title_container">
-                <div class="type_pic">
-                    <span></span>
-                </div>
-                <h2 class="title"> 影视IP <span>电影剧集 综艺节目 网络节目</span></h2>
-            </div>
-            <div class="content clearfix">
-                <img src="http://$!assetsDomain/ipcool/assets/images/index/dpcq.png">
-                <div class="ip_info">
-                    <div class="rank_container">
-                        <h5 class="rank_now">IP当前排名</h5>
-                        <!--
-							rise 上升趋势
-							drop 下降趋势
-							impartial 持平趋势
-						 -->
-                        <div class="rank_num rise">1</div>
-                        <h5 class="rank_history">历史最高第23名</h5>
-                    </div>
-                    <h1 class="ip_name">《奇葩说》</h1>
-                    <p class="ip_describe">
-                        是一档由爱奇艺打造的说话达人秀。节目由马东主持，并邀请了蔡康永、金星、高晓松担任导师
-                    </p>
-                    <a href="#" class="watch_more">查看详情</a>
-                    <div class="values_container">
-                        <div class="value potential_trend">
-                            <h5 class="value_title">潜力指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value heat">
-                            <h5 class="value_title">热度指数</h5>
-                            <h6 class="value_num">8634</h6>
-                        </div>
-                        <div class="value spread">
-                            <h5 class="value_title">传播指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value praise">
-                            <h5 class="value_title">口碑指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value comprehensive">
-                            <h5 class="value_title">综合指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ip_section character">
-        <div class="inner">
-            <div class="title_container">
-                <div class="type_pic">
-                    <span></span>
-                </div>
-                <h2 class="title"> 人物IP <span>明星 角色 网红 职能人物</span></h2>
-            </div>
-            <div class="content clearfix">
-                <img src="http://$!assetsDomain/ipcool/assets/images/index/dpcq.png">
-                <div class="ip_info">
-                    <div class="rank_container">
-                        <h5 class="rank_now">IP当前排名</h5>
-                        <!--
-							rise 上升趋势
-							drop 下降趋势
-							impartial 持平趋势
-						 -->
-                        <div class="rank_num rise">1</div>
-                        <h5 class="rank_history">历史最高第23名</h5>
-                    </div>
-                    <h1 class="ip_name">胡歌</h1>
-                    <p class="ip_describe">
-                        1982年9月20日出生于上海市徐汇区，中国内地演员、歌手、制片人。
-                    </p>
-                    <a href="#" class="watch_more">查看详情</a>
-                    <div class="values_container">
-                        <div class="value potential_trend">
-                            <h5 class="value_title">潜力指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value heat">
-                            <h5 class="value_title">热度指数</h5>
-                            <h6 class="value_num">8634</h6>
-                        </div>
-                        <div class="value spread">
-                            <h5 class="value_title">传播指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value praise">
-                            <h5 class="value_title">口碑指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value comprehensive">
-                            <h5 class="value_title">综合指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ip_section mechanism">
-        <div class="inner">
-            <div class="title_container">
-                <div class="type_pic">
-                    <span></span>
-                </div>
-                <h2 class="title"> 机构IP <span>开发 投资 执行</span></h2>
-            </div>
-            <div class="content clearfix">
-                <img src="http://$!assetsDomain/ipcool/assets/images/index/dpcq.png">
-                <div class="ip_info">
-                    <div class="rank_container">
-                        <h5 class="rank_now">IP当前排名</h5>
-                        <!--
-							rise 上升趋势
-							drop 下降趋势
-							impartial 持平趋势
-						 -->
-                        <div class="rank_num rise">1</div>
-                        <h5 class="rank_history">历史最高第23名</h5>
-                    </div>
-                    <h1 class="ip_name">阿里巴巴</h1>
-                    <p class="ip_describe">
-                        是全球企业间（B2B）电子商务的著名品牌，为数千万网商提供海量商机信息和便捷安全的在线交易市场
-                    </p>
-                    <a href="#" class="watch_more">查看详情</a>
-                    <div class="values_container">
-                        <div class="value potential_trend">
-                            <h5 class="value_title">潜力指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value heat">
-                            <h5 class="value_title">热度指数</h5>
-                            <h6 class="value_num">8634</h6>
-                        </div>
-                        <div class="value spread">
-                            <h5 class="value_title">传播指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value praise">
-                            <h5 class="value_title">口碑指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                        <div class="value comprehensive">
-                            <h5 class="value_title">综合指数</h5>
-                            <h6 class="value_num">6561</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="index_section p2">
-        <div class="inner">
-            <h2 class="title">权威的数据来源</h2>
-            <h3 class="sub_title">布控各大公信网站，全网社交舆论监控，真实信息准确同步，最新动态一手掌握</h3>
-            <img class="pic" src="http://$!assetsDomain/ipcool/assets/images/index/frontp2.png">
-            <div class="p2_titles">
-                <h3>全网流量统计</h3>
-                <h3>多端监控布局</h3>
-                <h3>人群地域多维度采集</h3>
-            </div>
-        </div>
-    </div>
-    <div class="index_section p3">
-        <div class="inner">
-            <h2 class="title">大数据服务</h2>
-            <h3 class="sub_title">大数据挖掘体系下的精度分析</h3>
-            <div class="p3_container">
-                <div class="content">
-                    <span class="icon1"></span>
-                    <h3>IP信息查询</h3>
-                    <h6>⊙10000+海量IP数据库</h6>
-                    <h6>⊙每日采集过亿数据条目</h6>
-                </div>
-                <div class="content">
-                    <span class="icon2"></span>
-                    <h3>完整IP分析报告</h3>
-                    <h6>⊙多维度的数据评估体系</h6>
-                    <h6>⊙详细的数据解析过程介绍</h6>
-                </div>
-                <div class="content">
-                    <span class="icon3"></span>
-                    <h3>专业IP开发咨询</h3>
-                    <h6>⊙布局关键数据的监控</h6>
-                    <h6>⊙全网事件传播与跟踪</h6>
-                </div>
-                <div class="content">
-                    <span class="icon4"></span>
-                    <h3>挖掘IP潜力价值</h3>
-                    <h6>⊙发现高价值的寒门IP</h6>
-                    <h6>⊙实现开发收益最大化</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="index_section p4">
-        <div class="inner">
-            <h2 class="title">更多产品与服务</h2>
-            <h3 class="sub_title">布控各大公信网站，全网社交舆论监控，真实信息准确同步，最新动态一手掌握</h3>
-            <div class="p4_container">
-                <div class="content">
-                    <span class="icon1"></span>
-                    <h3>排片助手</h3>
-                    <h6>帮助影院定制排片计划</h6>
-                    <h6>让票房收益最大化</h6>
-                    <button>即将上线</button>
-                </div>
-                <div class="content">
-                    <span class="icon2"></span>
-                    <h3>电影时光机</h3>
-                    <h6>对比往期同期票房</h6>
-                    <h6>对比分析预测票房</h6>
-                    <button>即将上线</button>
-                </div>
-                <div class="content">
-                    <span class="icon3"></span>
-                    <h3>票房模拟</h3>
-                    <h6>创建您的虚拟影片，通过分析预测</h6>
-                    <h6>来帮助您配置合理的资源</h6>
-                    <button>即将上线</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="index_section p5">
-        <div class="inner">
-            <h2>您的私人IP顾问</h2>
-            <a href="#">立即体验</a>
-        </div>
-    </div>
+</div>

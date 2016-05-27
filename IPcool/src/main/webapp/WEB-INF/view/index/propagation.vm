@@ -1,3 +1,6 @@
+#set($layout = "/layout/layout_index.vm")
+
+
 <div class="container">
     #parse("/index/common.vm")
     <!-- 传播能力 -->

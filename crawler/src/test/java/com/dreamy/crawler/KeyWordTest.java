@@ -28,22 +28,22 @@ public class KeyWordTest extends BaseJunitTest {
     @Test
     public void crawler() throws InterruptedException {
 
-        //keyWordWeiBoHandler.init();
-        BookView bookView = new BookView().type(2);
-        int currentPage = 8;
-        while (true) {
-            Page page = new Page();
-
-            page.setPageSize(50);
-            page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page);
-
-            for (BookView book : list) {
-                keyWordWeiXinHandler.crawler(book.getName(), book.getBookId());
-                Thread.sleep(NumberUtils.randomInt(1000,5000));
-            }
-            System.out.println(111);
-        }
+        keyWordWeiBoHandler.init();
+//        BookView bookView = new BookView().type(2);
+//        int currentPage = 8;
+//        while (true) {
+//            Page page = new Page();
+//
+//            page.setPageSize(50);
+//            page.setCurrentPage(currentPage);
+//            List<BookView> list = bookViewService.getList(bookView, page);
+//
+//            for (BookView book : list) {
+//                keyWordWeiXinHandler.crawler(book.getName(), book.getBookId());
+//                Thread.sleep(NumberUtils.randomInt(1000,5000));
+//            }
+//            System.out.println(111);
+//        }
 //        IpBook ipBook = new IpBook().type(1);
 //        int currentPage =  1;
 //        while (true) {
