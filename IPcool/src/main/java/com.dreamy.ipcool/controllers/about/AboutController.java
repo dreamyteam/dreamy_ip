@@ -16,21 +16,22 @@ public class AboutController extends IpcoolController {
 
     @RequestMapping("/us")
     public String us() {
-        return "/user/us";
+        return "/about/us";
     }
 
     @RequestMapping("/feedback")
     public String feedback() {
-        return "/user/feedback";
+        return "/about/feedback";
     }
 
     @RequestMapping("/agreement")
     public String agreement() {
-        return "/user/agreement";
+        return "/about/agreement";
     }
 
-    @RequestMapping("/privacy")
-    public String privacy() {
-        return "/user/privacy";
+    @RequestMapping("/contact")
+    public String contact() {
+        return "/about/contact";
     }
+
 }

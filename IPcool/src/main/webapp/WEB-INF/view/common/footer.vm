@@ -1,14 +1,14 @@
 <!-- 底 -->
 ##<div>
-    <footer>
+    <footer class="footer">
         <nav>
             <ul>
-                <li><a href="">网站首页</a></li>
-                <li><a href="/rank/list.html">排行榜</a></li>
-                <li><a href="">关于我们</a></li>
-                <li><a href="">意见反馈</a></li>
-                <li><a href="">用户协议</a></li>
-                <li><a href="">隐私政策</a></li>
+                <li><a href="/">网站首页</a></li>
+                <li><a href="/rank/list">排行榜</a></li>
+                <li><a href="/about/us">关于我们</a></li>
+                <li><a href="/about/feedback">意见反馈</a></li>
+                <li><a href="/about/agreement">用户协议</a></li>
+                <li><a href="/about/agreement">隐私政策</a></li>
                 <li><a href="">官方微信</a></li>
             </ul>
             <div class="copyright">

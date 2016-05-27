@@ -1,3 +1,6 @@
+#set($layout = "/layout/layout_index.vm")
+
+
 <input id="getIpid" type="hidden" value="$!{view.bookId}">
 
 <div class="container">

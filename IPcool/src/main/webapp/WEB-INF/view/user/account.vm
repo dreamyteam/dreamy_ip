@@ -1,5 +1,6 @@
+#set($layout = "/layout/layout_about_user.vm")
 
-    <div class="container clearfix">
+<div class="container clearfix">
         <!-- 用户中心 左侧导航 -->
         #parse("/common/user_center_left.vm")
         <!-- 用户中心 右侧部分 -->

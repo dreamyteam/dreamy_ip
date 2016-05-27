@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    #parse("/common/html_head.vm")
+    <meta charset="UTF-8">
+    <title>IP库 | IPCool</title>
 
+    #parse("/common/all_css.vm")
     <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
+
+    #parse("/common/all_js.vm")
 </head>
 <body>
 
-<div class="">
-    #parse("/common/top_bar.vm")
     $screen_content
-    #parse("/common/footer_homepage.vm")
-</div>
 
+    #parse("/common/popup_sign.vm")
 
-    #parse("/common/footer_js.vm")
-
-    #if($!{jsName})
-    <script src="/static/js/$!{jsName}.js"></script>
-    #end
+    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/vendor/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/index.js "></script>
 </body>
 </html>
 

@@ -1,16 +1,17 @@
+#set($layout = "/layout/layout_about_user.vm")
 
-    <div class="container clearfix">
+<div class="container clearfix">
         <!-- 关于我们 左侧导航 -->
         <ul class="sidebar_nav">
-            <li><a href="">关于我们</a></li>
-            <li><a href="">意见反馈</a></li>
-            <li class="active"><a href="">用户协议</a></li>
-            <li><a href="">隐私政策</a></li>
+            <li><a href="/about/us">关于我们</a></li>
+            <li><a href="/about/feedback">意见反馈</a></li>
+            <li class="active"><a href="#">用户协议</a></li>
+            <li><a href="/about/contact">联系我们</a></li>
         </ul>
         <!-- 关于我们 右侧部分 -->
         <div class="sidebar_content">
             <div class="clearfix" style="margin-bottom: 20px;">
-                <h1 class="title clearfix">用户政策 </h1>
+                <h1 class="title clearfix">用户协议 </h1>
                 <span class="update_date">更新时间：2016/04/04</span>
             </div>
             <p class="ontent_chinese">
