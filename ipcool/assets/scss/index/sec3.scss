@@ -1,0 +1,193 @@
+.sec_3 {
+    background: #fff;
+    .sec_3_background {
+        width: 100%;
+        height: 30vh;
+        background: url("http://o6qhdb7kv.bkt.clouddn.com/Artboard%2018%20Copy.-min.jpg") no-repeat;
+        padding-top: 8vh;
+        background-size: cover;
+        .title {
+            font-size: 60px;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.10);
+        }
+        .summary {
+            margin-top: 3vh;
+            font-size: 32px;
+            color: #ffffff;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.10);
+            text-align: center;
+        }
+    }
+    .sec_3_list {
+        width: 1200px;
+        margin: 12vh auto 0 auto;
+        font-size: 0;
+        li {
+            cursor: pointer;
+            display: inline-block;
+            width: 25%;
+            text-align: center;
+            .list_pic {
+                display: block;
+                width: 160px;
+                height: 160px;
+                margin: 0 auto;
+                transition: background 300ms ease;
+                &.people {
+                    background: url("../assets/images/index/icon_people_normal.png") no-repeat;
+                    background-size: cover;
+                }
+                &.investor {
+                    background: url("../assets/images/index/icon_enconomic_normal.png") no-repeat;
+                    background-size: cover;
+                }
+                &.creation {
+                    background: url("../assets/images/index/icon_creative_normal.png") no-repeat;
+                    background-size: cover;
+                }
+                &.issue {
+                    background: url("../assets/images/index/icon_share_normal.png") no-repeat;
+                    background-size: cover;
+                }
+            }
+            &.active {
+                .people {
+                    background: url("../assets/images/index/icon_people_sclected.png") no-repeat;
+                    background-size: cover;
+                }
+                .investor {
+                    background: url("../assets/images/index/icon_enconomic_selected.png") no-repeat;
+                    background-size: cover;
+                }
+                .creation {
+                    background: url("../assets/images/index/icon_creative_sclected.png") no-repeat;
+                    background-size: cover;
+                }
+                .issue {
+                    background: url("../assets/images/index/icon_share_sclected.png") no-repeat;
+                    background-size: cover;
+                }
+            }
+            .list_title {
+                display: block;
+                font-size: 32px;
+                color: #383838;
+                margin-top: 6vh;
+            }
+        }
+    }
+    .sec_3_list_summary {
+        width: 1200px;
+        padding: 0 100px;
+        margin: 10vh auto 0 auto;
+        font-size: 18px;
+        color: rgba(31, 26, 26, 0.60);
+        line-height: 40px;
+        li {
+            display: none;
+            p {
+                position: relative;
+                text-indent: 2em;
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: -110px;
+                    top: 0;
+                    background: url("../assets/images/index/silmon.png") no-repeat;
+                    background-size: 51px;
+                    width: 51px;
+                    height: 40px;
+                    transform: rotate(180deg);
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: -110px;
+                    top: 0;
+                    background: url("../assets/images/index/silmon.png") no-repeat;
+                    background-size: 51px;
+                    width: 51px;
+                    height: 40px;
+                }
+            }
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
+
+.sec_3.active {}
+
+@media screen and (max-width:1440px) {
+    .sec_3 {
+        .sec_3_background {
+            .title {
+                font-size: 40px;
+            }
+            .summary {
+                font-size: 24px;
+            }
+        }
+        .sec_3_list {
+            margin: 75px auto 0 auto;
+            li {
+                .list_title {
+                    font-size: 28px;
+                }
+            }
+        }
+        .sec_3_list_summary {
+            margin: 100px auto 0 auto;
+            font-size: 16px;
+            line-height: 36px;
+        }
+    }
+}
+
+@media screen and (max-width:1280px),
+screen and (max-height:700px) {
+    .sec_3 {
+        .sec_3_background {
+            .title {
+                font-size: 40px;
+            }
+            .summary {
+                font-size: 24px;
+            }
+        }
+        .sec_3_list {
+            width: 1000px;
+            margin: 70px auto 0 auto;
+            font-size: 0;
+            li {
+                .list_pic {
+                    width: 120px;
+                    height: 120px;
+                }
+                .list_title {
+                    font-size: 24px;
+                    margin-top: 20px;
+                }
+            }
+        }
+        .sec_3_list_summary {
+            width: 1000px;
+            margin: 100px auto 0 auto;
+            font-size: 14px;
+            line-height: 30px;
+            li {
+                p {
+                    &::before,
+                    &::after {
+                        background-size: 41px;
+                        width: 41px;
+                        height: 32px;
+                    }
+                }
+            }
+        }
+    }
+}

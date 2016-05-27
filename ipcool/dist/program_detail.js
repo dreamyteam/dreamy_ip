@@ -267,24 +267,37 @@
 	            this.tabContents = this.el.find(this.cfg.tabContents);
 	            this.tabNavList = this.tabNav.find("li");
 	            this.contentList = this.tabContents.find("li");
-	            this.bindTabNav();
+	            this.trigger = this.cfg.trigger || "click";
+	            this.checkTrigger();
 	        }
 	    }, {
-	        key: "bindTabNav",
-	        value: function bindTabNav() {
+	        key: "checkTrigger",
+	        value: function checkTrigger() {
 	            var self = this;
-	            this.tabNavList.each(function () {
-	                $(this).on("click", function () {
-	                    var index = $(this).index();
-	                    console.log(index);
-	                    //除去标题的active类
-	                    self.tabNavList.each(function () {
-	                        $(this).removeClass('active');
+	            if (this.trigger == "mouseover") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("mouseover", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index);
 	                    });
-	                    $(this).addClass('active');
-	                    self.switchContent(index, true);
 	                });
+	            } else if (this.trigger == "click") {
+	                this.tabNavList.each(function () {
+	                    $(this).on("click", function () {
+	                        var index = $(this).index();
+	                        self.switchTabNav(index);
+	                    });
+	                });
+	            }
+	        }
+	    }, {
+	        key: "switchTabNav",
+	        value: function switchTabNav(index) {
+	            this.tabNavList.each(function () {
+	                $(this).removeClass('active');
 	            });
+	            this.tabNavList.eq(index).addClass('active');
+	            this.switchContent(index, true);
 	        }
 	    }, {
 	        key: "switchContent",

@@ -1,0 +1,201 @@
+.sec_4 {
+    font-size: 0;
+    position: relative;
+    .sec_4_section {
+        cursor: pointer;
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 50%;
+        font-size: 54px;
+        transition: all 300ms ease;
+        .mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: url("../assets/images/index/sec4_mask.png") no-repeat;
+            background-size: cover;
+            transition: opacity 300ms ease;
+            opacity: 0.4;
+        }
+        .title {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width:300px;
+            height:200px;
+            margin-left: -150px;
+            margin-right: -100px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+            transition: all 300ms ease;
+            &::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                margin-left: -51px;
+                top: -30px;
+                width: 102px;
+                height: 4px;
+                background: #fff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+        }
+        .sec_4_info {
+            position: absolute;
+            width: 500px;
+            height: 160px;
+            left: 50%;
+            margin-left: -250px;
+            top: 60%;
+            opacity: 0;
+            transition: all 300ms ease;
+            .summary {
+                color: #fff;
+                font-weight: 100;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+                font-size: 18px;
+                text-align: center;
+            }
+            .icons_list {
+                width: 435px;
+                margin: 60px auto 0 auto;
+                font-size: 0;
+                li {
+                    display: inline-block;
+                    width: 145px;
+                    height: 60px;
+                    .sec_4_icon {
+                        display: inline-block;
+                        width: 60px;
+                        height: 60px;
+                        vertical-align: top;
+                    }
+                    em {
+                        display: inline-block;
+                        margin-left: 25px;
+                        vertical-align: top;
+                        color: #fff;
+                        width: 60px;
+                        font-weight: 100;
+                        font-style: normal;
+                        line-height: 60px;
+                        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+                        font-size: 18px;
+                    }
+                    .sec_4_icon.icon_rank {
+                        background: url("../assets/images/index/sec_4_icon_rank.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_tv {
+                        background: url("../assets/images/index/sec_4_icon_tv.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_prop {
+                        background: url("../assets/images/index/sec_4_icon_prop.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_award {
+                        background: url("../assets/images/index/sec_4_icon_award.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_trend {
+                        background: url("../assets/images/index/sec_4_icon_trend.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_heart {
+                        background: url("../assets/images/index/sec_4_icon_heart.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_star {
+                        background: url("../assets/images/index/sec_4_icon_star.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_data {
+                        background: url("../assets/images/index/sec_4_icon_data.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_channel {
+                        background: url("../assets/images/index/sec_4_icon_channel.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_report {
+                        background: url("../assets/images/index/sec_4_icon_report.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_charts {
+                        background: url("../assets/images/index/sec_4_icon_charts.png") no-repeat;
+                        background-size: 60px;
+                    }
+                    .sec_4_icon.icon_publish {
+                        background: url("../assets/images/index/sec_4_icon_publish.png") no-repeat;
+                        background-size: 60px;
+                    }
+                }
+            }
+        }
+        &:hover {
+            .mask {
+                opacity: 0;
+            }
+            .title {
+                transform: translateY(-60px);
+                color: #EFD8B0;
+                &::before {
+                    background: #EFD8B0;
+                }
+            }
+            .sec_4_info {
+                opacity: 1;
+                top: 50%;
+            }
+        }
+    }
+    .employment {
+        background: url("http://o6qhdb7kv.bkt.clouddn.com/Artboard%2026..jpg") no-repeat;
+        background-size: cover;
+    }
+    .invest {
+        background: url("http://o6qhdb7kv.bkt.clouddn.com/Artboard%2026%20Copy%202..jpg") no-repeat;
+        background-size: cover;
+    }
+    .copyright {
+        background: url("http://o6qhdb7kv.bkt.clouddn.com/Artboard%2026%20Copy%203..jpg") no-repeat;
+        background-size: cover;
+    }
+    .distribution {
+        background: url("http://o6qhdb7kv.bkt.clouddn.com/Artboard%2026%20Copy..jpg") no-repeat;
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .sec_4 {
+        .sec_4_section {
+            font-size: 46px;
+        }
+    }
+}
+@media screen and (max-width:1280px),
+ screen and (max-height:700px)  {
+     .sec_4 {
+        .sec_4_section {
+            font-size: 40px;
+            .sec_4_info {
+                .summary {
+                    font-size: 16px;
+                }
+                .icons_list {
+                    li {
+                        em {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

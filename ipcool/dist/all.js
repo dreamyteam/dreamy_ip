@@ -286,7 +286,6 @@
 	            var lastInput = this.boxReg.find("input[name='verify_code']");
 	            btnSubmit.addClass('active');
 	            lastInput.off("keydown");
-	            console.log(lastInput);
 	            lastInput.on("keydown", function (e) {
 	                var key = e.which;
 	                if (key == 13) {

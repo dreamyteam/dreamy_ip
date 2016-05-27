@@ -1,0 +1,203 @@
+.sec_7 {
+    background: #fff;
+    position: relative;
+    padding-top: 10vh;
+    .title {
+        font-size: 60px;
+        color: #383838;
+        text-align: center;
+    }
+    .summary {
+        font-size: 32px;
+        color: rgba(56, 56, 56, 0.6);
+        margin-top: 30px;
+        text-align: center;
+    }
+    .submit {
+        display: block;
+        margin: 100px auto;
+        background: rgba(18, 172, 163, 0.80);
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.10);
+        border-radius: 2px;
+        width: 600px;
+        height: 60px;
+        font-size: 25px;
+        color: #ffffff;
+        transition: all 300ms ease;
+        &:hover {
+            background: rgba(18, 172, 163, 1);
+        }
+    }
+    .sec_7_footer {
+        width: 100%;
+        height: 340px;
+        position: absolute;
+        bottom: 0;
+        background: #303747;
+        .inner {
+            width: 1280px;
+            height: 236px;
+            margin: 54px auto 0 auto;
+            font-size: 0;
+            .sec_7_section_left {
+                display: inline-block;
+                vertical-align: top;
+                width: 249px;
+                font-size: 18px;
+                color: #fff;
+                li {
+                    margin-bottom: 24px;
+                    a {
+                        color: #5d7694;
+                    }
+                    .dreamy_ewm {
+                        display: block;
+                        background: url("../assets/images/index/dreamy_ewm.png") no-repeat;
+                        width: 102px;
+                        height: 102px;
+                        background-size: 102px;
+                    }
+                }
+            }
+            .sec_7_section_right {
+                display: inline-block;
+                vertical-align: top;
+                width: 284px;
+                .ipcool_logo {
+                    position: relative;
+                    display: block;
+                    background: url('../assets/images/index/logo_withoutchi.png') 50% no-repeat;
+                    width: 179px;
+                    height: 54px;
+                    background-size: 179px;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 284px;
+                        height: 1px;
+                        background: rgba(255, 255, 255, 0.40);
+                        bottom: -20px;
+                    }
+                }
+                ul {
+                    margin-top: 40px;
+                    li {
+                        margin-bottom: 20px;
+                        font-size: 14px;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+        .sub_footer {
+            width: 100%;
+            height: 50px;
+            background: #262a36;
+            p {
+                color: #5d7694;
+                font-size: 14px;
+                line-height: 50px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .sec_7 {
+        .title {
+            font-size: 40px;
+        }
+        .summary {
+            font-size: 24px;
+        }
+        .submit {
+            margin: 60px auto;
+            width: 480px;
+            height: 56px;
+        }
+        .sec_7_footer {
+            width: 100%;
+            height: 300px;
+            .inner {
+                width: 980px;
+                height: 220px;
+                margin: 50px auto 0 auto;
+                .sec_7_section_left {
+                    width: 174px;
+                    font-size: 18px;
+                    li {
+                        margin-bottom: 18px;
+                    }
+                }
+                .sec_7_section_right {
+                    ul {
+                        margin-top: 30px;
+                        li {
+                            margin-bottom: 14px;
+                        }
+                    }
+                }
+            }
+            .sub_footer {
+                width: 100%;
+                height: 30px;
+                p {
+                    font-size: 14px;
+                    line-height: 30px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1280px),
+screen and (max-height:700px) {
+    .sec_7 {
+        .title {
+            font-size: 40px;
+        }
+        .summary {
+            font-size: 24px;
+        }
+        .sec_7_footer {
+            height: 280px;
+            .inner {
+                width: 1000px;
+                height: 186px;
+                .sec_7_section_left {
+                    width: 190px;
+                    font-size: 16px;
+                    li {
+                        margin-bottom: 14px;
+                    }
+                }
+                .sec_7_section_right {
+                    width: 240px;
+                    .ipcool_logo {
+                        width: 164px;
+                        height: 50px;
+                        background-size: 164px;
+                        &::after {
+                            width: 240px;
+                        }
+                    }
+                    ul {
+                        li {
+                            margin-bottom: 18px;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+            .sub_footer {
+                width: 100%;
+                height: 44px;
+                p {
+                    line-height: 44px;
+                }
+            }
+        }
+    }
+}
