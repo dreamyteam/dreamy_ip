@@ -87,7 +87,7 @@ public class RankUpdateTask {
     private Long setValue = 1L;
 
 
-    //    @Scheduled(fixedDelay = 1000 * 60 * 60)
+//    @Scheduled(fixedDelay = 1000 * 60 * 60)
     @Scheduled(cron = "10 2 * * * *")
     public void run() {
         Page page = new Page();
@@ -103,14 +103,12 @@ public class RankUpdateTask {
                     updateByBookView(bookView);
                 }
             }
-            
+
             if (!page.isHasNextPage()) {
                 break;
             }
             currentPage++;
         }
-
-
     }
 
     public void updateByBookView(BookView bookView) {
