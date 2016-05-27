@@ -32,13 +32,12 @@ public class CommentEventQueueHandler extends AbstractQueueHandler {
 
         Integer bookId = jsonObject.getInteger("ipId");
         String url = jsonObject.getString("url");
-
         List<Comment> commentList = commentHandler.getByUrl(url);
         if (CollectionUtils.isNotEmpty(commentList)) {
             Comments comment = new Comments();
             comment.setComments(commentList);
             comment.setIpId(bookId);
-            commentDao.save(comment);
+            commentDao.updateInser(comment);
         }
 
     }
