@@ -32,7 +32,7 @@ import java.util.Map;
  * Time: 上午11:08
  */
 @Component
-public class RankUpdateTask {
+public class UpdateRankAndIndexTask {
 
     @Autowired
     private BookViewService bookViewService;

@@ -1,6 +1,8 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
@@ -8,10 +10,7 @@ import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
-import com.dreamy.service.iface.ipcool.BookRankHistoryService;
-import com.dreamy.service.iface.ipcool.BookRankService;
-import com.dreamy.service.iface.ipcool.BookScoreService;
-import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
@@ -56,6 +55,9 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private BookRankHistoryService bookRankHistoryService;
 
+    @Autowired
+    private BookIndexHistoryService bookIndexHistoryService;
+
     @Override
     public void consume(JSONObject jsonObject) {
         final String bookIdStr = jsonObject.getString("bookId");
@@ -83,6 +85,8 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
                                 BookView updatedBookView = bookViewService.getByBookId(bookView.getBookId());
                                 updateRank(updatedBookView);
+
+                                updateHistoryIndex(bookView);
                             }
                         }
                     }
@@ -237,6 +241,38 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
         } catch (Exception e) {
             Log.error("update rank failed :id=" + bookView.getId() + ":type=" + rankType, e);
+        }
+    }
+
+    private void updateHistoryIndex(BookView bookView) {
+
+        bookIndexHistoryService.delByDate(new Date());
+ 
+
+
+        BookView entity = new BookView();
+        int currentPage = 1;
+        bookIndexHistoryService.delByDate(new Date());
+        while (true) {
+            Page page = new Page();
+            page.setPageSize(200);
+            page.setCurrentPage(currentPage);
+            List<BookView> list = bookViewService.getList(entity, page);
+            for (BookView info : list) {
+                BookIndexHistory history = new BookIndexHistory();
+                history.setHotIndex(info.getHotIndex());
+                history.setActivityIndex(info.getActivityIndex());
+                history.setCompositeIndex(info.getCompositeIndex());
+                history.setPropagateIndex(info.getPropagateIndex());
+                history.setDevelopIndex(info.getDevelopIndex());
+                history.setBookId(info.getBookId());
+                history.setStatus(1);
+                bookIndexHistoryService.save(history);
+            }
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            currentPage++;
         }
     }
 
