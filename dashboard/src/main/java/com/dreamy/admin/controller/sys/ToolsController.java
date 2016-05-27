@@ -3,8 +3,8 @@ package com.dreamy.admin.controller.sys;
 import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.*;
-import com.dreamy.admin.tasks.index.*;
-import com.dreamy.admin.tasks.rank.BookRankCreateTask;
+//import com.dreamy.admin.tasks.index.*;
+//import com.dreamy.admin.tasks.rank.BookRankCreateTask;
 import com.dreamy.admin.thread.ExtractBookViewService;
 import com.dreamy.admin.thread.ExtractThread;
 import com.dreamy.admin.thread.ExtractThreadManager;
@@ -48,22 +48,22 @@ public class ToolsController extends DashboardController {
     @Autowired
     BookScoreTask bookScoreTask;
 
-    @Autowired
-    CompositeIndexexCreateTask compositeIndexexCreateTask;
-    @Autowired
-    DevelopIndexesCreateTask developIndexesCreateTask;
-    @Autowired
-    HotIndexesCreateTask hotIndexesCreateTask;
-    @Autowired
-    PropagationIndexesCreareTask propagationIndexesCreareTask;
-
-    @Autowired
-    ReputationIndexesCreateTask reputationIndexesCreateTask;
-
-    @Autowired
-    BookIndexHistoryTask bookIndexHistoryTask;
-    @Autowired
-    BookRankCreateTask bookRankCreateTask;
+//    @Autowired
+//    CompositeIndexexCreateTask compositeIndexexCreateTask;
+//    @Autowired
+//    DevelopIndexesCreateTask developIndexesCreateTask;
+//    @Autowired
+//    HotIndexesCreateTask hotIndexesCreateTask;
+//    @Autowired
+//    PropagationIndexesCreareTask propagationIndexesCreareTask;
+//
+//    @Autowired
+//    ReputationIndexesCreateTask reputationIndexesCreateTask;
+//
+//    @Autowired
+//    BookIndexHistoryTask bookIndexHistoryTask;
+//    @Autowired
+//    BookRankCreateTask bookRankCreateTask;
 
     @Resource
     private SysOptionService sysOptionService;
@@ -194,33 +194,33 @@ public class ToolsController extends DashboardController {
     }
 
 
-    /**
-     * 计算指数
-     *
-     * @return
-     */
-    @RequestMapping(value = "/index/hotIndex")
-    public String hotIndex() {
-        hotIndexesCreateTask.run();
-        developIndexesCreateTask.run();
-        propagationIndexesCreareTask.run();
-        reputationIndexesCreateTask.run();
-        compositeIndexexCreateTask.run();
-        bookIndexHistoryTask.copy();
-        return redirect("/system/call.html");
-    }
-
-
-    /**
-     * 计算排名
-     *
-     * @return
-     */
-    @RequestMapping(value = "/index/rank")
-    public String rank() {
-        bookRankCreateTask.run();
-        return redirect("/system/call.html");
-    }
+//    /**
+//     * 计算指数
+//     *
+//     * @return
+//     */
+//    @RequestMapping(value = "/index/hotIndex")
+//    public String hotIndex() {
+//        hotIndexesCreateTask.run();
+//        developIndexesCreateTask.run();
+//        propagationIndexesCreareTask.run();
+//        reputationIndexesCreateTask.run();
+//        compositeIndexexCreateTask.run();
+//        bookIndexHistoryTask.copy();
+//        return redirect("/system/call.html");
+//    }
+//
+//
+//    /**
+//     * 计算排名
+//     *
+//     * @return
+//     */
+//    @RequestMapping(value = "/index/rank")
+//    public String rank() {
+//        bookRankCreateTask.run();
+//        return redirect("/system/call.html");
+//    }
     @RequestMapping(value = "/tools/createView")
     public String createView() {
         int current = 1;
