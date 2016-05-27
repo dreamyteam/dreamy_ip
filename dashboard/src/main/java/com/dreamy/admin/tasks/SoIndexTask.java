@@ -28,7 +28,7 @@ public class SoIndexTask {
     @Resource
     private QueueService queueService;
 
-    @Value("${queue_crawler_so_index}")
+    @Value("${queue_index_360}")
     private String queueName;
 
     public void crawler() {

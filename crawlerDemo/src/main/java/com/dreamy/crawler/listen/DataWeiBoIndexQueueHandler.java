@@ -19,10 +19,10 @@ import java.util.Date;
  * Created by wangyongxing on 16/5/5.
  */
 @Component
-public class SoIndexEventQueueHandler extends AbstractQueueHandler {
+public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
 
 
-    private static final Logger log = LoggerFactory.getLogger(SoIndexEventQueueHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(DataWeiBoIndexQueueHandler.class);
 
     @Autowired
     private SoHandler soHandler;

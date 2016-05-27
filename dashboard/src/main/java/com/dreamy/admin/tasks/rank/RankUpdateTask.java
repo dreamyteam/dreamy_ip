@@ -75,8 +75,18 @@ public class RankUpdateTask {
     private String s360IndexQueue;
 
 
-    @Value("${queue_index_wx}")
-    private String wxIndexQueue;
+    @Value("${queue_keyword_wx}")
+    private String wxKeyWordQueue;
+
+    @Value("${queue_keyword_wb}")
+    private String wbKeyWordQueue;
+
+    @Value("${queue_keyword_baidu_sougou}")
+    private String bsKeyWordQueue;
+
+    @Value("${queue_news_sougou}")
+    private String newsSougouQueue;
+
 
 
     private Long setValue = 1L;
@@ -156,8 +166,12 @@ public class RankUpdateTask {
                             Map<String, String> params = commonParams;
 
                             params.put("name", bookView.getName());
+                            pushToQueue(s360IndexQueue, params);
                             pushToQueue(wbIndexQueue, params);
-                            pushToQueue(wxIndexQueue, params);
+                            pushToQueue(wbKeyWordQueue, params);
+                            pushToQueue(wxKeyWordQueue, params);
+                            pushToQueue(bsKeyWordQueue, params);
+                            pushToQueue(newsSougouQueue, params);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

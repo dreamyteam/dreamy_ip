@@ -34,15 +34,6 @@
 
 
     <!--队列声明-->
-    <!--<rabbit:queue name="${queue_crawler_publish_book}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_comment}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_keyword}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_keyword_weixin}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_keyword_weibo}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_so_index}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_news_sougou}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_publish_book_amazon}"/>-->
-    <!--<rabbit:queue name="${queue_crawler_douban_book_tag}"/>-->
     <rabbit:queue name="${queue_amazon_crawler}"/>
     <rabbit:queue name="${queue_jd_crawler}"/>
     <rabbit:queue name="${queue_dangdang_crawler}"/>
@@ -50,7 +41,10 @@
     <rabbit:queue name="${queue_index_baidu}"/>
     <rabbit:queue name="${queue_index_360}"/>
     <rabbit:queue name="${queue_index_wb}"/>
-    <rabbit:queue name="${queue_index_wx}"/>
+    <rabbit:queue name="${queue_keyword_wx}"/>
+    <rabbit:queue name="${queue_keyword_wb}"/>
+    <rabbit:queue name="${queue_keyword_baidu_sougou}"/>
+    <rabbit:queue name="${queue_news_sougou}"/>
     <rabbit:queue name="${queue_crawler_over}"/>
 
 
@@ -73,7 +67,12 @@
             <rabbit:binding queue="${queue_index_baidu}"/>
             <rabbit:binding queue="${queue_index_360}"/>
             <rabbit:binding queue="${queue_index_wb}"/>
-            <rabbit:binding queue="${queue_index_wx}"/>
+
+
+            <rabbit:binding queue="${queue_keyword_wx}"/>
+            <rabbit:binding queue="${queue_keyword_wb}"/>
+            <rabbit:binding queue="${queue_keyword_baidu_sougou}"/>
+            <rabbit:binding queue="${queue_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_over}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
@@ -106,6 +105,9 @@
     <!--360指数-->
 
     <bean id="soIndexEventQueueHandler" class="com.dreamy.crawler.listen.SoIndexEventQueueHandler"/>
+
+    <!--微博指数-->
+    <bean id="dataWeiBoIndexQueueHandler" class="com.dreamy.crawler.listen.DataWeiBoIndexQueueHandler"/>
     <!--新闻媒体 news.sougou-->
     <bean id="newsMediaQueueHandler" class="com.dreamy.crawler.listen.NewsMediaQueueHandler"/>
 
@@ -121,16 +123,16 @@
             <!--error-handler="listenerErrorHandler">-->
         <!--<rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_crawler_comment}"/>-->
     <!--</rabbit:listener-container>-->
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_crawler_keyword}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_keyword_baidu_sougou}"/>
+    </rabbit:listener-container>
 
     <rabbit:listener-container
             connection-factory="connectionFactory"
@@ -141,7 +143,7 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage"
-                         queues="${queue_index_wx} "/>
+                         queues="${queue_keyword_wx} "/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -153,7 +155,29 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="keyWordWeiBoCrawlerQueueHandler" method="onMessage"
-                         queues="${queue_index_wb} "/>
+                         queues="${queue_keyword_wx} "/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+        connection-factory="connectionFactory"
+        auto-startup="true"
+        acknowledge="auto"
+        prefetch="1"
+        concurrency="1"
+        message-converter="simpleMessageConverter"
+        error-handler="listenerErrorHandler">
+    <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>
+</rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="dataWeiBoIndexQueueHandler" method="onMessage" queues="${queue_index_wb}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container
@@ -164,19 +188,8 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_news_sougou}"/>
     </rabbit:listener-container>
-
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_crawler_news_sougou}"/>-->
-    <!--</rabbit:listener-container>-->
 
 
     <rabbit:listener-container

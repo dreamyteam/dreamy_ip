@@ -5,13 +5,16 @@ import com.dreamy.mogodb.beans.SoArea;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/5/26.
  */
 public class DataWeiBoHandler {
+
     public void crawler(String cookie, int bookId) {
         BookIndexData bookIndexData = new BookIndexData();
         getAge(bookIndexData, cookie);
@@ -24,8 +27,8 @@ public class DataWeiBoHandler {
      */
     public static void getAge(BookIndexData bookIndexData, String cookie) {
         String url = "http://data.weibo.com/index/ajax/getdefaultattributealldata?type=default&__rnd=" + System.currentTimeMillis();
-        String value = "DATA=usrmdinst_17;PHPSESSID=fi9atbq7i0rjp2d7a1qg9jd0j2;";
-        String json = HttpUtils.getHtmlGetChangeCookie(url, value);
+
+        String json = HttpUtils.getHtmlGetChangeCookie(url, cookie);
         json = HttpUtils.decodeUnicode(json);
         if (StringUtils.isNotEmpty(json)) {
             Map<String, Object> map = JsonUtils.toMap(json);
@@ -52,6 +55,7 @@ public class DataWeiBoHandler {
         if (StringUtils.isNotEmpty(json)) {
             Map<String, Object> map = JsonUtils.toMap(json);
             Map<String, Object> map1 = (Map<String, Object>) map.get("zone");
+            List<SoArea> list = new ArrayList<SoArea>();
             for (Map.Entry<String, Object> entry : map1.entrySet()) {
                 Map<String, Object> map2 = (Map<String, Object>) entry.getValue();
                 SoArea soArea = new SoArea();
@@ -62,10 +66,9 @@ public class DataWeiBoHandler {
                     value = value.replace("%", "");
                     soArea.setPerctent(Double.valueOf(value));
                 }
-
-
+                list.add(soArea);
             }
-
+            bookIndexData.setAreaList(list);
         }
 
 

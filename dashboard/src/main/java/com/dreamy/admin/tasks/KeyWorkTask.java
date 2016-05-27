@@ -32,14 +32,14 @@ public class KeyWorkTask {
     @Resource
     private QueueService queueService;
 
-    @Value("${queue_crawler_keyword}")
+    @Value("${queue_keyword_baidu_sougou}")
     private String queueName;
 
 
-    @Value("${queue_crawler_keyword_weixin}")
+    @Value("${queue_keyword_wx}")
     private String weiXinQueueName;
 
-    @Value("${queue_crawler_keyword_weibo}")
+    @Value("${queue_keyword_wb}")
     private String weiBoQueueName;
 
 
