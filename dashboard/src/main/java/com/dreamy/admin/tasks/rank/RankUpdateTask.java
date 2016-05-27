@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
+import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -43,6 +44,9 @@ public class RankUpdateTask {
     private BookCrawlerInfoService bookCrawlerInfoService;
     @Autowired
     private RankService rankService;
+
+    @Autowired
+    private HotWordService hotWordService;
 
 
     @Autowired
