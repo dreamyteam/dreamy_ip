@@ -93,11 +93,11 @@ public class KeyWordWeiBoHandler {
         String cookie = (String) commonService.getCacheService().get(name);
         if (StringUtils.isEmpty(cookie)) {
             init();
-            cookie = (String) commonService.getCacheService().get(RedisConstEnums.sougouweixinCookieName.getCacheKey() + 1);
+            cookie = (String) commonService.getCacheService().get(RedisConstEnums.weiboCookieName.getCacheKey() + 1);
             if (StringUtils.isEmpty(cookie)) {
                 LoginSina ls = new LoginSina(CrawSina.weiboUsername, CrawSina.weiboPassword);
                 ls.dologinSina();
-                commonService.getCacheService().put(RedisConstEnums.sougouweixinCookieName.getCacheKey() + 1, CrawSina.Cookie);
+                commonService.getCacheService().put(RedisConstEnums.weiboCookieName.getCacheKey() + 1, CrawSina.Cookie);
                 cookie = CrawSina.Cookie;
             }
 
@@ -128,7 +128,7 @@ public class KeyWordWeiBoHandler {
             LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
             ls.dologinSina();
             if (StringUtils.isNotEmpty(CrawSina.Cookie)) {
-                commonService.getCacheService().set(RedisConstEnums.sougouweixinCookieName.getCacheKey()+i, CrawSina.Cookie, 3600);
+                commonService.getCacheService().set(RedisConstEnums.weiboCookieName.getCacheKey()+i, CrawSina.Cookie, 3600);
                 i++;
             }
         }

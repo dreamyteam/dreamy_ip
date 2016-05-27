@@ -1,39 +1,28 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.admin.tasks.BookViewCreateTask;
-import com.dreamy.admin.tasks.rank.BookRankCreateTask;
 import com.dreamy.admin.thread.ExtractBookViewService;
 import com.dreamy.admin.thread.ExtractThread;
 import com.dreamy.admin.thread.ExtractThreadManager;
 import com.dreamy.beans.Page;
-import com.dreamy.domain.ipcool.*;
-import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.enums.CrawlerTaskStatusEnums;
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
+import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.HotWordDao;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
-import com.dreamy.service.iface.ipcool.BookTagsService;
-import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.IpBookService;
-import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
-import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
-import com.dreamy.utils.StringUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,10 +36,7 @@ import java.util.Map;
 public class BookViewCreateTaskTest extends BaseJunitTest {
     @Autowired
     BookViewCreateTask bookViewCreateTask;
-
-    @Autowired
-    BookRankCreateTask bookRankCreateTask;
-
+    
     @Autowired
     private IpBookService ipBookService;
     @Autowired

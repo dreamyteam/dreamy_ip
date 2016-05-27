@@ -2,6 +2,7 @@ package com.dreamy.ipcool.controllers.index;
 
 import com.dreamy.beans.InterfaceBean;
 import com.dreamy.domain.ipcool.*;
+import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.BookIndexData;
@@ -221,7 +222,7 @@ public class PropagationController extends IpcoolController {
             score.put("max",bookView.getScore());
             list.add(score);
             Double developScore = 0.0;
-            BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId());
+            BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId()+"_"+ IndexSourceEnums.s360.getType());
             if (bookIndexData != null) {
                 String[] ages = bookIndexData.getAge();
                 if (ArrayUtils.isNotEmpty(ages)) {
@@ -305,7 +306,7 @@ public class PropagationController extends IpcoolController {
     public void sex(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.getById(bookId);
+        BookIndexData bookIndexData = bookIndexDataService.getById(bookId+"_"+IndexSourceEnums.s360.getType());
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -328,7 +329,7 @@ public class PropagationController extends IpcoolController {
     public void age(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.getById(bookId);
+        BookIndexData bookIndexData = bookIndexDataService.getById(bookId+"_"+IndexSourceEnums.s360.getType());
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();

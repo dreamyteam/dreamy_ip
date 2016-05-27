@@ -208,7 +208,7 @@ public class test extends BaseJunitTest {
     @Test
     public void so() throws UnsupportedEncodingException {
         BookIndexData bookIndexData = soHandler.getByUrl("少有人走的路", "全国");
-        bookIndexData.setId(110);
+        bookIndexData.setId(110+"_"+2);
         bookIndexData.setSource(2);
         bookIndexDataDao.save(bookIndexData);
 

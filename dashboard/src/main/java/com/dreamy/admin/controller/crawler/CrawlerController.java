@@ -119,7 +119,6 @@ public class CrawlerController extends DashboardController {
 
         for (BookCrawlerInfo info : list) {
             if (info.getStatus().equals(CrawlerTaskStatusEnums.failed.getStatus())) {
-                ipBookService.doCrawler(info);
             }
         }
 
@@ -133,9 +132,8 @@ public class CrawlerController extends DashboardController {
                 IpBook ipBook = ipBookService.getById(id);
                 BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
                 List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
-
                 for (BookCrawlerInfo info : list) {
-                    ipBookService.doCrawler(info);
+
                 }
             }
         }

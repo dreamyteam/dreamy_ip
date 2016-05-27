@@ -328,11 +328,15 @@ public class RedisClientService {
     }
 
     public Set<Object> zrange(String key, long start, long end) {
-        return  zSetOperations.range(key, start, end);
+        return zSetOperations.range(key, start, end);
     }
 
     public Set<Object> reverseZrange(String key, long start, long end) {
-        return  zSetOperations.reverseRange(key, start, end);
+        return zSetOperations.reverseRange(key, start, end);
+    }
+
+    public Long reverseZrank(String setName, String key) {
+        return zSetOperations.reverseRank(setName, key);
     }
 
 

@@ -2,10 +2,8 @@ package com.dreamy.admin.tasks;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.mq.QueueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +24,7 @@ public class NewsMediaTask {
     @Resource
     BookViewService bookViewService;
 
-    @Value("${queue_crawler_news_sougou}")
+    @Value("${queue_news_sougou}")
     private String queueName;
 
     public void crawler() {
