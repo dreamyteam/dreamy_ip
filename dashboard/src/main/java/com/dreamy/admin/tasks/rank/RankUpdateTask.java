@@ -3,11 +3,9 @@ package com.dreamy.admin.tasks.rank;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
-import com.dreamy.mogodb.beans.Book;
-import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -43,15 +41,9 @@ public class RankUpdateTask {
 
     @Autowired
     private BookCrawlerInfoService bookCrawlerInfoService;
-
-    @Autowired
-    private HotWordService hotWordService;
-
     @Autowired
     private RankService rankService;
 
-    @Autowired
-    private IpBookService ipBookService;
 
     @Autowired
     private QueueService queueService;
@@ -170,10 +162,9 @@ public class RankUpdateTask {
         while (currentPage <= totalPage);
     }
 
-    public void pushToQueue(String queueName, Map<String, String> params) {
+    private void pushToQueue(String queueName, Map<String, String> params) {
         queueService.push(queueName, params);
         redisClientService.incrBy(params.get("key"), setValue);
     }
-
 
 }

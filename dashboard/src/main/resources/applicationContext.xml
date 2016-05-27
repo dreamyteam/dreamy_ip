@@ -81,6 +81,16 @@
         <property name="httpOnly" value="true"/>
     </bean>
 
+
+    <bean id="taskExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="WaitForTasksToCompleteOnShutdown" value="true" />
+    </bean>
+
+
+
     <import resource="applicationContext-rabbitmq.xml"/>
     <import resource="classpath:applicationContext-dao.xml"/>
     <import resource="classpath:mongodb.xml"/>

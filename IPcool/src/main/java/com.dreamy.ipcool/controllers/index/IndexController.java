@@ -197,7 +197,7 @@ public class IndexController extends IpcoolController {
     public void trendHistory(HttpServletResponse response, @RequestParam(value = "bookId") Integer bookId, @RequestParam(value = "type", defaultValue = "") Integer type, @RequestParam(value = "callback") String callback) {
         InterfaceBean bean = new InterfaceBean().success();
         BookRank bookRank = bookRankService.getByBookIdAndType(bookId, type);
-        if (bookRank.getId() == null) {
+        if (bookRank == null) {
             bean.failure(1, "book id not exist");
         } else {
             Map<String, String> result = new HashMap<String, String>();
