@@ -5,6 +5,8 @@ import com.dreamy.mogodb.beans.SoArea;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,12 +15,14 @@ import java.util.Map;
 /**
  * Created by wangyongxing on 16/5/26.
  */
+@Component
 public class DataWeiBoHandler {
 
-    public void crawler(String cookie, int bookId) {
+    public BookIndexData crawler(String cookie) {
         BookIndexData bookIndexData = new BookIndexData();
         getAge(bookIndexData, cookie);
         drawAreaJson(bookIndexData, cookie);
+        return bookIndexData;
     }
 
 
@@ -59,7 +63,7 @@ public class DataWeiBoHandler {
             for (Map.Entry<String, Object> entry : map1.entrySet()) {
                 Map<String, Object> map2 = (Map<String, Object>) entry.getValue();
                 SoArea soArea = new SoArea();
-                soArea.setRank((Integer) map2.get("index"));
+                soArea.setRank(Integer.valueOf(map2.get("index").toString()));
                 soArea.setProvince(entry.getKey());
                 String value = (String) map2.get("value");
                 if (StringUtils.isNotEmpty(value)) {

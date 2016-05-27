@@ -3,6 +3,7 @@ package com.dreamy.crawler.listen;
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.info.douban.DouBanCrawlerBookHandler;
 import com.dreamy.crawler.service.CrawlerService;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.NumberUtils;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class DoubanBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         String isbn = jsonObject.getString("isbn");
         Integer bookId = jsonObject.getInteger("bookId");
@@ -32,7 +33,7 @@ public class DoubanBookQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             BookInfo bookInfo = douBanCrawlerBookHandler.crawler(url, operation);
-            crawlerService.Operation(operation, key, bookInfo, title, bookId, url);
+            crawlerService.Operation(operation, key, bookInfo, title, bookId, url,isbn, CrawlerSourceEnums.douban.getType());
             Thread.sleep(NumberUtils.randomInt(1000, 3000));
         } catch (Exception e) {
             log.error("DoubanBookQueueHandler event exception" + title + ",url:" + url, e);

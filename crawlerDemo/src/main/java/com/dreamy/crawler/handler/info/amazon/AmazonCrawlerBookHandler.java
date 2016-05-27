@@ -53,7 +53,7 @@ public class AmazonCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 BookInfo bean = new BookInfo();
-                if (operation.equals(OperationEnums.update.getCode())) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {
                     bean.setUrl(url);
                     getName(bean, document);
                     getAuthor(bean, document);

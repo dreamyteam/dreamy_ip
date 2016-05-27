@@ -36,7 +36,7 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
         //获取类型
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String isbn = jsonObject.getString("isbn");
@@ -45,9 +45,9 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
             if (StringUtils.isNotEmpty(bookIndexData.getMale())) {
-                bookIndexData.setId(bookId+"_"+ IndexSourceEnums.weibo.getType());
+                bookIndexData.setId(bookId+"_"+ IndexSourceEnums.s360.getType());
                 bookIndexData.setBookId(bookId);
-                bookIndexData.setSource(2);
+                bookIndexData.setSource(IndexSourceEnums.s360.getType());
                 bookIndexData.setUpdatedAt(new Date());
                 bookIndexDataDao.updateInser(bookIndexData);
             }

@@ -88,22 +88,18 @@ public class RankUpdateTask {
     private String newsSougouQueue;
 
 
-
     private Long setValue = 1L;
 
 
-    @Scheduled(fixedDelay = 1000 * 60*60)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void run() {
         Page page = new Page();
         page.setPageSize(100);
-        page.setTotalNum(bookViewService.getToutleCount());
-
-        Integer totalPage = page.getTotalPage();
-        Integer currentPage = page.getCurrentPage();
-        do {
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
-            currentPage++;
-
+        int currentPage =1;
+        BookView entity = new BookView();
+        while (true) {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getList(entity, page);
             if (CollectionUtils.isNotEmpty(bookViewList)) {
 
                 for (BookView bookView : bookViewList) {
@@ -165,13 +161,18 @@ public class RankUpdateTask {
 
                             Map<String, String> params = commonParams;
 
+
                             params.put("name", bookView.getName());
                             pushToQueue(s360IndexQueue, params);
-                            pushToQueue(wbIndexQueue, params);
                             pushToQueue(wbKeyWordQueue, params);
                             pushToQueue(wxKeyWordQueue, params);
                             pushToQueue(bsKeyWordQueue, params);
                             pushToQueue(newsSougouQueue, params);
+                            HotWord hotWord = hotWordService.getById(bookView.getBookId());
+                            if (hotWord != null) {
+                                params.put("cookie", hotWord.getCookie());
+                                pushToQueue(wbIndexQueue, params);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -179,9 +180,13 @@ public class RankUpdateTask {
                 }
 
             }
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            currentPage++;
         }
 
-        while (currentPage <= totalPage);
+
     }
 
     public void pushToQueue(String queueName, Map<String, String> params) {

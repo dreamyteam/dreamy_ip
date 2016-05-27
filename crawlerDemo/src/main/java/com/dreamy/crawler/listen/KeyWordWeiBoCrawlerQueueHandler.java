@@ -24,7 +24,7 @@ public class KeyWordWeiBoCrawlerQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String isbn = jsonObject.getString("isbn");
@@ -37,7 +37,7 @@ public class KeyWordWeiBoCrawlerQueueHandler extends AbstractQueueHandler {
         } finally {
             crawlerService.check(key, bookId);
             try {
-                Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
+                Thread.sleep(NumberUtils.randomInt(1, 3) * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

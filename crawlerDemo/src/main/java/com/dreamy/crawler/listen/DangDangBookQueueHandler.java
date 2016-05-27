@@ -32,7 +32,7 @@ public class DangDangBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         String isbn = jsonObject.getString("isbn");
         Integer bookId = jsonObject.getInteger("bookId");
@@ -46,7 +46,7 @@ public class DangDangBookQueueHandler extends AbstractQueueHandler {
         } else {
             bookInfo = dangDangCrawlerBookHandler.crawler(url, operation);
         }
-        crawlerService.operationBook(operation, key, bookInfo, bookId, url);
+        crawlerService.operationBook(operation, key, bookInfo, bookId, url,isbn,CrawlerSourceEnums.dangdang.getType());
 
     }
 
