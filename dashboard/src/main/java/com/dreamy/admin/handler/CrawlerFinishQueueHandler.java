@@ -60,7 +60,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     public void consume(JSONObject jsonObject) {
         String bookIdStr = jsonObject.getString("bookId");
 
-        if (StringUtils.isEmpty(bookIdStr)) {
+        if (StringUtils.isNotEmpty(bookIdStr)) {
             Integer bookId = Integer.parseInt(bookIdStr);
             final BookView bookView = bookViewService.getByBookId(bookId);
 

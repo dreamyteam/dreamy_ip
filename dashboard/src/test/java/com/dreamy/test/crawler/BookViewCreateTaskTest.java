@@ -1,7 +1,6 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.admin.tasks.BookViewCreateTask;
-import com.dreamy.admin.tasks.rank.BookRankCreateTask;
 import com.dreamy.admin.thread.ExtractBookViewService;
 import com.dreamy.admin.thread.ExtractThread;
 import com.dreamy.admin.thread.ExtractThreadManager;
@@ -48,8 +47,6 @@ public class BookViewCreateTaskTest extends BaseJunitTest {
     @Autowired
     BookViewCreateTask bookViewCreateTask;
 
-    @Autowired
-    BookRankCreateTask bookRankCreateTask;
 
     @Autowired
     private IpBookService ipBookService;
