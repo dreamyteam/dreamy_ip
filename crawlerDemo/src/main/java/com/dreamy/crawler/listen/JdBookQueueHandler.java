@@ -37,7 +37,7 @@ public class JdBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String isbn = jsonObject.getString("isbn");
@@ -50,7 +50,7 @@ public class JdBookQueueHandler extends AbstractQueueHandler {
         } else {
             bookInfo = jdCrawlerBookHandler.crawler(url, operation);
         }
-        crawlerService.operationBook(operation, key, bookInfo, bookId, url);
+        crawlerService.operationBook(operation, key, bookInfo, bookId, url,isbn,CrawlerSourceEnums.jd.getType());
     }
 
 

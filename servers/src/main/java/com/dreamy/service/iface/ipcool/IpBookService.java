@@ -51,11 +51,6 @@ public interface IpBookService {
      */
     int delByIds(List<Integer> ids);
 
-    /**
-     *
-     * @param bookCrawlerInfo
-     */
-    void doCrawler(BookCrawlerInfo bookCrawlerInfo);
 
     void save(IpBook ipBook);
 }

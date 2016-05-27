@@ -24,7 +24,7 @@ public class KeyWordWeiBoCrawlerQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("title");
+        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String isbn = jsonObject.getString("isbn");
@@ -32,11 +32,15 @@ public class KeyWordWeiBoCrawlerQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             keyWordWeiBoHandler.crawler(title, bookId);
-            Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
         } catch (Exception e) {
             log.error(" KeyWordWeiBoCrawlerQueueHandler 处理异常JSON[" + jsonObject + "]", e);
         } finally {
             crawlerService.check(key, bookId);
+            try {
+                Thread.sleep(NumberUtils.randomInt(1, 3) * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

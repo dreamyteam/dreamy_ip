@@ -52,7 +52,7 @@ public class AmazonBookQueueHandler extends AbstractQueueHandler {
         } else {
             bookInfo = amazonCrawlerBookHandler.crawler(url,operation);
         }
-        crawlerService.operationBook(operation, key, bookInfo, bookId, url);
+        crawlerService.operationBook(operation, key, bookInfo, bookId, url,isbn,CrawlerSourceEnums.amazon.getType());
     }
 
 

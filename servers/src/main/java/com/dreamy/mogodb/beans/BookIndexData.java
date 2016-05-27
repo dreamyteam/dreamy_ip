@@ -10,7 +10,9 @@ import java.util.List;
  */
 public class BookIndexData {
     @Id
-    private Integer id;
+    private String id;
+
+    private Integer bookId;
 
     private Integer source;
     /**
@@ -62,14 +64,6 @@ public class BookIndexData {
 
     public void setMale(String male) {
         this.male = male;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getSource() {
@@ -134,5 +128,21 @@ public class BookIndexData {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 }

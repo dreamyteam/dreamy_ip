@@ -47,7 +47,6 @@ public class IpBookCrawlerTask {
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
                 if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
                     for (BookCrawlerInfo info : bookCrawlerInfos) {
-                        ipBookService.doCrawler(info);
                     }
                 }
                 if (!page.isHasNextPage()) {
@@ -125,7 +124,6 @@ public class IpBookCrawlerTask {
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
                 if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
                     for (BookCrawlerInfo info : bookCrawlerInfos) {
-                        ipBookService.doCrawler(info);
                     }
                 }
                 if (!page.isHasNextPage()) {

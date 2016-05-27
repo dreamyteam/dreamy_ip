@@ -24,14 +24,14 @@ public class BookIndexDataServiceImpl implements BookIndexDataService {
     }
 
     @Override
-    public BookIndexData getById(Integer id) {
+    public BookIndexData getById(String id) {
          return bookIndexDataDao.queryById(id);
     }
 
     @Override
     public List<BookIndexData> getByBookId(Integer bookId) {
         Query query = new Query();
-        Criteria criteria = Criteria.where("id").is(bookId);
+        Criteria criteria = Criteria.where("bookId").is(bookId);
         query.addCriteria(criteria);
         return bookIndexDataDao.queryList(query);
     }

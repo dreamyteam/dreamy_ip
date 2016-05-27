@@ -25,12 +25,11 @@
     <rabbit:admin connection-factory="connectionFactory"/>
 
     <!--配置模版-->
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="data.listen"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
     <!--默认配置模版-->
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
 
-    <!--队列声明 -->
     <rabbit:queue name="${queue_amazon_crawler}"/>
     <rabbit:queue name="${queue_jd_crawler}"/>
     <rabbit:queue name="${queue_dangdang_crawler}"/>
@@ -38,14 +37,14 @@
     <rabbit:queue name="${queue_index_baidu}"/>
     <rabbit:queue name="${queue_index_360}"/>
     <rabbit:queue name="${queue_index_wb}"/>
-    <rabbit:queue name="${queue_index_wx}"/>
-
-    <!--队列声明 -->
-    <rabbit:queue name="${queue_crawler_finshed}"/>
-
+    <rabbit:queue name="${queue_keyword_wx}"/>
+    <rabbit:queue name="${queue_keyword_wb}"/>
+    <rabbit:queue name="${queue_keyword_baidu_sougou}"/>
+    <rabbit:queue name="${queue_news_sougou}"/>
+    <rabbit:queue name="${queue_crawler_over}"/>
 
     <!--交换器声明-->
-    <rabbit:direct-exchange name="data.listen">
+    <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
             <rabbit:binding queue="${queue_amazon_crawler}"/>
             <rabbit:binding queue="${queue_jd_crawler}"/>
@@ -54,9 +53,11 @@
             <rabbit:binding queue="${queue_index_baidu}"/>
             <rabbit:binding queue="${queue_index_360}"/>
             <rabbit:binding queue="${queue_index_wb}"/>
-            <rabbit:binding queue="${queue_index_wx}"/>
-            <rabbit:binding queue="${queue_crawler_finshed}"/>
-
+            <rabbit:binding queue="${queue_keyword_wx}"/>
+            <rabbit:binding queue="${queue_keyword_wb}"/>
+            <rabbit:binding queue="${queue_keyword_baidu_sougou}"/>
+            <rabbit:binding queue="${queue_news_sougou}"/>
+            <rabbit:binding queue="${queue_crawler_over}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -73,7 +74,7 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="crawlerFinishQueueHandler" method="onMessage" queues="${queue_crawler_finshed}"/>
+        <rabbit:listener ref="crawlerFinishQueueHandler" method="onMessage" queues="${queue_crawler_over}"/>
     </rabbit:listener-container>
 
     <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>

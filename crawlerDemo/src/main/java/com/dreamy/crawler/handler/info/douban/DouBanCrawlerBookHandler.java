@@ -90,7 +90,7 @@ public class DouBanCrawlerBookHandler {
             } else {
                 Document document = Jsoup.parse(html);
                 if (document != null) {
-                    if (operation.equals("crawler")) {
+                    if (operation.equals(OperationEnums.crawler.getCode())) {
                         getAuthorAndPressAndPublishTime(bean, document);
                         getImage(bean, document);
                         getAuthorInfo(bean, document);

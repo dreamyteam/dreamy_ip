@@ -3,6 +3,7 @@ package com.dreamy.crawler.service;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
@@ -72,10 +73,10 @@ public class CrawlerServiceImpl implements CrawlerService {
     }
 
     @Override
-    public void Operation(String operation, String key, BookInfo bookInfo, String title, Integer bookId, String url) {
+    public void Operation(String operation, String key, BookInfo bookInfo, String title, Integer bookId, String url,String isbn,Integer type) {
         try {
             if (bookInfo != null) {
-                if (operation.equals("crawler")) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {
                     IpBook ipBook = new IpBook();
                     ipBook.setType(1);
                     ipBook.setStatus(1);
@@ -87,16 +88,19 @@ public class CrawlerServiceImpl implements CrawlerService {
                     BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
                     bookCrawlerInfo.status(1);
                     bookCrawlerInfo.bookId(ipBook.getId());
-                    bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+                    bookCrawlerInfo.setSource(type);
                     bookCrawlerInfo.url(url);
                     bookCrawlerInfoService.save(bookCrawlerInfo);
                     if (StringUtils.isNotEmpty(bookInfo.getISBN())) {
                         pushAll(bookInfo.getISBN(), url, ipBook.getId());
                     }
+                    bookInfo.setId(bookInfo.getISBN() + "_" + type);
                 }
-                bookInfo.setSource(CrawlerSourceEnums.douban.getType());
+                else{
+                    bookInfo.setId(isbn+ "_" + type);
+                }
+                bookInfo.setSource(type);
                 bookInfo.setIpId(bookId);
-                bookInfo.setId(bookInfo.getISBN() + "_" + CrawlerSourceEnums.douban.getType());
                 bookInfoService.updateInser(bookInfo);
             }
 
@@ -109,20 +113,23 @@ public class CrawlerServiceImpl implements CrawlerService {
     }
 
 
-    public void operationBook(String operation, String key, BookInfo bookInfo, Integer bookId, String url) {
+    public void operationBook(String operation, String key, BookInfo bookInfo, Integer bookId, String url,String isbn,Integer type) {
         try {
             if (bookInfo != null) {
-                if (operation.equals("crawler")) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {
                     BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo();
                     bookCrawlerInfo.status(1);
                     bookCrawlerInfo.bookId(bookId);
-                    bookCrawlerInfo.setSource(CrawlerSourceEnums.douban.getType());
+                    bookCrawlerInfo.setSource(type);
                     bookCrawlerInfo.url(url);
                     bookCrawlerInfoService.save(bookCrawlerInfo);
+                    bookInfo.setId(bookInfo.getISBN() + "_" + type);
+                }
+                else{
+                    bookInfo.setId(isbn+ "_" + type);
                 }
 
-                bookInfo.setId(bookInfo.getISBN() + "_" + CrawlerSourceEnums.douban.getType());
-                bookInfo.setSource(CrawlerSourceEnums.douban.getType());
+                bookInfo.setSource(type);
                 bookInfo.setIpId(bookId);
                 bookInfoService.updateInser(bookInfo);
             }
@@ -136,9 +143,9 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId) {
-        System.out.println(1111);
         long num = rawValueOperations.increment(key, -1);
-        if (num <= 0) {
+        if (num <1) {
+            rawValueOperations.getOperations().delete(key);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("bookId", bookId);
             queueService.push(queueName, map);
