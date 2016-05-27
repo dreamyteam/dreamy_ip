@@ -58,42 +58,43 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String bookIdStr = jsonObject.getString("bookId");
+        final String bookIdStr = jsonObject.getString("bookId");
 
-        if (StringUtils.isEmpty(bookIdStr)) {
-            Integer bookId = Integer.parseInt(bookIdStr);
-            final BookView bookView = bookViewService.getByBookId(bookId);
-
-            if (bookView != null) {
-                List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-                if (CollectionUtils.isNotEmpty(bookInfoList)) {
-
-                    //更新指数
-                    updateHotIndex(bookView);
-                    updatePropogationIndex(bookView);
-                    updateReputationIndex(bookView);
-                    updateDevelopIndex(bookView);
-                    updateCompositeIndex(bookView);
+        if (StringUtils.isNotEmpty(bookIdStr)) {
 
 
-                    try {
-                        Runnable r = new Runnable() {
-                            @Override
-                            public void run() {
+            try {
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        Integer bookId = Integer.parseInt(bookIdStr);
+                        final BookView bookView = bookViewService.getByBookId(bookId);
+
+                        if (bookView != null) {
+                            List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
+                            if (CollectionUtils.isNotEmpty(bookInfoList)) {
+
+                                //更新指数
+                                updateHotIndex(bookView);
+                                updatePropogationIndex(bookView);
+                                updateReputationIndex(bookView);
+                                updateDevelopIndex(bookView);
+                                updateCompositeIndex(bookView);
+
                                 BookView updatedBookView = bookViewService.getByBookId(bookView.getBookId());
                                 updateRank(updatedBookView);
                             }
-                        };
-
-                        //更新排名
-                        threadPoolTaskExecutor.execute(r);
-                    } catch (Exception e) {
-                        Log.error("update rank failed :" + bookView.getId(), e);
+                        }
                     }
-                }
-            }
+                };
 
+                //更新排名
+                threadPoolTaskExecutor.execute(r);
+            } catch (Exception e) {
+                Log.error("update rank failed :" + bookIdStr, e);
+            }
         }
+
     }
 
     /**
@@ -192,18 +193,18 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.hot.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
 
-        updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType());
-        updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType());
-        updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType());
-        updateRank(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType());
+        updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
+        updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
+        updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
+        updateRank(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
 
     }
 
-    private void updateRank(BookView bookView, String cacheKey, Integer rankType) {
+    private void updateRank(BookView bookView, String cacheKey, Integer rankType, Integer index) {
         try {
             Integer bookId = bookView.getBookId();
 
-            redisClientService.zadd(cacheKey, bookView.getCompositeIndex(), bookView.getBookId().toString());
+            redisClientService.zadd(cacheKey, index, bookView.getBookId().toString());
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
             if (rankNum != null) {
                 BookRank bookRank = new BookRank();
@@ -211,7 +212,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                 BookRank rank = bookRankService.getByBookIdAndType(bookId, rankType);
                 if (rank != null) {
                     rank.rank(rankNum.intValue());
-                    rank.rankIndex(bookView.getCompositeIndex());
+                    rank.rankIndex(index);
 
                     bookRankService.updateByRecord(rank);
                 } else {
@@ -219,7 +220,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     rank.bookId(bookView.getBookId());
                     rank.rank(rankNum.intValue());
                     rank.type(rankType);
-                    rank.rankIndex(bookView.getCompositeIndex());
+                    rank.rankIndex(index);
                     rank.name(bookView.getName());
 
                     bookRankService.save(rank);
@@ -229,7 +230,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                 rankHistory.bookId(bookView.getBookId());
                 rankHistory.rank(rankNum.intValue());
                 rankHistory.type(rankType);
-                rankHistory.rankIndex(bookView.getCompositeIndex());
+                rankHistory.rankIndex(index);
 
                 bookRankHistoryService.save(rankHistory);
             }

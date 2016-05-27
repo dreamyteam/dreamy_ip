@@ -36,7 +36,7 @@ import java.util.Map;
 public class BookViewCreateTaskTest extends BaseJunitTest {
     @Autowired
     BookViewCreateTask bookViewCreateTask;
-
+    
     @Autowired
     private IpBookService ipBookService;
     @Autowired

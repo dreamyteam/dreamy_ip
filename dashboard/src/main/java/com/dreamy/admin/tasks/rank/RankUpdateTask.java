@@ -87,11 +87,12 @@ public class RankUpdateTask {
     private Long setValue = 1L;
 
 
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+//    @Scheduled(fixedDelay = 1000 * 60 * 60)
+    @Scheduled(cron = "10 2 * * * *")
     public void run() {
         Page page = new Page();
-        page.setPageSize(100);
-        int currentPage =1;
+        page.setPageSize(20);
+        int currentPage = 1;
         BookView entity = new BookView();
         while (true) {
             page.setCurrentPage(currentPage);
@@ -99,90 +100,92 @@ public class RankUpdateTask {
             if (CollectionUtils.isNotEmpty(bookViewList)) {
 
                 for (BookView bookView : bookViewList) {
-                    BookCrawlerInfo record = new BookCrawlerInfo().bookId(bookView.getBookId());
-                    List<BookCrawlerInfo> bookCrawlerInfoList = bookCrawlerInfoService.getListByRecord(record, null);
-                    if (CollectionUtils.isEmpty(bookCrawlerInfoList)) {
-                        break;
-                    }
-
-                    Map<Integer, String> salePlatformUrls = new HashMap<>();
-                    for (BookCrawlerInfo bookCrawlerInfo : bookCrawlerInfoList) {
-                        String url = bookCrawlerInfo.getUrl();
-                        if (StringUtils.isNotEmpty(url)) {
-                            salePlatformUrls.put(bookCrawlerInfo.getSource(), bookCrawlerInfo.getUrl());
-                        }
-                    }
-
-                    if (CollectionUtils.isEmpty(salePlatformUrls)) {
-                        break;
-                    }
-
-                    Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
-                    if (CollectionUtils.isEmpty(commonParams)) {
-                        break;
-                    }
-
-                    try {
-                        if (CollectionUtils.isEmpty(salePlatformUrls)) {
-                            break;
-                        }
-
-                        Long count = redisClientService.getNumber(commonParams.get("key"));
-                        if (count == null || count == 0) {
-                            redisClientService.setNumber(commonParams.get("key"), (long) 0);
-
-                            if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
-                                Map<String, String> params = commonParams;
-                                params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
-                                pushToQueue(amazonQueue, params);
-                            }
-
-                            if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
-                                Map<String, String> params = commonParams;
-                                params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
-                                pushToQueue(jdQueue, params);
-                            }
-
-                            if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
-                                Map<String, String> params = commonParams;
-                                params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
-                                pushToQueue(dangdangQueue, params);
-                            }
-
-                            if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
-                                Map<String, String> params = commonParams;
-                                params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
-                                pushToQueue(doubanQueue, params);
-                            }
-
-                            Map<String, String> params = commonParams;
-
-
-                            params.put("name", bookView.getName());
-                            pushToQueue(s360IndexQueue, params);
-                            pushToQueue(wbKeyWordQueue, params);
-                            pushToQueue(wxKeyWordQueue, params);
-                            pushToQueue(bsKeyWordQueue, params);
-                            pushToQueue(newsSougouQueue, params);
-                            HotWord hotWord = hotWordService.getById(bookView.getBookId());
-                            if (hotWord != null) {
-                                params.put("cookie", hotWord.getCookie());
-                                pushToQueue(wbIndexQueue, params);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    updateByBookView(bookView);
                 }
-
             }
+
             if (!page.isHasNextPage()) {
                 break;
             }
             currentPage++;
         }
+    }
+
+    public void updateByBookView(BookView bookView) {
+        BookCrawlerInfo record = new BookCrawlerInfo().bookId(bookView.getBookId());
+        List<BookCrawlerInfo> bookCrawlerInfoList = bookCrawlerInfoService.getListByRecord(record, null);
+        if (CollectionUtils.isEmpty(bookCrawlerInfoList)) {
+            return;
+        }
+
+        Map<Integer, String> salePlatformUrls = new HashMap<>();
+        for (BookCrawlerInfo bookCrawlerInfo : bookCrawlerInfoList) {
+            String url = bookCrawlerInfo.getUrl();
+            if (StringUtils.isNotEmpty(url)) {
+                salePlatformUrls.put(bookCrawlerInfo.getSource(), bookCrawlerInfo.getUrl());
+            }
+        }
+
+        if (CollectionUtils.isEmpty(salePlatformUrls)) {
+            return;
+        }
+
+        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        if (CollectionUtils.isEmpty(commonParams)) {
+            return;
+        }
+
+        try {
+            if (CollectionUtils.isEmpty(salePlatformUrls)) {
+                return;
+            }
+
+            Long count = redisClientService.getNumber(commonParams.get("key"));
+            if (count == null || count == 0) {
+                redisClientService.setNumber(commonParams.get("key"), (long) 0);
+
+                if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
+                    Map<String, String> params = commonParams;
+                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
+                    pushToQueue(amazonQueue, params);
+                }
+
+                if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
+                    Map<String, String> params = commonParams;
+                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
+                    pushToQueue(jdQueue, params);
+                }
+
+                if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
+                    Map<String, String> params = commonParams;
+                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
+                    pushToQueue(dangdangQueue, params);
+                }
+
+                if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
+                    Map<String, String> params = commonParams;
+                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
+                    pushToQueue(doubanQueue, params);
+                }
+
+                Map<String, String> params = commonParams;
 
 
+                params.put("name", bookView.getName());
+                pushToQueue(s360IndexQueue, params);
+                pushToQueue(wbKeyWordQueue, params);
+                pushToQueue(wxKeyWordQueue, params);
+                pushToQueue(bsKeyWordQueue, params);
+                pushToQueue(newsSougouQueue, params);
+                HotWord hotWord = hotWordService.getById(bookView.getBookId());
+                if (hotWord != null) {
+                    params.put("cookie", hotWord.getCookie());
+                    pushToQueue(wbIndexQueue, params);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void pushToQueue(String queueName, Map<String, String> params) {
