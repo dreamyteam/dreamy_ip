@@ -24,9 +24,9 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            width:300px;
+            width:400px;
             height:200px;
-            margin-left: -150px;
+            margin-left: -200px;
             margin-right: -100px;
             text-align: center;
             color: #fff;
@@ -142,7 +142,7 @@
                 opacity: 0;
             }
             .title {
-                transform: translateY(-60px);
+                transform: translateY(-10vh);
                 color: #EFD8B0;
                 &::before {
                     background: #EFD8B0;

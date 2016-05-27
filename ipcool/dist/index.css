@@ -737,9 +737,9 @@ html.fp-enabled, .fp-enabled body {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 300px;
+      width: 400px;
       height: 200px;
-      margin-left: -150px;
+      margin-left: -200px;
       margin-right: -100px;
       text-align: center;
       color: #fff;
@@ -833,8 +833,8 @@ html.fp-enabled, .fp-enabled body {
     .sec_4 .sec_4_section:hover .mask {
       opacity: 0; }
     .sec_4 .sec_4_section:hover .title {
-      -webkit-transform: translateY(-60px);
-              transform: translateY(-60px);
+      -webkit-transform: translateY(-10vh);
+              transform: translateY(-10vh);
       color: #EFD8B0; }
       .sec_4 .sec_4_section:hover .title::before {
         background: #EFD8B0; }
