@@ -6,6 +6,7 @@ import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.dao.BookIndexDataDao;
 import com.dreamy.utils.NumberUtils;
+import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +43,21 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
-            bookIndexData.setId(bookId);
-            bookIndexData.setSource(2);
-            bookIndexData.setUpdatedAt(new Date());
-            bookIndexDataDao.updateInser(bookIndexData);
-            Thread.sleep(NumberUtils.randomInt(1000,5000));
-        }catch (Exception e){
-            log.error("SoIndexEventQueueHandler  failed: bookId:" + bookId+" word:"+title,e);
-        }
-        finally {
-            crawlerService.check(key,bookId);
+            if (StringUtils.isNotEmpty(bookIndexData.getMale())) {
+                bookIndexData.setId(bookId);
+                bookIndexData.setSource(2);
+                bookIndexData.setUpdatedAt(new Date());
+                bookIndexDataDao.updateInser(bookIndexData);
+            }
+        } catch (Exception e) {
+            log.error("SoIndexEventQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
+        } finally {
+            crawlerService.check(key, bookId);
+            try {
+                Thread.sleep(NumberUtils.randomInt(1000, 3000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
 

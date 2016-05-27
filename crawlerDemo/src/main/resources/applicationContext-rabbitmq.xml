@@ -88,7 +88,7 @@
     <bean id="amazonBookQueueHandler" class="com.dreamy.crawler.listen.AmazonBookQueueHandler"/>
 
 
-    <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.crawler.listen.CrawlerDoubanBookQueueHandler"/>
+    <bean id="crawlerDoubanBookQueueHandler" class="com.dreamy.crawler.listen.DoubanBookQueueHandler"/>
     <!--当当-->
     <bean id="dangBookQueueHandler" class="com.dreamy.crawler.listen.DangDangBookQueueHandler"/>
     <!--京东-->
