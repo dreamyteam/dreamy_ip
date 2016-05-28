@@ -16,11 +16,11 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:rabbitmq_${model}.properties</value>
-                <value>classpath:jdbc_${model}.properties</value>
-                <value>classpath:redis_${model}.properties</value>
-                <value>classpath:mongodb_${model}.properties</value>
-                <value>classpath:common_${model}.properties</value>
+                <value>classpath:rabbitmq_${env}.properties</value>
+                <value>classpath:jdbc_${env}.properties</value>
+                <value>classpath:redis_${env}.properties</value>
+                <value>classpath:mongodb_${env}.properties</value>
+                <value>classpath:common_${env}.properties</value>
             </list>
         </property>
     </bean>
