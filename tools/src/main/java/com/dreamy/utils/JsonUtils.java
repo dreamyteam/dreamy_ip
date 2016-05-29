@@ -1,7 +1,6 @@
 package com.dreamy.utils;
 
 
-
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 /**
  * Created by wangyongxing on 16/4/12.
  */
@@ -23,6 +23,7 @@ import java.util.*;
 public class JsonUtils {
     private static final Logger log = LoggerFactory.getLogger(JsonUtils.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     static {
         OBJECT_MAPPER.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
@@ -31,8 +32,7 @@ public class JsonUtils {
     /**
      * json字符串转变成map对象
      *
-     * @param json
-     *            json字符串
+     * @param json json字符串
      * @return
      */
     public static <T> Map<String, T> toMap(String json) {
@@ -40,7 +40,7 @@ public class JsonUtils {
             try {
                 return OBJECT_MAPPER.readValue(json, Map.class);
             } catch (Throwable e) {
-                e.printStackTrace();
+                log.error("json字符串转变成map对象 is error " + json, e);
             }
         }
 
@@ -50,10 +50,8 @@ public class JsonUtils {
     /**
      * json字符串转变为list对象
      *
-     * @param clazz
-     *            list中内容对应class
-     * @param json
-     *            json字符串
+     * @param clazz list中内容对应class
+     * @param json  json字符串
      * @return
      */
     public static <T> List<T> toList(Class<T> clazz, String json) {
@@ -62,7 +60,7 @@ public class JsonUtils {
                 return OBJECT_MAPPER.readValue(json,
                         OBJECT_MAPPER.getTypeFactory().constructCollectionType(ArrayList.class, clazz));
             } catch (Throwable e) {
-                e.printStackTrace();
+                log.error("json字符串转变为list对象 " + json, e);
             }
         }
 
@@ -72,8 +70,7 @@ public class JsonUtils {
     /**
      * 将对象转变为json字符串
      *
-     * @param obj
-     *            对象
+     * @param obj 对象
      * @return
      */
     public static String toString(Object obj) {
@@ -81,7 +78,7 @@ public class JsonUtils {
             try {
                 return OBJECT_MAPPER.writeValueAsString(obj);
             } catch (Throwable e) {
-                log.error("json字符串转变 error "+obj,e);
+                log.error("json字符串转变 error " + obj, e);
             }
         }
 
@@ -91,10 +88,8 @@ public class JsonUtils {
     /**
      * json字符串转变为特定对象
      *
-     * @param clazz
-     *            对象
-     * @param json
-     *            字符串
+     * @param clazz 对象
+     * @param json  字符串
      * @return
      */
     public static <T> T toObject(Class<T> clazz, String json) {
@@ -102,7 +97,7 @@ public class JsonUtils {
             try {
                 return OBJECT_MAPPER.readValue(json, clazz);
             } catch (Throwable e) {
-                log.error("json字符串转变 error "+json,e);
+                log.error("json字符串转变 error " + json, e);
             }
         }
 
@@ -118,7 +113,6 @@ public class JsonUtils {
             try {
                 return format.parse(date);
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             return null;

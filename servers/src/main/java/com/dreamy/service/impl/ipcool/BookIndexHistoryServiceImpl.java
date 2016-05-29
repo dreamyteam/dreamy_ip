@@ -87,4 +87,13 @@ public class BookIndexHistoryServiceImpl implements BookIndexHistoryService {
 
         return null;
     }
+
+    @Override
+    public Integer delByBookIdAndDate(Integer bookId, Date date) {
+        BookIndexHistoryConditions conditions = new BookIndexHistoryConditions();
+        BookIndexHistoryConditions.Criteria criteria = conditions.createCriteria();
+        criteria.andBookIdEqualTo(bookId).andCreatedAtEqualTo(TimeUtils.getDate(date));
+
+        return bookIndexHistoryDao.deleteByExample(conditions);
+    }
 }

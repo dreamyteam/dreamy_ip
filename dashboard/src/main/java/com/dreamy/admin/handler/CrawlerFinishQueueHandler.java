@@ -82,7 +82,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                                 updateReputationIndex(bookView);
                                 updateDevelopIndex(bookView);
                                 updateCompositeIndex(bookView);
-
                                 BookView updatedBookView = bookViewService.getByBookId(bookView.getBookId());
                                 updateRank(updatedBookView);
 
@@ -226,16 +225,13 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     rank.type(rankType);
                     rank.rankIndex(index);
                     rank.name(bookView.getName());
-
                     bookRankService.save(rank);
                 }
-
                 BookRankHistory rankHistory = new BookRankHistory();
                 rankHistory.bookId(bookView.getBookId());
                 rankHistory.rank(rankNum.intValue());
                 rankHistory.type(rankType);
                 rankHistory.rankIndex(index);
-
                 bookRankHistoryService.save(rankHistory);
             }
 
@@ -245,35 +241,17 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     }
 
     private void updateHistoryIndex(BookView bookView) {
+        bookIndexHistoryService.delByBookIdAndDate(bookView.getBookId(),new Date());
+        BookIndexHistory history=new BookIndexHistory();
+        history.setHotIndex(bookView.getHotIndex());
+        history.setActivityIndex(bookView.getActivityIndex());
+        history.setCompositeIndex(bookView.getCompositeIndex());
+        history.setPropagateIndex(bookView.getPropagateIndex());
+        history.setDevelopIndex(bookView.getDevelopIndex());
+        history.setBookId(bookView.getBookId());
+        history.setStatus(1);
+        bookIndexHistoryService.save(history);
 
-        bookIndexHistoryService.delByDate(new Date());
- 
-
-
-        BookView entity = new BookView();
-        int currentPage = 1;
-        bookIndexHistoryService.delByDate(new Date());
-        while (true) {
-            Page page = new Page();
-            page.setPageSize(200);
-            page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(entity, page);
-            for (BookView info : list) {
-                BookIndexHistory history = new BookIndexHistory();
-                history.setHotIndex(info.getHotIndex());
-                history.setActivityIndex(info.getActivityIndex());
-                history.setCompositeIndex(info.getCompositeIndex());
-                history.setPropagateIndex(info.getPropagateIndex());
-                history.setDevelopIndex(info.getDevelopIndex());
-                history.setBookId(info.getBookId());
-                history.setStatus(1);
-                bookIndexHistoryService.save(history);
-            }
-            if (!page.isHasNextPage()) {
-                break;
-            }
-            currentPage++;
-        }
     }
 
 }
