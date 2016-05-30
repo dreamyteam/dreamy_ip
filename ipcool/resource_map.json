@@ -2,99 +2,99 @@
     "cssMapjson": [{
         "key": "all.css",
         "type": "css",
-        "packaged": [
-            "ipcool/dist/all.css"
+        "value": [
+            "/dist/css/all.css"
         ]
     }, {
         "key": "index.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/index.css"
+            "/dist/css/index.css"
         ]
     }, {
         "key": "program_detail_page.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/program_detail_page.css"
+            "/dist/css/program_detail_page.css"
         ]
     }, {
         "key": "rank_list.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/rank_list.css"
+            "/dist/css/rank_list.css"
         ]
     }, {
         "key": "record.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/record.css"
+            "/dist/css/record.css"
         ]
     }, {
         "key": "searchresult.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/searchresult.css"
+            "/dist/css/searchresult.css"
         ]
     }, {
         "key": "sidebar.css",
         "type": "css",
         "packaged": [
-            "ipcool/dist/sidebar.css"
+            "/dist/css/sidebar.css"
         ]
     }],
     "jsMapJson": [{
         "key": "jquery.min.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/vendor/jquery.min.js"
+            "/dist/vendor/jquery.min.js"
         ]
     }, {
         "key": "jquery.fullPage.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/vendor/jquery.fullPage.js"
+            "/dist/vendor/jquery.fullPage.js"
         ]
     }, {
         "key": "pace.min.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/vendor/pace.min.js"
+            "/dist/vendor/pace.min.js"
         ]
     }, {
         "key": "echarts.min.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/vendor/echarts.min.js"
+            "/dist/vendor/echarts.min.js"
         ]
     }, {
         "key": "all.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/all.js"
+            "/dist/js/all.js"
         ]
     }, {
         "key": "index.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/index.js"
+            "/dist/js/index.js"
         ]
     }, {
         "key": "program_detail.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/program_detail.js"
+            "/dist/js/program_detail.js"
         ]
     }, {
         "key": "searchresult.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/searchresult.js"
+            "/dist/js/searchresult.js"
         ]
     }, {
         "key": "user.js",
         "type": "js",
         "packaged": [
-            "ipcool/dist/user.js"
+            "/dist/js/user.js"
         ]
     }]
 }
