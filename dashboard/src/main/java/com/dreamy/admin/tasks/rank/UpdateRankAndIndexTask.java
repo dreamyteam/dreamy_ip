@@ -93,7 +93,7 @@ public class UpdateRankAndIndexTask {
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
-        page.setPageSize(2);
+        page.setPageSize(500);
         int currentPage = 1;
         BookView entity = new BookView();
         while (true) {
