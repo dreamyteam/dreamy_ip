@@ -1,7 +1,6 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -75,14 +73,13 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                             if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
                                 //更新指数
-                                updateHotIndex(bookView);
-                                updatePropogationIndex(bookView);
-                                updateReputationIndex(bookView);
-                                updateDevelopIndex(bookView);
-                                updateCompositeIndex(bookView);
-                                BookView updatedBookView = bookViewService.getByBookId(bookView.getBookId());
-                                updateRank(updatedBookView);
+                                getNewHotIndex(bookView);
+                                getNewPropogationIndex(bookView);
+                                getNewReputationIndex(bookView);
+                                getNewDevelopIndex(bookView);
+                                getNewCompositeIndex(bookView);
 
+                                updateRank(bookView);
                                 updateHistoryIndex(bookView);
                             }
                         }
@@ -99,60 +96,56 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     }
 
     /**
-     * 更新火热指数
+     * 获取新的火热指数
      *
      * @param bookView
      */
-    private void updateHotIndex(BookView bookView) {
+    private void getNewHotIndex(BookView bookView) {
         try {
             String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
             bookView.hotIndex(Integer.parseInt(hotIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新传播指数
+     * 获取新的传播指数
      *
      * @param bookView
      */
-    private void updatePropogationIndex(BookView bookView) {
+    private void getNewPropogationIndex(BookView bookView) {
         try {
             String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
             bookView.propagateIndex(Integer.parseInt(propagateIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update  propatation index failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新口碑指数
+     * 获取新的口碑指数
      *
      * @param bookView
      */
-    private void updateReputationIndex(BookView bookView) {
+    private void getNewReputationIndex(BookView bookView) {
         try {
             String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
             bookView.reputationIndex(Integer.parseInt(reputationIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新潜力指数
+     * 获取新的潜力指数
      *
      * @param bookView
      */
-    private void updateDevelopIndex(BookView bookView) {
+    private void getNewDevelopIndex(BookView bookView) {
         try {
             String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
             bookView.developIndex(Integer.parseInt(developIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
@@ -160,11 +153,11 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
 
     /**
-     * 更新综合指数
+     * 获取新的综合指数
      *
      * @param bookView
      */
-    private void updateCompositeIndex(BookView bookView) {
+    private void getNewCompositeIndex(BookView bookView) {
         try {
             Integer hotIndex = bookView.getHotIndex();
             Integer propagationIndex = bookView.getPropagateIndex();
