@@ -1,4 +1,7 @@
-#set($layout = "/layout/layout_about_user.vm")
+#set($cssName = "sidebar.css")
+#set($jsName = "user.js")
+
+
 
 <div class="container clearfix">
         <!-- 用户中心 左侧导航 -->

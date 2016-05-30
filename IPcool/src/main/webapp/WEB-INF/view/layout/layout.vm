@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>IP库 | IPCool</title>
-    #parse("/common/all_css.vm")
-    #parse("/common/all_js.vm")
+
+    $!assetsUtils.getCssByKey("all.css")
+    #if($!cssName)
+        $!assetsUtils.getCssByKey($!cssName)
+    #end
 </head>
 <body>
 
@@ -14,7 +17,18 @@
     #parse("/common/footer.vm")
     #parse("/common/popup_sign.vm")
 </div>
-    #parse("/common/all_js_noneindex.vm")
+
+    $!assetsUtils.getJsByKey("jquery.min.js")
+    $!assetsUtils.getJsByKey("pace.min.js")
+    $!assetsUtils.getJsByKey("all.js")
+
+    #if($!jsName)
+        $!assetsUtils.getJsByKey($!jsName)
+    #end
+    #if($!jsName2)
+        $!assetsUtils.getJsByKey($!jsName2)
+    #end
 </body>
+
 </html>
 

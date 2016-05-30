@@ -4,33 +4,30 @@
     <meta charset="UTF-8">
     <title>IP库 | IPCool</title>
 
+    $!assetsUtils.getCssByKey("all.css")
     #if($!cssName)
         $!assetsUtils.getCssByKey($!cssName)
     #end
-
-
-    $!assetsUtils.getCssByKey("all.css")
-    $!assetsUtils.getCssByKey("index.css")
-
-
-
 </head>
 <body>
 
+<div class="wrap">
+    #parse("/common/top_bar.vm")
     $screen_content
-
+    #parse("/common/footer.vm")
     #parse("/common/popup_sign.vm")
-
+</div>
 
     $!assetsUtils.getJsByKey("jquery.min.js")
-    $!assetsUtils.getJsByKey("jquery.fullPage.js")
+    $!assetsUtils.getJsByKey("echarts.min.js")
     $!assetsUtils.getJsByKey("pace.min.js")
-    $!assetsUtils.getJsByKey("index.js")
+    $!assetsUtils.getJsByKey("all.js")
 
     #if($!jsName)
         $!assetsUtils.getJsByKey($!jsName)
     #end
 
 </body>
+
 </html>
 

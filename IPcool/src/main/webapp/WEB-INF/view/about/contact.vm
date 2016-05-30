@@ -1,4 +1,4 @@
-#set($layout = "/layout/layout_about_user.vm")
+#set($cssName = "sidebar.css")
 
 
 <div class="container clearfix">
