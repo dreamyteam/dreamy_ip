@@ -178,7 +178,7 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/newsMedia")
     public String newsSogou() {
-        newsMediaTask.crawler();
+        //newsMediaTask.crawler();
         return redirect("/system/call.html");
     }
 
