@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <title>IP库 | IPCool</title>
 
-    #parse("/common/all_css.vm")
-    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
-
-    #parse("/common/all_js.vm")
+    $!assetsUtils.getJsByKey("pace.min.js")
+    $!assetsUtils.getCssByKey("all.css")
+    1989919
+    #if($aa)
+        $!assetsUtils.getCssByKey("index.css")
+    #end
+##    #parse("/common/all_css.vm")
+##    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
+##
+##    #parse("/common/all_js.vm")
 </head>
 <body>
 
     $screen_content
 
-    #parse("/common/popup_sign.vm")
-
-    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/vendor/jquery.fullPage.js"></script>
-    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/index.js "></script>
+##    #parse("/common/popup_sign.vm")
+##
+##    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/vendor/jquery.fullPage.js"></script>
+##    <script type="text/javascript" src="http://$!assetsDomain/ipcool/dist/index.js "></script>
 </body>
 </html>
 
