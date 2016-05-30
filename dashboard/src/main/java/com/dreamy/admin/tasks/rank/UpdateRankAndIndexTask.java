@@ -89,7 +89,8 @@ public class UpdateRankAndIndexTask {
 
     private Long stepValue = 1L;
 
-    @Scheduled(cron = "0 15 2 * * ?")
+    //    @Scheduled(cron = "0 15 2 * * ?")
+    @Scheduled(fixedDelay = 1000 * 60 * 60 * 10)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();

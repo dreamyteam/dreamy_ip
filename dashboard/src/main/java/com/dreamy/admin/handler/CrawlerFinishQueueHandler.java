@@ -61,10 +61,8 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
         final String bookIdStr = jsonObject.getString("bookId");
-
+        Log.info("starting book over : " + bookIdStr);
         if (StringUtils.isNotEmpty(bookIdStr)) {
-
-
             try {
                 Runnable r = new Runnable() {
                     @Override
@@ -241,8 +239,8 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     }
 
     private void updateHistoryIndex(BookView bookView) {
-        bookIndexHistoryService.delByBookIdAndDate(bookView.getBookId(),new Date());
-        BookIndexHistory history=new BookIndexHistory();
+        bookIndexHistoryService.delByBookIdAndDate(bookView.getBookId(), new Date());
+        BookIndexHistory history = new BookIndexHistory();
         history.setHotIndex(bookView.getHotIndex());
         history.setActivityIndex(bookView.getActivityIndex());
         history.setCompositeIndex(bookView.getCompositeIndex());
