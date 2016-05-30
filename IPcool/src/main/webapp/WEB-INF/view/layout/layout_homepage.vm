@@ -5,6 +5,11 @@
     <title>IP库 | IPCool</title>
 
     $!assetsUtils.getJsByKey("pace.min.js")
+    $!assetsUtils.getCssByKey("all.css")
+    1989919
+    #if($aa)
+        $!assetsUtils.getCssByKey("index.css")
+    #end
 ##    #parse("/common/all_css.vm")
 ##    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
 ##

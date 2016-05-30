@@ -41,9 +41,9 @@ public class IpcoolAssetsUtils extends AssetsService {
         if (CollectionUtils.isNotEmpty(cssMap)) {
             for (Map<String, Object> map : cssMap) {
                 if (key.equals(map.get("key"))) {
-                    ArrayList keyValue = (ArrayList) map.get("key");
+                    ArrayList keyValue = (ArrayList) map.get("value");
                     if (CollectionUtils.isNotEmpty(keyValue)) {
-                        sourceHtml = "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValue.get(0) + "\">";
+                        sourceHtml += "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValue.get(0) + "\">\r\n";
                     }
                     break;
                 }
@@ -66,7 +66,7 @@ public class IpcoolAssetsUtils extends AssetsService {
 
                     ArrayList keyValues = (ArrayList) map.get("value");
                     if (CollectionUtils.isNotEmpty(keyValues)) {
-                        sourceHtml = "<script type=\"text/javascript\" src=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValues.get(0) + "\"></scrip>";
+                        sourceHtml += "<script type=\"text/javascript\" src=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValues.get(0) + "\"></script>\r\n";
                     }
                     break;
                 }
