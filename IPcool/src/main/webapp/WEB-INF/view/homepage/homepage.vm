@@ -1,6 +1,4 @@
 #set($layout = "/layout/layout_homepage.vm")
-#set($aa = "1989")
-$aa
 <div id="home_page">
     <div class="section sec_1">
         <div class="background_layer"></div>
