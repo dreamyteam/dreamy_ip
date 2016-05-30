@@ -44,7 +44,7 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
-            if (StringUtils.isNotEmpty(bookIndexData.getMale())) {
+            if (bookIndexData!=null) {
                 bookIndexData.setId(bookId+"_"+ IndexSourceEnums.s360.getType());
                 bookIndexData.setBookId(bookId);
                 bookIndexData.setSource(IndexSourceEnums.s360.getType());

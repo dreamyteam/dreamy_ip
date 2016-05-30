@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,13 +28,14 @@ public class SoHandler {
             name = name.replace(" ", "");
             String q = java.net.URLEncoder.encode(name, "UTF-8");
             area = java.net.URLEncoder.encode(area, "GBK");
-            data = new BookIndexData();
-            //check(q);
-            drawAreaJson(data, q);
-            soMediaJson(data, name, q, area);
-            portrayalJson(data, q);
-            soIndexJson(data, name, q, area);
-            overviewJson(data, q, area);
+            if (check(q)) {
+                data = new BookIndexData();
+                drawAreaJson(data, q);
+                soMediaJson(data, name, q, area);
+                portrayalJson(data, q);
+                soIndexJson(data, name, q, area);
+                overviewJson(data, q, area);
+            }
         } catch (Exception e) {
             log.error("book " + name + "360 指数抓取失败 ", e);
         } finally {
@@ -43,15 +45,20 @@ public class SoHandler {
 
     }
 
-    private void check(String q) {
+    private Boolean check(String q) {
+        boolean result = true;
         String url = "http://index.so.com/index.php?a=indexQuery&q=" + q;
         String json = HttpUtils.getHtmlGet(url);
         json = HttpUtils.decodeUnicode(json);
         if (StringUtils.isNotEmpty(json)) {
             Map<String, Object> map = JsonUtils.toMap(json);
             Map<String, Object> map1 = (Map<String, Object>) map.get("data");
+            List<Object> map2 = (List<Object>) map1.get("no");
+            if (map2 != null) {
+                result = false;
+            }
         }
-
+        return result;
 
     }
 
@@ -114,8 +121,6 @@ public class SoHandler {
             Map<String, Object> map2 = (Map<String, Object>) map1.get("index");
             Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
             data.setLastDate(map3.get("to") + "");
-//            System.out.println(map3.get("from"));
-//            System.out.println(map3.get("to"));
             String str = (String) map2.get(name);
             String arr[] = str.split("\\|");
             data.setIndex(arr);
