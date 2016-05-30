@@ -1,9 +1,93 @@
-
 @import "./components/searchbar.scss";
 @import "./components/program_nav.scss";
 @import "./components/outside_title.scss";
-
-
+.rank_container {
+    padding: 0 30px;
+    font-size: 0;
+    .rank_title {
+        font-size: 18px;
+        color: #4A4A4A;
+        margin-bottom: 20px;
+    }
+    .rank_top_three {
+        display: inline-block;
+        vertical-align: top;
+        width: 585px;
+        li {
+            display: inline-block;
+            vertical-align: top;
+            width: 195px;
+            .rank_pic_container {
+                position: relative;
+                display: block;
+                width: 150px;
+                height: 210px;
+                background: #F2F2F2;
+                .rank_pic {
+                    width: 150px;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                }
+                .rank_num {
+                    display: block;
+                    position: absolute;
+                    width: 18px;
+                    height: 18px;
+                    background: #00a69d;
+                    color: #fff;
+                    top: 0;
+                    left: 0;
+                    font-size: 14px;
+                    line-height: 18px;
+                    text-align: center;
+                }
+            }
+            .name {
+                margin-top: 10px;
+                font-size: 16px;
+                color: #4A4A4A;
+            }
+            .info {
+                margin-top: 9px;
+                font-size: 12px;
+                color: #5E5E5E;
+            }
+        }
+    }
+    .rank_rest {
+        width: 235px;
+        height: 20px;
+        vertical-align: top;
+        display: inline-block;
+        li {
+            line-height: 37px;
+            border-bottom: 1px solid #EFEFEF;
+            .rank_num,
+            .name,
+            .trend {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .rank_num {
+                width: 20px;
+                height: 20px;
+                font-size: 14px;
+                color:#fff;
+                line-height: 20px;
+                text-align: center;
+                background: #9B9B9B;
+            }
+            .name{
+                font-size: 16px;
+                margin-left: 12px;
+            }
+            .trend{
+                float: right;
+                font-style: normal;
+                font-size: 14px;
+            }
+        }
+    }
+}
 
 section.rank_list {
     position: relative;
@@ -85,7 +169,7 @@ section.rank_list {
             }
         }
         .rank_num {
-        	font-size: 16px;
+            font-size: 16px;
             width: 60px;
             text-align: center;
         }

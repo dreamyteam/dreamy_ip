@@ -1,6 +1,22 @@
 .out_side_title {
+	position: relative;
+	padding-left: 60px;
     .out_side_title_icon {
         width: 60px;
         height: 60px;
+        position: absolute;
+        left:0;
+        top:0;
+        &.icon_rank{
+        	background:url("../assets/images/ic_equalizer_black_24px.png") 50% 50% no-repeat;
+        }
+    }
+    .title{
+    	color:#2B2C2E;
+    	font-size: 24px;
+    }
+    .summary{
+    	color:#262626;
+    	font-size: 12px;
     }
 }
