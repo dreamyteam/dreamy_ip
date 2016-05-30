@@ -84,14 +84,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Tab = __webpack_require__(4);
-
 	var VoteProto = __webpack_require__(15); //投票
+
+	// import Tab from '../components/tab.js'
 
 
 	$(function () {
 	    //列表切换
-	    new Tab({ selector: '.program_tab' });
+	    // new Tab({ el: '.program_tab' });
 	    //导航置顶
 	    new _fix_top2.default();
 	    //找到ip名字id
@@ -238,83 +238,7 @@
 
 /***/ },
 /* 3 */,
-/* 4 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Tab = function () {
-	    function Tab(cfg) {
-	        _classCallCheck(this, Tab);
-
-	        this.cfg = cfg;
-	        this.init();
-	    }
-
-	    _createClass(Tab, [{
-	        key: "init",
-	        value: function init() {
-	            this.el = $(this.cfg.el);
-	            this.tabNav = this.el.find(this.cfg.tabNav);
-	            this.tabContents = this.el.find(this.cfg.tabContents);
-	            this.tabNavList = this.tabNav.find("li");
-	            this.contentList = this.tabContents.find("li");
-	            this.trigger = this.cfg.trigger || "click";
-	            this.checkTrigger();
-	        }
-	    }, {
-	        key: "checkTrigger",
-	        value: function checkTrigger() {
-	            var self = this;
-	            if (this.trigger == "mouseover") {
-	                this.tabNavList.each(function () {
-	                    $(this).on("mouseover", function () {
-	                        var index = $(this).index();
-	                        self.switchTabNav(index);
-	                    });
-	                });
-	            } else if (this.trigger == "click") {
-	                this.tabNavList.each(function () {
-	                    $(this).on("click", function () {
-	                        var index = $(this).index();
-	                        self.switchTabNav(index);
-	                    });
-	                });
-	            }
-	        }
-	    }, {
-	        key: "switchTabNav",
-	        value: function switchTabNav(index) {
-	            this.tabNavList.each(function () {
-	                $(this).removeClass('active');
-	            });
-	            this.tabNavList.eq(index).addClass('active');
-	            this.switchContent(index, true);
-	        }
-	    }, {
-	        key: "switchContent",
-	        value: function switchContent(index, animate) {
-	            this.contentList.each(function () {
-	                $(this).removeClass('active');
-	            });
-	            this.contentList.eq(index).addClass('active');
-	        }
-	    }]);
-
-	    return Tab;
-	}();
-
-	exports.default = Tab;
-
-/***/ },
+/* 4 */,
 /* 5 */,
 /* 6 */
 /***/ function(module, exports) {
@@ -1035,6 +959,7 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
+	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'sex') {
 	                this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
