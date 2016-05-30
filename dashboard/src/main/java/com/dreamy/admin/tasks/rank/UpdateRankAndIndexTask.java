@@ -86,12 +86,10 @@ public class UpdateRankAndIndexTask {
 
     private Long setValue = 1L;
 
-
-//    @Scheduled(fixedDelay = 1000 * 60 * 60)
-    @Scheduled(cron = "10 2 * * * *")
+    @Scheduled(cron = "0 15 2 * * ?")
     public void run() {
         Page page = new Page();
-        page.setPageSize(20);
+        page.setPageSize(2);
         int currentPage = 1;
         BookView entity = new BookView();
         while (true) {
