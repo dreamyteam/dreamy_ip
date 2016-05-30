@@ -1,4 +1,4 @@
-#set($layout = "/layout/layout_rank.vm")
+#set($cssName = "rank_list.css")
 
 
 <!--main-->

@@ -19,15 +19,14 @@
 </div>
 
     $!assetsUtils.getJsByKey("jquery.min.js")
+    $!assetsUtils.getJsByKey("echarts.min.js")
     $!assetsUtils.getJsByKey("pace.min.js")
     $!assetsUtils.getJsByKey("all.js")
 
     #if($!jsName)
         $!assetsUtils.getJsByKey($!jsName)
     #end
-    #if($!jsName2)
-        $!assetsUtils.getJsByKey($!jsName2)
-    #end
+
 </body>
 
 </html>

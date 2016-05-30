@@ -1,5 +1,5 @@
-#set($layout = "/layout/layout_search.vm")
-
+#set($cssName = "search_result.css")
+#set($jsName = "search_result.js")
 
 
 <!--main-->
