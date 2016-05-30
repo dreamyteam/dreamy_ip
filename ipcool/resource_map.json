@@ -30,10 +30,10 @@
             "/dist/css/record.css"
         ]
     }, {
-        "key": "searchresult.css",
+        "key": "search_result.css",
         "type": "css",
         "value": [
-            "/dist/css/searchresult.css"
+            "/dist/css/search_result.css"
         ]
     }, {
         "key": "sidebar.css",
