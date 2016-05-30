@@ -3,24 +3,26 @@ package com.dreamy.admin.tasks.rank;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
-import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.ipcool.RankService;
 import com.dreamy.service.iface.mongo.HotWordService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ import java.util.Map;
  */
 @Component
 public class UpdateRankAndIndexTask {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateRankAndIndexTask.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -84,28 +87,34 @@ public class UpdateRankAndIndexTask {
     private String newsSougouQueue;
 
 
-    private Long setValue = 1L;
+    private Long stepValue = 1L;
 
     @Scheduled(cron = "0 15 2 * * ?")
     public void run() {
+        LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
         page.setPageSize(2);
         int currentPage = 1;
         BookView entity = new BookView();
         while (true) {
-            page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getList(entity, page);
-            if (CollectionUtils.isNotEmpty(bookViewList)) {
+            try {
+                page.setCurrentPage(currentPage);
+                List<BookView> bookViewList = bookViewService.getList(entity, page);
+                if (CollectionUtils.isNotEmpty(bookViewList)) {
 
-                for (BookView bookView : bookViewList) {
-                    updateByBookView(bookView);
+                    for (BookView bookView : bookViewList) {
+                        updateByBookView(bookView);
+                    }
                 }
-            }
 
-            if (!page.isHasNextPage()) {
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+            } catch (Exception e) {
+                LOGGER.error("update rank jod error ", e);
                 break;
             }
-            currentPage++;
         }
     }
 
@@ -138,9 +147,11 @@ public class UpdateRankAndIndexTask {
                 return;
             }
 
-            Long count = redisClientService.getNumber(commonParams.get("key"));
+            String cacheKey = commonParams.get("key");
+            Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
-                redisClientService.setNumber(commonParams.get("key"), (long) 0);
+                redisClientService.setNumber(cacheKey, (long) 0);
+                redisClientService.expire(cacheKey, 60 * 60 * 24);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
@@ -188,7 +199,7 @@ public class UpdateRankAndIndexTask {
 
     private void pushToQueue(String queueName, Map<String, String> params) {
         queueService.push(queueName, params);
-        redisClientService.incrBy(params.get("key"), setValue);
+        redisClientService.incrBy(params.get("key"), stepValue);
     }
 
 }
