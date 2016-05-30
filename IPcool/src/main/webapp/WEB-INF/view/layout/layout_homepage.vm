@@ -5,7 +5,7 @@
     <title>IP库 | IPCool</title>
 
     #parse("/common/all_css.vm")
-    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/index.css">
+    <link rel="stylesheet" type="text/css" href="http://$!assetsDomain/ipcool/dist/css/index.css">
 
     #parse("/common/all_js.vm")
 </head>
