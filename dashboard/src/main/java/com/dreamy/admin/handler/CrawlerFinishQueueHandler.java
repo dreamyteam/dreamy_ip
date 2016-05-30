@@ -1,6 +1,7 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
@@ -8,10 +9,7 @@ import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
-import com.dreamy.service.iface.ipcool.BookRankHistoryService;
-import com.dreamy.service.iface.ipcool.BookRankService;
-import com.dreamy.service.iface.ipcool.BookScoreService;
-import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,13 +53,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private BookRankHistoryService bookRankHistoryService;
 
+    @Autowired
+    private BookIndexHistoryService bookIndexHistoryService;
+
     @Override
     public void consume(JSONObject jsonObject) {
         final String bookIdStr = jsonObject.getString("bookId");
-
+        Log.info("starting book over : " + bookIdStr);
         if (StringUtils.isNotEmpty(bookIdStr)) {
-
-
             try {
                 Runnable r = new Runnable() {
                     @Override
@@ -75,14 +73,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                             if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
                                 //更新指数
-                                updateHotIndex(bookView);
-                                updatePropogationIndex(bookView);
-                                updateReputationIndex(bookView);
-                                updateDevelopIndex(bookView);
-                                updateCompositeIndex(bookView);
+                                getNewHotIndex(bookView);
+                                getNewPropogationIndex(bookView);
+                                getNewReputationIndex(bookView);
+                                getNewDevelopIndex(bookView);
+                                getNewCompositeIndex(bookView);
 
-                                BookView updatedBookView = bookViewService.getByBookId(bookView.getBookId());
-                                updateRank(updatedBookView);
+                                updateRank(bookView);
+                                updateHistoryIndex(bookView);
                             }
                         }
                     }
@@ -98,60 +96,56 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     }
 
     /**
-     * 更新火热指数
+     * 获取新的火热指数
      *
      * @param bookView
      */
-    private void updateHotIndex(BookView bookView) {
+    private void getNewHotIndex(BookView bookView) {
         try {
             String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
             bookView.hotIndex(Integer.parseInt(hotIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新传播指数
+     * 获取新的传播指数
      *
      * @param bookView
      */
-    private void updatePropogationIndex(BookView bookView) {
+    private void getNewPropogationIndex(BookView bookView) {
         try {
             String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
             bookView.propagateIndex(Integer.parseInt(propagateIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update  propatation index failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新口碑指数
+     * 获取新的口碑指数
      *
      * @param bookView
      */
-    private void updateReputationIndex(BookView bookView) {
+    private void getNewReputationIndex(BookView bookView) {
         try {
             String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
             bookView.reputationIndex(Integer.parseInt(reputationIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
     }
 
     /**
-     * 更新潜力指数
+     * 获取新的潜力指数
      *
      * @param bookView
      */
-    private void updateDevelopIndex(BookView bookView) {
+    private void getNewDevelopIndex(BookView bookView) {
         try {
             String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
             bookView.developIndex(Integer.parseInt(developIndex));
-            bookViewService.update(bookView);
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
@@ -159,11 +153,11 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
 
     /**
-     * 更新综合指数
+     * 获取新的综合指数
      *
      * @param bookView
      */
-    private void updateCompositeIndex(BookView bookView) {
+    private void getNewCompositeIndex(BookView bookView) {
         try {
             Integer hotIndex = bookView.getHotIndex();
             Integer propagationIndex = bookView.getPropagateIndex();
@@ -222,22 +216,33 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     rank.type(rankType);
                     rank.rankIndex(index);
                     rank.name(bookView.getName());
-
                     bookRankService.save(rank);
                 }
-
                 BookRankHistory rankHistory = new BookRankHistory();
                 rankHistory.bookId(bookView.getBookId());
                 rankHistory.rank(rankNum.intValue());
                 rankHistory.type(rankType);
                 rankHistory.rankIndex(index);
-
                 bookRankHistoryService.save(rankHistory);
             }
 
         } catch (Exception e) {
             Log.error("update rank failed :id=" + bookView.getId() + ":type=" + rankType, e);
         }
+    }
+
+    private void updateHistoryIndex(BookView bookView) {
+        bookIndexHistoryService.delByBookIdAndDate(bookView.getBookId(), new Date());
+        BookIndexHistory history = new BookIndexHistory();
+        history.setHotIndex(bookView.getHotIndex());
+        history.setActivityIndex(bookView.getActivityIndex());
+        history.setCompositeIndex(bookView.getCompositeIndex());
+        history.setPropagateIndex(bookView.getPropagateIndex());
+        history.setDevelopIndex(bookView.getDevelopIndex());
+        history.setBookId(bookView.getBookId());
+        history.setStatus(1);
+        bookIndexHistoryService.save(history);
+
     }
 
 }

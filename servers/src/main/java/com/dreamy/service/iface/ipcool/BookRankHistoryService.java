@@ -38,8 +38,6 @@ public interface BookRankHistoryService {
     BookRankHistory getTopHistoryByBookIdAndType(Integer bookId, Integer type);
 
 
-    int delByBookIdAndTypeAndDate(Integer bookId, Integer type, Date date);
-
 
 
 
