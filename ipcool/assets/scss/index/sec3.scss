@@ -36,37 +36,37 @@
                 margin: 0 auto;
                 transition: background 300ms ease;
                 &.people {
-                    background: url("../assets/images/index/icon_people_normal.png") no-repeat;
+                    background: url("../../assets/images/index/icon_people_normal.png") no-repeat;
                     background-size: cover;
                 }
                 &.investor {
-                    background: url("../assets/images/index/icon_enconomic_normal.png") no-repeat;
+                    background: url("../../assets/images/index/icon_enconomic_normal.png") no-repeat;
                     background-size: cover;
                 }
                 &.creation {
-                    background: url("../assets/images/index/icon_creative_normal.png") no-repeat;
+                    background: url("../../assets/images/index/icon_creative_normal.png") no-repeat;
                     background-size: cover;
                 }
                 &.issue {
-                    background: url("../assets/images/index/icon_share_normal.png") no-repeat;
+                    background: url("../../assets/images/index/icon_share_normal.png") no-repeat;
                     background-size: cover;
                 }
             }
             &.active {
                 .people {
-                    background: url("../assets/images/index/icon_people_sclected.png") no-repeat;
+                    background: url("../../assets/images/index/icon_people_sclected.png") no-repeat;
                     background-size: cover;
                 }
                 .investor {
-                    background: url("../assets/images/index/icon_enconomic_selected.png") no-repeat;
+                    background: url("../../assets/images/index/icon_enconomic_selected.png") no-repeat;
                     background-size: cover;
                 }
                 .creation {
-                    background: url("../assets/images/index/icon_creative_sclected.png") no-repeat;
+                    background: url("../../assets/images/index/icon_creative_sclected.png") no-repeat;
                     background-size: cover;
                 }
                 .issue {
-                    background: url("../assets/images/index/icon_share_sclected.png") no-repeat;
+                    background: url("../../assets/images/index/icon_share_sclected.png") no-repeat;
                     background-size: cover;
                 }
             }
@@ -95,7 +95,7 @@
                     position: absolute;
                     left: -110px;
                     top: 0;
-                    background: url("../assets/images/index/silmon.png") no-repeat;
+                    background: url("../../assets/images/index/silmon.png") no-repeat;
                     background-size: 51px;
                     width: 51px;
                     height: 40px;
@@ -106,7 +106,7 @@
                     position: absolute;
                     right: -110px;
                     top: 0;
-                    background: url("../assets/images/index/silmon.png") no-repeat;
+                    background: url("../../assets/images/index/silmon.png") no-repeat;
                     background-size: 51px;
                     width: 51px;
                     height: 40px;

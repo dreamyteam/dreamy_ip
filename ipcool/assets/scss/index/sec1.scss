@@ -18,7 +18,7 @@
                 display: inline-block;
                 float: left;
                 font-size: 12px;
-                background: url('../assets/images/index/logo_withoutchi.png') 50% no-repeat;
+                background: url('../../assets/images/index/logo_withoutchi.png') 50% no-repeat;
                 vertical-align: middle;
                 background-size: 179px;
                 width: 179px;
@@ -126,7 +126,7 @@
     }
     .main_title {
         display: block;
-        background: url("../assets/images/index/main_title.png") 50% no-repeat;
+        background: url("../../assets/images/index/main_title.png") 50% no-repeat;
         margin: 25vh auto 0 auto;
         background-size: 810px;
         width: 810px;
@@ -161,7 +161,7 @@
                 top: 0;
                 right: 0;
                 cursor: pointer;
-                background: url("../assets/images/search_main_ico.png") no-repeat center center, transparent;
+                background: url("../../assets/images/search_main_ico.png") no-repeat center center, transparent;
                 background-size: 23px;
                 border-radius: 2px;
                 padding: 0;

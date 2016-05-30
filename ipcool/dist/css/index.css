@@ -208,7 +208,7 @@ html.fp-enabled, .fp-enabled body {
         display: inline-block;
         float: left;
         font-size: 12px;
-        background: url("../assets/images/index/logo_withoutchi.png") 50% no-repeat;
+        background: url("../../assets/images/index/logo_withoutchi.png") 50% no-repeat;
         vertical-align: middle;
         background-size: 179px;
         width: 179px;
@@ -297,7 +297,7 @@ html.fp-enabled, .fp-enabled body {
             color: #ffffff; }
   .sec_1 .main_title {
     display: block;
-    background: url("../assets/images/index/main_title.png") 50% no-repeat;
+    background: url("../../assets/images/index/main_title.png") 50% no-repeat;
     margin: 25vh auto 0 auto;
     background-size: 810px;
     width: 810px;
@@ -329,7 +329,7 @@ html.fp-enabled, .fp-enabled body {
         top: 0;
         right: 0;
         cursor: pointer;
-        background: url("../assets/images/search_main_ico.png") no-repeat center center, transparent;
+        background: url("../../assets/images/search_main_ico.png") no-repeat center center, transparent;
         background-size: 23px;
         border-radius: 2px;
         padding: 0;
@@ -437,28 +437,28 @@ html.fp-enabled, .fp-enabled body {
               width: 64px;
               height: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_trend {
-              background: url("../assets/images/index/icon_trend.png") no-repeat;
+              background: url("../../assets/images/index/icon_trend.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_prop {
-              background: url("../assets/images/index/icon_prop.png") no-repeat;
+              background: url("../../assets/images/index/icon_prop.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_heat {
-              background: url("../assets/images/index/icon_heat.png") no-repeat;
+              background: url("../../assets/images/index/icon_heat.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_fans {
-              background: url("../assets/images/index/icon_fans.png") no-repeat;
+              background: url("../../assets/images/index/icon_fans.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_heart {
-              background: url("../assets/images/index/icon_heart.png") no-repeat;
+              background: url("../../assets/images/index/icon_heart.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_tag {
-              background: url("../assets/images/index/icon_tag.png") no-repeat;
+              background: url("../../assets/images/index/icon_tag.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_movie {
-              background: url("../assets/images/index/icon_movie.png") no-repeat;
+              background: url("../../assets/images/index/icon_movie.png") no-repeat;
               background-size: 64px; }
             .sec_2 .sec_2_container .tab_content li .tab_list .tab_list_content .icon_users {
-              background: url("../assets/images/index/icon_users.png") no-repeat;
+              background: url("../../assets/images/index/icon_users.png") no-repeat;
               background-size: 64px; }
       .sec_2 .sec_2_container .tab_content li.active {
         display: block;
@@ -610,28 +610,28 @@ html.fp-enabled, .fp-enabled body {
         margin: 0 auto;
         transition: background 300ms ease; }
         .sec_3 .sec_3_list li .list_pic.people {
-          background: url("../assets/images/index/icon_people_normal.png") no-repeat;
+          background: url("../../assets/images/index/icon_people_normal.png") no-repeat;
           background-size: cover; }
         .sec_3 .sec_3_list li .list_pic.investor {
-          background: url("../assets/images/index/icon_enconomic_normal.png") no-repeat;
+          background: url("../../assets/images/index/icon_enconomic_normal.png") no-repeat;
           background-size: cover; }
         .sec_3 .sec_3_list li .list_pic.creation {
-          background: url("../assets/images/index/icon_creative_normal.png") no-repeat;
+          background: url("../../assets/images/index/icon_creative_normal.png") no-repeat;
           background-size: cover; }
         .sec_3 .sec_3_list li .list_pic.issue {
-          background: url("../assets/images/index/icon_share_normal.png") no-repeat;
+          background: url("../../assets/images/index/icon_share_normal.png") no-repeat;
           background-size: cover; }
       .sec_3 .sec_3_list li.active .people {
-        background: url("../assets/images/index/icon_people_sclected.png") no-repeat;
+        background: url("../../assets/images/index/icon_people_sclected.png") no-repeat;
         background-size: cover; }
       .sec_3 .sec_3_list li.active .investor {
-        background: url("../assets/images/index/icon_enconomic_selected.png") no-repeat;
+        background: url("../../assets/images/index/icon_enconomic_selected.png") no-repeat;
         background-size: cover; }
       .sec_3 .sec_3_list li.active .creation {
-        background: url("../assets/images/index/icon_creative_sclected.png") no-repeat;
+        background: url("../../assets/images/index/icon_creative_sclected.png") no-repeat;
         background-size: cover; }
       .sec_3 .sec_3_list li.active .issue {
-        background: url("../assets/images/index/icon_share_sclected.png") no-repeat;
+        background: url("../../assets/images/index/icon_share_sclected.png") no-repeat;
         background-size: cover; }
       .sec_3 .sec_3_list li .list_title {
         display: block;
@@ -655,7 +655,7 @@ html.fp-enabled, .fp-enabled body {
           position: absolute;
           left: -110px;
           top: 0;
-          background: url("../assets/images/index/silmon.png") no-repeat;
+          background: url("../../assets/images/index/silmon.png") no-repeat;
           background-size: 51px;
           width: 51px;
           height: 40px;
@@ -666,7 +666,7 @@ html.fp-enabled, .fp-enabled body {
           position: absolute;
           right: -110px;
           top: 0;
-          background: url("../assets/images/index/silmon.png") no-repeat;
+          background: url("../../assets/images/index/silmon.png") no-repeat;
           background-size: 51px;
           width: 51px;
           height: 40px; }
@@ -729,7 +729,7 @@ html.fp-enabled, .fp-enabled body {
       top: 0;
       right: 0;
       bottom: 0;
-      background: url("../assets/images/index/sec4_mask.png") no-repeat;
+      background: url("../../assets/images/index/sec4_mask.png") no-repeat;
       background-size: cover;
       transition: opacity 300ms ease;
       opacity: 0.4; }
@@ -795,40 +795,40 @@ html.fp-enabled, .fp-enabled body {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
             font-size: 18px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_rank {
-            background: url("../assets/images/index/sec_4_icon_rank.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_rank.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_tv {
-            background: url("../assets/images/index/sec_4_icon_tv.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_tv.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_prop {
-            background: url("../assets/images/index/sec_4_icon_prop.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_prop.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_award {
-            background: url("../assets/images/index/sec_4_icon_award.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_award.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_trend {
-            background: url("../assets/images/index/sec_4_icon_trend.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_trend.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_heart {
-            background: url("../assets/images/index/sec_4_icon_heart.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_heart.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_star {
-            background: url("../assets/images/index/sec_4_icon_star.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_star.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_data {
-            background: url("../assets/images/index/sec_4_icon_data.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_data.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_channel {
-            background: url("../assets/images/index/sec_4_icon_channel.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_channel.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_report {
-            background: url("../assets/images/index/sec_4_icon_report.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_report.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_charts {
-            background: url("../assets/images/index/sec_4_icon_charts.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_charts.png") no-repeat;
             background-size: 60px; }
           .sec_4 .sec_4_section .sec_4_info .icons_list li .sec_4_icon.icon_publish {
-            background: url("../assets/images/index/sec_4_icon_publish.png") no-repeat;
+            background: url("../../assets/images/index/sec_4_icon_publish.png") no-repeat;
             background-size: 60px; }
     .sec_4 .sec_4_section:hover .mask {
       opacity: 0; }
@@ -913,19 +913,19 @@ html.fp-enabled, .fp-enabled body {
             width: 200px;
             height: 130px; }
           .sec_5 .background .sec_5_tab_slide .sec_5_tab_slide_nav li .logo.logo_ls {
-            background: url("../assets/images/index/le-min.png") 50% 50% no-repeat;
+            background: url("../../assets/images/index/le-min.png") 50% 50% no-repeat;
             background-size: 200px; }
           .sec_5 .background .sec_5_tab_slide .sec_5_tab_slide_nav li .logo.logo_yw {
-            background: url("../assets/images/index/Yu-min.png") 50% 50% no-repeat;
+            background: url("../../assets/images/index/Yu-min.png") 50% 50% no-repeat;
             background-size: 200px; }
           .sec_5 .background .sec_5_tab_slide .sec_5_tab_slide_nav li .logo.logo_ne {
-            background: url("../assets/images/index/Ne-min.png") 50% 50% no-repeat;
+            background: url("../../assets/images/index/Ne-min.png") 50% 50% no-repeat;
             background-size: 200px; }
           .sec_5 .background .sec_5_tab_slide .sec_5_tab_slide_nav li .logo.logo_bd {
-            background: url("../assets/images/index/ba-min.png") 50% 50% no-repeat;
+            background: url("../../assets/images/index/ba-min.png") 50% 50% no-repeat;
             background-size: 200px; }
           .sec_5 .background .sec_5_tab_slide .sec_5_tab_slide_nav li .logo.logo_al {
-            background: url("../assets/images/index/Al-min.png") 50% 50% no-repeat;
+            background: url("../../assets/images/index/Al-min.png") 50% 50% no-repeat;
             background-size: 200px; }
   .sec_5 .sec_5_tab_slide_content_container {
     position: relative;
@@ -960,7 +960,7 @@ html.fp-enabled, .fp-enabled body {
             position: absolute;
             left: -110px;
             top: 0;
-            background: url("../assets/images/index/silmon.png") no-repeat;
+            background: url("../../assets/images/index/silmon.png") no-repeat;
             background-size: 51px;
             width: 51px;
             height: 40px;
@@ -971,7 +971,7 @@ html.fp-enabled, .fp-enabled body {
             position: absolute;
             right: -110px;
             top: 0;
-            background: url("../assets/images/index/silmon.png") no-repeat;
+            background: url("../../assets/images/index/silmon.png") no-repeat;
             background-size: 51px;
             width: 51px;
             height: 40px; }
@@ -1038,7 +1038,8 @@ html.fp-enabled, .fp-enabled body {
 
 .sec_6 {
   background: url("http://o6qhdb7kv.bkt.clouddn.com/p6_bg_img-min.jpg") 50% 50% no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  position: relative; }
   .sec_6 .title {
     text-align: center;
     margin-top: 10vh;
@@ -1061,7 +1062,7 @@ html.fp-enabled, .fp-enabled body {
     .sec_6 .sec_6_product .prev {
       display: block;
       position: absolute;
-      background: url("../assets/images/index/btn_arrow.png") 50% 50% no-repeat, transparent;
+      background: url("../../assets/images/index/btn_arrow.png") 50% 50% no-repeat, transparent;
       background-size: 48px;
       width: 130px;
       height: 130px;
@@ -1071,7 +1072,7 @@ html.fp-enabled, .fp-enabled body {
     .sec_6 .sec_6_product .next {
       display: block;
       position: absolute;
-      background: url("../assets/images/index/btn_arrow.png") 50% 50% no-repeat, transparent;
+      background: url("../../assets/images/index/btn_arrow.png") 50% 50% no-repeat, transparent;
       -webkit-transform: rotate(180deg);
               transform: rotate(180deg);
       background-size: 48px;
@@ -1110,19 +1111,19 @@ html.fp-enabled, .fp-enabled body {
               width: 100%;
               height: 160px; }
               .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo.film_row_piece {
-                background: url("../assets/images/index/1.png") 50% 50% no-repeat, rgba(36, 113, 161, 0.8);
+                background: url("../../assets/images/index/1.png") 50% 50% no-repeat, rgba(36, 113, 161, 0.8);
                 background-size: 100px; }
               .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo.simulator {
-                background: url("../assets/images/index/2.png") 50% 50% no-repeat, rgba(36, 161, 149, 0.8);
+                background: url("../../assets/images/index/2.png") 50% 50% no-repeat, rgba(36, 161, 149, 0.8);
                 background-size: 100px; }
               .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo.time_machine {
-                background: url("../assets/images/index/3.png") 50% 50% no-repeat, rgba(36, 161, 99, 0.8);
+                background: url("../../assets/images/index/3.png") 50% 50% no-repeat, rgba(36, 161, 99, 0.8);
                 background-size: 100px; }
               .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo.changce {
-                background: url("../assets/images/index/4.png") 50% 50% no-repeat, rgba(36, 110, 161, 0.6);
+                background: url("../../assets/images/index/4.png") 50% 50% no-repeat, rgba(36, 110, 161, 0.6);
                 background-size: 100px; }
               .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_logo.announce {
-                background: url("../assets/images/index/5.png") 50% 50% no-repeat, rgba(69, 36, 161, 0.59);
+                background: url("../../assets/images/index/5.png") 50% 50% no-repeat, rgba(69, 36, 161, 0.59);
                 background-size: 100px; }
             .sec_6 .sec_6_product .sec_6_product_list_container .sec_6_product_list .single_product .product_container .product_info {
               margin-top: 45px;
@@ -1280,7 +1281,7 @@ html.fp-enabled, .fp-enabled body {
             color: #5d7694; }
           .sec_7 .sec_7_footer .inner .sec_7_section_left li .dreamy_ewm {
             display: block;
-            background: url("../assets/images/index/dreamy_ewm.png") no-repeat;
+            background: url("../../assets/images/index/dreamy_ewm.png") no-repeat;
             width: 102px;
             height: 102px;
             background-size: 102px; }
@@ -1291,7 +1292,7 @@ html.fp-enabled, .fp-enabled body {
         .sec_7 .sec_7_footer .inner .sec_7_section_right .ipcool_logo {
           position: relative;
           display: block;
-          background: url("../assets/images/index/logo_withoutchi.png") 50% no-repeat;
+          background: url("../../assets/images/index/logo_withoutchi.png") 50% no-repeat;
           width: 179px;
           height: 54px;
           background-size: 179px; }

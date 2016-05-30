@@ -6,7 +6,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            background: url("../assets/images/colorfulbar.png") no-repeat;
+            background: url("../../assets/images/colorfulbar.png") no-repeat;
             background-size: 540px;
             width: 540px;
             height: 4px;
@@ -79,7 +79,7 @@
                 cursor: pointer;
                 padding-left: 11px;
                 display: block;
-                background: url("../assets/images/selectbg.png") 95% center no-repeat, #ebebeb;
+                background: url("../../assets/images/selectbg.png") 95% center no-repeat, #ebebeb;
                 background-size: 9px;
                 border: 1px solid #bfbfbf;
                 border-radius: 2px;
@@ -136,11 +136,11 @@
             margin-bottom: 50px;
         }
         span.record_result.success {
-            background: url("../assets/images/done_ico@2x.png") no-repeat;
+            background: url("../../assets/images/done_ico@2x.png") no-repeat;
             background-size: 70px;
         }
         span.record_result.error {
-            background: url("../assets/images/erroc_ico@2x.png") no-repeat;
+            background: url("../../assets/images/erroc_ico@2x.png") no-repeat;
             background-size: 70px;
         }
         .record_result_title {

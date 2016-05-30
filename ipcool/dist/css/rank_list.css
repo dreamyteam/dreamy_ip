@@ -19,7 +19,7 @@
       border-right: none; }
     .searchbar .form_search .submit {
       cursor: pointer;
-      background: url("../assets/images/search_main_ico.png") no-repeat center center, #fff;
+      background: url("../../assets/images/search_main_ico.png") no-repeat center center, #fff;
       background-size: 20px 20px;
       border: 1px solid #848484;
       border-radius: 0 5px 5px 0;
@@ -73,7 +73,7 @@ section.program_nav {
         text-align: center;
         font-size: 14px;
         right: -252px;
-        background: url("../assets/images/download.png") 10px center no-repeat;
+        background: url("../../assets/images/download.png") 10px center no-repeat;
         background-size: 16px;
         line-height: 40px;
         color: #00a69d;
@@ -104,7 +104,7 @@ section.program_nav_scroll {
     left: 0;
     top: 0; }
     .out_side_title .out_side_title_icon.icon_rank {
-      background: url("../assets/images/ic_equalizer_black_24px.png") 50% 50% no-repeat; }
+      background: url("../../assets/images/ic_equalizer_black_24px.png") 50% 50% no-repeat; }
   .out_side_title .title {
     color: #2B2C2E;
     font-size: 24px; }
@@ -192,7 +192,7 @@ section.rank_list {
     position: absolute;
     left: 0;
     top: 0;
-    background: url("../assets/images/colorfulbar.png") no-repeat;
+    background: url("../../assets/images/colorfulbar.png") no-repeat;
     background-size: 540px;
     width: 540px;
     height: 4px; }
@@ -272,7 +272,7 @@ section.rank_detail {
     position: absolute;
     left: 0;
     top: 0;
-    background: url("../assets/images/colorfulbar.png") no-repeat;
+    background: url("../../assets/images/colorfulbar.png") no-repeat;
     background-size: 540px;
     width: 540px;
     height: 4px; }

@@ -166,4 +166,4 @@
 /***/ }
 
 /******/ });
-//# sourceMappingURL=searchresult.js.map
+//# sourceMappingURL=search_result.js.map

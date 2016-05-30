@@ -7,7 +7,7 @@ header.ipcool_hearder {
         .logo {
             display: block;
             float: left;
-            background: url("../assets/images/logo.png") no-repeat;
+            background: url("../../assets/images/logo.png") no-repeat;
             background-size: 268px;
             width: 268px;
             height: 47px;
@@ -72,7 +72,7 @@ header.ipcool_hearder {
             }
             .submit {
                 cursor: pointer;
-                background: url("../assets/images/search_main_ico.png") no-repeat center center, #fff;
+                background: url("../../assets/images/search_main_ico.png") no-repeat center center, #fff;
                 background-size: 20px 20px;
                 border: 1px solid #D8D8D8;
                 border-radius: 0 5px 5px 0;

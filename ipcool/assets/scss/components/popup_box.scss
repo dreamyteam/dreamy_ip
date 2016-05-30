@@ -22,7 +22,7 @@
     margin: 0 auto;
     button.close {
         position: absolute;
-        background: url("../assets/images/pooup_close_btn_normal@2x.png") no-repeat;
+        background: url("../../assets/images/pooup_close_btn_normal@2x.png") no-repeat;
         background-size: 54px;
         width: 54px;
         height: 54px;
@@ -58,7 +58,7 @@
     margin-top: -270px;
     .logo {
         display: inline-block;
-        background: url("../assets/images/logo_bottom_gray.png") no-repeat;
+        background: url("../../assets/images/logo_bottom_gray.png") no-repeat;
         background-size: 153px;
         width: 153px;
         height: 46px;
@@ -103,15 +103,15 @@
                     height: 45px;
                 }
                 label.icon_phone_number {
-                    background: url("../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
+                    background: url("../../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
                     background-size: 12px;
                 }
                 label.icon_password {
-                    background: url("../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
+                    background: url("../../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
                     background-size: 17px;
                 }
                 label.icon_verify {
-                    background: url("../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
+                    background: url("../../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
                     background-size: 16px;
                 }
                 input[type=text],
@@ -264,7 +264,7 @@ input[type=checkbox] {
 }
 
 input[type=checkbox]:checked {
-    background: url("../assets/images/icon_verify@2x.png") center center no-repeat;
+    background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
     background-size: 12px;
 }
 

@@ -20,7 +20,7 @@
       border-right: none; }
     .searchbar .form_search .submit {
       cursor: pointer;
-      background: url("../assets/images/search_main_ico.png") no-repeat center center, #fff;
+      background: url("../../assets/images/search_main_ico.png") no-repeat center center, #fff;
       background-size: 20px 20px;
       border: 1px solid #848484;
       border-radius: 0 5px 5px 0;
@@ -37,7 +37,7 @@ section.program_info {
     position: absolute;
     left: 0;
     top: 0;
-    background: url("../assets/images/colorfulbar.png") no-repeat;
+    background: url("../../assets/images/colorfulbar.png") no-repeat;
     background-size: 540px;
     width: 540px;
     height: 4px; }
@@ -182,7 +182,7 @@ section.program_nav {
         text-align: center;
         font-size: 14px;
         right: -252px;
-        background: url("../assets/images/download.png") 10px center no-repeat;
+        background: url("../../assets/images/download.png") 10px center no-repeat;
         background-size: 16px;
         line-height: 40px;
         color: #00a69d;
@@ -315,7 +315,7 @@ section.write_comment_container form.write_comment {
       content: '';
       width: 30px;
       height: 31px;
-      background: url("../assets/images/uparror.png") no-repeat;
+      background: url("../../assets/images/uparror.png") no-repeat;
       background-size: 30px;
       left: 10px;
       top: 10px; }
@@ -329,7 +329,7 @@ section.write_comment_container form.write_comment {
       content: '';
       width: 30px;
       height: 31px;
-      background: url("../assets/images/yijianfankui.png") no-repeat;
+      background: url("../../assets/images/yijianfankui.png") no-repeat;
       background-size: 30px;
       left: 10px;
       top: 10px; }
@@ -580,22 +580,22 @@ section.program_values {
           border-radius: 0 4px 4px 0;
           border-left: none; }
     .vote_container .vote_content .vote.movie span {
-      background: url("../assets/images/movie_ico@2x.png") no-repeat;
+      background: url("../../assets/images/movie_ico@2x.png") no-repeat;
       background-size: 30px; }
     .vote_container .vote_content .vote.tvshow span {
-      background: url("../assets/images/tv_show_ico@2x.png") no-repeat;
+      background: url("../../assets/images/tv_show_ico@2x.png") no-repeat;
       background-size: 30px; }
     .vote_container .vote_content .vote.mobilegame span {
-      background: url("../assets/images/mobile_game_ico@2x.png") no-repeat;
+      background: url("../../assets/images/mobile_game_ico@2x.png") no-repeat;
       background-size: 30px; }
     .vote_container .vote_content .vote.game span {
-      background: url("../assets/images/game_ico@2x.png") no-repeat;
+      background: url("../../assets/images/game_ico@2x.png") no-repeat;
       background-size: 30px; }
     .vote_container .vote_content .vote.peripheral span {
-      background: url("../assets/images/peripheral_ico@2x.png") no-repeat;
+      background: url("../../assets/images/peripheral_ico@2x.png") no-repeat;
       background-size: 30px; }
     .vote_container .vote_content .vote.others span {
-      background: url("../assets/images/others@2x.png") no-repeat;
+      background: url("../../assets/images/others@2x.png") no-repeat;
       background-size: 30px; }
 
 .review_container {

@@ -1,5 +1,5 @@
 {
-    "cssMapjson": [{
+    "cssMapJson": [{
         "key": "all.css",
         "type": "css",
         "value": [
@@ -8,92 +8,92 @@
     }, {
         "key": "index.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/index.css"
         ]
     }, {
         "key": "program_detail_page.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/program_detail_page.css"
         ]
     }, {
         "key": "rank_list.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/rank_list.css"
         ]
     }, {
         "key": "record.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/record.css"
         ]
     }, {
         "key": "searchresult.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/searchresult.css"
         ]
     }, {
         "key": "sidebar.css",
         "type": "css",
-        "packaged": [
+        "value": [
             "/dist/css/sidebar.css"
         ]
     }],
     "jsMapJson": [{
         "key": "jquery.min.js",
         "type": "js",
-        "packaged": [
-            "/dist/vendor/jquery.min.js"
+        "value": [
+            "/dist/js/vendor/jquery.min.js"
         ]
     }, {
         "key": "jquery.fullPage.js",
         "type": "js",
-        "packaged": [
-            "/dist/vendor/jquery.fullPage.js"
+        "value": [
+            "/dist/js/vendor/jquery.fullPage.js"
         ]
     }, {
         "key": "pace.min.js",
         "type": "js",
-        "packaged": [
-            "/dist/vendor/pace.min.js"
+        "value": [
+            "/dist/js/vendor/pace.min.js"
         ]
     }, {
         "key": "echarts.min.js",
         "type": "js",
-        "packaged": [
-            "/dist/vendor/echarts.min.js"
+        "value": [
+            "/dist/js/vendor/echarts.min.js"
         ]
     }, {
         "key": "all.js",
         "type": "js",
-        "packaged": [
+        "value": [
             "/dist/js/all.js"
         ]
     }, {
         "key": "index.js",
         "type": "js",
-        "packaged": [
+        "value": [
             "/dist/js/index.js"
         ]
     }, {
         "key": "program_detail.js",
         "type": "js",
-        "packaged": [
+        "value": [
             "/dist/js/program_detail.js"
         ]
     }, {
-        "key": "searchresult.js",
+        "key": "search_result.js",
         "type": "js",
-        "packaged": [
-            "/dist/js/searchresult.js"
+        "value": [
+            "/dist/js/search_result.js"
         ]
     }, {
         "key": "user.js",
         "type": "js",
-        "packaged": [
+        "value": [
             "/dist/js/user.js"
         ]
     }]

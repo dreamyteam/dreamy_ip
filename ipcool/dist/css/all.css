@@ -285,7 +285,7 @@ section {
   margin: 0 auto; }
   .popup_box button.close {
     position: absolute;
-    background: url("../assets/images/pooup_close_btn_normal@2x.png") no-repeat;
+    background: url("../../assets/images/pooup_close_btn_normal@2x.png") no-repeat;
     background-size: 54px;
     width: 54px;
     height: 54px;
@@ -324,7 +324,7 @@ section {
   margin-top: -270px; }
   .sign .logo {
     display: inline-block;
-    background: url("../assets/images/logo_bottom_gray.png") no-repeat;
+    background: url("../../assets/images/logo_bottom_gray.png") no-repeat;
     background-size: 153px;
     width: 153px;
     height: 46px; }
@@ -365,13 +365,13 @@ section {
         width: 47px;
         height: 45px; }
       .sign #signForm .sign_form .sign_container label.icon_phone_number {
-        background: url("../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
+        background: url("../../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
         background-size: 12px; }
       .sign #signForm .sign_form .sign_container label.icon_password {
-        background: url("../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
+        background: url("../../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
         background-size: 17px; }
       .sign #signForm .sign_form .sign_container label.icon_verify {
-        background: url("../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
+        background: url("../../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
         background-size: 16px; }
       .sign #signForm .sign_form .sign_container input[type=text], .sign #signForm .sign_form .sign_container input[type=password] {
         display: block;
@@ -493,7 +493,7 @@ input[type=checkbox] {
   height: 14px; }
 
 input[type=checkbox]:checked {
-  background: url("../assets/images/icon_verify@2x.png") center center no-repeat;
+  background: url("../../assets/images/icon_verify@2x.png") center center no-repeat;
   background-size: 12px; }
 
 .avatar {
@@ -560,7 +560,7 @@ input[type=checkbox]:checked {
       content: '';
       width: 30px;
       height: 31px;
-      background: url("../assets/images/uparror.png") no-repeat;
+      background: url("../../assets/images/uparror.png") no-repeat;
       background-size: 30px;
       left: 10px;
       top: 10px; }
@@ -574,7 +574,7 @@ input[type=checkbox]:checked {
       content: '';
       width: 30px;
       height: 31px;
-      background: url("../assets/images/yijianfankui.png") no-repeat;
+      background: url("../../assets/images/yijianfankui.png") no-repeat;
       background-size: 30px;
       left: 10px;
       top: 10px; }
@@ -615,7 +615,7 @@ header.ipcool_hearder {
     header.ipcool_hearder .inner .logo {
       display: block;
       float: left;
-      background: url("../assets/images/logo.png") no-repeat;
+      background: url("../../assets/images/logo.png") no-repeat;
       background-size: 268px;
       width: 268px;
       height: 47px; }
@@ -671,7 +671,7 @@ header.ipcool_hearder {
         border-right: none; }
       header.ipcool_hearder .inner .form_search .submit {
         cursor: pointer;
-        background: url("../assets/images/search_main_ico.png") no-repeat center center, #fff;
+        background: url("../../assets/images/search_main_ico.png") no-repeat center center, #fff;
         background-size: 20px 20px;
         border: 1px solid #D8D8D8;
         border-radius: 0 5px 5px 0;
@@ -747,7 +747,7 @@ footer.footer {
     margin-top: 50px; }
     footer.footer .copyright .logo {
       display: inline-block;
-      background: url("../assets/images/logo_bottom_gray.png") no-repeat;
+      background: url("../../assets/images/logo_bottom_gray.png") no-repeat;
       background-size: 153px;
       width: 153px;
       height: 46px;
