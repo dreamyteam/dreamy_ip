@@ -2,29 +2,22 @@ package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.domain.ipcool.BookIndexHistory;
-import com.dreamy.domain.ipcool.BookRank;
-import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,65 +44,47 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private RedisClientService redisClientService;
 
-    @Autowired
-    private BookRankService bookRankService;
-
-    @Autowired
-    private BookRankHistoryService bookRankHistoryService;
 
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
 
-    @Autowired
-    private QueueService queueService;
-
-    @Value("${queue_book_waitting_rank_update}")
-    private String bookRankWaittingUpdateQueue;
 
     @Override
     public void consume(JSONObject jsonObject) {
-        final String bookIdStr = jsonObject.getString("bookId");
+        String bookIdStr = jsonObject.getString("bookId");
         Log.info("starting book over : " + bookIdStr);
         if (StringUtils.isNotEmpty(bookIdStr)) {
             try {
-                Runnable r = new Runnable() {
-                    @Override
-                    public void run() {
-                        Integer bookId = Integer.parseInt(bookIdStr);
-                        final BookView bookView = bookViewService.getByBookId(bookId);
+                Integer bookId = Integer.parseInt(bookIdStr);
+                BookView bookView = bookViewService.getByBookId(bookId);
 
-                        if (bookView != null) {
-                            List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-                            if (CollectionUtils.isNotEmpty(bookInfoList)) {
+                if (bookView != null) {
+                    List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
+                    if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
-                                //计算指数
-                                Integer hotIndex = getNewHotIndex(bookView);
-                                Integer propagationIndex = getNewPropogationIndex(bookView);
-                                Integer reputationIndex = getNewReputationIndex(bookView);
-                                Integer developIndex = getNewDevelopIndex(bookView);
+                        //计算指数
+                        Integer hotIndex = getNewHotIndex(bookView);
+                        Integer propagationIndex = getNewPropogationIndex(bookView);
+                        Integer reputationIndex = getNewReputationIndex(bookView);
+                        Integer developIndex = getNewDevelopIndex(bookView);
 
 
-                                bookView.hotIndex(hotIndex);
-                                bookView.propagateIndex(propagationIndex);
-                                bookView.reputationIndex(reputationIndex);
-                                bookView.developIndex(developIndex);
+                        bookView.hotIndex(hotIndex);
+                        bookView.propagateIndex(propagationIndex);
+                        bookView.reputationIndex(reputationIndex);
+                        bookView.developIndex(developIndex);
 
-                                Integer compositeIndex = getNewCompositeIndex(bookView);
-                                bookView.compositeIndex(compositeIndex);
+                        Integer compositeIndex = getNewCompositeIndex(bookView);
+                        bookView.compositeIndex(compositeIndex);
 
-                                //更新指数
-                                bookViewService.update(bookView);
-                                updateHistoryIndex(bookView);
+                        //更新指数
+                        bookViewService.update(bookView);
+                        updateHistoryIndex(bookView);
 
-                                //指数写入到redis用于排名
-                                updateRank(bookView);
-                            }
-                        }
+                        //指数写入到redis用于排名
+                        updateRank(bookView);
                     }
-                };
-
-                //更新排名
-                threadPoolTaskExecutor.execute(r);
+                }
             } catch (Exception e) {
                 Log.error("update rank failed :" + bookIdStr, e);
             }
