@@ -95,23 +95,22 @@ public class UpdateIndexTask {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
         page.setPageSize(500);
-        int currentPage = 1;
-        BookView entity = new BookView();
-        while (true) {
+        int currentPage = 1; 
+        Boolean isLoop = true;
+
+        while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getList(entity, page);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
-
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
                     }
+                    currentPage ++;
+                }else{
+                    isLoop = false;
                 }
 
-                if (!page.isHasNextPage()) {
-                    break;
-                }
-                currentPage++;
             } catch (Exception e) {
                 LOGGER.error("update index jod error ", e);
                 break;

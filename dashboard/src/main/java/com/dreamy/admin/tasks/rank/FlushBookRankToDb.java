@@ -47,7 +47,8 @@ public class FlushBookRankToDb {
         Page page = new Page();
         page.setPageSize(500);
         int currentPage = 1;
-        while (true) {
+        Boolean isLoop = true;
+        while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
@@ -58,7 +59,7 @@ public class FlushBookRankToDb {
 
                     currentPage++;
                 } else {
-                    break;
+                    isLoop = false;
                 }
             } catch (Exception e) {
                 LOGGER.error("## flush rand redis to db failed ", e);
