@@ -17,7 +17,7 @@ $(function() {
                 $(".sec_" + index).addClass('active');
             },
         })
-    },1000)
+    },800)
 
 
 

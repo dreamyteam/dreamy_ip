@@ -78,7 +78,7 @@
 	                $(".sec_" + index).addClass('active');
 	            }
 	        });
-	    }, 1000);
+	    }, 800);
 
 	    var sec2Tab = new _tab2.default({
 	        el: "#sec_2_tab",
