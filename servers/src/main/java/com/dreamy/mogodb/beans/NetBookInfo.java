@@ -1,9 +1,15 @@
 package com.dreamy.mogodb.beans;
 
+import org.springframework.data.annotation.Id;
+
 /**
- * Created by wangyongxing on 16/4/5.
+ * Created by wangyongxing on 16/5/30.
  */
-public class Member {
+public class NetBookInfo {
+
+    @Id
+    private String bookId;
+
     /**
      * 作品名称
      */
@@ -56,11 +62,19 @@ public class Member {
     /**
      * 评分
      */
-    private Double score;
+    private String score;
     /**
      * 授权状态
      */
     private String authority;
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
 
     public String getMonthSort() {
         return monthSort;
@@ -118,11 +132,11 @@ public class Member {
         this.label = label;
     }
 
-    public Double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -165,6 +179,5 @@ public class Member {
     public void setInfo(String info) {
         this.info = info;
     }
-
 
 }
