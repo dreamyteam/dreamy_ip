@@ -1,6 +1,4 @@
-
 import Paging from '../components/paging.js'
-
 
 $(function() {
     //分页

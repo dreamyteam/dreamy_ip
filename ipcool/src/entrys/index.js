@@ -3,8 +3,6 @@ import SlideTab from '../components/slide_tab.js'
 import Popup from '../components/pop_up.js'
 import SignIn from '../components/LonginReg.js'
 
-
-
 $(function() {
 
     setTimeout(function() {
@@ -19,7 +17,7 @@ $(function() {
                 $(".sec_" + index).addClass('active');
             },
         })
-    },1500)
+    },1000)
 
 
 
