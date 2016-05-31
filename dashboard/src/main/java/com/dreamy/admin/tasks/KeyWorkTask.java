@@ -32,12 +32,15 @@ public class KeyWorkTask {
     @Resource
     private QueueService queueService;
 
-    @Value("${queue_crawler_keyword}")
+    @Value("${queue_keyword_baidu_sougou}")
     private String queueName;
 
 
-    @Value("${queue_crawler_keyword_weixin}")
+    @Value("${queue_keyword_wx}")
     private String weiXinQueueName;
+
+    @Value("${queue_keyword_wb}")
+    private String weiBoQueueName;
 
 
     public void crawler() {
@@ -69,14 +72,14 @@ public class KeyWorkTask {
             }
         } catch (Exception e) {
 
-            log.error("KeyWorkTask is error", e);
+            log.error("crawler is error", e);
         }
 
     }
 
     public void crawlerWeiXin() {
         try {
-            BookView entity = new BookView().type(1);
+            BookView entity = new BookView().type(2);
             int currentPage = 1;
             while (true) {
                 Page page = new Page();
@@ -87,11 +90,7 @@ public class KeyWorkTask {
                     Map<String, Object> map = new HashMap<>();
                     map.put("bookId", bookView.getBookId());
                     map.put("source", bookView.getType());
-                    if (StringUtils.isNotEmpty(bookView.getAuthor())) {
-                        map.put("word", bookView.getName() + " " + bookView.getAuthor());
-                    } else {
-                        map.put("word", bookView.getName());
-                    }
+                    map.put("word", bookView.getName());
                     queueService.push(weiXinQueueName, map);
                 }
                 if (!page.isHasNextPage()) {
@@ -100,9 +99,40 @@ public class KeyWorkTask {
                 currentPage++;
             }
         } catch (Exception e) {
-            log.error("KeyWorkTask is error", e);
+            log.error("crawlerWeiXin is error", e);
         }
     }
+
+    public void crawlerWeiBo() {
+        try {
+            BookView entity = new BookView().type(1);
+            int currentPage = 1;
+            while (true) {
+                Page page = new Page();
+                page.setPageSize(50);
+                page.setCurrentPage(currentPage);
+                List<BookView> list = bookViewService.getList(entity, page);
+                for (BookView bookView : list) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("source", bookView.getType());
+                    map.put("bookId", bookView.getBookId());
+                    if (StringUtils.isNotEmpty(bookView.getAuthor())) {
+                        map.put("word", bookView.getName() + " " + bookView.getAuthor());
+                    } else {
+                        map.put("word", bookView.getName());
+                    }
+                    queueService.push(weiBoQueueName, map);
+                }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+            }
+        } catch (Exception e) {
+            log.error("crawlerWeiBo is error", e);
+        }
+    }
+
 
 //    public void crawlerWeiXin(final List<BookView> list) {
 //        AsynchronousService.submit(new ObjectCallable() {

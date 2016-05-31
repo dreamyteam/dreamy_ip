@@ -25,6 +25,15 @@ public class CrawSina {
         SINA_USERS.put("hanshinan92@gmail.com", "http://3w.mailcn");
         SINA_USERS.put("376427853@qq.com", "alan19880418");
         SINA_USERS.put("18768129443", "luckysheep33");
+        SINA_USERS.put("13675824165", "jiangshan");
+        SINA_USERS.put("13251904501", "http://3w.mailcn.dreamy");
+        SINA_USERS.put("540751258@qq.com", "woshitiancai1");
+        SINA_USERS.put("15267051024", "Dreamy.live");
+        SINA_USERS.put("837912803@qq.com", "hjl88076132");
+
+
+
+
 
 
 

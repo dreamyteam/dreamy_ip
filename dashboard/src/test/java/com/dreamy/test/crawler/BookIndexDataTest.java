@@ -16,12 +16,12 @@ public class BookIndexDataTest extends BaseJunitTest {
 
     @Test
     public void find() {
-        BookIndexData data = bookIndexDataService.getById(158);
+        BookIndexData data = bookIndexDataService.getById("158_2");
         OverviewJson overviewJson= data.getOverviewJson();
         overviewJson.setMonthChainRatio("100");
         data.setLastDate("2017");
         bookIndexDataService.updateInser(data);
-         data = bookIndexDataService.getById(158);
+         data = bookIndexDataService.getById("158_2");
         System.out.println(data);
     }
 }

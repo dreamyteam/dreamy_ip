@@ -46,7 +46,7 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
-    public List<BookRank> getList(BookRank bookRank, Page page,String order) {
+    public List<BookRank> getList(BookRank bookRank, Page page, String order) {
         Map<String, Object> params = BeanUtils.toQueryMap(bookRank);
         BookRankConditions conditions = new BookRankConditions();
         conditions.createCriteria().addByMap(params);
@@ -54,7 +54,7 @@ public class BookRankServiceImpl implements BookRankService {
             page.setTotalNum(bookRankDao.countByExample(conditions));
             conditions.setPage(page);
         }
-        if(StringUtils.isNotEmpty(order)){
+        if (StringUtils.isNotEmpty(order)) {
             conditions.setOrderByClause(order);
         }
 
@@ -79,13 +79,14 @@ public class BookRankServiceImpl implements BookRankService {
         if (CollectionUtils.isNotEmpty(bookRanks)) {
             for (BookRank r : bookRanks) {
                 BookView bookview = bookViewService.getByBookId(r.getBookId());
+                if (bookview != null) {
+                    BookViewWithExt bookViewWithExt = new BookViewWithExt();
+                    bookViewWithExt.setBookView(bookview);
+                    bookViewWithExt.setCompositeRank(r.getRank());
+                    bookViewWithExt.setTrend(getRankTrendByBookIdAndTypeAndIndex(r.getBookId(), rankType, r.getRankIndex()));
 
-                BookViewWithExt bookViewWithExt = new BookViewWithExt();
-                bookViewWithExt.setBookView(bookview);
-                bookViewWithExt.setCompositeRank(r.getRank());
-                bookViewWithExt.setTrend(getRankTrendByBookIdAndTypeAndIndex(r.getBookId(), rankType, r.getRankIndex()));
-
-                bookViewWithExts.add(bookViewWithExt);
+                    bookViewWithExts.add(bookViewWithExt);
+                }
             }
         }
 
@@ -101,8 +102,6 @@ public class BookRankServiceImpl implements BookRankService {
 
     @Override
     public BookRank getByBookIdAndType(Integer bookId, Integer type) {
-        BookRank bookRank = new BookRank();
-
         BookRankConditions conditions = new BookRankConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
 
@@ -112,10 +111,10 @@ public class BookRankServiceImpl implements BookRankService {
 
         List<BookRank> bookRanks = bookRankDao.selectByExample(conditions);
         if (CollectionUtils.isNotEmpty(bookRanks)) {
-            bookRank = bookRanks.get(0);
+            return  bookRanks.get(0);
         }
 
-        return bookRank;
+        return null;
     }
 
     @Override
@@ -160,7 +159,7 @@ public class BookRankServiceImpl implements BookRankService {
         Integer res = BookRankTrendEnums.keep.getType();
         Page page = new Page();
         page.setPageSize(1);
-        List<BookRankHistory> bookRankHistoryList = bookRankHistoryService.getByBookIdAndType(bookId, type,page);
+        List<BookRankHistory> bookRankHistoryList = bookRankHistoryService.getByBookIdAndType(bookId, type, page);
         if (CollectionUtils.isNotEmpty(bookRankHistoryList)) {
             BookRankHistory bookRankHistory = bookRankHistoryList.get(0);
             Integer lastIndex = bookRankHistory.getRankIndex();
@@ -187,7 +186,7 @@ public class BookRankServiceImpl implements BookRankService {
     }
 
     @Override
-    public Integer deleteByBookIdAndType(Integer bookId,Integer type) {
+    public Integer deleteByBookIdAndType(Integer bookId, Integer type) {
         BookRankConditions conditions = new BookRankConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type);
         return bookRankDao.deleteByExample(conditions);
@@ -213,5 +212,11 @@ public class BookRankServiceImpl implements BookRankService {
 
         return classLevel;
 
+    }
+
+    @Override
+    public Integer updateByRecord(BookRank bookRank) {
+
+        return bookRankDao.update(bookRank);
     }
 }

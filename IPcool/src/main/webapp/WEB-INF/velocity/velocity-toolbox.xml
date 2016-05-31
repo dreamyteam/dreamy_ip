@@ -7,5 +7,10 @@
 		<class>com.dreamy.utils.TimeUtils</class>
 	</tool>
 
+    <tool>
+        <key>assetsUtils</key>
+        <scope>application</scope>
+        <class>com.dreamy.ipcool.utils.IpcoolAssetsUtils</class>
+    </tool>
 
 </toolbox>

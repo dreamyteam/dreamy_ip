@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by wangyongxing on 16/5/9.
  *
- * 积分 排名
+ * 抽取 积分 排名
  */
 @Component
 public class BookScoreTask {
@@ -40,7 +40,7 @@ public class BookScoreTask {
             page.setCurrentPage(currentPage);
             List<IpBook> list = ipBookService.getIpBookList(entity, page);
             for (IpBook ipBook : list) {
-                List<BookInfo> bookInfos = bookInfoService.getListByIpId(ipBook.getId());
+                List<BookInfo> bookInfos = bookInfoService.getListByISBN(ipBook.getCode());
                 BookScore bookScore = null;
                 for (BookInfo bookInfo : bookInfos) {
                     bookScore = new BookScore();

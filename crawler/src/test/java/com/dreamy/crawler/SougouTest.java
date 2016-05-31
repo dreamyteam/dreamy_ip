@@ -27,7 +27,7 @@ public class SougouTest extends BaseJunitTest {
         int currentPage = 1;
         while (true) {
             Page page = new Page();
-            page.setPageSize(200);
+            page.setPageSize(1);
             page.setCurrentPage(currentPage);
             List<BookView> list = bookViewService.getList(bookView, page);
 

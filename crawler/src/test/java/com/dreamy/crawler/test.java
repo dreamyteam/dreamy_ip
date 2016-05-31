@@ -127,7 +127,7 @@ public class test extends BaseJunitTest {
 
     @Test
     public void testGetMongo() {
-        Object object = bookInfoService.getById(1);
+        Object object = bookInfoService.getById("");
         if (object != null) {
 
         }
@@ -208,7 +208,7 @@ public class test extends BaseJunitTest {
     @Test
     public void so() throws UnsupportedEncodingException {
         BookIndexData bookIndexData = soHandler.getByUrl("少有人走的路", "全国");
-        bookIndexData.setId(110);
+        bookIndexData.setId(110+"_"+2);
         bookIndexData.setSource(2);
         bookIndexDataDao.save(bookIndexData);
 
@@ -218,7 +218,7 @@ public class test extends BaseJunitTest {
     @Test
     public void bookIndexDataFind() throws UnsupportedEncodingException {
 
-        BookIndexData bookIndexData = bookIndexDataDao.queryById(110);
+        BookIndexData bookIndexData = bookIndexDataDao.queryById(11);
 
         System.out.println(bookIndexData);
 

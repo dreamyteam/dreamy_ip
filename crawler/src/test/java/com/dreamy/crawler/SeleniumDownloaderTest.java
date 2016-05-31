@@ -43,7 +43,7 @@ public class SeleniumDownloaderTest {
 		SeleniumDownloader seleniumDownloader = new SeleniumDownloader(chromeDriverPath);
 		//seleniumDownloader.setSleepTime(10000);
 		long time1 = System.currentTimeMillis();
-		Page page = seleniumDownloader.download(new Request("http://item.jd.com/11678007.html#comment"), new Task() {
+		Page page = seleniumDownloader.download(new Request("http://search.jd.com/Search?enc=utf-8&pvid=24gwg9oi.5otj5i&keyword=9787219090909"), new Task() {
 			@Override
 			public String getUUID() {
 				return "http://item.jd.com/";

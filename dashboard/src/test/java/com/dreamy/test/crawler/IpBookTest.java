@@ -84,9 +84,10 @@ public class IpBookTest extends BaseJunitTest {
 
         }
     }
+
     @Test
     public void updateInser() {
-        BookInfo bookInfo = bookInfoService.getById(20000);
+        BookInfo bookInfo = bookInfoService.getById("");
         bookInfo.setCrawlerId(20000);
         bookInfo.setCommentNum(21212);
         bookInfo.setAuthor("测试");

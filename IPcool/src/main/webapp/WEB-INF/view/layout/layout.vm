@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    #parse("/common/html_head.vm")
-    #parse("/common/header_css.vm")
+    <meta charset="UTF-8">
+    <title>IP库 | IPCool</title>
 
-    #if($!{cssName})
-        <link href="/static/css/$!{cssName}.css" rel="stylesheet" type="text/css"/>
+    $!assetsUtils.getCssByKey("all.css")
+    #if($!cssName)
+        $!assetsUtils.getCssByKey($!cssName)
     #end
-    <link rel="stylesheet" type="text/css" href="http://ipcool.me/dist/pace-theme-minimal.css">
-    <script type="text/javascript" src="http://ipcool.me/dist/pace.min.js"></script>
 </head>
 <body>
 
-<div class="">
+<div class="wrap">
     #parse("/common/top_bar.vm")
     $screen_content
     #parse("/common/footer.vm")
+    #parse("/common/popup_sign.vm")
 </div>
 
+    $!assetsUtils.getJsByKey("jquery.min.js")
+    $!assetsUtils.getJsByKey("pace.min.js")
+    $!assetsUtils.getJsByKey("all.js")
 
-
-    #parse("/common/footer_js.vm")
-
-    #if($!{jsName})
-    <script src="/static/js/$!{jsName}.js"></script>
+    #if($!jsName)
+        $!assetsUtils.getJsByKey($!jsName)
+    #end
+    #if($!jsName2)
+        $!assetsUtils.getJsByKey($!jsName2)
     #end
 </body>
+
 </html>
 

@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by wangyongxing on 16/4/6.
  */
@@ -27,27 +30,52 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
 
     @Override
     public BookInfo getByUrl(String url) {
+            String html = HttpUtils.getHtmlGetByProxy(url,null,0,null);
+            BookInfo bean = null;
+            if (StringUtils.isNotEmpty(html)) {
+                Document document = Jsoup.parse(html);
+                if (document != null) {
+                    bean = new BookInfo();
+                    getISBN(bean, document);
+                    getAuthorAndPressAndPublishTime(bean, document);
+                    getCommentNum(bean, document);
+                    getImage(bean, document);
+                    getAuthorInfo(bean, document);
+                    getTags(bean, document);
+                    getScore(bean, document);
+                    return bean;
 
-        String html = HttpUtils.getHtmlGet(url);
-        BookInfo bean = null;
-        if (StringUtils.isNotEmpty(html)) {
-            Document document = Jsoup.parse(html);
-            if (document != null) {
-                bean = new BookInfo();
-                getAuthorAndPressAndPublishTime(bean, document);
-                getCommentNum(bean, document);
-                getImage(bean, document);
-                getAuthorInfo(bean, document);
-                getTags(bean, document);
-                getScore(bean, document);
-                return bean;
-
+                }
             }
+
+
+            return bean;
+
         }
 
+        /**
+         * 解析ISBN
+         *
+         * @param bookInfo
+         * @param document
+         */
+    private void getISBN(BookInfo bookInfo, Document document) {
+        try {
+            Element element = document.getElementById("info");
+            if (element != null) {
+                String str = element.text().replace(" ", "");
+                Pattern p = Pattern.compile("ISBN:([0-9]*)");
+                Matcher m = p.matcher(str);
+                String result = "";
+                while (m.find()) {
+                    result = m.group(1);
+                }
+                bookInfo.setISBN(result);
+            }
+        } catch (Exception e) {
+            log.error("解析 dandou ISBN 异常", e);
 
-        return bean;
-
+        }
     }
 
     /**
@@ -57,20 +85,26 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
      * @param document
      */
     private void getAuthorAndPressAndPublishTime(BookInfo bookInfo, Document document) {
-        Elements elements = document.getElementsByAttributeValue("name", "keywords");
-        Element element = elements.first();
-        String content = element.attr("content");
-        if (StringUtils.isNotEmpty(content)) {
-            String arr[] = content.split(",");
-            int size = arr.length;
-            if (size > 5) {
-                bookInfo.setTitle(arr[0]);
-                bookInfo.setAuthor(arr[1]);
-                bookInfo.setPress(arr[2]);
-                bookInfo.setPushTime(arr[3]);
-            }
+        try {
+            Elements elements = document.getElementsByAttributeValue("name", "keywords");
+            Element element = elements.first();
+            String content = element.attr("content");
+            if (StringUtils.isNotEmpty(content)) {
+                String arr[] = content.split(",");
+                int size = arr.length;
+                if (size >5) {
+                    bookInfo.setTitle(arr[0]);
+                    bookInfo.setAuthor(arr[1]);
+                    bookInfo.setPress(arr[2]);
+                    bookInfo.setPushTime(arr[3]);
+                }
 
+            }
         }
+        catch (Exception e){
+            log.error("解析 dandou 出版社 异常", e);
+        }
+
     }
 
 
@@ -102,15 +136,13 @@ public class DouBanCrawlerHandler extends AbstractCrawlerHandler {
             if (elements != null && elements.size() > 0) {
                 Element element = elements.get(0);
                 bookInfo.setInfo(element.text());
-                if(elements.size()>1) {
+                if (elements.size() > 1) {
                     element = elements.get(1);
                     bookInfo.setAuthorInfo(element.text());
                 }
             }
-        }catch (Exception e){
-            log.error("解析 作者简介 内容简介 异常", e);
-
-
+        } catch (Exception e) {
+            log.error("解析 dandou 作者简介 内容简介 异常", e);
         }
 
 

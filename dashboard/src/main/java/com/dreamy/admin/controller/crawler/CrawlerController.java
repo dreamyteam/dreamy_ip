@@ -62,15 +62,11 @@ public class CrawlerController extends DashboardController {
         List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
         model.put("book", ipBook);
 
-        List<BookInfo> bookInfos = new LinkedList<>();
+        List<BookInfo> bookInfos =bookInfoService.getListByISBN(ipBook.getCode());
         for (BookCrawlerInfo info : list) {
             model.put("url" + info.getSource(), info.getUrl().trim());
-            BookInfo bookInfo = (BookInfo) bookInfoService.getById(info.getId());
-            if (bookInfo != null) {
-                bookInfos.add(bookInfo);
-            }
-        }
 
+        }
         model.put("crawlerInfos", bookInfos);
         model.put("currentSource", request.getParameter("source"));
         model.put("sources", CrawlerSourceEnums.values());
@@ -123,7 +119,6 @@ public class CrawlerController extends DashboardController {
 
         for (BookCrawlerInfo info : list) {
             if (info.getStatus().equals(CrawlerTaskStatusEnums.failed.getStatus())) {
-                ipBookService.doCrawler(info);
             }
         }
 
@@ -137,9 +132,8 @@ public class CrawlerController extends DashboardController {
                 IpBook ipBook = ipBookService.getById(id);
                 BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().bookId(ipBook.getId());
                 List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(bookCrawlerInfo);
-
                 for (BookCrawlerInfo info : list) {
-                    ipBookService.doCrawler(info);
+
                 }
             }
         }

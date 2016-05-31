@@ -1,3 +1,5 @@
+#set($cssName = "rank_list.css")
+
 <!--main-->
 <div class="container">
     <!--搜索框-->

@@ -1,6 +1,7 @@
 package com.dreamy.listen;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.handler.so.SoHandler;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.dao.BookIndexDataDao;
@@ -35,7 +36,7 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
         String word=jsonObject.getString("word");
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(word, "全国");
-            bookIndexData.setId(ipId);
+            bookIndexData.setId(ipId+"_"+ IndexSourceEnums.s360.getType());
             bookIndexData.setSource(type);
             bookIndexData.setUpdatedAt(new Date());
             bookIndexDataDao.updateInser(bookIndexData);

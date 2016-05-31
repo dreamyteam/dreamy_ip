@@ -29,12 +29,12 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public BookInfo getById(Integer id) {
-        return bookInfoDao.queryById(id);
+    public BookInfo getById(String id) {
+        return bookInfoDao.getByStringId(id);
     }
 
     @Override
-    public void delById(Integer id) {
+    public void delById(String id) {
         bookInfoDao.deleteById(id);
     }
 
@@ -55,5 +55,18 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Override
     public void updateInser(BookInfo bookInfo) {
         bookInfoDao.updateInser(bookInfo);
+    }
+
+    @Override
+    public List<BookInfo> getListByISBN(String isbn) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("ISBN").is(isbn);
+        query.addCriteria(criteria);
+        return bookInfoDao.queryList(query);
+    }
+
+    @Override
+    public void udpate(BookInfo bookInfo) throws Exception {
+        bookInfoDao.updateMulti(bookInfo);
     }
 }

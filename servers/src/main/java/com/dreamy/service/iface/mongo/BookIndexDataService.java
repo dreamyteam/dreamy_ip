@@ -25,5 +25,5 @@ public interface BookIndexDataService {
     public void updateInser(BookIndexData data);
 
 
-    public BookIndexData getById(Integer id);
+    public BookIndexData getById(String id);
 }

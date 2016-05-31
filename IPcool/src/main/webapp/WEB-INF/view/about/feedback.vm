@@ -1,11 +1,12 @@
+#set($cssName = "sidebar.css")
 
-    <div class="container clearfix">
+<div class="container clearfix">
         <!-- 关于我们 左侧导航 -->
         <ul class="sidebar_nav">
-            <li><a href="">关于我们</a></li>
-            <li class="active"><a href="">意见反馈</a></li>
-            <li><a href="">用户协议</a></li>
-            <li><a href="">隐私政策</a></li>
+            <li><a href="/about/us">关于我们</a></li>
+            <li class="active"><a href="#">意见反馈</a></li>
+            <li><a href="/about/agreement">用户协议</a></li>
+            <li><a href="/about/contact">联系我们</a></li>
         </ul>
         <!-- 关于我们 右侧部分 -->
         <div class="sidebar_content clearfix">

@@ -1,3 +1,7 @@
+#set($cssName = "search_result.css")
+#set($jsName = "search_result.js")
+
+
 <!--main-->
 <div class="container">
     <!--搜索框-->
@@ -79,6 +83,7 @@
     <div class="paging" id="paging"
          data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize,"content":"$!content"}'>
     </div>
-
     <!--分页器-->
 </div>
+
+

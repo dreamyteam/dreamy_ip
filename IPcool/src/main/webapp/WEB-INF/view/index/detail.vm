@@ -1,3 +1,7 @@
+#set($layout = "/layout/layout_chart.vm")
+#set($cssName = "program_detail_page.css")
+#set($jsName = "program_detail.js")
+
 <input id="getIpid" type="hidden" value="$!{view.bookId}">
 
 <div class="container">

@@ -3,7 +3,6 @@ package com.dreamy.dao.iface.ipcool;
 import com.dreamy.dao.BaseDao;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookScoreConditions;
-import sun.misc.BASE64Decoder;
 
 /**
  * Created by wangyongxing on 16/4/28.

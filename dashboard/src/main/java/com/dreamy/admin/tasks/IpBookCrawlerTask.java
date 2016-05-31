@@ -35,7 +35,7 @@ public class IpBookCrawlerTask {
     @Autowired
     private BookInfoService bookInfoService;
 
-    @Scheduled(fixedDelay = 5000)
+//    @Scheduled(fixedDelay = 5000)
     public void checkBookCrawlerWaittingStatus() {
         int currentPage = 1;
         BookCrawlerInfo bookCrawlerInfo = new BookCrawlerInfo().status(CrawlerTaskStatusEnums.waitting.getStatus());
@@ -47,7 +47,6 @@ public class IpBookCrawlerTask {
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
                 if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
                     for (BookCrawlerInfo info : bookCrawlerInfos) {
-                        ipBookService.doCrawler(info);
                     }
                 }
                 if (!page.isHasNextPage()) {
@@ -62,7 +61,7 @@ public class IpBookCrawlerTask {
         }
     }
 
-    @Scheduled(fixedDelay = 7000)
+//    @Scheduled(fixedDelay = 7000)
     public void checkIpBookStatus() {
         Page page = new Page();
         page.setPageSize(1000);
@@ -125,7 +124,6 @@ public class IpBookCrawlerTask {
                 List<BookCrawlerInfo> bookCrawlerInfos = bookCrawlerInfoService.getListByRecord(bookCrawlerInfo, page);
                 if (CollectionUtils.isNotEmpty(bookCrawlerInfos)) {
                     for (BookCrawlerInfo info : bookCrawlerInfos) {
-                        ipBookService.doCrawler(info);
                     }
                 }
                 if (!page.isHasNextPage()) {

@@ -89,6 +89,6 @@ public class BookViewServiceImpl implements BookViewService {
             return bookViews.get(0);
         }
 
-        return new BookView();
+        return null;
     }
 }

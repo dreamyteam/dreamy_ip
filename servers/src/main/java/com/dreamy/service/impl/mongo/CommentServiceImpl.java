@@ -15,6 +15,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Resource
     private CommentDao commentDao;
+
     @Override
     public Comments getById(Integer id) {
         return commentDao.queryById(id);

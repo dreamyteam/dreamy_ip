@@ -39,8 +39,16 @@
 
                     <div class="well operate-box">
 
+                        <a class="btn btn-default" href="/crawler/douban">
+                            豆瓣爬取
+                        </a>
+
                         <a class="btn btn-default" href="/crawler/all">
                             出版文学全部爬取
+                        </a>
+
+                        <a class="btn btn-default" href="/tools/createView">
+                            提取出版文学
                         </a>
                         <a class="btn btn-default" href="/tools/sina">
                             新浪登录
@@ -48,6 +56,10 @@
 
                         <a class="btn btn-default" href="/crawler/keyword">
                             关键词搜索爬取
+                        </a>
+
+                        <a class="btn btn-default" href="/crawler/keyword_weibo">
+                            微博关键词搜索爬取
                         </a>
 
                         <a class="btn btn-default" href="/crawler/keyword_weixin">

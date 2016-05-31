@@ -1,3 +1,5 @@
+#set($cssName = "record.css")
+
 <!--main-->
     <div class="container">
         <section class="record">

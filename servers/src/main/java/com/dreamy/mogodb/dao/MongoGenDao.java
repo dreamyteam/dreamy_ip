@@ -90,7 +90,7 @@ public abstract class MongoGenDao<T> {
         return this.mongoTemplate.count(query, this.getEntityClass());
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         Criteria criteria = Criteria.where("_id").is(id);
         if (null != criteria) {
             Query query = new Query(criteria);
