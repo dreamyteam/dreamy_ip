@@ -127,7 +127,6 @@ public class IndexController extends IpcoolController {
         if (bookView == null || bookView.getId() == null) {
             return null;
         }
-
         Integer bookId = bookView.getBookId();
 
         Comments comments = commentService.getById(bookId);

@@ -66,12 +66,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                         Integer hotIndex = getNewHotIndex(bookView);
                         Integer propagationIndex = getNewPropogationIndex(bookView);
                         Integer reputationIndex = getNewReputationIndex(bookView);
-                        Integer developIndex = getNewDevelopIndex(bookView);
+
 
 
                         bookView.hotIndex(hotIndex);
                         bookView.propagateIndex(propagationIndex);
                         bookView.reputationIndex(reputationIndex);
+
+                        Integer developIndex = getNewDevelopIndex(bookView);
                         bookView.developIndex(developIndex);
 
                         Integer compositeIndex = getNewCompositeIndex(bookView);
@@ -99,8 +101,11 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      */
     private Integer getNewHotIndex(BookView bookView) {
         try {
-            String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-            return Integer.parseInt(hotIndex);
+            String hotIndexStr = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
+            Integer hotIndex = Integer.parseInt(hotIndexStr);
+            if (hotIndex > 0) {
+                return hotIndex;
+            }
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
@@ -113,9 +118,13 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewPropogationIndex(BookView bookView) {
+
         try {
             String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-            return Integer.parseInt(propagateIndex);
+            Integer index = Integer.parseInt(propagateIndex);
+            if (index > 0) {
+                return index;
+            }
         } catch (Exception e) {
             Log.error("update  propatation index failed :" + bookView.getId(), e);
         }
@@ -130,7 +139,10 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     private Integer getNewReputationIndex(BookView bookView) {
         try {
             String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-            return Integer.parseInt(reputationIndex);
+            Integer index = Integer.parseInt(reputationIndex);
+            if (index > 0) {
+                return index;
+            }
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
@@ -146,7 +158,10 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     private Integer getNewDevelopIndex(BookView bookView) {
         try {
             String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-            return Integer.parseInt(developIndex);
+            Integer index = Integer.parseInt(developIndex);
+            if (index > 0) {
+                return index;
+            }
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
@@ -169,7 +184,10 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
             Double compositeIndex = 0.1 * (3 * (hotIndex + propagationIndex) + 2 * (reputationIndex + developIndex));
 
-            return compositeIndex.intValue();
+            Integer index = compositeIndex.intValue();
+            if (index > 0) {
+                return index;
+            }
         } catch (Exception e) {
             Log.error("update composite index failed :" + bookView.getId(), e);
         }

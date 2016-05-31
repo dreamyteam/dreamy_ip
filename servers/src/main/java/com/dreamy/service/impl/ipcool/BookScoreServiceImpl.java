@@ -43,22 +43,20 @@ public class BookScoreServiceImpl implements BookScoreService {
 
         BookScoreConditions conditions = new BookScoreConditions();
         conditions.createCriteria().andBookIdEqualTo(bookScore.getBookId()).andSourceEqualTo(bookScore.getSource());
-        List<BookScore> list= bookScoreDao.selectByExample(conditions);
-        if(CollectionUtils.isNotEmpty(list))
-        {
-            BookScore old=list.get(0);
-            if(bookScore.getCommentNum()>0){
+        List<BookScore> list = bookScoreDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(list)) {
+            BookScore old = list.get(0);
+            if (bookScore.getCommentNum() > 0) {
                 old.commentNum(bookScore.getCommentNum());
             }
-            if(bookScore.getScore()>0){
+            if (bookScore.getScore() > 0) {
                 old.score(bookScore.getScore());
             }
-            if(bookScore.getSaleSort()>0){
+            if (bookScore.getSaleSort() > 0) {
                 old.saleSort(bookScore.getSaleSort());
             }
             bookScoreDao.update(old);
-        }
-        else{
+        } else {
             bookScoreDao.save(bookScore);
         }
 
@@ -133,6 +131,8 @@ public class BookScoreServiceImpl implements BookScoreService {
         Integer hotIndex = bookView.getHotIndex();
         Integer propagationIndex = bookView.getPropagateIndex();
 
+        developScore += 0.01 * (hotIndex + propagationIndex);
+
         List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
         if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
             int i = 0;
@@ -144,7 +144,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 }
             }
 
-            developScore = 0.01 * (hotIndex + propagationIndex) * developScore / i;
+            developScore *= developScore / i;
         }
 
 

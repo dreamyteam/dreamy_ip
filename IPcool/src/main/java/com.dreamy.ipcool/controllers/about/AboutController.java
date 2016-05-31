@@ -1,6 +1,10 @@
 package com.dreamy.ipcool.controllers.about;
 
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.ipcool.controllers.IpcoolController;
+import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.service.iface.ipcool.BookViewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/about")
 @Controller
 public class AboutController extends IpcoolController {
+
+    @Autowired
+    private BookScoreService bookScoreService;
+    @Autowired
+    private BookViewService bookViewService;
 
     @RequestMapping("/us")
     public String us() {
@@ -33,5 +42,14 @@ public class AboutController extends IpcoolController {
     public String contact() {
         return "/about/contact";
     }
+
+    @RequestMapping("/tt")
+    public void tt() {
+        BookView bookView = bookViewService.getByBookId(7518);
+        String score = bookScoreService.getDevelopIndexByRecord(bookView);
+        System.err.println("111");
+    }
+
+
 
 }
