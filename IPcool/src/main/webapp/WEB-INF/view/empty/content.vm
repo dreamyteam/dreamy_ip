@@ -1,0 +1,84 @@
+#set($layout = "/layout/blank_layout.vm")
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IP库 | IPCool</title>
+    $!assetsUtils.getCssByKey("all.css")
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .empty {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .empty .empty_content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -75px;
+            margin-top: -100px;
+            height: 200px;
+            width: 150px;
+        }
+
+        .empty .empty_content .icon_empty {
+            display: block;
+            width: 130px;
+            height: 130px;
+            background: url("http://o6qhdb7kv.bkt.clouddn.com/Shape..png") no-repeat;
+            -webkit-background-size: 130px;
+            background-size: 130px;
+            margin: 0 auto;
+        }
+
+        .empty .empty_content .comming {
+            text-align: center;
+            font-size: 24px;
+            color: rgba(55, 55, 55, 0.60);
+        }
+
+        .empty .empty_content .soon {
+            font-size: 14px;
+            color: rgba(55, 55, 55, 0.60);
+            text-align: center;
+        }
+
+        .empty .empty_footer {
+            position: absolute;
+            width: 100%;
+            bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(55, 55, 55, 0.60);
+        }
+    </style>
+</head>
+
+<body>
+    #parse("/common/top_bar.vm")
+<div class="empty">
+    <div class="empty_content">
+        <span class="icon_empty"></span>
+
+        <h3 class="comming">页面即将开放</h3>
+        <h6 class="soon">comming soon...</h6>
+    </div>
+    <p class="empty_footer">杭州耀岩网络科技有限公司 | 网络经营许可证 浙ICP备11024601号-1© Copyright 2006-2016 IPcool.me Inc. All rights reserved.</p>
+</div>
+
+    #parse("/common/popup_sign.vm")
+</body>
+
+</html>
