@@ -8,15 +8,15 @@
             color: #979797;
             &.disable {
                 cursor: not-allowed;
-                border: solid 1px #ededed;
+                border: solid 1px #B8B8B8;
                 a {
                     cursor: not-allowed;
-                    color: #ededed;
+                    color: #B8B8B8;
                 }
                 &:hover {
-                    border: solid 1px #ededed;
+                    border: solid 1px #B8B8B8;
                     a {
-                        color: #ededed;
+                        color: #B8B8B8;
                     }
                 }
             }
