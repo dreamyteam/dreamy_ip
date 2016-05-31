@@ -4,11 +4,9 @@
     overflow: hidden;
     background: url('http://o6qhdb7kv.bkt.clouddn.com/home_page_1_bg_pic.jpg') 0 100% no-repeat;
     background-size: cover;
-
     header {
         width: 100%;
         height: 54px;
-        overflow: hidden;
         nav {
             display: block;
             width: 100%;
@@ -42,18 +40,6 @@
                         width: 74px;
                         line-height: 54px;
                         text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.10);
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            left: 150%;
-                            bottom: 2px;
-                            background: #fff;
-                            width: 54px;
-                            margin-left: -27px;
-                            height: 3px;
-                            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
-                            transition: left 300ms ease;
-                        }
                     }
                     span {
                         display: inline-block;
@@ -79,10 +65,95 @@
                         transition: color 300ms ease, background 300ms ease, border 300ms ease;
                     }
                 }
+                #currentUser {
+                    cursor:pointer;
+                    position: relative;
+                    overflow: visible;
+                    .user_menu {
+                        padding: 5px 0;
+                        display:none;
+                        opacity: 0;
+                        z-index: 999999;
+                        position: absolute;
+                        top: 55px;
+                        right: 0px;
+                        width: 205px;
+                        border-radius: 2px;
+                        background: #fff;
+                        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+                        transition: all 500ms ease;
+                        .user_menu_contaienr {
+                            height: 100%;
+                            li {
+                                display: block;
+                                width: 100%;
+                                height: 40px;
+                                line-height: 40px;
+                                border-bottom: 1px solid rgba(151, 151, 151, 0.2);
+                                transition: all 300ms ease;
+                                a {
+                                    text-align: left;
+                                    width: 100%;
+                                    color: #383838;
+                                    line-height: 40px;
+                                }
+                                &:hover {
+                                    background: #F8F8F8;
+                                    border:none;
+                                }
+                                &:last-child{
+                                    border:none;
+                                }
+                            }
+                            i{
+                                display: inline-block;
+                                width:14px;
+                                height:14px;
+                                margin:auto 20px;
+                                &.icon_follow{
+                                    background:url("../../assets/images/index/ic_follow.png") 50% 50% no-repeat;
+                                    background-size: 14px;
+                                }
+                                &.icon_info{
+                                    background:url("../../assets/images/index/ic_info.png") 50% 50% no-repeat;
+                                    background-size: 14px;
+                                }
+                                &.icon_pwd{
+                                    background:url("../../assets/images/index/ic_pwd.png") 50% 50% no-repeat;
+                                    background-size: 14px;
+                                }
+                                &.icon_logout{
+                                    background:url("../../assets/images/index/ic_logout.png") 50% 50% no-repeat;
+                                    background-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                    &:hover{
+                        .user_menu{
+                            display:block;
+                            opacity:1;
+                        }
+                    }
+                }
             }
             .home_page_nav_left {
                 float: left;
                 margin-left: 90px;
+                a {
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: 150%;
+                        bottom: 2px;
+                        background: #fff;
+                        width: 54px;
+                        margin-left: -27px;
+                        height: 3px;
+                        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+                        transition: left 300ms ease;
+                    }
+                }
                 li a:hover {
                     &:after {
                         left: 50%;
@@ -173,9 +244,6 @@
 }
 
 .sec_1.active {
-    .background_layer {
-        transform: scale(1.06);
-    }
 }
 
 @media screen and (max-width:1440px) {

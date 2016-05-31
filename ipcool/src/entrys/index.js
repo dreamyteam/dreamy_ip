@@ -6,12 +6,24 @@ import SignIn from '../components/LonginReg.js'
 
 
 $(function() {
-    $("#home_page").fullpage({
-        verticalCentered: false,
-        afterLoad: function(anchorLink, index) {
-            $(".sec_" + index).addClass('active');
-        },
-    })
+
+    setTimeout(function() {
+        $("#loading").hide();
+        $("#home_page").show();
+        setTimeout(function(){
+            $("#home_page").addClass("active");
+        },100)
+        $("#home_page").fullpage({
+            verticalCentered: false,
+            afterLoad: function(anchorLink, index) {
+                $(".sec_" + index).addClass('active');
+            },
+        })
+    },1500)
+
+
+
+
     let sec2Tab = new Tab({
         el: "#sec_2_tab",
         tabNav: ".tab_nav",
@@ -54,7 +66,7 @@ $(function() {
             type: 1
         })
     })
-    $("#regBottom").on('click',function(){
+    $("#regBottom").on('click', function() {
         let popRegBottom = new Popup('#popup_sign');
         popRegBottom.alert();
         new SignIn({

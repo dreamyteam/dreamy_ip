@@ -1,79 +1,85 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!*****************************!*\
-  !*** ./src/entrys/index.js ***!
-  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _tab = __webpack_require__(/*! ../components/tab.js */ 4);
-	
+
+	var _tab = __webpack_require__(4);
+
 	var _tab2 = _interopRequireDefault(_tab);
-	
-	var _slide_tab = __webpack_require__(/*! ../components/slide_tab.js */ 5);
-	
+
+	var _slide_tab = __webpack_require__(5);
+
 	var _slide_tab2 = _interopRequireDefault(_slide_tab);
-	
-	var _pop_up = __webpack_require__(/*! ../components/pop_up.js */ 2);
-	
+
+	var _pop_up = __webpack_require__(2);
+
 	var _pop_up2 = _interopRequireDefault(_pop_up);
-	
-	var _LonginReg = __webpack_require__(/*! ../components/LonginReg.js */ 1);
-	
+
+	var _LonginReg = __webpack_require__(1);
+
 	var _LonginReg2 = _interopRequireDefault(_LonginReg);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	$(function () {
-	    $("#home_page").fullpage({
-	        verticalCentered: false,
-	        afterLoad: function afterLoad(anchorLink, index) {
-	            $(".sec_" + index).addClass('active');
-	        }
-	    });
+
+	    setTimeout(function () {
+	        $("#loading").hide();
+	        $("#home_page").show();
+	        setTimeout(function () {
+	            $("#home_page").addClass("active");
+	        }, 100);
+	        $("#home_page").fullpage({
+	            verticalCentered: false,
+	            afterLoad: function afterLoad(anchorLink, index) {
+	                $(".sec_" + index).addClass('active');
+	            }
+	        });
+	    }, 1500);
+
 	    var sec2Tab = new _tab2.default({
 	        el: "#sec_2_tab",
 	        tabNav: ".tab_nav",
@@ -128,25 +134,22 @@
 
 /***/ },
 /* 1 */
-/*!*************************************!*\
-  !*** ./src/components/LonginReg.js ***!
-  \*************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Sign = function () {
 	    function Sign(cfg) {
 	        _classCallCheck(this, Sign);
-	
+
 	        this.cfg = cfg;
 	        this.type = null; // 0 reg 1 login
 	        this.el = null;
@@ -157,7 +160,7 @@
 	        this.canClickSendVCB = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Sign, [{
 	        key: "init",
 	        value: function init() {
@@ -221,7 +224,7 @@
 	                hasValueRegPwd = false,
 	                hasValueLoginPhone = false,
 	                hasValueLoginPwd = false;
-	
+
 	            if (type == 0) {
 	                //reg
 	                this.boxReg.find('input').on("input propertychange", function () {
@@ -308,7 +311,7 @@
 	                }
 	            });
 	            var countdown = 60;
-	
+
 	            function settime(obj) {
 	                if (countdown == 0) {
 	                    obj.removeAttr("disabled");
@@ -377,7 +380,7 @@
 	            var btnSubmit = this.boxLogin.find("button.solid");
 	            var lastInput = this.boxLogin.find("input[name='password']");
 	            btnSubmit.addClass('active');
-	
+
 	            lastInput.off("keydown");
 	            lastInput.on("keydown", function (e) {
 	                var key = e.which;
@@ -441,38 +444,35 @@
 	            });
 	        }
 	    }]);
-	
+
 	    return Sign;
 	}();
-	
+
 	exports.default = Sign;
 
 /***/ },
 /* 2 */
-/*!**********************************!*\
-  !*** ./src/components/pop_up.js ***!
-  \**********************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Popup = function () {
 	    function Popup(el) {
 	        _classCallCheck(this, Popup);
-	
+
 	        this.el = $(el);
 	        this.mask = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Popup, [{
 	        key: 'init',
 	        value: function init() {
@@ -511,38 +511,35 @@
 	            this.el.addClass("active");
 	        }
 	    }]);
-	
+
 	    return Popup;
 	}();
-	
+
 	exports.default = Popup;
 
 /***/ },
 /* 3 */,
 /* 4 */
-/*!*******************************!*\
-  !*** ./src/components/tab.js ***!
-  \*******************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Tab = function () {
 	    function Tab(cfg) {
 	        _classCallCheck(this, Tab);
-	
+
 	        this.cfg = cfg;
 	        this.init();
 	    }
-	
+
 	    _createClass(Tab, [{
 	        key: "init",
 	        value: function init() {
@@ -592,33 +589,30 @@
 	            this.contentList.eq(index).addClass('active');
 	        }
 	    }]);
-	
+
 	    return Tab;
 	}();
-	
+
 	exports.default = Tab;
 
 /***/ },
 /* 5 */
-/*!*************************************!*\
-  !*** ./src/components/slide_tab.js ***!
-  \*************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var SlideTab = function () {
 	    function SlideTab(cfg) {
 	        _classCallCheck(this, SlideTab);
-	
+
 	        this.cfg = cfg;
 	        this.el = null; //容器元素
 	        this.box = null; //container元素
@@ -633,7 +627,7 @@
 	        this.trigger = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(SlideTab, [{
 	        key: "init",
 	        value: function init() {
@@ -649,7 +643,7 @@
 	            this.trigger = this.cfg.trigger || "btn";
 	            this.currentIndex = 0;
 	            this.canClick = true;
-	
+
 	            this.resize();
 	            this.bindUI();
 	        }
@@ -660,10 +654,10 @@
 	            this.liWidth = this.lis.eq(0).width();
 	            var ulWidth = this.liWidth * this.lis.length;
 	            this.box.css({ width: ulWidth + 'px' });
-	
+
 	            var currentOffsetLeft = this.currentIndex * this.liWidth;
 	            this.box.css({ left: -currentOffsetLeft + "px" });
-	
+
 	            if (this.tabContents) {
 	                this.switchTabContents(this.currentIndex + 2);
 	            }
@@ -672,7 +666,7 @@
 	        key: "bindUI",
 	        value: function bindUI() {
 	            var self = this;
-	
+
 	            if (this.trigger == "btn") {
 	                this.prev.off("click");
 	                this.prev.on("click", function () {
@@ -751,7 +745,7 @@
 	                } else {
 	                    left = -(myIndex - 2) * this.liWidth;
 	                }
-	
+
 	                this.canClick = false;
 	                this.box.animate({ left: left + "px" }, function () {
 	                    self.canClick = true;
@@ -771,12 +765,11 @@
 	            tabContentsList.eq(index).addClass('active');
 	        }
 	    }]);
-	
+
 	    return SlideTab;
 	}();
-	
+
 	exports.default = SlideTab;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=index.js.map

@@ -85,7 +85,7 @@ section.search_result {
       section.search_result .sresult_ip .sresult_content .quotient {
         margin-top: 40px; }
         section.search_result .sresult_ip .sresult_content .quotient li {
-          width: 140px;
+          width: 135px;
           overflow: hidden;
           display: inline-block; }
           section.search_result .sresult_ip .sresult_content .quotient li h6 {

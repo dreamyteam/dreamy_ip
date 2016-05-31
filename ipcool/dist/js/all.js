@@ -1,70 +1,67 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!***************************!*\
-  !*** ./src/entrys/all.js ***!
-  \***************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _LonginReg = __webpack_require__(/*! ../components/LonginReg.js */ 1);
-	
+
+	var _LonginReg = __webpack_require__(1);
+
 	var _LonginReg2 = _interopRequireDefault(_LonginReg);
-	
-	var _pop_up = __webpack_require__(/*! ../components/pop_up.js */ 2);
-	
+
+	var _pop_up = __webpack_require__(2);
+
 	var _pop_up2 = _interopRequireDefault(_pop_up);
-	
-	var _back_top = __webpack_require__(/*! ../components/back_top.js */ 3);
-	
+
+	var _back_top = __webpack_require__(3);
+
 	var _back_top2 = _interopRequireDefault(_back_top);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	$(function () {
-	
+
 	    $("#register").on('click', function () {
 	        var popReg = new _pop_up2.default('#popup_sign');
 	        popReg.alert();
@@ -86,25 +83,22 @@
 
 /***/ },
 /* 1 */
-/*!*************************************!*\
-  !*** ./src/components/LonginReg.js ***!
-  \*************************************/
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Sign = function () {
 	    function Sign(cfg) {
 	        _classCallCheck(this, Sign);
-	
+
 	        this.cfg = cfg;
 	        this.type = null; // 0 reg 1 login
 	        this.el = null;
@@ -115,7 +109,7 @@
 	        this.canClickSendVCB = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Sign, [{
 	        key: "init",
 	        value: function init() {
@@ -179,7 +173,7 @@
 	                hasValueRegPwd = false,
 	                hasValueLoginPhone = false,
 	                hasValueLoginPwd = false;
-	
+
 	            if (type == 0) {
 	                //reg
 	                this.boxReg.find('input').on("input propertychange", function () {
@@ -266,7 +260,7 @@
 	                }
 	            });
 	            var countdown = 60;
-	
+
 	            function settime(obj) {
 	                if (countdown == 0) {
 	                    obj.removeAttr("disabled");
@@ -335,7 +329,7 @@
 	            var btnSubmit = this.boxLogin.find("button.solid");
 	            var lastInput = this.boxLogin.find("input[name='password']");
 	            btnSubmit.addClass('active');
-	
+
 	            lastInput.off("keydown");
 	            lastInput.on("keydown", function (e) {
 	                var key = e.which;
@@ -399,38 +393,35 @@
 	            });
 	        }
 	    }]);
-	
+
 	    return Sign;
 	}();
-	
+
 	exports.default = Sign;
 
 /***/ },
 /* 2 */
-/*!**********************************!*\
-  !*** ./src/components/pop_up.js ***!
-  \**********************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Popup = function () {
 	    function Popup(el) {
 	        _classCallCheck(this, Popup);
-	
+
 	        this.el = $(el);
 	        this.mask = null;
 	        this.init();
 	    }
-	
+
 	    _createClass(Popup, [{
 	        key: 'init',
 	        value: function init() {
@@ -469,39 +460,36 @@
 	            this.el.addClass("active");
 	        }
 	    }]);
-	
+
 	    return Popup;
 	}();
-	
+
 	exports.default = Popup;
 
 /***/ },
 /* 3 */
-/*!************************************!*\
-  !*** ./src/components/back_top.js ***!
-  \************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var BackTop = function () {
 	    function BackTop(contrastElement) {
 	        _classCallCheck(this, BackTop);
-	
+
 	        //参照元素
 	        this.boundingBox = null;
 	        this.contrastElement = $(contrastElement || '.container');
 	        this.init();
 	    }
-	
+
 	    _createClass(BackTop, [{
 	        key: 'init',
 	        value: function init() {
@@ -547,7 +535,7 @@
 	            $(window).resize(function () {
 	                var cLeft = self.contrastElement.offset().left;
 	                var cWidth = self.contrastElement.width();
-	
+
 	                self.boundingBox.css({
 	                    left: cLeft + cWidth + 20 + 'px'
 	                });
@@ -562,12 +550,11 @@
 	            });
 	        }
 	    }]);
-	
+
 	    return BackTop;
 	}();
-	
+
 	exports.default = BackTop;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=all.js.map
