@@ -6,7 +6,6 @@ import com.dreamy.domain.ipcool.BookTags;
 import com.dreamy.domain.ipcool.BookTagsConditions;
 import com.dreamy.domain.ipcool.BookTagsMap;
 import com.dreamy.domain.ipcool.BookTagsMapConditions;
-import com.dreamy.mogodb.beans.Book;
 import com.dreamy.service.iface.ipcool.BookTagsService;
 
 import com.dreamy.utils.CollectionUtils;

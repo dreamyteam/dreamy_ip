@@ -306,7 +306,7 @@ public class PropagationController extends IpcoolController {
     public void sex(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.getById(bookId+"_"+IndexSourceEnums.s360.getType());
+        BookIndexData bookIndexData = bookIndexDataService.queryById(bookId);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -329,7 +329,7 @@ public class PropagationController extends IpcoolController {
     public void age(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.getById(bookId+"_"+IndexSourceEnums.s360.getType());
+        BookIndexData bookIndexData = bookIndexDataService.queryById(bookId);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
