@@ -11,16 +11,20 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,6 +60,12 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
 
+    @Autowired
+    private QueueService queueService;
+
+    @Value("${queue_book_waitting_rank_update}")
+    private String bookRankWaittingUpdateQueue;
+
     @Override
     public void consume(JSONObject jsonObject) {
         final String bookIdStr = jsonObject.getString("bookId");
@@ -72,15 +82,27 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                             List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
                             if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
-                                //更新指数
-                                getNewHotIndex(bookView);
-                                getNewPropogationIndex(bookView);
-                                getNewReputationIndex(bookView);
-                                getNewDevelopIndex(bookView);
-                                getNewCompositeIndex(bookView);
+                                //计算指数
+                                Integer hotIndex = getNewHotIndex(bookView);
+                                Integer propagationIndex = getNewPropogationIndex(bookView);
+                                Integer reputationIndex = getNewReputationIndex(bookView);
+                                Integer developIndex = getNewDevelopIndex(bookView);
 
-                                updateRank(bookView);
+
+                                bookView.hotIndex(hotIndex);
+                                bookView.propagateIndex(propagationIndex);
+                                bookView.reputationIndex(reputationIndex);
+                                bookView.developIndex(developIndex);
+
+                                Integer compositeIndex = getNewCompositeIndex(bookView);
+                                bookView.compositeIndex(compositeIndex);
+
+                                //更新指数
+                                bookViewService.update(bookView);
                                 updateHistoryIndex(bookView);
+
+                                //指数写入到redis用于排名
+                                updateRank(bookView);
                             }
                         }
                     }
@@ -100,13 +122,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      *
      * @param bookView
      */
-    private void getNewHotIndex(BookView bookView) {
+    private Integer getNewHotIndex(BookView bookView) {
         try {
             String hotIndex = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-            bookView.hotIndex(Integer.parseInt(hotIndex));
+            return Integer.parseInt(hotIndex);
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
+        return bookView.getHotIndex();
     }
 
     /**
@@ -114,13 +137,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      *
      * @param bookView
      */
-    private void getNewPropogationIndex(BookView bookView) {
+    private Integer getNewPropogationIndex(BookView bookView) {
         try {
             String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-            bookView.propagateIndex(Integer.parseInt(propagateIndex));
+            return Integer.parseInt(propagateIndex);
         } catch (Exception e) {
             Log.error("update  propatation index failed :" + bookView.getId(), e);
         }
+        return bookView.getPropagateIndex();
     }
 
     /**
@@ -128,13 +152,15 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      *
      * @param bookView
      */
-    private void getNewReputationIndex(BookView bookView) {
+    private Integer getNewReputationIndex(BookView bookView) {
         try {
             String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-            bookView.reputationIndex(Integer.parseInt(reputationIndex));
+            return Integer.parseInt(reputationIndex);
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
+
+        return bookView.getReputationIndex();
     }
 
     /**
@@ -142,13 +168,15 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      *
      * @param bookView
      */
-    private void getNewDevelopIndex(BookView bookView) {
+    private Integer getNewDevelopIndex(BookView bookView) {
         try {
             String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-            bookView.developIndex(Integer.parseInt(developIndex));
+            return Integer.parseInt(developIndex);
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
+
+        return bookView.getDevelopIndex();
     }
 
 
@@ -157,7 +185,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      *
      * @param bookView
      */
-    private void getNewCompositeIndex(BookView bookView) {
+    private Integer getNewCompositeIndex(BookView bookView) {
         try {
             Integer hotIndex = bookView.getHotIndex();
             Integer propagationIndex = bookView.getPropagateIndex();
@@ -166,71 +194,17 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
             Double compositeIndex = 0.1 * (3 * (hotIndex + propagationIndex) + 2 * (reputationIndex + developIndex));
 
-            bookView.compositeIndex(compositeIndex.intValue());
-            bookViewService.update(bookView);
+            return compositeIndex.intValue();
         } catch (Exception e) {
             Log.error("update composite index failed :" + bookView.getId(), e);
         }
+
+        return bookView.getCompositeIndex();
     }
 
     /**
-     *  ##############  ##############  ##############  排名更新  ##############  ##############  ##############
-     */
-    /**
-     * 分数更新完成之后，把对应的分数写入到
-     *
      * @param bookView
      */
-    private void updateRank(BookView bookView) {
-        redisClientService.zadd(BookRankEnums.composite.getCacheKey(), bookView.getCompositeIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.develop.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.hot.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
-
-        updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
-        updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
-        updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
-        updateRank(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
-
-    }
-
-    private void updateRank(BookView bookView, String cacheKey, Integer rankType, Integer index) {
-        try {
-            Integer bookId = bookView.getBookId();
-
-            redisClientService.zadd(cacheKey, index, bookView.getBookId().toString());
-            Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
-            if (rankNum != null) {
-                BookRank bookRank = new BookRank();
-                bookRank.bookId(bookId);
-                BookRank rank = bookRankService.getByBookIdAndType(bookId, rankType);
-                if (rank != null) {
-                    rank.rank(rankNum.intValue());
-                    rank.rankIndex(index);
-
-                    bookRankService.updateByRecord(rank);
-                } else {
-                    rank = new BookRank();
-                    rank.bookId(bookView.getBookId());
-                    rank.rank(rankNum.intValue());
-                    rank.type(rankType);
-                    rank.rankIndex(index);
-                    rank.name(bookView.getName());
-                    bookRankService.save(rank);
-                }
-                BookRankHistory rankHistory = new BookRankHistory();
-                rankHistory.bookId(bookView.getBookId());
-                rankHistory.rank(rankNum.intValue());
-                rankHistory.type(rankType);
-                rankHistory.rankIndex(index);
-                bookRankHistoryService.save(rankHistory);
-            }
-
-        } catch (Exception e) {
-            Log.error("update rank failed :id=" + bookView.getId() + ":type=" + rankType, e);
-        }
-    }
-
     private void updateHistoryIndex(BookView bookView) {
         bookIndexHistoryService.delByBookIdAndDate(bookView.getBookId(), new Date());
         BookIndexHistory history = new BookIndexHistory();
@@ -242,7 +216,13 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         history.setBookId(bookView.getBookId());
         history.setStatus(1);
         bookIndexHistoryService.save(history);
+    }
 
+    private void updateRank(BookView bookView) {
+        redisClientService.zadd(BookRankEnums.composite.getCacheKey(), bookView.getCompositeIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.develop.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.hot.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
     }
 
 }

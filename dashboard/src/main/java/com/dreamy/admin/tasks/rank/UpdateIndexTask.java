@@ -34,8 +34,8 @@ import java.util.Map;
  * Time: 上午11:08
  */
 @Component
-public class UpdateRankAndIndexTask {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateRankAndIndexTask.class);
+public class UpdateIndexTask {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateIndexTask.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -89,8 +89,8 @@ public class UpdateRankAndIndexTask {
 
     private Long stepValue = 1L;
 
-    //    @Scheduled(cron = "0 15 2 * * ?")
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 10)
+    @Scheduled(cron = "0 15 1 * * ?")
+//    @Scheduled(fixedDelay = 1000 * 60 * 60 * 10)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
@@ -113,7 +113,7 @@ public class UpdateRankAndIndexTask {
                 }
                 currentPage++;
             } catch (Exception e) {
-                LOGGER.error("update rank jod error ", e);
+                LOGGER.error("update index jod error ", e);
                 break;
             }
         }
