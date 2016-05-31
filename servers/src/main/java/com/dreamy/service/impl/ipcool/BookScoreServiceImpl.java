@@ -75,6 +75,16 @@ public class BookScoreServiceImpl implements BookScoreService {
         return bookScoreDao.selectByExample(conditions);
     }
 
+
+    @Override
+    public List<BookScore> getByBookId(Integer bookId) {
+        BookScoreConditions conditions = new BookScoreConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+
+        return bookScoreDao.selectByExample(conditions);
+    }
+
+
     @Override
     public String getBookHotIndexByBookId(Integer bookId) {
         List<BookScore> bookScores = getByBookId(bookId);
@@ -91,14 +101,6 @@ public class BookScoreServiceImpl implements BookScoreService {
         }
 
         return "" + hotScore.intValue();
-    }
-
-    @Override
-    public List<BookScore> getByBookId(Integer bookId) {
-        BookScoreConditions conditions = new BookScoreConditions();
-        conditions.createCriteria().andBookIdEqualTo(bookId);
-
-        return bookScoreDao.selectByExample(conditions);
     }
 
     @Override
