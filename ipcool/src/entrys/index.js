@@ -2,8 +2,15 @@ import Tab from '../components/tab.js'
 import SlideTab from '../components/slide_tab.js'
 import Popup from '../components/pop_up.js'
 import SignIn from '../components/LonginReg.js'
+import HoverDelay from '../components/hover_delay.js';
+
 
 $(function() {
+
+    let userMenu = new HoverDelay({
+        el:"#currentUser",
+        target:"#user_menu"
+    });
 
     setTimeout(function() {
         $("#loading").hide();

@@ -66,12 +66,13 @@
                     }
                 }
                 #currentUser {
-                    cursor:pointer;
+                    cursor: pointer;
                     position: relative;
                     overflow: visible;
+                    margin-left: 15px;
                     .user_menu {
                         padding: 5px 0;
-                        display:none;
+                        display: none;
                         opacity: 0;
                         z-index: 999999;
                         position: absolute;
@@ -80,8 +81,9 @@
                         width: 205px;
                         border-radius: 2px;
                         background: #fff;
+                        transform: translateY(20px);
                         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-                        transition: all 500ms ease;
+                        transition: all 300ms ease;
                         .user_menu_contaienr {
                             height: 100%;
                             li {
@@ -99,41 +101,39 @@
                                 }
                                 &:hover {
                                     background: #F8F8F8;
-                                    border:none;
+                                    border: none;
                                 }
-                                &:last-child{
-                                    border:none;
+                                &:last-child {
+                                    border: none;
                                 }
                             }
-                            i{
+                            i {
                                 display: inline-block;
-                                width:14px;
-                                height:14px;
-                                margin:auto 20px;
-                                &.icon_follow{
-                                    background:url("../../assets/images/index/ic_follow.png") 50% 50% no-repeat;
+                                width: 14px;
+                                height: 14px;
+                                margin: auto 20px;
+                                &.icon_follow {
+                                    background: url("../../assets/images/index/ic_follow.png") 50% 50% no-repeat;
                                     background-size: 14px;
                                 }
-                                &.icon_info{
-                                    background:url("../../assets/images/index/ic_info.png") 50% 50% no-repeat;
+                                &.icon_info {
+                                    background: url("../../assets/images/index/ic_info.png") 50% 50% no-repeat;
                                     background-size: 14px;
                                 }
-                                &.icon_pwd{
-                                    background:url("../../assets/images/index/ic_pwd.png") 50% 50% no-repeat;
+                                &.icon_pwd {
+                                    background: url("../../assets/images/index/ic_pwd.png") 50% 50% no-repeat;
                                     background-size: 14px;
                                 }
-                                &.icon_logout{
-                                    background:url("../../assets/images/index/ic_logout.png") 50% 50% no-repeat;
+                                &.icon_logout {
+                                    background: url("../../assets/images/index/ic_logout.png") 50% 50% no-repeat;
                                     background-size: 14px;
                                 }
                             }
                         }
                     }
-                    &:hover{
-                        .user_menu{
-                            display:block;
-                            opacity:1;
-                        }
+                    .user_menu.active {
+                        opacity: 1;
+                        transform: translateY(0);
                     }
                 }
             }
@@ -159,6 +159,13 @@
                         left: 50%;
                     }
                 }
+                li.active {
+                    a {
+                        &:after {
+                            left: 50%;
+                        }
+                    }
+                }
             }
             .home_page_nav_right {
                 float: right;
@@ -173,7 +180,7 @@
                     background: transparent;
                     &:hover {
                         background: #ffffff;
-                        border: 2px solid #ffffff;
+                        border: 1px solid #ffffff;
                         color: #20c9bd;
                     }
                 }
@@ -243,8 +250,7 @@
     }
 }
 
-.sec_1.active {
-}
+.sec_1.active {}
 
 @media screen and (max-width:1440px) {
     .sec_1 {

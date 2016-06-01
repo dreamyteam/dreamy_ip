@@ -2,6 +2,7 @@
 @import "./components/program_nav.scss";
 @import "./components/outside_title.scss";
 .rank_container {
+    margin-top: 40px;
     padding: 0 30px;
     font-size: 0;
     .rank_title {
@@ -71,23 +72,48 @@
                 width: 20px;
                 height: 20px;
                 font-size: 14px;
-                color:#fff;
+                color: #fff;
                 line-height: 20px;
                 text-align: center;
                 background: #9B9B9B;
             }
-            .name{
+            .name {
                 font-size: 16px;
                 margin-left: 12px;
+                color:#4A4A4A;
             }
-            .trend{
+            .trend {
                 float: right;
                 font-style: normal;
                 font-size: 14px;
+                color:#9B9B9B;
+            }
+        }
+        li:nth-child(1) {
+            .rank_num {
+                background: #00A69D;
+            }
+            .trend {
+                color: #00a69d;
+            }
+        }
+        li:nth-child(2) {
+            .rank_num {
+                background: #36BDB6;
+            }
+        }
+        li:nth-child(3) {
+            .rank_num {
+                background: #87D2CD;
             }
         }
     }
 }
+
+.rank_container:first-child {
+    margin-top: 0;
+}
+
 
 section.rank_list {
     position: relative;

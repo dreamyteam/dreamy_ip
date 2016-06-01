@@ -53,7 +53,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var cropper = __webpack_require__(17);
+	var cropper = __webpack_require__(18);
 	// var Avatar = require('../components/avatar_upload.js');
 
 	$(function () {
@@ -205,7 +205,7 @@
 
 /***/ },
 
-/***/ 17:
+/***/ 18:
 /***/ function(module, exports) {
 
 	/*!
