@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AboutController extends IpcoolController {
 
+
     @RequestMapping("/us")
     public String us() {
         return "/about/us";
@@ -33,5 +34,12 @@ public class AboutController extends IpcoolController {
     public String contact() {
         return "/about/contact";
     }
+
+    @RequestMapping("/empty")
+    public String empty() {
+
+        return "/about/empty";
+    }
+
 
 }

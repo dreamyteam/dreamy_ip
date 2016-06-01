@@ -70,12 +70,13 @@
             connection-factory="connectionFactory"
             auto-startup="true"
             acknowledge="auto"
-            prefetch="1"
+            prefetch="5"
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerFinishQueueHandler" method="onMessage" queues="${queue_crawler_over}"/>
     </rabbit:listener-container>
+
 
     <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
 

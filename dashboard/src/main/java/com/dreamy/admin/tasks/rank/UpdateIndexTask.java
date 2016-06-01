@@ -34,8 +34,8 @@ import java.util.Map;
  * Time: 上午11:08
  */
 @Component
-public class UpdateRankAndIndexTask {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateRankAndIndexTask.class);
+public class UpdateIndexTask {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateIndexTask.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -89,31 +89,30 @@ public class UpdateRankAndIndexTask {
 
     private Long stepValue = 1L;
 
-    //    @Scheduled(cron = "0 15 2 * * ?")
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 10)
+        @Scheduled(cron = "0 10 11 * * ?")
+//    @Scheduled(fixedDelay = 1000 * 10)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
-        page.setPageSize(500);
+        page.setPageSize(100);
         int currentPage = 1;
-        BookView entity = new BookView();
-        while (true) {
+        Boolean isLoop = true;
+
+        while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getList(entity, page);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
-
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
                     }
+                    currentPage++;
+                } else {
+                    isLoop = false;
                 }
 
-                if (!page.isHasNextPage()) {
-                    break;
-                }
-                currentPage++;
             } catch (Exception e) {
-                LOGGER.error("update rank jod error ", e);
+                LOGGER.error("update index jod error ", e);
                 break;
             }
         }
@@ -152,7 +151,7 @@ public class UpdateRankAndIndexTask {
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
                 redisClientService.setNumber(cacheKey, (long) 0);
-                redisClientService.expire(cacheKey, 60 * 60 * 24);
+//                redisClientService.expire(cacheKey, 60 * 60 * 24);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
