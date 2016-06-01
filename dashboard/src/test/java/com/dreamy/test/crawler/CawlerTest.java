@@ -2,7 +2,6 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.KeyWorkTask;
-import com.dreamy.admin.tasks.rank.UpdateRankAndIndexTask;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.QueueRoutingKeyEnums;
@@ -35,8 +34,6 @@ public class CawlerTest extends BaseJunitTest {
     @Autowired
     private SinaLoginService sinaLoginService;
 
-    @Autowired
-    UpdateRankAndIndexTask updateRankAndIndexTask;
     @Autowired
     BookIndexHistoryService bookIndexHistoryService;
 
