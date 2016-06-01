@@ -89,7 +89,8 @@ public class UpdateIndexTask {
 
     private Long stepValue = 1L;
 
-    @Scheduled(cron = "0 10 1 * * ?")
+    //    @Scheduled(cron = "0 10 1 * * ?")
+    @Scheduled(fixedDelay = 1000 * 10)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         Page page = new Page();
@@ -105,8 +106,8 @@ public class UpdateIndexTask {
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
                     }
-                    currentPage ++;
-                }else{
+                    currentPage++;
+                } else {
                     isLoop = false;
                 }
 
@@ -150,7 +151,7 @@ public class UpdateIndexTask {
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
                 redisClientService.setNumber(cacheKey, (long) 0);
-                redisClientService.expire(cacheKey, 60 * 60 * 24);
+//                redisClientService.expire(cacheKey, 60 * 60 * 24);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
