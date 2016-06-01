@@ -40,17 +40,18 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _tab = __webpack_require__(4);
+	var _tab = __webpack_require__(5);
 
 	var _tab2 = _interopRequireDefault(_tab);
 
-	var _slide_tab = __webpack_require__(5);
+	var _slide_tab = __webpack_require__(6);
 
 	var _slide_tab2 = _interopRequireDefault(_slide_tab);
 
@@ -62,9 +63,18 @@
 
 	var _LonginReg2 = _interopRequireDefault(_LonginReg);
 
+	var _hover_delay = __webpack_require__(19);
+
+	var _hover_delay2 = _interopRequireDefault(_hover_delay);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(function () {
+
+	    var userMenu = new _hover_delay2.default({
+	        el: "#currentUser",
+	        target: "#user_menu"
+	    });
 
 	    setTimeout(function () {
 	        $("#loading").hide();
@@ -133,7 +143,8 @@
 	});
 
 /***/ },
-/* 1 */
+
+/***/ 1:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -451,7 +462,8 @@
 	exports.default = Sign;
 
 /***/ },
-/* 2 */
+
+/***/ 2:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -518,8 +530,8 @@
 	exports.default = Popup;
 
 /***/ },
-/* 3 */,
-/* 4 */
+
+/***/ 5:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -596,7 +608,8 @@
 	exports.default = Tab;
 
 /***/ },
-/* 5 */
+
+/***/ 6:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -771,5 +784,85 @@
 
 	exports.default = SlideTab;
 
+/***/ },
+
+/***/ 19:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var HoverDelay = function () {
+	    function HoverDelay(cfg) {
+	        _classCallCheck(this, HoverDelay);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.target = null;
+	        this.init();
+	    }
+
+	    _createClass(HoverDelay, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.target = $(this.cfg.target);
+	            this.bindUI();
+	        }
+	    }, {
+	        key: "bindUI",
+	        value: function bindUI() {
+	            var self = this;
+	            var timer = null;
+	            this.el.hover(function () {
+	                self.targetShow();
+	                clearInterval(timer); //关键
+	            }, function () {
+	                timer = setTimeout(function () {
+	                    self.targetHide();
+	                }, 1000);
+	            });
+
+	            this.target.hover(function () {
+	                clearInterval(timer);
+	            }, function () {
+	                timer = setTimeout(function () {
+	                    self.targetHide();
+	                }, 1000);
+	            });
+	        }
+	    }, {
+	        key: "targetShow",
+	        value: function targetShow() {
+	            var self = this;
+	            self.target.show();
+	            setTimeout(function () {
+	                self.target.addClass("active");
+	            }, 1);
+	        }
+	    }, {
+	        key: "targetHide",
+	        value: function targetHide() {
+	            var self = this;
+	            self.target.removeClass("active");
+	            setTimeout(function () {
+	                self.target.hide();
+	            }, 300);
+	        }
+	    }]);
+
+	    return HoverDelay;
+	}();
+
+	exports.default = HoverDelay;
+
 /***/ }
-/******/ ]);
+
+/******/ });

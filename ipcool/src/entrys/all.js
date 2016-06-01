@@ -1,9 +1,14 @@
 import SignIn from '../components/LonginReg.js'
 import Popup from '../components/pop_up.js'
 import BackTop from '../components/back_top.js';
+import HoverDelay from '../components/hover_delay.js';
 
 $(function() {
-    
+
+    let userMenu = new HoverDelay({
+        el:"#currentUser",
+        target:"#user_menu"
+    });
     $("#register").on('click', function() {
         var popReg = new Popup('#popup_sign');
         popReg.alert();
