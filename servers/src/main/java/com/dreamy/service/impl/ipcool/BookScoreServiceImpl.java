@@ -97,7 +97,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 hotScore += marketPercent * commentNum;
             }
 
-            hotScore = hotScore / 3.2 + getSearchIndexByBookId(bookId) * 4;
+            hotScore = Math.log10(hotScore / 3.2 + getSearchIndexByBookId(bookId) * 4) * 1000;
         }
 
         return "" + hotScore.intValue();
@@ -122,6 +122,8 @@ public class BookScoreServiceImpl implements BookScoreService {
             for (KeyWord word : keyWords) {
                 propagateIndex += map.get(word.getSource()) * word.getIndexNum();
             }
+
+            propagateIndex = Math.log10(propagateIndex) * 1000;
 
         }
         return "" + propagateIndex.intValue();
@@ -149,7 +151,7 @@ public class BookScoreServiceImpl implements BookScoreService {
             developScore *= developScore / i;
         }
 
-
+        developScore = Math.log10(developScore) * 1000;
         return "" + (developScore.intValue());
     }
 
@@ -165,7 +167,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 reputationScore += marketPercent * score;
             }
 
-            reputationScore = reputationScore * 123.45;
+            reputationScore = Math.log10(reputationScore * 123.45)*1000;
         }
 
         return "" + reputationScore.intValue();

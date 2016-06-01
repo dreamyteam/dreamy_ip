@@ -102,5 +102,12 @@ public interface BookRankService {
      */
     Integer updateByRecord(BookRank bookRank);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    List<BookRank> getBookRankByBookId(Integer bookId);
+
 
 }

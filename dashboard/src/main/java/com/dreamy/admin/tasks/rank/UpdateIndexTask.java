@@ -1,5 +1,6 @@
 package com.dreamy.admin.tasks.rank;
 
+import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
@@ -86,22 +87,24 @@ public class UpdateIndexTask {
     @Value("${queue_news_sougou}")
     private String newsSougouQueue;
 
+    @Autowired
+    private FlushBookRankToDb flushBookRankToDb;
 
     private Long stepValue = 1L;
 
-        @Scheduled(cron = "0 10 11 * * ?")
-//    @Scheduled(fixedDelay = 1000 * 10)
+    @Scheduled(cron = "0 10 1 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
+
+        int currentPage = 1;
         Page page = new Page();
         page.setPageSize(100);
-        int currentPage = 1;
         Boolean isLoop = true;
 
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "id desc");
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
@@ -151,7 +154,6 @@ public class UpdateIndexTask {
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
                 redisClientService.setNumber(cacheKey, (long) 0);
-//                redisClientService.expire(cacheKey, 60 * 60 * 24);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
@@ -181,16 +183,19 @@ public class UpdateIndexTask {
 
 
                 params.put("name", bookView.getName());
-                pushToQueue(s360IndexQueue, params);
-                pushToQueue(wbKeyWordQueue, params);
-                pushToQueue(wxKeyWordQueue, params);
-                pushToQueue(bsKeyWordQueue, params);
                 pushToQueue(newsSougouQueue, params);
+                pushToQueue(s360IndexQueue, params);
+
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {
                     params.put("cookie", hotWord.getCookie());
                     pushToQueue(wbIndexQueue, params);
                 }
+
+                params.put("name", bookView.getName() + " " + bookView.getAuthor());
+                pushToQueue(bsKeyWordQueue, params);
+                pushToQueue(wbKeyWordQueue, params);
+                pushToQueue(wxKeyWordQueue, params);
             }
         } catch (Exception e) {
             e.printStackTrace();

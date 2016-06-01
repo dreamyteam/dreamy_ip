@@ -42,7 +42,7 @@ public class FlushBookRankToDb {
     @Autowired
     private BookRankHistoryService bookRankHistoryService;
 
-    @Scheduled(cron = "0 15 3 * * ?")
+    @Scheduled(cron = "0 15 6 * * ?")
     public void run() {
         Page page = new Page();
         page.setPageSize(500);
@@ -51,7 +51,7 @@ public class FlushBookRankToDb {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "composite_index desc");
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "id desc");
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
                         updateRank(bookView);
@@ -74,7 +74,7 @@ public class FlushBookRankToDb {
      *
      * @param bookView
      */
-    private void updateRank(BookView bookView) {
+    public void updateRank(BookView bookView) {
         updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
         updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
         updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
@@ -85,9 +85,9 @@ public class FlushBookRankToDb {
         try {
             Integer bookId = bookView.getBookId();
 
-            redisClientService.zadd(cacheKey, index, bookView.getBookId().toString());
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
             if (rankNum != null) {
+                rankNum++;
                 BookRank bookRank = new BookRank();
                 bookRank.bookId(bookId);
                 BookRank rank = bookRankService.getByBookIdAndType(bookId, rankType);
