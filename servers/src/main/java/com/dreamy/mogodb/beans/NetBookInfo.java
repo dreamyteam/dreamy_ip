@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 public class NetBookInfo {
 
     @Id
-    private String bookId;
+    private Integer bookId;
 
     /**
      * 作品名称
@@ -68,11 +68,11 @@ public class NetBookInfo {
      */
     private String authority;
 
-    public String getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 

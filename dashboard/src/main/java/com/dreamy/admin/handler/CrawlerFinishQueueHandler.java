@@ -78,7 +78,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                                 getNewReputationIndex(bookView);
                                 getNewDevelopIndex(bookView);
                                 getNewCompositeIndex(bookView);
-
                                 updateRank(bookView);
                                 updateHistoryIndex(bookView);
                             }

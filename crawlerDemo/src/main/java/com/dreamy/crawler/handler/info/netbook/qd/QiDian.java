@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class QiDian {
 
-    //@ExtractBy("//div[@class=\"swb\"]//span[@class=\"swbt\"]//a/@href")
-    @ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"name\"]/@href")
+    //@ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"name\"]/@href")
+    @ExtractBy("//div[@class=\"swb\"]//span[@class=\"swbt\"]//a/@href")
     private List<String> urls;
-
-   // @ExtractBy("//div[@class=\"swb\"]//span[@class=\"swbt\"]//a/text()")
-    @ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"name\"]/text()")
+    // @ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"name\"]/text()")
+   @ExtractBy("//div[@class=\"swb\"]//span[@class=\"swbt\"]//a/text()")
     private List<String> titles;
 
-    //@ExtractBy("//div[@class=\"swd\"]//a/text()")
-    @ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"author\"]/text()")
+
+    //@ExtractBy("//div[@class=\"list_box\"]//tr//td//a[@class=\"author\"]/text()")
+    @ExtractBy("//div[@class=\"swd\"]//a/text()")
     private List<String> authoers;
 
     public List<String> getUrls() {
