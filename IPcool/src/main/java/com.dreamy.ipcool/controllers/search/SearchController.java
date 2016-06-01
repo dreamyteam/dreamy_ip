@@ -44,7 +44,10 @@ public class SearchController extends IpcoolController {
                 bookIds.add(view.getBookId());
             }
             Map<Integer, Integer> rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
-            model.put("rankMap", rankMap);
+            if (rankMap != null) {
+                model.put("rankMap", rankMap);
+            }
+            
         } else {
             list = null;
         }

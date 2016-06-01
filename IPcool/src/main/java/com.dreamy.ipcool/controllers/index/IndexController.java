@@ -230,8 +230,7 @@ public class IndexController extends IpcoolController {
         model.put("pageName", pageName);
         model.put("typeEnums", BookTypeEnums.values());
 
-        BookRank bookRank = new BookRank().bookId(bookId);
-        List<BookRank> list = bookRankService.getList(bookRank, null, null);
+        List<BookRank> list = bookRankService.getBookRankByBookId(bookId);
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();

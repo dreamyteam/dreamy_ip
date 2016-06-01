@@ -9,6 +9,7 @@ import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookLevelEnums;
+import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookRankTrendEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
@@ -111,7 +112,7 @@ public class BookRankServiceImpl implements BookRankService {
 
         List<BookRank> bookRanks = bookRankDao.selectByExample(conditions);
         if (CollectionUtils.isNotEmpty(bookRanks)) {
-            return  bookRanks.get(0);
+            return bookRanks.get(0);
         }
 
         return null;
@@ -135,24 +136,39 @@ public class BookRankServiceImpl implements BookRankService {
 
     @Override
     public Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds) {
-        Map<Integer, Integer> map = new HashMap<>();
-
         if (CollectionUtils.isNotEmpty(bookIds)) {
-            BookRankConditions bookRankConditions = new BookRankConditions();
-            bookRankConditions.createCriteria().andBookIdIn(bookIds);
+            Map<Integer, Integer> map = getCompositeRankMapByBookIdFromRedis(bookIds);
+            if (map.size() < bookIds.size()) {
+                BookRankConditions bookRankConditions = new BookRankConditions();
+                bookRankConditions.createCriteria().andBookIdIn(bookIds);
 
-            List<BookRank> bookRanks = bookRankDao.selectByExample(bookRankConditions);
-            if (CollectionUtils.isNotEmpty(bookRanks)) {
-                for (BookRank bookRank : bookRanks) {
-                    if (bookRank.getType().equals(BookIndexTypeEnums.composite.getType())) {
-                        map.put(bookRank.getBookId(), bookRank.getRank());
+                List<BookRank> bookRanks = bookRankDao.selectByExample(bookRankConditions);
+                if (CollectionUtils.isNotEmpty(bookRanks)) {
+                    for (BookRank bookRank : bookRanks) {
+                        if (bookRank.getType().equals(BookIndexTypeEnums.composite.getType())) {
+                            map.put(bookRank.getBookId(), bookRank.getRank());
+                        }
                     }
                 }
+            }
+            return map;
+        }
+
+        return null;
+    }
+
+    public Map<Integer, Integer> getCompositeRankMapByBookIdFromRedis(List<Integer> bookIds) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer bookId : bookIds) {
+            Long crank = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookId.toString());
+            if (crank > 0) {
+                map.put(bookId, crank.intValue());
             }
         }
 
         return map;
     }
+
 
     @Override
     public Integer getRankTrendByBookIdAndTypeAndIndex(Integer bookId, Integer type, Integer randIndex) {
@@ -218,5 +234,56 @@ public class BookRankServiceImpl implements BookRankService {
     public Integer updateByRecord(BookRank bookRank) {
 
         return bookRankDao.update(bookRank);
+    }
+
+    @Override
+    public List<BookRank> getBookRankByBookId(Integer bookId) {
+
+        Long crank = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookId.toString());
+        Long drank = redisClientService.reverseZrank(BookRankEnums.develop.getCacheKey(), bookId.toString());
+        Long prank = redisClientService.reverseZrank(BookRankEnums.propagation.getCacheKey(), bookId.toString());
+        Long hrank = redisClientService.reverseZrank(BookRankEnums.hot.getCacheKey(), bookId.toString());
+
+
+        List<BookRank> bookRankList = new LinkedList<>();
+        BookRank bookRank = new BookRank();
+        if (crank == null || crank <= 0) {
+            bookRank = getByBookIdAndType(bookId, BookIndexTypeEnums.composite.getType());
+        } else {
+            bookRank.setType(BookIndexTypeEnums.composite.getType());
+            bookRank.setRank(crank.intValue());
+        }
+        bookRankList.add(bookRank);
+
+        bookRank = new BookRank();
+        if (drank == null || drank <= 0) {
+            bookRank = getByBookIdAndType(bookId, BookIndexTypeEnums.develop.getType());
+        } else {
+            bookRank.setType(BookIndexTypeEnums.develop.getType());
+            bookRank.setRank(drank.intValue());
+        }
+        bookRankList.add(bookRank);
+
+        bookRank = new BookRank();
+        if (prank == null || prank <= 0) {
+            bookRank = getByBookIdAndType(bookId, BookIndexTypeEnums.propagate.getType());
+        } else {
+            bookRank.setType(BookIndexTypeEnums.propagate.getType());
+            bookRank.setRank(prank.intValue());
+        }
+        bookRankList.add(bookRank);
+
+        bookRank = new BookRank();
+        if (hrank == null || hrank <= 0) {
+            bookRank = getByBookIdAndType(bookId, BookIndexTypeEnums.hot.getType());
+        } else {
+            bookRank.setType(BookIndexTypeEnums.hot.getType());
+            bookRank.setRank(hrank.intValue());
+        }
+        bookRankList.add(bookRank);
+
+        return bookRankList;
+
+
     }
 }
