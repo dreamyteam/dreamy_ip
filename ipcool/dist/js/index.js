@@ -46,11 +46,11 @@
 
 	'use strict';
 
-	var _tab = __webpack_require__(4);
+	var _tab = __webpack_require__(5);
 
 	var _tab2 = _interopRequireDefault(_tab);
 
-	var _slide_tab = __webpack_require__(5);
+	var _slide_tab = __webpack_require__(6);
 
 	var _slide_tab2 = _interopRequireDefault(_slide_tab);
 
@@ -519,7 +519,8 @@
 
 /***/ },
 /* 3 */,
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -596,7 +597,7 @@
 	exports.default = Tab;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	"use strict";
