@@ -14,12 +14,18 @@ public final class PatternUtils {
      * @return
      */
     public static String getNum(String str){
+        String result="";
         String regEx="[^0-9]";
         Pattern p = Pattern.compile(regEx);
         if(StringUtils.isNotEmpty(str)) {
-
             Matcher m = p.matcher(str);
-            return m.replaceAll("").trim();
+            result=m.replaceAll("").trim();
+            if(StringUtils.isNotEmpty(result)){
+                return result;
+            }
+            else{
+                return "0";
+            }
         }
         else {
             return "0";

@@ -1,58 +1,36 @@
-package com.crawler.test;
+package com.dreamy.crawler.handler.info.netbook.qd;
 
-import com.dreamy.crawler.handler.info.netbook.qd.QiDian;
 import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.mogodb.dao.NetBookInfoDao;
 import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.model.OOSpider;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by wangyongxing on 16/5/30.
+ * Created by wangyongxing on 16/5/31.
  */
-public class QiDianMian {
-    public static void main(String[] args) {
-        //String url = "http://top.qidian.com/Book/TopDetail.aspx?TopType=3&PageIndex=1";
-        String url="http://all.qidian.com/Book/BookStore.aspx?ChannelId=-1&SubCategoryId=-1&Tag=all&Size=-1&Action=-1&OrderId=6&P=all&PageIndex=1&update=-1&Vip=1&Boutique=-1&SignStatus=-1";
-        OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), QiDian.class);
-        QiDian qiDian = ooSpider.<QiDian>get(url);
-        NetBookInfo info = new NetBookInfo();
-        int size = qiDian.getUrls().size();
-        List<String> urls = qiDian.getUrls();
-        List<String> names = qiDian.getTitles();
-        List<String> authoers = qiDian.getAuthoers();
-        for (int i = 0; i < size; i++) {
-            String utl = urls.get(i);
-            info.setTitle(names.get(i));
-            info.setAuthor(authoers.get(i));
-            String bookId = PatternUtils.getNum(utl);
-            info.setImage("http://image.cmfu.com/books/" + bookId + "/" + bookId + ".jpg");
-            info.setBookId(Integer.valueOf(bookId));
-            crawler(info, utl);
-        }
-    }
+public class QiDianHandler {
 
-
-    public static void crawler(NetBookInfo info, String url) {
+    NetBookInfoDao netBookInfoDao;
+    public static void crawler(Integer bookId, String url) {
 
         String html = HttpUtils.getHtmlGet(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
+                NetBookInfo info =new NetBookInfo();
+                info.setBookId(bookId);
                 getInfo(info, document);
-                getClickNum(info, document);
-                getRecommendNum(info, document);
                 getOverInfo(info, document);
                 getOverAuthority(info, document);
+                getClickNum(info, document);
+                getRecommendNum(info, document);
                 getScore(info, document);
                 getTicketNum(info,document);
             }

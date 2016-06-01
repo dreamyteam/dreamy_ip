@@ -2,10 +2,12 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.KeyWorkTask;
+import com.dreamy.admin.tasks.rank.UpdateRankAndIndexTask;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
+import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.StringUtils;
@@ -32,6 +34,11 @@ public class CawlerTest extends BaseJunitTest {
 
     @Autowired
     private SinaLoginService sinaLoginService;
+
+    @Autowired
+    UpdateRankAndIndexTask updateRankAndIndexTask;
+    @Autowired
+    BookIndexHistoryService bookIndexHistoryService;
 
     @Test
     public void test() {
@@ -61,9 +68,11 @@ public class CawlerTest extends BaseJunitTest {
 
     @Test
     public void tt() {
-        Date d = new Date();
-        String aa = TimeUtils.toString("yyyyMMddhhmmss", d) + "1000" + "0000" + "0000" + "0000" + "00";
-        System.err.println("aa");
-
+        int id=6015;
+       int aa= bookIndexHistoryService.delByBookIdAndDate(id,new Date());
+        System.out.println(aa);
+        //updateRankAndIndexTask.run();
     }
+
+
 }

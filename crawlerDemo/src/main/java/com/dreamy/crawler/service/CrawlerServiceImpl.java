@@ -3,9 +3,9 @@ package com.dreamy.crawler.service;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.IpBook;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.IpBookService;
@@ -17,9 +17,7 @@ import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -46,9 +44,9 @@ public class CrawlerServiceImpl implements CrawlerService {
 //    @Value("${queue_crawler_comment}")
 //    private String commentQueueName;
 
+
     @Autowired
-    @Qualifier("rawValueOperations")
-    private ValueOperations<String, Integer> rawValueOperations;
+    private RedisClientService redisClientService;
 
 
     @Value("${queue_crawler_over}")
@@ -62,7 +60,7 @@ public class CrawlerServiceImpl implements CrawlerService {
     private BookInfoService bookInfoService;
     @Autowired
     BookCrawlerInfoService bookCrawlerInfoService;
-
+    @Autowired
     BookScoreService bookScoreService;
 
     @Override
@@ -148,9 +146,9 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId) {
-        long num = rawValueOperations.increment(key, -1);
+        long num = redisClientService.incrBy(key, -1L);
         if (num < 1) {
-            rawValueOperations.getOperations().delete(key);
+            redisClientService.del(key);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("bookId", bookId);
             queueService.push(queueName, map);

@@ -87,12 +87,14 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                 Integer compositeIndex = getNewCompositeIndex(bookView);
                 bookView.compositeIndex(compositeIndex);
 
+
                 //更新指数
                 bookViewService.update(bookView);
                 updateHistoryIndex(bookView);
 
                 //指数写入到redis用于排名
                 updateRank(bookView);
+
             }
         }
     }

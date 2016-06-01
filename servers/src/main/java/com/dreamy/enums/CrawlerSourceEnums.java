@@ -10,7 +10,10 @@ public enum CrawlerSourceEnums {
     amazon(1, "亚马逊", "amazon", 0.1),
     jd(2, "京东", "jd", 0.16),
     dangdang(3, "当当", "dd", 0.24),
-    douban(4, "豆瓣", "douban", 0.5);
+    douban(4, "豆瓣", "douban", 0.5),
+    qidian(5, "起点", "qidian", 0.5),
+    zongheng(6, "纵横", "zongheng", 0.5),
+    huayu(7, "花语", "huayu", 0.5);
 
     private Integer type;
 
