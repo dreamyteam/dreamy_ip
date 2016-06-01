@@ -1,6 +1,5 @@
 package com.dreamy.mogodb.dao;
 
-import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.utils.BeanUtils;
 import org.springframework.data.mongodb.core.query.Criteria;

@@ -50,9 +50,9 @@ public class NetBookInfo {
     private Integer ticketNum;
 
     /**
-     * 作品类型
+     * 作品分类
      */
-    private String type;
+    private String category;
 
     /**
      * 标签
@@ -116,13 +116,6 @@ public class NetBookInfo {
         this.ticketNum = ticketNum;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getLabel() {
         return label;
@@ -180,4 +173,11 @@ public class NetBookInfo {
         this.info = info;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

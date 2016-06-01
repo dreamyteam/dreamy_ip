@@ -17,7 +17,10 @@ public enum QueueRoutingKeyEnums {
 
     publish_so_index("so_index","指数抓取"),
 
-    publish_news_sougou("news_sogou","news.sogou.com上5大新闻来源数量");
+    publish_news_sougou("news_sogou","news.sogou.com上5大新闻来源数量"),
+
+
+    publish_qidian("qidian","qidian");
 
     private String key;
 

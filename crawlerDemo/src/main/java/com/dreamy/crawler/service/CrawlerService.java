@@ -1,6 +1,7 @@
 package com.dreamy.crawler.service;
 
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.mogodb.beans.NetBookInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,10 @@ public interface CrawlerService {
     public void operationBook(String operation,String key,BookInfo bookInfo,Integer bookId,String url,String isbn,Integer type);
 
     public void check(String key, int bookId);
+
+
+    public void operationNetBook(String operation,String key, NetBookInfo bookInfo, Integer bookId);
+
 
 
 

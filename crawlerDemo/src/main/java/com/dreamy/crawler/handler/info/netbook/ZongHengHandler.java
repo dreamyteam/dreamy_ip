@@ -1,6 +1,7 @@
 package com.dreamy.crawler.handler.info.netbook;
 
 import com.dreamy.crawler.selenium.SeleniumDownloader;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.mogodb.dao.NetBookInfoDao;
 import com.dreamy.utils.HttpUtils;
@@ -20,20 +21,26 @@ import us.codecraft.webmagic.Task;
  */
 public class ZongHengHandler {
 
-    NetBookInfoDao netBookInfoDao;
-    public static void crawler(NetBookInfo info, String url) {
+    public NetBookInfo crawler(Integer bookId, String url, String operation) {
         //String html =seleniumDownloader(url);
         String html = HttpUtils.getHtmlGet(url);
+        NetBookInfo info = null;
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
-                getImage(info, document);
-                getInfo(info, document);
+                info = new NetBookInfo();
+                info.setBookId(bookId);
+                if (operation.equals(OperationEnums.crawler.getCode())) {
+                    getImage(info, document);
+                    getInfo(info, document);
+                }
                 getClickNum(info, document);
                 getTicketNum(info, document);
                 getTicketSort(info, document);
+
             }
         }
+        return info;
 
     }
 
@@ -59,13 +66,19 @@ public class ZongHengHandler {
     }
 
     public static void getClickNum(NetBookInfo info, Document document) {
+        try {
+            Elements elements = document.select("div.vote_info>p");
+            if (elements != null && elements.size() > 0) {
+                Element celement = elements.get(2);
+                String clickNum = celement.text() != null ? celement.text() : "0";
+                info.setClickNum(Integer.valueOf(clickNum));
+                Element relement = elements.get(4);
+                String recommendNum = relement.text() != null ? relement.text() : "0";
+                info.setRecommendNum(Integer.valueOf(recommendNum));
 
-        Elements elements = document.select("div.vote_info>p");
-        if (elements != null && elements.size() > 0) {
-            Element element = elements.get(2);
-            System.out.println(element.text());
-            Element element1 = elements.get(4);
-            System.out.println(element1.text());
+            }
+        }catch (Exception e){
+
         }
 
     }
