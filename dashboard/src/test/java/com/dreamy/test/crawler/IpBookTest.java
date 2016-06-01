@@ -1,7 +1,6 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.mogodb.beans.Book;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
