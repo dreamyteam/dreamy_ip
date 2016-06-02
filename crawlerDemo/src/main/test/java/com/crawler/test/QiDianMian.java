@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class QiDianMian {
     public static void main(String[] args) {
         //String url = "http://top.qidian.com/Book/TopDetail.aspx?TopType=3&PageIndex=1";
-        String url="http://all.qidian.com/Book/BookStore.aspx?ChannelId=-1&SubCategoryId=-1&Tag=all&Size=-1&Action=-1&OrderId=6&P=all&PageIndex=1&update=-1&Vip=1&Boutique=-1&SignStatus=-1";
+        String url = "http://all.qidian.com/Book/BookStore.aspx?ChannelId=-1&SubCategoryId=-1&Tag=all&Size=-1&Action=-1&OrderId=6&P=all&PageIndex=1&update=-1&Vip=1&Boutique=-1&SignStatus=-1";
         OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), QiDian.class);
         QiDian qiDian = ooSpider.<QiDian>get(url);
         NetBookInfo info = new NetBookInfo();
@@ -54,7 +54,9 @@ public class QiDianMian {
                 getOverInfo(info, document);
                 getOverAuthority(info, document);
                 getScore(info, document);
-                getTicketNum(info,document);
+                getTicketNum(info, document);
+                getLabel(info, document);
+                getCategory(info, document);
             }
         }
 
@@ -104,16 +106,51 @@ public class QiDianMian {
 
     }
 
+
+    public static void getCategory(NetBookInfo info, Document document) {
+
+        Elements elements = document.getElementById("bookdiv").getElementsByAttributeValue("itemprop", "genre");
+        if (elements != null && elements.size() > 0) {
+            Element element = elements.first();
+            info.setCategory(element.text());
+        }
+
+
+    }
+
+    /**
+     * 作者 自定义标签
+     *
+     * @param info
+     * @param document
+     */
+    public static void getLabel(NetBookInfo info, Document document) {
+
+        StringBuffer labels = new StringBuffer();
+        Elements elements = document.select("div.labels>div.box>a");
+        if (elements != null && elements.size() > 0) {
+            for (Element element : elements) {
+                labels.append(element.text() + ",");
+            }
+        }
+
+        String str = labels.toString();
+        info.setLabel(str.substring(0, str.length() - 1));
+
+
+    }
+
+
     public static void getOverAuthority(NetBookInfo info, Document document) {
 
         Elements elements = document.getElementById("bookdiv").getElementsByTag("tr");
         if (elements != null && elements.size() > 0) {
             Element element = elements.last();
-            Elements tds=element.children();
-            if(tds!=null&&tds.size()>2) {
+            Elements tds = element.children();
+            if (tds != null && tds.size() > 2) {
                 Element td = tds.get(2);
-                info.setAuthority(td.text().replace("授权状态：","").replace(" ",""));
-                System.out.println(td.text().replace("授权状态：","").replace(" ",""));
+                info.setAuthority(td.text().replace("授权状态：", "").replace(" ", ""));
+                System.out.println(td.text().replace("授权状态：", "").replace(" ", ""));
             }
         }
 
@@ -134,10 +171,11 @@ public class QiDianMian {
         Elements elements = document.getElementsByClass("ballot_data");
         if (elements != null && elements.size() > 0) {
             Element element = elements.first();
-            String num=getResult(element.text());
+            String num = getResult(element.text());
             info.setTicketNum(Integer.valueOf(num));
         }
     }
+
     public static String getResult(String str) {
         String result = "0";
         Pattern p = Pattern.compile("本月票数：(.*?)票");
@@ -145,8 +183,7 @@ public class QiDianMian {
         while (m.find()) {
             result = m.group(1);
         }
-        if(StringUtils.isEmpty(result))
-        {
+        if (StringUtils.isEmpty(result)) {
             return "0";
         }
         return result;
