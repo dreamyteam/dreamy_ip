@@ -161,7 +161,7 @@ public class BookRankServiceImpl implements BookRankService {
         Map<Integer, Integer> map = new HashMap<>();
         for (Integer bookId : bookIds) {
             Long crank = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookId.toString());
-            if (crank > 0) {
+            if (crank != null && crank > 0) {
                 map.put(bookId, crank.intValue());
             }
         }
