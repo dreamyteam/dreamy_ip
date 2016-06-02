@@ -670,7 +670,7 @@
 	                            fontSize: 14
 	                        }
 	                    },
-	                    indicator: [{ name: '热度', max: 60000 }, { name: '开发空间', max: 60000 }, { name: '传播', max: 60000 }, { name: '口碑', max: 60000 }, { name: '消费能力', max: 60000 }],
+	                    indicator: [{ name: '热度', max: 10000 }, { name: '开发空间', max: 10000 }, { name: '传播', max: 10000 }, { name: '口碑', max: 10000 }, { name: '消费能力', max: 10000 }],
 	                    splitArea: {
 	                        areaStyle: {
 	                            color: ['rgba(250,250,250,0)']

@@ -96,5 +96,11 @@
         "value": [
             "/dist/js/user.js"
         ]
+    }, {
+        "key": "apply.js",
+        "type": "js",
+        "value": [
+            "/dist/js/apply.js"
+        ]
     }]
 }

@@ -43,9 +43,9 @@
                 color: #2b2c2e;
                 line-height: 45px;
                 padding-left: 11px;
-            }
-            .ip_name {
-                background: #fcf8e2;
+                &:focus{
+                     background: #fcf8e2;
+                }
             }
             // 验证码
             .verify_container {
@@ -96,14 +96,11 @@
                     vertical-align: middle;
                     width: 50%;
                     .err_msg {
-                        right: 25px;
+                        right: 0;
                     }
                 }
                 .input_content:nth-child(2n) {
                     padding-left: 25px;
-                    .err_msg {
-                        right: 0;
-                    }
                 }
             }
             .input_content {

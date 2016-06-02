@@ -40,9 +40,8 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59,7 +58,7 @@
 
 	var _back_top2 = _interopRequireDefault(_back_top);
 
-	var _hover_delay = __webpack_require__(19);
+	var _hover_delay = __webpack_require__(4);
 
 	var _hover_delay2 = _interopRequireDefault(_hover_delay);
 
@@ -91,8 +90,7 @@
 	});
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -410,8 +408,7 @@
 	exports.default = Sign;
 
 /***/ },
-
-/***/ 2:
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -478,8 +475,7 @@
 	exports.default = Popup;
 
 /***/ },
-
-/***/ 3:
+/* 3 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -569,8 +565,7 @@
 	exports.default = BackTop;
 
 /***/ },
-
-/***/ 19:
+/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -648,5 +643,4 @@
 	exports.default = HoverDelay;
 
 /***/ }
-
-/******/ });
+/******/ ]);

@@ -633,7 +633,8 @@ header.ipcool_hearder {
     min-width: 940px;
     display: block;
     margin: 0 auto;
-    font-size: 16px; }
+    font-size: 16px;
+    height: 50px; }
     header.ipcool_hearder nav .logo {
       margin-left: 30px;
       margin-top: 10px;

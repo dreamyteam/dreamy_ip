@@ -39,8 +39,8 @@ section.record {
       color: #2b2c2e;
       line-height: 45px;
       padding-left: 11px; }
-    section.record .record_content .ip_name {
-      background: #fcf8e2; }
+      section.record .record_content input:focus {
+        background: #fcf8e2; }
     section.record .record_content .verify_container .verify_code {
       float: right;
       margin-top: 37px;
@@ -86,11 +86,9 @@ section.record {
         vertical-align: middle;
         width: 50%; }
         section.record .record_content .input_container .input_content .err_msg {
-          right: 25px; }
+          right: 0; }
       section.record .record_content .input_container .input_content:nth-child(2n) {
         padding-left: 25px; }
-        section.record .record_content .input_container .input_content:nth-child(2n) .err_msg {
-          right: 0; }
     section.record .record_content .input_content {
       margin-top: 12px;
       position: relative;
