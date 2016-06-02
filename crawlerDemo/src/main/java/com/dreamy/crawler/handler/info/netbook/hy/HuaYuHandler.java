@@ -106,7 +106,6 @@ public class HuaYuHandler {
             Elements elements = document.select("div.img>a>img");
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
-                System.out.println(element.attr("src"));
                 info.setImage(element.attr("src"));
             }
         } catch (Exception e) {
@@ -125,7 +124,8 @@ public class HuaYuHandler {
             Elements elements = document.getElementsByClass("total_threads");
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
-                System.out.println(element.text());
+                String num=element.text()!=null?element.text():"0";
+                info.setCommentNum(Integer.valueOf(num));
             }
         } catch (Exception e) {
             log.error(" huyua 评论数 is error book=" + info.getBookId(), e);

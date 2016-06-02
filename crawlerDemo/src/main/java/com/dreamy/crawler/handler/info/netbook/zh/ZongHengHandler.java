@@ -75,19 +75,30 @@ public class ZongHengHandler {
 
     }
 
+    /**
+     * 解析 点击数 推荐数 评论数
+     * @param info
+     * @param document
+     */
     public static void getClickNum(NetBookInfo info, Document document) {
         try {
             Elements elements = document.select("div.vote_info>p");
             if (elements != null && elements.size() > 0) {
                 Element celement = elements.get(2);
-                String clickNum = celement.text() != null ? celement.text() : "0";
-                info.setClickNum(Integer.valueOf(clickNum));
+                String clickNum = celement.text();
+                info.setClickNum(Integer.valueOf(PatternUtils.getNum(clickNum)));
                 Element relement = elements.get(4);
-                String recommendNum = relement.text() != null ? relement.text() : "0";
-                info.setRecommendNum(Integer.valueOf(recommendNum));
+                String recommendNum = relement.text();
+                info.setRecommendNum(Integer.valueOf(PatternUtils.getNum(recommendNum)));
+                Element commentElement = elements.get(5);
+                String commentNum = commentElement.text();
+                info.setCommentNum(Integer.valueOf(PatternUtils.getNum(commentNum)));
 
             }
         }catch (Exception e){
+
+            log.error(" zongheng 点击数 is error book=" + info.getBookId(), e);
+
 
         }
 

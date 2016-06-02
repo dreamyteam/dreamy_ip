@@ -10,6 +10,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,6 +73,9 @@ public class DouBanCrawlerBookHandler {
                     getImage(bean, document);
                     getTags(bean, document);
                     getISBN(bean, document);
+                    getPess(bean, document);
+                    getAuthor(bean, document);
+                    getPessTime(bean,document);
                 }
                 getCommentNum(bean, document);
                 getScore(bean, document);
@@ -96,6 +101,8 @@ public class DouBanCrawlerBookHandler {
                         getAuthorInfo(bean, document);
                         getTags(bean, document);
                         getCommentNum(bean, document);
+                        getPess(bean, document);
+                        getAuthor(bean, document);
                     }
                     getScore(bean, document);
                     getISBN(bean, document);
@@ -120,16 +127,11 @@ public class DouBanCrawlerBookHandler {
             Element element = document.getElementById("info");
             if (element != null) {
                 String str = element.text().replace(" ", "");
-                Pattern p = Pattern.compile("ISBN:([0-9]*)");
-                Matcher m = p.matcher(str);
-                String result = "";
-                while (m.find()) {
-                    result = m.group(1);
-                }
+                String result =getResult("ISBN:([0-9]*)",str);
                 bookInfo.setISBN(result);
             }
         } catch (Exception e) {
-            log.error("解析 ISBN 异常", e);
+            log.error("解析ISBN 异常", e);
 
         }
     }
@@ -148,8 +150,8 @@ public class DouBanCrawlerBookHandler {
             String arr[] = content.split(",");
             int size = arr.length;
             if (size > 5) {
-                bookInfo.setTitle(arr[0]);
                 bookInfo.setAuthor(arr[1]);
+                bookInfo.setTitle(arr[0]);
                 bookInfo.setPress(arr[2]);
                 bookInfo.setPushTime(arr[3]);
             }
@@ -192,11 +194,75 @@ public class DouBanCrawlerBookHandler {
                 }
             }
         } catch (Exception e) {
-            log.error("解析 作者简介 内容简介 异常", e);
+            log.error("解析作者内容简介 异常", e);
 
 
         }
 
+
+    }
+
+    /**
+     * 解析 出版社
+     * @param bookInfo
+     * @param document
+     */
+    public void getPess(BookInfo bookInfo, Document document) {
+        try {
+            Element element = document.getElementById("info");
+            String html = element.html().replace("</span>", "").replace(" ", "");
+            String pree = getResult("出版社:([^\"|[\\u4e00-\\u9fa5]]+)<br/>", html);
+            bookInfo.setPress(pree);
+        } catch (Exception e) {
+            log.error("解析出版社异常", e);
+        }
+    }
+
+    /**
+     * 解析 作者
+     * @param bookInfo
+     * @param document
+     */
+    public void getAuthor(BookInfo bookInfo, Document document) {
+        try {
+            Element element = document.getElementById("info");
+            String html = element.text().replace(" ", "");
+            String author = getResult("作者:([^\"|[\\u4e00-\\u9fa5]]+)出版社:", html);
+            bookInfo.setAuthor(author);
+
+        } catch (Exception e) {
+            log.error("解析作者异常", e);
+        }
+    }
+
+    /**
+     * 解析 出版时间
+     * @param bookInfo
+     * @param document
+     */
+    public void getPessTime(BookInfo bookInfo, Document document) {
+        try {
+            Element element = document.getElementById("info");
+            String html = element.text().replace(" ", "");
+            String pushTime = getResult("出版年:(.*?)页数:", html);
+            bookInfo.setPushTime(pushTime);
+        } catch (Exception e) {
+            log.error("解析出版时间异常", e);
+        }
+    }
+
+    public static String getResult(String reg, String str) {
+        String result = "";
+        //"总点击：([0-9]*)"
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+            result = m.group(1);
+        }
+        if (StringUtils.isEmpty(result)) {
+            return "";
+        }
+        return result;
 
     }
 
