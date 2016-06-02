@@ -135,25 +135,36 @@ public class BookScoreServiceImpl implements BookScoreService {
         Integer hotIndex = bookView.getHotIndex();
         Integer propagationIndex = bookView.getPropagateIndex();
 
-        developScore += 0.01 * (hotIndex + propagationIndex);
+        developScore += (hotIndex + propagationIndex) * 0.5;
 
         List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
         if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
             int i = 0;
+            Double sexScore = 0.0;
+
             for (BookIndexData bookIndexData : bookIndexDatas) {
                 String[] ages = bookIndexData.getAge();
                 if (ArrayUtils.isNotEmpty(ages)) {
-                    developScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[1]) + 16 * Double.parseDouble(ages[0]) + 8 * Double.parseDouble(ages[0]);
+                    if (bookIndexData.getSource().equals(IndexSourceEnums.weibo.getType())) {
+                        Double totalPeople = 0.0;
+                        for (String people : ages) {
+                            totalPeople += Double.parseDouble(people);
+                        }
+                        sexScore += (15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[2]) + 16 * Double.parseDouble(ages[3]) + 8 * Double.parseDouble(ages[4])) / totalPeople;
+                    } else {
+                        sexScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[2]) + 16 * Double.parseDouble(ages[3]) + 8 * Double.parseDouble(ages[4]);
+                    }
                     i++;
                 }
             }
 
-            developScore *= developScore / i;
+            developScore *= sexScore / i;
         }
 
         developScore = Math.log10(developScore) * 1000;
         return "" + (developScore.intValue());
     }
+
 
     @Override
     public String getReputationIndexByBookId(Integer bookId) {
@@ -167,7 +178,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 reputationScore += marketPercent * score;
             }
 
-            reputationScore = Math.log10(reputationScore * 123.45)*1000;
+            reputationScore = Math.log10(reputationScore * 123.45) * 1000;
         }
 
         return "" + reputationScore.intValue();

@@ -3,11 +3,14 @@ package com.dreamy.test.crawler;
 import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.KeyWorkTask;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
+import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.StringUtils;
@@ -34,8 +37,18 @@ public class CawlerTest extends BaseJunitTest {
 
     @Autowired
     private SinaLoginService sinaLoginService;
+
+    @Autowired
+    private BookViewService bookViewService;
+
+
     @Autowired
     BookIndexHistoryService bookIndexHistoryService;
+
+    @Autowired
+    private BookScoreService bookScoreService;
+
+
     @Value("${queue_crawler_qidian}")
     private String queueName;
 
@@ -63,10 +76,9 @@ public class CawlerTest extends BaseJunitTest {
 
     @Test
     public void tt() {
-        int id=6015;
-       int aa= bookIndexHistoryService.delByBookIdAndDate(id,new Date());
-        System.out.println(aa);
-        //updateRankAndIndexTask.run();
+        BookView bookView = bookViewService.getByBookId(516);
+        String tt = bookScoreService.getDevelopIndexByRecord(bookView);
+        System.err.println("111");
     }
 
 
