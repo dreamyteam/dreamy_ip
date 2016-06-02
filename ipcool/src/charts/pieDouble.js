@@ -74,7 +74,6 @@ export default class pieDouble extends Chart {
         this.url && this.getRemoteData();
     }
     updateChart(data) {
-        console.log(data);
         this.chart.hideLoading();
         if (this.type == 'sex') {
             this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);

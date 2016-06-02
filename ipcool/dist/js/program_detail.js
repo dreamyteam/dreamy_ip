@@ -46,10 +46,6 @@
 
 	'use strict';
 
-	var _get_value_history = __webpack_require__(7);
-
-	var _get_value_history2 = _interopRequireDefault(_get_value_history);
-
 	var _fix_top = __webpack_require__(8);
 
 	var _fix_top2 = _interopRequireDefault(_fix_top);
@@ -58,34 +54,13 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
-	var _line = __webpack_require__(9);
+	var _scroll_load = __webpack_require__(20);
 
-	var _line2 = _interopRequireDefault(_line);
-
-	var _radar = __webpack_require__(11);
-
-	var _radar2 = _interopRequireDefault(_radar);
-
-	var _pieMutiple = __webpack_require__(12);
-
-	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
-
-	var _pieDouble = __webpack_require__(13);
-
-	var _pieDouble2 = _interopRequireDefault(_pieDouble);
-
-	var _barVertical = __webpack_require__(14);
-
-	var _barVertical2 = _interopRequireDefault(_barVertical);
-
-	var _barComment = __webpack_require__(15);
-
-	var _barComment2 = _interopRequireDefault(_barComment);
+	var _scroll_load2 = _interopRequireDefault(_scroll_load);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var VoteProto = __webpack_require__(16); //投票
-
 	// import Tab from '../components/tab.js'
 
 
@@ -97,74 +72,16 @@
 	    //找到ip名字id
 	    var ip_name = $('.program_info .content h1.name').html();
 	    var ip_Id = $('#getIpid').val();
-	    //异步趋势历史最高
-	    var compositeValues = new _get_value_history2.default($('#composite_values'), 5);
-	    var hotValues = new _get_value_history2.default($('#hot_values'), 1);
-	    var developValues = new _get_value_history2.default($('#develop_values'), 2);
-	    var propagateValues = new _get_value_history2.default($('#propagate_values'), 3);
-	    var reputationValues = new _get_value_history2.default($('#reputation_values'), 4);
+
+	    var scrollLoad = new _scroll_load2.default({
+	        els: ".scroll_load",
+	        history: ".scroll_load_history",
+	        chart: ".scroll_load_chart"
+	    });
 
 	    var voteproto = new VoteProto({
 	        el: '.vote_container .vote_content',
 	        ip_Id: ip_Id
-	    });
-	    //图表们
-	    //综合指数
-	    var comprehensiveValue = new _line2.default({
-	        el: 'chart_comprehensive_value',
-	        name: ip_name
-	    });
-	    //潜力模型
-	    var potentialModel = new _radar2.default({
-	        el: 'chart_potential_model',
-	        name: ip_name
-	    });
-	    //热度趋势
-	    var heatTrend = new _line2.default({
-	        el: 'chart_heat_trend',
-	        name: ip_name
-	    });
-	    //传播能力趋势
-	    var transmissionIndex = new _line2.default({
-	        el: 'chart_transmission_index',
-	        name: ip_name
-	    });
-	    //新闻媒体平台
-	    var mediaPlatform = new _pieMutiple2.default({
-	        el: 'chart_media_platform',
-	        left: 'center',
-	        name: ip_name
-	    });
-	    // 社交平台
-	    var socialPlatform = new _pieDouble2.default({
-	        el: 'chart_social_platform',
-	        type: 'social',
-	        left: 'center',
-	        name: ip_name
-	    });
-	    // 用户活跃度趋势
-	    var userVitalty = new _line2.default({
-	        el: 'chart_user_vitalty',
-	        name: ip_name
-	    });
-	    // 性别比例分布
-	    var sexDistribution = new _pieDouble2.default({
-	        el: 'chart_sex_distribution',
-	        type: 'sex',
-	        left: 'center',
-	        name: ip_name
-	    });
-	    //年龄分布
-	    var ageDistribution = new _barVertical2.default({
-	        el: 'chart_age_distribution',
-	        type: 'age',
-	        left: 'center',
-	        name: ip_name
-	    });
-	    //点评图表
-	    var commentReviews = new _barComment2.default({
-	        el: 'chart_reviews',
-	        name: ip_name
 	    });
 	});
 
@@ -960,7 +877,6 @@
 	    }, {
 	        key: 'updateChart',
 	        value: function updateChart(data) {
-	            console.log(data);
 	            this.chart.hideLoading();
 	            if (this.type == 'sex') {
 	                this.subTitle = this.caculateSubTitle(data[0].value, data[1].value);
@@ -1400,6 +1316,180 @@
 	};
 
 	module.exports = VoteProto;
+
+/***/ },
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get_value_history = __webpack_require__(7);
+
+	var _get_value_history2 = _interopRequireDefault(_get_value_history);
+
+	var _line = __webpack_require__(9);
+
+	var _line2 = _interopRequireDefault(_line);
+
+	var _radar = __webpack_require__(11);
+
+	var _radar2 = _interopRequireDefault(_radar);
+
+	var _pieMutiple = __webpack_require__(12);
+
+	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
+
+	var _pieDouble = __webpack_require__(13);
+
+	var _pieDouble2 = _interopRequireDefault(_pieDouble);
+
+	var _barVertical = __webpack_require__(14);
+
+	var _barVertical2 = _interopRequireDefault(_barVertical);
+
+	var _barComment = __webpack_require__(15);
+
+	var _barComment2 = _interopRequireDefault(_barComment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ScrollLoad = function () {
+	    function ScrollLoad(cfg) {
+	        _classCallCheck(this, ScrollLoad);
+
+	        this.cfg = cfg;
+	        this.els = null;
+	        this.isLoaded = [];
+	        this.history = null;
+	        this.chart = null;
+	        this.init();
+	    }
+
+	    _createClass(ScrollLoad, [{
+	        key: 'init',
+	        value: function init() {
+	            this.els = $(this.cfg.els);
+	            this.history = this.cfg.history;
+	            this.chart = this.cfg.chart;
+	            this.setDefaultLoaded();
+	            this.listenEvent();
+	        }
+	    }, {
+	        key: 'setDefaultLoaded',
+	        value: function setDefaultLoaded() {
+	            //重置所有isLoaded
+	            var elLength = this.els.length;
+	            for (var i = 0; i < elLength; i++) {
+	                this.isLoaded[i] = false;
+	            }
+	        }
+	    }, {
+	        key: 'listenEvent',
+	        value: function listenEvent() {
+	            var self = this;
+	            function onScroll() {
+	                var scrollTop = $(document).scrollTop(); //滚动条距离
+	                self.els.each(function () {
+	                    var offsetTop = $(this).offset().top; //距离文档顶部距离
+	                    var disTop = offsetTop - scrollTop;
+	                    var curIndex = $(this).index(self.cfg.els);
+	                    if (disTop < 800) {
+	                        if (!self.isLoaded[curIndex]) {
+	                            self.loadCharts($(this));
+	                            self.loadHistory($(this));
+	                            self.isLoaded[curIndex] = true;
+	                        }
+	                    }
+	                });
+	            }
+	            $(window).on("scroll", function () {
+	                onScroll();
+	            });
+	            $(window).on("load", function () {
+	                onScroll();
+	            }); //初始化首屏
+	        }
+	    }, {
+	        key: 'loadHistory',
+	        value: function loadHistory(obj) {
+	            if (obj.find(this.history).length > 0) {
+	                var elememt = obj.find(this.history).eq(0);
+	                var type = elememt.data("type");
+	                new _get_value_history2.default(obj, type);
+	            }
+	        }
+	    }, {
+	        key: 'loadCharts',
+	        value: function loadCharts(obj) {
+	            var self = this;
+	            if (obj.find(this.chart).length > 0) {
+	                var elememts = obj.find(this.chart);
+	                elememts.each(function () {
+	                    self.getChartType($(this));
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'getChartType',
+	        value: function getChartType(el) {
+	            var fetchData = el.data("fetchType");
+	            var idValue = el.attr("id");
+	            var ipName = fetchData.name;
+	            var type = fetchData.type;
+	            if (type == "line") {
+	                new _line2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            } else if (type == "radar") {
+	                new _radar2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            } else if (type == "PieChartMutiple") {
+	                new _pieMutiple2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "PieChartDouble") {
+	                new _pieDouble2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    type: fetchData.chartType,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "BarChartVertical") {
+	                new _barVertical2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    type: fetchData.chartType,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "BarCommit") {
+	                new _barComment2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            }
+	        }
+	    }]);
+
+	    return ScrollLoad;
+	}();
+
+	exports.default = ScrollLoad;
 
 /***/ }
 /******/ ]);
