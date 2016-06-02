@@ -248,6 +248,16 @@
             }
         }
     }
+    .icon_down{
+        background:url("../../assets/images/index/icon_down.png") no-repeat;
+        background-size: 49px;
+        width:49px;
+        height:28px;
+        position: absolute;
+        left:50%;
+        margin-left: -24.5px;
+        bottom:40px;
+    }
 }
 
 .sec_1.active {}

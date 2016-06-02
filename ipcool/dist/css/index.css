@@ -396,6 +396,15 @@ html.fp-enabled, .fp-enabled body {
         padding: 0;
         width: 43px;
         height: 50px; }
+  .sec_1 .icon_down {
+    background: url("../../assets/images/index/icon_down.png") no-repeat;
+    background-size: 49px;
+    width: 49px;
+    height: 28px;
+    position: absolute;
+    left: 50%;
+    margin-left: -24.5px;
+    bottom: 40px; }
 
 @media screen and (max-width: 1440px) {
   .sec_1 .main_title {
