@@ -57,5 +57,6 @@ public class IpcoolWebContentInterceptor extends WebContentInterceptor {
     public void assetsHandle() {
         IpcoolAssetsUtils.getCssMap();
         IpcoolAssetsUtils.getJsMap();
+        IpcoolAssetsUtils.isDev = commonService.isDev();
     }
 }
