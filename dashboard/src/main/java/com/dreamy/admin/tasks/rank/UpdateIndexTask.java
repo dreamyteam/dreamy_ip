@@ -88,10 +88,8 @@ public class UpdateIndexTask {
     private String newsSougouQueue;
 
 
-    private Long stepValue = 1L;
-
-    //    @Scheduled(cron = "0 30 10 * * ?")
-    @Scheduled(cron = "0 05 11 * * ?")
+    @Scheduled(cron = "0 50 15 * * ?")
+//    @Scheduled(fixedDelay = 100000)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
@@ -188,8 +186,7 @@ public class UpdateIndexTask {
 
                 Map<String, String> params = commonParams;
 
-
-                params.put("name", bookView.getName());
+                params.put("name", "《" + bookView.getName() + "》 " + bookView.getAuthor());
                 pushToQueue(newsSougouQueue, params);
                 pushToQueue(s360IndexQueue, params);
 
@@ -201,7 +198,6 @@ public class UpdateIndexTask {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
 
-                params.put("name", bookView.getName() + " " + bookView.getAuthor());
                 pushToQueue(bsKeyWordQueue, params);
                 pushToQueue(wbKeyWordQueue, params);
                 pushToQueue(wxKeyWordQueue, params);
