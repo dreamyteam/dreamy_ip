@@ -91,7 +91,7 @@ public class UpdateIndexTask {
     private Long stepValue = 1L;
 
     //    @Scheduled(cron = "0 30 10 * * ?")
-    @Scheduled(cron = "0 55 10 * * ?")
+    @Scheduled(cron = "0 05 11 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
