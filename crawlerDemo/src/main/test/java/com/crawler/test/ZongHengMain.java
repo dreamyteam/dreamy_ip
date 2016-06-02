@@ -1,6 +1,6 @@
 package com.crawler.test;
 
-import com.dreamy.crawler.handler.info.netbook.ZongHeng;
+import com.dreamy.crawler.handler.info.netbook.zh.ZongHeng;
 import com.dreamy.crawler.selenium.SeleniumDownloader;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.utils.HttpUtils;
@@ -17,8 +17,6 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.model.OOSpider;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by wangyongxing on 16/5/30.
@@ -38,6 +36,7 @@ public class ZongHengMain {
             info.setTitle(names.get(i));
             info.setAuthor(authoers.get(i));
             System.out.println(urls.get(i) + "-" + names.get(i) + "...." + authoers.get(i));
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dreamy.crawler.handler.info.netbook;
+package com.dreamy.crawler.handler.info.netbook.zh;
 
 import us.codecraft.webmagic.model.annotation.ExtractBy;
 
