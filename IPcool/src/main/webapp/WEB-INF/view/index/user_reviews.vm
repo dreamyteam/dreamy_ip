@@ -4,7 +4,7 @@
 
 <div class="container">
     #parse("/index/common.vm")
-    <section class="user_reviews">
+    <section class="user_reviews scroll_load">
         <h1 class="title">用户口碑</h1>
 
         <div class="review_container">
@@ -15,7 +15,12 @@
             </div>
             <div class="review_chart">
 ##                <button>写点评</button>
-                <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
+                <div id="chart_reviews"
+                     class="scroll_load_chart"
+                     data-fetch-type='{"name":"$!{view.name}","type":"BarCommit"}'
+                     data-fetch-url="/user/score?ip=$!{view.bookId}">
+
+                </div>
             </div>
         </div>
         <ul class="comments_container">
