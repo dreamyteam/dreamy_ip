@@ -36,7 +36,7 @@ import java.util.Map;
 public class BookViewCreateTaskTest extends BaseJunitTest {
     @Autowired
     BookViewCreateTask bookViewCreateTask;
-    
+
     @Autowired
     private IpBookService ipBookService;
     @Autowired
@@ -47,8 +47,8 @@ public class BookViewCreateTaskTest extends BaseJunitTest {
     @Autowired
     private BookInfoDao bookInfoDao;
 
-    @Value("${queue_crawler_comment}")
-    private String commentQueueName;
+//    @Value("${queue_crawler_comment}")
+//    private String commentQueueName;
     @Autowired
     QueueService queueService;
     @Autowired
@@ -93,7 +93,7 @@ public class BookViewCreateTaskTest extends BaseJunitTest {
                 map.put("isbn", "");
                 map.put("url", info.getUrl());
                 map.put("bookId", info.getBookId());
-                queueService.push(commentQueueName, map);
+                //queueService.push(commentQueueName, map);
             }
             if (!page.isHasNextPage()) {
                 break;

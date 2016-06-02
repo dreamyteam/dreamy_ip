@@ -67,6 +67,10 @@ public class NetBookInfo {
      * 授权状态
      */
     private String authority;
+    /**
+     * 评论数
+     */
+    private Integer commentNum;
 
     public Integer getBookId() {
         return bookId;
@@ -179,5 +183,13 @@ public class NetBookInfo {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
     }
 }

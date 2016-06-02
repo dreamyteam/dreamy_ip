@@ -5,7 +5,10 @@ import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.handler.*;
 import com.dreamy.handler.so.SoHandler;
 import com.dreamy.mogodb.beans.*;
-import com.dreamy.mogodb.dao.*;
+import com.dreamy.mogodb.dao.BookIndexDataDao;
+import com.dreamy.mogodb.dao.BookInfoDao;
+import com.dreamy.mogodb.dao.CommentDao;
+import com.dreamy.mogodb.dao.UserAgentDao;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
@@ -17,17 +20,15 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by wangyongxing on 16/4/5.
  */
 public class test extends BaseJunitTest {
 
-    private Date lastRuntime = null;
 
-    @Autowired
-    private MemberDao memberDao;
 
     @Autowired
     private UserAgentDao userAgentDao;
@@ -54,24 +55,6 @@ public class test extends BaseJunitTest {
     public void insert() {
         System.out.println(11);
 
-        Book book = new Book();
-        book.setTitle(" 测试");
-        book.setCode("0001");
-        List<Member> list = new ArrayList<Member>();
-        Member member = new Member();
-        member.setAuthor("test");
-        member.setImage("test");
-        member.setTitle("test");
-        list.add(member);
-
-        Member member2 = new Member();
-        member2.setAuthor("test");
-        member2.setImage("test");
-        member2.setTitle("test");
-        list.add(member2);
-        book.setMemberList(list);
-
-        memberDao.save(book);
     }
 
     public void insertBookInfo() {

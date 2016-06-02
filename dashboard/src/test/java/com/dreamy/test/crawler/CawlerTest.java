@@ -36,12 +36,12 @@ public class CawlerTest extends BaseJunitTest {
     private SinaLoginService sinaLoginService;
     @Autowired
     BookIndexHistoryService bookIndexHistoryService;
-    @Value("${queue_crawler_qidian}")
+    @Value("${queue_crawler_huayu}")
     private String queueName;
 
     @Test
     public void test() {
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo().source(CrawlerSourceEnums.qidian.getType()), null);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo().source(CrawlerSourceEnums.huayu.getType()), null);
 
         for (BookCrawlerInfo info : list) {
             Map<String, Object> map = new HashMap<>();
