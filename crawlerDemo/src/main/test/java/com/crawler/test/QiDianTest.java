@@ -28,7 +28,7 @@ public class QiDianTest extends BaseJunitTest {
     NetBookInfoDao netBookInfoDao;
     @Test
     public void save(){
-        for(int i=82;i<100;i++) {
+        for(int i=1;i<128;i++) {
             String url = "http://all.qidian.com/Book/BookStore.aspx?ChannelId=-1&SubCategoryId=-1&Tag=all&Size=-1&Action=-1&OrderId=6&P=all&PageIndex="+i+"&update=-1&Vip=1&Boutique=-1&SignStatus=-1";
             OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(100), QiDian.class);
             QiDian qiDian = ooSpider.<QiDian>get(url);

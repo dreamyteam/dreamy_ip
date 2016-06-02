@@ -1,4 +1,4 @@
-package com.dreamy.crawler.handler.info.netbook;
+package com.dreamy.crawler.handler.info.netbook.zh;
 
 import com.dreamy.crawler.selenium.SeleniumDownloader;
 import com.dreamy.enums.OperationEnums;
@@ -11,6 +11,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -19,7 +23,9 @@ import us.codecraft.webmagic.Task;
 /**
  * Created by wangyongxing on 16/5/31.
  */
+@Component
 public class ZongHengHandler {
+    private static final Logger log = LoggerFactory.getLogger(ZongHengHandler.class);
 
     public NetBookInfo crawler(Integer bookId, String url, String operation) {
         //String html =seleniumDownloader(url);
@@ -39,6 +45,10 @@ public class ZongHengHandler {
                 getTicketSort(info, document);
 
             }
+        }
+        else{
+            log.info(" zongheng  crawler is empty url=" + url + " book=" + bookId);
+
         }
         return info;
 

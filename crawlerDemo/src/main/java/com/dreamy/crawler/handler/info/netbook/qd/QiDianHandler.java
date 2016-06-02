@@ -8,6 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
@@ -18,6 +20,8 @@ import java.util.regex.Pattern;
  */
 @Component
 public class QiDianHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(QiDianHandler.class);
 
     public NetBookInfo crawler(Integer bookId, String url, String operation) {
         NetBookInfo info = null;
@@ -39,6 +43,8 @@ public class QiDianHandler {
                 getScore(info, document);
                 getTicketNum(info, document);
             }
+        } else {
+            log.info(" qidian  crawler is empty url=" + url + " book=" + bookId);
         }
         return info;
     }
@@ -57,6 +63,7 @@ public class QiDianHandler {
                 info.setInfo(element.text());
             }
         } catch (Exception e) {
+            log.error(" qidian 简介 is error book=" + info.getBookId(), e);
 
         }
 
