@@ -1,9 +1,9 @@
 package com.dreamy.admin.tasks.rank;
 
-import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.HotWord;
@@ -87,12 +87,11 @@ public class UpdateIndexTask {
     @Value("${queue_news_sougou}")
     private String newsSougouQueue;
 
-    @Autowired
-    private FlushBookRankToDb flushBookRankToDb;
 
     private Long stepValue = 1L;
 
-    @Scheduled(cron = "0 30 10 * * ?")
+    //    @Scheduled(cron = "0 30 10 * * ?")
+    @Scheduled(cron = "0 55 10 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
@@ -104,7 +103,7 @@ public class UpdateIndexTask {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrder(page, "id desc");
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
@@ -153,30 +152,38 @@ public class UpdateIndexTask {
             String cacheKey = commonParams.get("key");
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
-                redisClientService.setNumber(cacheKey, (long) 0);
+                redisClientService.setNumber(cacheKey, 10L);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
                     pushToQueue(amazonQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
                     pushToQueue(jdQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
                     pushToQueue(dangdangQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
                     pushToQueue(doubanQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 Map<String, String> params = commonParams;
@@ -190,6 +197,8 @@ public class UpdateIndexTask {
                 if (hotWord != null) {
                     params.put("cookie", hotWord.getCookie());
                     pushToQueue(wbIndexQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 params.put("name", bookView.getName() + " " + bookView.getAuthor());
@@ -204,7 +213,6 @@ public class UpdateIndexTask {
 
     private void pushToQueue(String queueName, Map<String, String> params) {
         queueService.push(queueName, params);
-        redisClientService.incrBy(params.get("key"), stepValue);
     }
 
 }

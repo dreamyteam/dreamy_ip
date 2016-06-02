@@ -45,7 +45,7 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
-    public Integer getToutleCount() {
+    public Integer getToutleCountByType(Integer type) {
         BookViewConditions conditions = new BookViewConditions();
         conditions.createCriteria().andIdGreaterThan(0);
         return bookViewDao.countByExample(conditions);
@@ -68,8 +68,9 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
-    public List<BookView> getListByPageAndOrder(Page page, String order) {
+    public List<BookView> getListByPageAndOrderAndType(Page page, String order,Integer type) {
         BookViewConditions conditions = new BookViewConditions();
+        conditions.createCriteria().andTypeEqualTo(type);
         conditions.setPage(page);
         conditions.setOrderByClause(order);
         return bookViewDao.selectByExample(conditions);
