@@ -14,6 +14,10 @@
             height: 100%;
             width: 100%;
         }
+        header.ipcool_hearder{
+            position: relative;
+            z-index: 99999;
+        }
 
         .empty {
             position: absolute;
