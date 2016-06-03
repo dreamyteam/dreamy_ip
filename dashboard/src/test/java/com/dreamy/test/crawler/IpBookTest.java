@@ -2,11 +2,13 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -21,6 +23,9 @@ public class IpBookTest extends BaseJunitTest {
     private BookInfoService bookInfoService;
     @Resource
     BookViewService bookViewService;
+
+    @Autowired
+    private BookScoreService bookScoreService;
 
     @Test
     public void insert() {
@@ -93,5 +98,11 @@ public class IpBookTest extends BaseJunitTest {
         bookInfo.setSaleSort("12");
         bookInfo.setInfo("adadads");
         bookInfoService.updateInser(bookInfo);
+    }
+
+    @Test
+    public  void  developIndex(){
+        BookView bookView = bookViewService.getByBookId(217);
+        bookScoreService.getDevelopIndexByRecord(bookView);
     }
 }
