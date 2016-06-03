@@ -30,14 +30,6 @@ public class NewsSougouHandler {
 
     private static final Map<Integer, String> CRAWL_SOURCES = new LinkedHashMap<Integer, String>();
 
-    static {
-        CRAWL_SOURCES.put(1, "搜获");
-        CRAWL_SOURCES.put(2, "腾讯");
-        CRAWL_SOURCES.put(3, "新浪");
-        CRAWL_SOURCES.put(4, "凤凰");
-        CRAWL_SOURCES.put(5, "网易");
-
-    }
 
     @Resource
     NewsMediaService newsMediaService;
