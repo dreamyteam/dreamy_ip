@@ -177,66 +177,6 @@ public class PeopleChartConditions {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("type =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(Integer value) {
-            addCriterion("type <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(Integer value) {
-            addCriterion("type >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("type >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(Integer value) {
-            addCriterion("type <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("type <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<Integer> values) {
-            addCriterion("type in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<Integer> values) {
-            addCriterion("type not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
-            addCriterion("type between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("type not between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
         public Criteria andBookIdIsNull() {
             addCriterion("book_id is null");
             return (Criteria) this;
@@ -594,6 +534,126 @@ public class PeopleChartConditions {
 
         public Criteria andAgeFifthNotBetween(Double value1, Double value2) {
             addCriterion("age_fifth not between", value1, value2, "ageFifth");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleIsNull() {
+            addCriterion("male is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleIsNotNull() {
+            addCriterion("male is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleEqualTo(Double value) {
+            addCriterion("male =", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleNotEqualTo(Double value) {
+            addCriterion("male <>", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleGreaterThan(Double value) {
+            addCriterion("male >", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleGreaterThanOrEqualTo(Double value) {
+            addCriterion("male >=", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleLessThan(Double value) {
+            addCriterion("male <", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleLessThanOrEqualTo(Double value) {
+            addCriterion("male <=", value, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleIn(List<Double> values) {
+            addCriterion("male in", values, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleNotIn(List<Double> values) {
+            addCriterion("male not in", values, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleBetween(Double value1, Double value2) {
+            addCriterion("male between", value1, value2, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaleNotBetween(Double value1, Double value2) {
+            addCriterion("male not between", value1, value2, "male");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleIsNull() {
+            addCriterion("female is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleIsNotNull() {
+            addCriterion("female is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleEqualTo(Double value) {
+            addCriterion("female =", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleNotEqualTo(Double value) {
+            addCriterion("female <>", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleGreaterThan(Double value) {
+            addCriterion("female >", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleGreaterThanOrEqualTo(Double value) {
+            addCriterion("female >=", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleLessThan(Double value) {
+            addCriterion("female <", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleLessThanOrEqualTo(Double value) {
+            addCriterion("female <=", value, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleIn(List<Double> values) {
+            addCriterion("female in", values, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleNotIn(List<Double> values) {
+            addCriterion("female not in", values, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleBetween(Double value1, Double value2) {
+            addCriterion("female between", value1, value2, "female");
+            return (Criteria) this;
+        }
+
+        public Criteria andFemaleNotBetween(Double value1, Double value2) {
+            addCriterion("female not between", value1, value2, "female");
             return (Criteria) this;
         }
 
