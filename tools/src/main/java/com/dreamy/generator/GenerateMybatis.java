@@ -25,7 +25,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 public class GenerateMybatis {
 
 
-    private static final String XML_NAME = "dreamy-lgh-generatorConfig.xml";
+    private static final String XML_NAME = "dreamy-ip-generatorConfig.xml";
 
 
 

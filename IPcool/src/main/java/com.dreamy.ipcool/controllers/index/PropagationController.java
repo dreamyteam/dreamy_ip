@@ -32,6 +32,20 @@ public class PropagationController extends IpcoolController {
 
     private static final Map<Integer, String> SCORE_SOURCES = new LinkedHashMap<Integer, String>();
 
+    static {
+        SOURCES.put(1, "搜获");
+        SOURCES.put(2, "腾讯");
+        SOURCES.put(3, "新浪");
+        SOURCES.put(4, "凤凰");
+        SOURCES.put(5, "网易");
+
+        SCORE_SOURCES.put(1, "亚马逊");
+        SCORE_SOURCES.put(2, "京东");
+        SCORE_SOURCES.put(3, "当当");
+        SCORE_SOURCES.put(4, "豆瓣");
+
+    }
+
     @Resource
     private NewsMediaService newsMediaService;
 
@@ -45,6 +59,8 @@ public class PropagationController extends IpcoolController {
     BookScoreService bookScoreService;
     @Resource
     BookViewService bookViewService;
+    @Resource
+    PeopleChartService peopleChartService;
 
 
     /**
@@ -246,16 +262,13 @@ public class PropagationController extends IpcoolController {
         entity.type(1);
         List<NewsMedia> list = newsMediaService.getList(entity, null);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
-        if (CollectionUtils.isNotEmpty(list)) {
-            for (NewsMedia newsMedia : list) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("value", newsMedia.getNum());
-                map.put("name", SOURCES.get(newsMedia.getSource()));
-                re.add(map);
-            }
-            bean.setData(re);
+        for (NewsMedia newsMedia : list) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("value", newsMedia.getNum());
+            map.put("name", SOURCES.get(newsMedia.getSource()));
+            re.add(map);
         }
-
+        bean.setData(re);
         interfaceReturn(response, JsonUtils.toString(bean), callback);
     }
 
@@ -295,16 +308,18 @@ public class PropagationController extends IpcoolController {
     public void sex(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.queryById(bookId);
+        List<PeopleChart> list = peopleChartService.getListByBookId(bookId, 1);
+
+        PeopleChart peopleChart = list.get(0);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
-        if (bookIndexData != null) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", bookIndexData.getFemale());
-            map.put("name", "女");
-            re.add(map);
+        if (peopleChart != null) {
             Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", bookIndexData.getMale());
+            male.put("value", peopleChart.getAgeFirst());
             male.put("name", "男");
+            Map<String, Object> female = new HashMap<String, Object>();
+            female.put("value", peopleChart.getAgeScond());
+            female.put("name", "女");
+            re.add(female);
             re.add(male);
         }
         bean.setData(re);
@@ -318,19 +333,26 @@ public class PropagationController extends IpcoolController {
     public void age(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        BookIndexData bookIndexData = bookIndexDataService.queryById(bookId);
+
+
+        List<PeopleChart> list = peopleChartService.getListByBookId(bookId, 1);
+
+        PeopleChart peopleChart = list.get(0);
+        double arr[] = new double[5];
+        arr[0] = peopleChart.getAgeFirst();
+        arr[1] = peopleChart.getAgeScond();
+        arr[2] = peopleChart.getAgeThird();
+        arr[3] = peopleChart.getAgeFourth();
+        arr[4] = peopleChart.getAgeFifth();
+
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
-        if (bookIndexData != null) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", bookIndexData.getAge() != null ? bookIndexData.getAge() : new String[0]);
-            re.add(map);
-
-            //@todo
-            Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", bookIndexData.getAge() != null ? bookIndexData.getAge() : new String[0]);
-            re.add(male);
-        }
-
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("value", arr);
+        re.add(map);
+        //@todo
+        Map<String, Object> male = new HashMap<String, Object>();
+        male.put("value", arr);
+        re.add(male);
         bean.setData(re);
         interfaceReturn(response, JsonUtils.toString(bean), callback);
 

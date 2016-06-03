@@ -116,16 +116,6 @@
     <bean id="huaYuQueueHandler" class="com.dreamy.crawler.listen.HuaYuQueueHandler"/>
 
     <!--&lt;!&ndash;队列监听&ndash;&gt;-->
-    <!--&lt;!&ndash;<rabbit:listener-container&ndash;&gt;-->
-            <!--&lt;!&ndash;connection-factory="connectionFactory"&ndash;&gt;-->
-            <!--&lt;!&ndash;auto-startup="true"&ndash;&gt;-->
-            <!--&lt;!&ndash;acknowledge="auto"&ndash;&gt;-->
-            <!--&lt;!&ndash;prefetch="1"&ndash;&gt;-->
-            <!--&lt;!&ndash;concurrency="1"&ndash;&gt;-->
-            <!--&lt;!&ndash;message-converter="simpleMessageConverter"&ndash;&gt;-->
-            <!--&lt;!&ndash;error-handler="listenerErrorHandler">&ndash;&gt;-->
-        <!--&lt;!&ndash;<rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_crawler_comment}"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</rabbit:listener-container>&ndash;&gt;-->
     <!--<rabbit:listener-container-->
             <!--connection-factory="connectionFactory"-->
             <!--auto-startup="true"-->
@@ -134,110 +124,120 @@
             <!--concurrency="1"-->
             <!--message-converter="simpleMessageConverter"-->
             <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_keyword_baidu_sougou}"/>-->
+        <!--<rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_crawler_comment}"/>-->
     <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_keyword_baidu_sougou}"/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage"-->
-                         <!--queues="${queue_keyword_wx} "/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordWeiXinEventQueueHandler" method="onMessage"
+                         queues="${queue_keyword_wx} "/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="keyWordWeiBoCrawlerQueueHandler" method="onMessage"-->
-                         <!--queues="${queue_keyword_wb} "/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordWeiBoCrawlerQueueHandler" method="onMessage"
+                         queues="${queue_keyword_wb} "/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-        <!--connection-factory="connectionFactory"-->
-        <!--auto-startup="true"-->
-        <!--acknowledge="auto"-->
-        <!--prefetch="1"-->
-        <!--concurrency="1"-->
-        <!--message-converter="simpleMessageConverter"-->
-        <!--error-handler="listenerErrorHandler">-->
-    <!--<rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>-->
-<!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+        connection-factory="connectionFactory"
+        auto-startup="true"
+        acknowledge="auto"
+        prefetch="1"
+        concurrency="1"
+        message-converter="simpleMessageConverter"
+        error-handler="listenerErrorHandler">
+    <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>
+</rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="dataWeiBoIndexQueueHandler" method="onMessage" queues="${queue_index_wb}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="dataWeiBoIndexQueueHandler" method="onMessage" queues="${queue_index_wb}"/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_news_sougou}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="newsMediaQueueHandler" method="onMessage" queues="${queue_news_sougou}"/>
+    </rabbit:listener-container>
 
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="crawlerDoubanBookQueueHandler" method="onMessage" queues="${queue_douban_crawler}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerDoubanBookQueueHandler" method="onMessage" queues="${queue_douban_crawler}"/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="jdBookQueueHandler" method="onMessage" queues="${queue_jd_crawler}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="jdBookQueueHandler" method="onMessage" queues="${queue_jd_crawler}"/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="amazonBookQueueHandler" method="onMessage" queues="${queue_amazon_crawler}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="amazonBookQueueHandler" method="onMessage" queues="${queue_amazon_crawler}"/>
+    </rabbit:listener-container>
 
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="dangBookQueueHandler" method="onMessage" queues="${queue_dangdang_crawler}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="dangBookQueueHandler" method="onMessage" queues="${queue_dangdang_crawler}"/>
+    </rabbit:listener-container>
 
 
     <rabbit:listener-container

@@ -53,10 +53,9 @@ public class KeyWordWeiXinHandler {
     public void getWeiXin(String name, Integer bookId) {
         name = HttpUtils.encodeUrl(name);
         String url = "http://weixin.sogou.com/weixin?type=2&ie=utf8&query=" + name;
-        int num = 1;
         String key = RedisConstEnums.sougouweixin.getCacheKey();
         Set<String> set = hashOperationsString.keys(RedisConstEnums.sougouweixin.getCacheKey());
-
+        int num = 1;
         if (CollectionUtils.isNotEmpty(set)) {
             num = set.size();
         }
@@ -67,36 +66,35 @@ public class KeyWordWeiXinHandler {
 
     }
 
-    public boolean crawleringByProxy(String url, String value, Integer bookId, String filed) {
+    public void crawleringByProxy(String url, String value, Integer bookId, String filed) {
         String html = HttpUtils.getHtmlGetChangeCookie(url, value);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
+                KeyWord keyWord = new KeyWord();
+                keyWord.bookId(bookId);
+                keyWord.source(KeyWordEnums.weixin.getType());
                 Element element = document.getElementById("scd_num");
                 if (element != null) {
                     String result = element.text();
                     String num = PatternUtils.getNum(result);
-                    KeyWord keyWord = new KeyWord();
-                    keyWord.bookId(bookId);
-                    keyWord.source(KeyWordEnums.weixin.getType());
                     keyWord.indexNum(Integer.valueOf(num));
-                    keyWordService.saveOrUpdate(keyWord);
+
                 } else {
                     Elements elements = document.select("div.content-box");
                     if (elements != null && elements.size() > 0) {
                         element = elements.first();
                         hashOperationsString.delete(RedisConstEnums.sougouweixin.getCacheKey(), filed);
-                        System.out.println(element.text());
                         log.error(" weixin.sogou.com  crawler book " + bookId + " error " + element.text());
+                    } else {
+                        keyWord.indexNum(NumberUtils.randomInt(1,10));
                     }
-
-
                 }
+                keyWordService.saveOrUpdate(keyWord);
             }
-            return true;
+
         }
-        return false;
+
+
     }
-
-
 }
