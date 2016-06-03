@@ -39,9 +39,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     private BookScoreService bookScoreService;
 
     @Autowired
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
-
-    @Autowired
     private RedisClientService redisClientService;
 
 
