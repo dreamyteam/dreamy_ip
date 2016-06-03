@@ -6,17 +6,17 @@ package com.dreamy.enums;
  * Date: 16/5/4
  * Time: 下午4:12
  */
-public enum SougouEnums {
+public enum NewsMediaEnums {
     sohu(1, "搜狐"),
     tenxun(2, "腾讯"),
     sina(3, "新浪"),
-    ifeng(4, "凤凰"),
+    fenghuang(4, "凤凰"),
     wangyi(5, "网易");
     private Integer type;
 
     private String Description;
 
-    SougouEnums(Integer type, String description) {
+    NewsMediaEnums(Integer type, String description) {
         this.type = type;
         Description = description;
     }

@@ -1,5 +1,6 @@
 package com.dreamy.admin.tasks;
 
+import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
@@ -48,15 +49,15 @@ public class TestTask {
     @Autowired
     private RedisClientService redisClientService;
 
-//    @Scheduled(fixedDelay = 190000)
+
+    //@Scheduled(fixedDelay = 190000)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
         int currentPage = 1;
         Page page = new Page();
-        page.setPageSize(100);
+        page.setPageSize(400);
         Boolean isLoop = true;
-        String tt = HttpUtils.decodeUrl("%25E5%25A4%25B4%25E5%258F%2591%2520%25E4%25B8%259C%25E9%2587%258E%25E5%259C%25AD%25E5%2590%25BE");
 
         while (isLoop) {
             try {
@@ -64,7 +65,7 @@ public class TestTask {
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                        getSina(bookView.getName() + " " + bookView.getAuthor(), bookView.getBookId());
+
                     }
                     currentPage++;
                 } else {

@@ -32,20 +32,6 @@ public class PropagationController extends IpcoolController {
 
     private static final Map<Integer, String> SCORE_SOURCES = new LinkedHashMap<Integer, String>();
 
-    static {
-        SOURCES.put(1, "搜获");
-        SOURCES.put(2, "腾讯");
-        SOURCES.put(3, "新浪");
-        SOURCES.put(4, "凤凰");
-        SOURCES.put(5, "网易");
-
-        SCORE_SOURCES.put(1, "亚马逊");
-        SCORE_SOURCES.put(2, "京东");
-        SCORE_SOURCES.put(3, "当当");
-        SCORE_SOURCES.put(4, "豆瓣");
-
-    }
-
     @Resource
     private NewsMediaService newsMediaService;
 
@@ -201,28 +187,28 @@ public class PropagationController extends IpcoolController {
     public void developIndexHistroy(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
         InterfaceBean bean = new InterfaceBean().success();
         BookView bookView = bookViewService.getByBookId(bookId);
-        Map<String,Object> indicator=new HashMap<String, Object>();
+        Map<String, Object> indicator = new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (bookView != null) {
             Map<String, Object> hot = new HashMap<String, Object>();
-            hot.put("name","热度");
-            hot.put("max",bookView.getHotIndex());
+            hot.put("name", "热度");
+            hot.put("max", bookView.getHotIndex());
             list.add(hot);
             Map<String, Object> develop = new HashMap<String, Object>();
-            develop.put("name","开发空间");
-            develop.put("max",bookView.getDevelopIndex());
+            develop.put("name", "开发空间");
+            develop.put("max", bookView.getDevelopIndex());
             list.add(develop);
 
             Map<String, Object> propagate = new HashMap<String, Object>();
-            propagate.put("name","传播");
-            propagate.put("max",bookView.getPropagateIndex());
+            propagate.put("name", "传播");
+            propagate.put("max", bookView.getPropagateIndex());
             list.add(propagate);
             Map<String, Object> score = new HashMap<String, Object>();
-            score.put("name","口碑");
-            score.put("max",bookView.getScore());
+            score.put("name", "口碑");
+            score.put("max", bookView.getScore());
             list.add(score);
             Double developScore = 0.0;
-            BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId()+"_"+ IndexSourceEnums.s360.getType());
+            BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId() + "_" + IndexSourceEnums.s360.getType());
             if (bookIndexData != null) {
                 String[] ages = bookIndexData.getAge();
                 if (ArrayUtils.isNotEmpty(ages)) {
@@ -231,12 +217,12 @@ public class PropagationController extends IpcoolController {
             }
 
             Map<String, Object> speed = new HashMap<String, Object>();
-            speed.put("name","消费能力");
-            speed.put("max",developScore.intValue());
+            speed.put("name", "消费能力");
+            speed.put("max", developScore.intValue());
             list.add(speed);
             //indicator.put("indicator",list);
-            int arr[] = new int[]{bookView.getHotIndex(),bookView.getDevelopIndex(),bookView.getPropagateIndex(),bookView.getScore(),developScore.intValue()};
-            indicator.put("value",arr);
+            int arr[] = new int[]{bookView.getHotIndex(), bookView.getDevelopIndex(), bookView.getPropagateIndex(), bookView.getScore(), developScore.intValue()};
+            indicator.put("value", arr);
             bean.setData(indicator);
         }
         interfaceReturn(response, JsonUtils.toString(bean), callback);
@@ -260,13 +246,16 @@ public class PropagationController extends IpcoolController {
         entity.type(1);
         List<NewsMedia> list = newsMediaService.getList(entity, null);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
-        for (NewsMedia newsMedia : list) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", newsMedia.getNum());
-            map.put("name", SOURCES.get(newsMedia.getSource()));
-            re.add(map);
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (NewsMedia newsMedia : list) {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("value", newsMedia.getNum());
+                map.put("name", SOURCES.get(newsMedia.getSource()));
+                re.add(map);
+            }
+            bean.setData(re);
         }
-        bean.setData(re);
+
         interfaceReturn(response, JsonUtils.toString(bean), callback);
     }
 
@@ -333,12 +322,12 @@ public class PropagationController extends IpcoolController {
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (bookIndexData != null) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
+            map.put("value", bookIndexData.getAge() != null ? bookIndexData.getAge() : new String[0]);
             re.add(map);
 
             //@todo
             Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", bookIndexData.getAge()!=null?bookIndexData.getAge():new String[0]);
+            male.put("value", bookIndexData.getAge() != null ? bookIndexData.getAge() : new String[0]);
             re.add(male);
         }
 

@@ -216,7 +216,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         bookIndexHistoryService.save(history);
     }
 
-    private void updateRank(BookView bookView) {
+    public void updateRank(BookView bookView) {
         redisClientService.zadd(BookRankEnums.composite.getCacheKey(), bookView.getCompositeIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.develop.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());

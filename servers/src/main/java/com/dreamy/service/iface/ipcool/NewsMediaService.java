@@ -10,9 +10,30 @@ import java.util.List;
  */
 public interface NewsMediaService {
 
+    /**
+     *
+     * @param newsMedia
+     */
     public void save(NewsMedia newsMedia);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
     public Integer delByBookId(Integer bookId);
 
+    /**
+     *
+     * @param media
+     * @param page
+     * @return
+     */
     public List<NewsMedia> getList(NewsMedia media, Page page);
+
+    /**
+     *
+     * @return
+     */
+    public List<NewsMedia> getDefaultList();
 }
