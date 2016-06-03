@@ -352,7 +352,13 @@ public class PropagationController extends IpcoolController {
         re.add(map);
         //@todo
         Map<String, Object> male = new HashMap<String, Object>();
-        male.put("value", arr);
+        double flag[] = new double[5];
+        flag[0] =0.14;
+        flag[1] =0.28;
+        flag[2] =0.31;
+        flag[3] = 0.19;
+        flag[4] =0.08;
+        male.put("value", flag);
         re.add(male);
         bean.setData(re);
         interfaceReturn(response, JsonUtils.toString(bean), callback);
