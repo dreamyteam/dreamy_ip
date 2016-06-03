@@ -1,5 +1,6 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
@@ -37,6 +38,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private QueueService queueService;
+
+    @Autowired
+    private FlushBookRankToDb flushBookRankToDb;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -116,10 +120,10 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void developIndex() {
-        BookView bookView = bookViewService.getByBookId(4769);
-        String index = bookScoreService.getPropagateIndexByBookId(4769);
-
-        System.err.println(index);
+//        BookView bookView = bookViewService.getByBookId(4769);
+//        String index = bookScoreService.getPropagateIndexByBookId(4769);
+//
+//        System.err.println(index);
 
 //        int currentPage = 1;
 //        Page page = new Page();
@@ -140,6 +144,10 @@ public class IpBookTest extends BaseJunitTest {
 //                isLoop = false;
 //            }
 //        }
+
+        flushBookRankToDb.run();
+
+
 
     }
 
