@@ -11,6 +11,7 @@ import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.iface.mongo.NetBookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
 import com.dreamy.utils.asynchronous.ObjectCallable;
@@ -186,8 +187,8 @@ public class CrawlerServiceImpl implements CrawlerService {
             @Override
             public Object run() throws Exception {
                 BookView oldBookView = bookViewService.getByBookId(bookId);
-                NetBookInfo bookInfo=netBookInfoService.getById(bookId);
-                if (oldBookView == null&&bookInfo!=null) {
+                NetBookInfo bookInfo = netBookInfoService.getById(bookId);
+                if (oldBookView == null && bookInfo != null) {
                     BookView bookView = new BookView();
                     bookView.setName(bookInfo.getTitle());
                     bookView.setImageUrl(bookInfo.getImage());
@@ -232,14 +233,16 @@ public class CrawlerServiceImpl implements CrawlerService {
                 bookScore.source(type);
                 bookScore.status(0);
                 bookScore.bookId(bookId);
-                if (bookInfo.getCommentNum() != null) {
-                    bookScore.commentNum(bookInfo.getCommentNum());
-                }
-                if (bookInfo.getSaleSort() != null) {
-                    bookScore.saleSort(Integer.valueOf(bookInfo.getSaleSort()));
-                }
-                if (bookInfo.getScore() != null) {
-                    bookScore.setScore(Double.valueOf(bookInfo.getScore()));
+                bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
+                bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",", "")) : 0);
+                if (type == CrawlerSourceEnums.amazon.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                } else if (type == CrawlerSourceEnums.jd.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.dangdang.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.douban.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                 }
                 bookScoreService.saveUpdate(bookScore);
                 return null;
