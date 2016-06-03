@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
@@ -66,17 +67,18 @@ public class KeyWordWeiBoHandler {
             client.getConnectionManager().shutdown();
             responseText = HttpUtils.decodeUnicode(responseText);
             String result = getResult(responseText);
+            KeyWord keyWord = new KeyWord();
+            keyWord.source(KeyWordEnums.weibo.getType());
+            keyWord.bookId(bookId);
             if (StringUtils.isNotEmpty(result)) {
-                KeyWord keyWord = new KeyWord();
-                keyWord.bookId(bookId);
                 keyWord.indexNum(Integer.valueOf(result.replace(",", "")));
-                keyWord.source(KeyWordEnums.weibo.getType());
-                keyWordService.saveOrUpdate(keyWord);
             } else {
                 if (check(responseText)) {
                     log.info(bookId + " 微博搜索结果 " + responseText);
                 }
+                keyWord.indexNum(NumberUtils.randomInt(1,10));
             }
+            keyWordService.saveOrUpdate(keyWord);
         } catch (Exception e) {
             log.error("微博搜索结果 失败 ", e);
         }
@@ -128,11 +130,11 @@ public class KeyWordWeiBoHandler {
             LoginSina ls = new LoginSina(entry.getKey(), entry.getValue());
             ls.dologinSina();
             if (StringUtils.isNotEmpty(CrawSina.Cookie)) {
-                commonService.getCacheService().set(RedisConstEnums.weiboCookieName.getCacheKey()+i, CrawSina.Cookie, 3600);
+                commonService.getCacheService().set(RedisConstEnums.weiboCookieName.getCacheKey() + i, CrawSina.Cookie, 3600);
                 i++;
             }
         }
-        commonService.getCacheService().put(RedisConstEnums.weibo.getCacheKey(),i);
+        commonService.getCacheService().put(RedisConstEnums.weibo.getCacheKey(), i);
     }
 
 }

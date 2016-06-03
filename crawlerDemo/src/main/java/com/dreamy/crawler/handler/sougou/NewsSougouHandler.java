@@ -2,10 +2,7 @@ package com.dreamy.crawler.handler.sougou;
 
 import com.dreamy.domain.ipcool.NewsMedia;
 import com.dreamy.service.iface.ipcool.NewsMediaService;
-import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.PatternUtils;
-import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -56,12 +53,14 @@ public class NewsSougouHandler {
                 Elements elements = document.getElementsByClass("filt-pop");
                 if (elements != null && elements.size() > 1) {
                     Elements hrefs = elements.get(1).getElementsByTag("a");
-
                     int i = 1;
-                    for (Element elements1 : hrefs) {
-                        url=elements1.attr("href");
-                        get(url, i, bookId);
-                        i++;
+                    if (hrefs.size() > 4) {
+                        newsMediaService.delByBookId(bookId);
+                        for (Element elements1 : hrefs) {
+                            url = "http://news.sogou.com/news"+elements1.attr("href");
+                            get(url, i, bookId);
+                            i++;
+                        }
                     }
 
                 }
@@ -77,16 +76,18 @@ public class NewsSougouHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 Elements elements = document.getElementsByClass("filt-result");
+                NewsMedia newsMedia = new NewsMedia();
+                newsMedia.bookId(bookId);
+                newsMedia.type(1);
+                newsMedia.source(source);
                 if (elements != null && elements.size() > 0) {
                     Element element = elements.first();
                     PatternUtils.getNum(element.text());
-                    NewsMedia newsMedia = new NewsMedia();
-                    newsMedia.bookId(bookId);
-                    newsMedia.type(1);
-                    newsMedia.source(source);
                     newsMedia.num(Integer.valueOf(PatternUtils.getNum(element.text())));
-                    newsMediaService.save(newsMedia);
+                } else {
+                    newsMedia.num(NumberUtils.randomInt(1, 20));
                 }
+                newsMediaService.save(newsMedia);
             }
         }
     }

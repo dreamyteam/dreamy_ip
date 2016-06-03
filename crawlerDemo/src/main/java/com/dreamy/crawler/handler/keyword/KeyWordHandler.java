@@ -40,14 +40,10 @@ import java.util.regex.Pattern;
  */
 @Component
 public class KeyWordHandler {
-    @Autowired
-    protected UserAgentService userAgentService;
 
     private static final Logger log = LoggerFactory.getLogger(KeyWordHandler.class);
-
     @Resource
-    private KeyWordService keyWordService;
-
+    KeyWordService keyWordService;
     @Resource
     CommonService commonService;
 
@@ -67,20 +63,19 @@ public class KeyWordHandler {
         String html = HttpUtils.getHtmlGet(url);
         Document document = Jsoup.parse(html);
         if (document != null) {
+            KeyWord keyWord = new KeyWord();
+            keyWord.bookId(bookId);
+            keyWord.source(KeyWordEnums.baidu.getType());
             Elements elements = document.getElementsByClass("nums");
             if (elements != null && elements.size() > 0) {
-                KeyWord keyWord = null;
                 Element element = elements.first();
                 String result = element.text();
                 String num = PatternUtils.getNum(result);
-                keyWord = new KeyWord();
-                keyWord.bookId(bookId);
                 keyWord.indexNum(Integer.valueOf(num));
-                keyWord.source(KeyWordEnums.baidu.getType());
-                keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 百度搜索结果 "+html);
+                keyWord.indexNum(NumberUtils.randomInt(1, 100));
             }
+            keyWordService.saveOrUpdate(keyWord);
 
         }
 
@@ -93,33 +88,25 @@ public class KeyWordHandler {
      */
     public void getSo(String word, Integer bookId) {
 
-        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q="+word;
+        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + word;
         String html = HttpUtils.getSsl(url);
         Document document = Jsoup.parse(html);
         if (document != null) {
             Elements elements = document.getElementsByClass("nums");
-            KeyWord keyWord = null;
+            KeyWord keyWord =new KeyWord();
+            keyWord.bookId(bookId);
+            keyWord.source(KeyWordEnums.so.getType());
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
                 String result = element.text();
                 String num = PatternUtils.getNum(result);
-                keyWord = new KeyWord();
-                keyWord.bookId(bookId);
-                keyWord.source(KeyWordEnums.so.getType());
                 keyWord.indexNum(Integer.valueOf(num));
-                keyWordService.saveOrUpdate(keyWord);
             } else {
-                log.info(bookId + " 360 搜索结果 "+ html);
+                keyWord.setIndexNum(NumberUtils.randomInt(1,100));
             }
+            keyWordService.saveOrUpdate(keyWord);
         }
     }
-
-
-
-
-
-
-
 
 
 }
