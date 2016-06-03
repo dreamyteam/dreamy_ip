@@ -1,5 +1,6 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookScoreService;
@@ -26,6 +27,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private BookScoreService bookScoreService;
+
+    @Autowired
+    private UpdateIndexTask updateIndexTask;
 
     @Test
     public void insert() {
@@ -102,7 +106,8 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public  void  developIndex(){
-        BookView bookView = bookViewService.getByBookId(217);
+        BookView bookView = bookViewService.getByBookId(7071);
         bookScoreService.getDevelopIndexByRecord(bookView);
     }
+
 }
