@@ -116,8 +116,10 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void developIndex() {
-        BookView bookView = bookViewService.getByBookId(7397);
-        bookScoreService.getDevelopIndexByRecord(bookView);
+        BookView bookView = bookViewService.getByBookId(4769);
+        String index = bookScoreService.getPropagateIndexByBookId(4769);
+
+        System.err.println(index);
 
 //        int currentPage = 1;
 //        Page page = new Page();
@@ -137,8 +139,6 @@ public class IpBookTest extends BaseJunitTest {
 //            } else {
 //                isLoop = false;
 //            }
-//
-//
 //        }
 
     }
