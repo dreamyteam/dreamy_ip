@@ -145,6 +145,7 @@ public class BookScoreServiceImpl implements BookScoreService {
             Double sexScore = 0.0;
             for (PeopleChart peopleChart : peopleChartList) {
                 sexScore += 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                i++;
             }
 
             developScore *= sexScore / i;

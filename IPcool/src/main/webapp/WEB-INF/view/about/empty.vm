@@ -83,6 +83,8 @@
 </div>
 
     #parse("/common/popup_sign.vm")
+    $!assetsUtils.getJsByKey("jquery.min.js")
+    $!assetsUtils.getJsByKey("all.js")
 </body>
 
 </html>

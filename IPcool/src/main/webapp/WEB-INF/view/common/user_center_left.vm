@@ -11,7 +11,6 @@
 ##    <li><a href="">我关注的</a></li>
     <li #if($pageName=="bio") class="active" #end><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">帐号信息</a></li>
     <li #if($pageName=="password") class="active"    #end><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
-##    <li><a href="">历史纪录</a></li>
 </ul>
 
 
@@ -23,6 +22,9 @@
                 <img id="avatar_upload" src="">
             </div>
             <p>随意拖拽或缩放大图中的虚线方格，虚线内小图即为保存后的小头像图标。</p>
-            <button class="submit" id="avatar_upload_submit">保存</button>
+            <div class="avatar_btn_container">
+                <button class="submit" id="avatar_upload_submit">保存</button>
+                <button class="cancle" id="avatar_upload_cancle">取消</button>
+            </div>
         </div>
 </div>
