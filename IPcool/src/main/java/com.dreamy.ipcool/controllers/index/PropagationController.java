@@ -6,11 +6,12 @@ import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.BookIndexData;
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
-import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.utils.*;
+import com.dreamy.utils.ArrayUtils;
+import com.dreamy.utils.ConstStrings;
+import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.TimeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -308,16 +309,16 @@ public class PropagationController extends IpcoolController {
     public void sex(HttpServletResponse response, @RequestParam(value = "ip", required = true) Integer bookId, @RequestParam(value = "callback", required = false, defaultValue = ConstStrings.EMPTY) String callback) {
 
         InterfaceBean bean = new InterfaceBean().success();
-        List<PeopleChart> list = peopleChartService.getListByBookId(bookId, 1);
+        List<PeopleChart> list = peopleChartService.getListByBookId(bookId);
 
         PeopleChart peopleChart = list.get(0);
         List<Map<String, Object>> re = new ArrayList<Map<String, Object>>();
         if (peopleChart != null) {
             Map<String, Object> male = new HashMap<String, Object>();
-            male.put("value", peopleChart.getAgeFirst());
+            male.put("value", peopleChart.getMale());
             male.put("name", "男");
             Map<String, Object> female = new HashMap<String, Object>();
-            female.put("value", peopleChart.getAgeScond());
+            female.put("value", peopleChart.getFemale());
             female.put("name", "女");
             re.add(female);
             re.add(male);
@@ -335,7 +336,7 @@ public class PropagationController extends IpcoolController {
         InterfaceBean bean = new InterfaceBean().success();
 
 
-        List<PeopleChart> list = peopleChartService.getListByBookId(bookId, 1);
+        List<PeopleChart> list = peopleChartService.getListByBookId(bookId);
 
         PeopleChart peopleChart = list.get(0);
         double arr[] = new double[5];
