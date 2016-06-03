@@ -2,16 +2,14 @@ package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookScoreDao;
-import com.dreamy.domain.ipcool.BookScore;
-import com.dreamy.domain.ipcool.BookScoreConditions;
-import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.KeyWord;
+import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
+import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.utils.ArrayUtils;
 import com.dreamy.utils.BeanUtils;
@@ -37,6 +35,9 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Autowired
     private KeyWordService keyWordService;
+
+    @Autowired
+    private PeopleChartService peopleChartService;
 
     @Override
     public void saveUpdate(BookScore bookScore) {
@@ -138,25 +139,12 @@ public class BookScoreServiceImpl implements BookScoreService {
 
         developScore += (hotIndex + propagationIndex) * 0.5;
 
-        List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
-        if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
+        List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
+        if (CollectionUtils.isNotEmpty(peopleChartList)) {
             int i = 0;
             Double sexScore = 0.0;
-
-            for (BookIndexData bookIndexData : bookIndexDatas) {
-                String[] ages = bookIndexData.getAge();
-                if (ArrayUtils.isNotEmpty(ages)) {
-                    if (bookIndexData.getSource().equals(IndexSourceEnums.weibo.getType())) {
-                        Double totalPeople = 0.0;
-                        for (String people : ages) {
-                            totalPeople += Double.parseDouble(people);
-                        }
-                        sexScore += (15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[2]) + 16 * Double.parseDouble(ages[3]) + 8 * Double.parseDouble(ages[4])) / totalPeople;
-                    } else {
-                        sexScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[2]) + 16 * Double.parseDouble(ages[3]) + 8 * Double.parseDouble(ages[4]);
-                    }
-                    i++;
-                }
+            for (PeopleChart peopleChart : peopleChartList) {
+                sexScore += 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
             }
 
             developScore *= sexScore / i;
@@ -229,6 +217,4 @@ public class BookScoreServiceImpl implements BookScoreService {
 
         return res;
     }
-
-
 }

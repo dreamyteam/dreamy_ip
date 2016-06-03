@@ -10,10 +10,22 @@ import java.util.List;
  */
 public interface PeopleChartService {
 
+    /**
+     * @param peopleChart
+     */
     public void save(PeopleChart peopleChart);
 
+    /**
+     * @param peopleChart
+     * @param page
+     * @return
+     */
     public List<PeopleChart> getList(PeopleChart peopleChart, Page page);
 
+    /**
+     * @param bookId
+     * @return
+     */
     public List<PeopleChart> getListByBookId(Integer bookId);
 
 

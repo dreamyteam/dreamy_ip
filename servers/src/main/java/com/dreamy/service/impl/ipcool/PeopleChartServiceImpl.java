@@ -43,4 +43,6 @@ public class PeopleChartServiceImpl implements PeopleChartService {
         conditions.createCriteria().andBookIdEqualTo(bookId);
         return peopleChartDao.selectByExample(conditions);
     }
+
+
 }
