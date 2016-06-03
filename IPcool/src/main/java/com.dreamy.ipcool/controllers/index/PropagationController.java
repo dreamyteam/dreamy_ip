@@ -8,10 +8,7 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
-import com.dreamy.utils.ArrayUtils;
-import com.dreamy.utils.ConstStrings;
-import com.dreamy.utils.JsonUtils;
-import com.dreamy.utils.TimeUtils;
+import com.dreamy.utils.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -207,38 +204,39 @@ public class PropagationController extends IpcoolController {
         Map<String, Object> indicator = new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (bookView != null) {
+            int total=0;
             Map<String, Object> hot = new HashMap<String, Object>();
             hot.put("name", "热度");
             hot.put("max", bookView.getHotIndex());
             list.add(hot);
+            total+=bookView.getHotIndex();
             Map<String, Object> develop = new HashMap<String, Object>();
             develop.put("name", "开发空间");
             develop.put("max", bookView.getDevelopIndex());
             list.add(develop);
+            total+=bookView.getDevelopIndex();
 
             Map<String, Object> propagate = new HashMap<String, Object>();
             propagate.put("name", "传播");
             propagate.put("max", bookView.getPropagateIndex());
             list.add(propagate);
+            total+=bookView.getPropagateIndex();
             Map<String, Object> score = new HashMap<String, Object>();
             score.put("name", "口碑");
-            score.put("max", bookView.getScore());
+            score.put("max", bookView.getReputationIndex());
             list.add(score);
+            total+=bookView.getReputationIndex();
             Double developScore = 0.0;
-            BookIndexData bookIndexData = bookIndexDataService.getById(bookView.getBookId() + "_" + IndexSourceEnums.s360.getType());
-            if (bookIndexData != null) {
-                String[] ages = bookIndexData.getAge();
-                if (ArrayUtils.isNotEmpty(ages)) {
-                    developScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[1]) + 16 * Double.parseDouble(ages[0]) + 8 * Double.parseDouble(ages[0]);
-                }
+            List<PeopleChart> charts=peopleChartService.getListByBookId(bookId);
+            if(CollectionUtils.isNotEmpty(charts)){
+                PeopleChart peopleChart=charts.get(0);
+                developScore=(total/4)*peopleChart.getAgeThird();
             }
-
             Map<String, Object> speed = new HashMap<String, Object>();
             speed.put("name", "消费能力");
             speed.put("max", developScore.intValue());
             list.add(speed);
-            //indicator.put("indicator",list);
-            int arr[] = new int[]{bookView.getHotIndex(), bookView.getDevelopIndex(), bookView.getPropagateIndex(), bookView.getScore(), developScore.intValue()};
+            int arr[] = new int[]{bookView.getHotIndex(), bookView.getDevelopIndex(), bookView.getPropagateIndex(), bookView.getReputationIndex(), developScore.intValue()};
             indicator.put("value", arr);
             bean.setData(indicator);
         }
