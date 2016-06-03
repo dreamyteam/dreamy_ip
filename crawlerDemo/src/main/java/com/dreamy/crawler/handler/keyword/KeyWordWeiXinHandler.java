@@ -58,12 +58,14 @@ public class KeyWordWeiXinHandler {
         String key = RedisConstEnums.sougouweixin.getCacheKey();
         Set<String> set = hashOperationsString.keys(RedisConstEnums.sougouweixin.getCacheKey());
         int num = 1;
+        String filed = "";
+        String cookie = "";
         if (CollectionUtils.isNotEmpty(set)) {
             num = set.size();
+            List<String> list = new ArrayList(set);
+            filed = list.get(NumberUtils.randomInt(1, num-1));
+            cookie = hashOperationsString.get(key, filed);
         }
-        List<String> list = new ArrayList(set);
-        String filed =list.get(NumberUtils.randomInt(1, num));
-        String cookie = hashOperationsString.get(key, filed);
         crawleringByProxy(url, cookie, bookId, filed);
 
 
@@ -87,11 +89,11 @@ public class KeyWordWeiXinHandler {
                     Elements elements = document.select("div.content-box");
                     if (elements != null && elements.size() > 0) {
                         element = elements.first();
-                        keyWord.indexNum(NumberUtils.randomInt(1,10));
+                        keyWord.indexNum(NumberUtils.randomInt(1, 10));
                         hashOperationsString.delete(RedisConstEnums.sougouweixin.getCacheKey(), filed);
                         log.error(" weixin.sogou.com  crawler book " + bookId + " error " + element.text());
                     } else {
-                        keyWord.indexNum(NumberUtils.randomInt(1,10));
+                        keyWord.indexNum(NumberUtils.randomInt(1, 10));
                     }
                 }
                 keyWordService.saveOrUpdate(keyWord);
