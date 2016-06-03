@@ -97,7 +97,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 hotScore += marketPercent * commentNum;
             }
 
-            hotScore = Math.log10(hotScore / 3.2 + getSearchIndexByBookId(bookId) * 4) * 1000;
+            hotScore = Math.log10(hotScore + (hotScore * getSearchIndexByBookId(bookId) / 300)) * 1000;
         }
 
         return "" + hotScore.intValue();
@@ -120,11 +120,12 @@ public class BookScoreServiceImpl implements BookScoreService {
         List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
         if (CollectionUtils.isNotEmpty(keyWords)) {
             for (KeyWord word : keyWords) {
-                propagateIndex += map.get(word.getSource()) * word.getIndexNum();
+                if (!keyWord.getSource().equals(KeyWordEnums.weibo.getType())) {
+                    propagateIndex += map.get(word.getSource()) * word.getIndexNum();
+                }
             }
 
             propagateIndex = Math.log10(propagateIndex) * 1000;
-
         }
         return "" + propagateIndex.intValue();
     }
