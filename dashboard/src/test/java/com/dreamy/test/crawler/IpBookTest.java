@@ -1,15 +1,19 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
+import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -30,6 +34,12 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private UpdateIndexTask updateIndexTask;
+
+    @Autowired
+    private QueueService queueService;
+
+    @Value("${queue_crawler_over}")
+    private String BookOverQueue;
 
     @Test
     public void insert() {
@@ -105,9 +115,32 @@ public class IpBookTest extends BaseJunitTest {
     }
 
     @Test
-    public  void  developIndex(){
-        BookView bookView = bookViewService.getByBookId(7071);
+    public void developIndex() {
+        BookView bookView = bookViewService.getByBookId(7397);
         bookScoreService.getDevelopIndexByRecord(bookView);
+
+//        int currentPage = 1;
+//        Page page = new Page();
+//        page.setPageSize(100);
+//        Boolean isLoop = true;
+//
+//        while (isLoop) {
+//            page.setCurrentPage(currentPage);
+//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
+//            if (CollectionUtils.isNotEmpty(bookViewList)) {
+//                for (BookView bookView : bookViewList) {
+//                    Map<String, String> params = new HashMap<>();
+//                    params.put("bookId", "" + bookView.getBookId());
+//                    queueService.push(BookOverQueue, params);
+//                }
+//                currentPage++;
+//            } else {
+//                isLoop = false;
+//            }
+//
+//
+//        }
+
     }
 
 }

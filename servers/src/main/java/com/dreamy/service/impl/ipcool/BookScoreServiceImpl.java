@@ -150,8 +150,7 @@ public class BookScoreServiceImpl implements BookScoreService {
 
             developScore *= (sexScore / i) / (20.512);
         }
-
-        developScore = Math.log10(developScore) * 1000;
+ 
         return "" + (developScore.intValue());
     }
 
