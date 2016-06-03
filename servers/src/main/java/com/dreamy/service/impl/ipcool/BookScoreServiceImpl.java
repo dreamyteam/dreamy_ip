@@ -121,9 +121,11 @@ public class BookScoreServiceImpl implements BookScoreService {
         List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
         if (CollectionUtils.isNotEmpty(keyWords)) {
             for (KeyWord word : keyWords) {
-                if (!keyWord.getSource().equals(KeyWordEnums.weibo.getType())) {
+//                Integer source = word.getSource();
+//                Integer type = KeyWordEnums.weibo.getType();
+//                if (source != type) {
                     propagateIndex += map.get(word.getSource()) * word.getIndexNum();
-                }
+//                }
             }
 
             propagateIndex = Math.log10(propagateIndex) * 1000;
@@ -148,10 +150,9 @@ public class BookScoreServiceImpl implements BookScoreService {
                 i++;
             }
 
-            developScore *= sexScore / i;
+            developScore *= (sexScore / i) / (20.512);
         }
 
-        developScore = Math.log10(developScore) * 1000;
         return "" + (developScore.intValue());
     }
 
