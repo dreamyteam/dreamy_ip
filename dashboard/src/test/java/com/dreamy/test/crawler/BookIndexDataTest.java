@@ -58,83 +58,65 @@ public class BookIndexDataTest extends BaseJunitTest {
                 }
                 if (StringUtils.isNotEmpty(data.getMale())) {
                     male += Double.valueOf(data.getMale());
-
                 }
 
             }
             PeopleChart peopleChart = new PeopleChart();
-            peopleChart.setType(1);
             peopleChart.setBookId(bookView.getBookId());
-            peopleChart.setAgeFirst(male / i);
-            peopleChart.setAgeScond(female / i);
-            peopleChartService.save(peopleChart);
-
+            peopleChart.setMale(male / i);
+            peopleChart.setFemale(female / i);
+            age(i, list, peopleChart);
 
         }
 
 
     }
 
-    @Test
-    public void save111() {
-        Page page = new Page();
-        page.setPageSize(1661);
-        page.setCurrentPage(4);
-        List<BookView> views = bookViewService.getList(new BookView().type(1), page);
+    public void age(int num, List<BookIndexData> list, PeopleChart peopleChart) {
+        double a1 = 0.0;
+        double a2 = 0.0;
+        double a3 = 0.0;
+        double a4 = 0.0;
+        double a5 = 0.0;
 
-        for (BookView bookView : views) {
-            List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
-            double a1 = 0.0;
-            double a2 = 0.0;
-            double a3 = 0.0;
-            double a4 = 0.0;
-            double a5 = 0.0;
-            int i = 1;
-            for (BookIndexData data : list) {
-                i = list.size();
-                String arr[] = data.getAge();
-                if (arr != null) {
-                    if (data.getSource().equals(IndexSourceEnums.weibo.getType())) {
-                        double[] cc = cc(arr);
-                        a1 += cc[0];
-                        a2 += cc[0];
-                        a3 += cc[0];
-                        a4 += cc[0];
-                        a5 += cc[0];
-                    } else {
-                        a1 += Double.valueOf(arr[0]);
-                        a2 += Double.valueOf(arr[1]);
-                        a3 += Double.valueOf(arr[2]);
-                        a4 += Double.valueOf(arr[3]);
-                        a5 += Double.valueOf(arr[4]);
-                    }
-
+        for (BookIndexData data : list) {
+            String arr[] = data.getAge();
+            if (arr != null) {
+                if (data.getSource().equals(IndexSourceEnums.weibo.getType())) {
+                    double[] cc = cc(arr);
+                    a1 += cc[0];
+                    a2 += cc[0];
+                    a3 += cc[0];
+                    a4 += cc[0];
+                    a5 += cc[0];
+                } else {
+                    a1 += Double.valueOf(arr[0]);
+                    a2 += Double.valueOf(arr[1]);
+                    a3 += Double.valueOf(arr[2]);
+                    a4 += Double.valueOf(arr[3]);
+                    a5 += Double.valueOf(arr[4]);
                 }
+
             }
-            PeopleChart peopleChart = new PeopleChart();
-            peopleChart.setType(2);
-            peopleChart.setBookId(bookView.getBookId());
-            peopleChart.setAgeFirst(a1 / i);
-            peopleChart.setAgeScond(a2 / i);
-            peopleChart.setAgeThird(a3 / i);
-            peopleChart.setAgeFourth(a4 / i);
-            peopleChart.setAgeFifth(a5 / i);
-            peopleChartService.save(peopleChart);
-
-
         }
+        peopleChart.setAgeFirst(a1 / num);
+        peopleChart.setAgeScond(a2 / num);
+        peopleChart.setAgeThird(a3 / num);
+        peopleChart.setAgeFourth(a4 / num);
+        peopleChart.setAgeFifth(a5 / num);
+        peopleChartService.save(peopleChart);
 
 
     }
 
 
     private double[] cc(String ages[]) {
-        double totalPeople =0;
+        double totalPeople = 0;
         for (String people : ages) {
             totalPeople += Double.parseDouble(people);
         }
-        if(totalPeople<1){
-            totalPeople=1;
+        if (totalPeople < 1) {
+            totalPeople = 1;
         }
         double arr[] = new double[5];
 

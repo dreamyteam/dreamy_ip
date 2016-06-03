@@ -7,8 +7,6 @@ import java.util.Date;
 public class PeopleChart extends BaseDomain<Integer> implements Serializable {
     private Integer id;
 
-    private Integer type;
-
     private Integer bookId;
 
     private Double ageFirst;
@@ -20,6 +18,10 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
     private Double ageFourth;
 
     private Double ageFifth;
+
+    private Double male;
+
+    private Double female;
 
     private Date createdAt;
 
@@ -33,14 +35,6 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Integer getBookId() {
@@ -91,6 +85,22 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
         this.ageFifth = ageFifth;
     }
 
+    public Double getMale() {
+        return male;
+    }
+
+    public void setMale(Double male) {
+        this.male = male;
+    }
+
+    public Double getFemale() {
+        return female;
+    }
+
+    public void setFemale(Double female) {
+        this.female = female;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -120,13 +130,14 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
         }
         PeopleChart other = (PeopleChart) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getBookId() == null ? other.getBookId() == null : this.getBookId().equals(other.getBookId()))
             && (this.getAgeFirst() == null ? other.getAgeFirst() == null : this.getAgeFirst().equals(other.getAgeFirst()))
             && (this.getAgeScond() == null ? other.getAgeScond() == null : this.getAgeScond().equals(other.getAgeScond()))
             && (this.getAgeThird() == null ? other.getAgeThird() == null : this.getAgeThird().equals(other.getAgeThird()))
             && (this.getAgeFourth() == null ? other.getAgeFourth() == null : this.getAgeFourth().equals(other.getAgeFourth()))
             && (this.getAgeFifth() == null ? other.getAgeFifth() == null : this.getAgeFifth().equals(other.getAgeFifth()))
+            && (this.getMale() == null ? other.getMale() == null : this.getMale().equals(other.getMale()))
+            && (this.getFemale() == null ? other.getFemale() == null : this.getFemale().equals(other.getFemale()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
             && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
     }
@@ -136,13 +147,14 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getBookId() == null) ? 0 : getBookId().hashCode());
         result = prime * result + ((getAgeFirst() == null) ? 0 : getAgeFirst().hashCode());
         result = prime * result + ((getAgeScond() == null) ? 0 : getAgeScond().hashCode());
         result = prime * result + ((getAgeThird() == null) ? 0 : getAgeThird().hashCode());
         result = prime * result + ((getAgeFourth() == null) ? 0 : getAgeFourth().hashCode());
         result = prime * result + ((getAgeFifth() == null) ? 0 : getAgeFifth().hashCode());
+        result = prime * result + ((getMale() == null) ? 0 : getMale().hashCode());
+        result = prime * result + ((getFemale() == null) ? 0 : getFemale().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         return result;
@@ -150,11 +162,6 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
 
     public PeopleChart id(Integer value) {
         this.id = value;
-        return this;
-    }
-
-    public PeopleChart type(Integer value) {
-        this.type = value;
         return this;
     }
 
@@ -185,6 +192,16 @@ public class PeopleChart extends BaseDomain<Integer> implements Serializable {
 
     public PeopleChart ageFifth(Double value) {
         this.ageFifth = value;
+        return this;
+    }
+
+    public PeopleChart male(Double value) {
+        this.male = value;
+        return this;
+    }
+
+    public PeopleChart female(Double value) {
+        this.female = value;
         return this;
     }
 

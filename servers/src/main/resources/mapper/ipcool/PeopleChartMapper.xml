@@ -3,13 +3,14 @@
 <mapper namespace="com.dreamy.mapper.ipcool.PeopleChartMapper" >
   <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.PeopleChart" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="age_first" property="ageFirst" jdbcType="DOUBLE" />
     <result column="age_scond" property="ageScond" jdbcType="DOUBLE" />
     <result column="age_third" property="ageThird" jdbcType="DOUBLE" />
     <result column="age_fourth" property="ageFourth" jdbcType="DOUBLE" />
     <result column="age_fifth" property="ageFifth" jdbcType="DOUBLE" />
+    <result column="male" property="male" jdbcType="DOUBLE" />
+    <result column="female" property="female" jdbcType="DOUBLE" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, type, book_id, age_first, age_scond, age_third, age_fourth, age_fifth, created_at, 
-    updated_at
+    id, book_id, age_first, age_scond, age_third, age_fourth, age_fifth, male, female, 
+    created_at, updated_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.PeopleChartConditions" >
     select
@@ -107,21 +108,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.PeopleChart" useGeneratedKeys="true" keyProperty="id" >
-    insert into ip_people_chart (type, book_id, age_first, 
-      age_scond, age_third, age_fourth, 
-      age_fifth, created_at, updated_at
-      )
-    values (#{type,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{ageFirst,jdbcType=DOUBLE}, 
-      #{ageScond,jdbcType=DOUBLE}, #{ageThird,jdbcType=DOUBLE}, #{ageFourth,jdbcType=DOUBLE}, 
-      #{ageFifth,jdbcType=DOUBLE}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
-      )
+    insert into ip_people_chart (book_id, age_first, age_scond, 
+      age_third, age_fourth, age_fifth, 
+      male, female, created_at, 
+      updated_at)
+    values (#{bookId,jdbcType=INTEGER}, #{ageFirst,jdbcType=DOUBLE}, #{ageScond,jdbcType=DOUBLE}, 
+      #{ageThird,jdbcType=DOUBLE}, #{ageFourth,jdbcType=DOUBLE}, #{ageFifth,jdbcType=DOUBLE}, 
+      #{male,jdbcType=DOUBLE}, #{female,jdbcType=DOUBLE}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.PeopleChart" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_people_chart
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="type != null" >
-        type,
-      </if>
       <if test="bookId != null" >
         book_id,
       </if>
@@ -140,6 +138,12 @@
       <if test="ageFifth != null" >
         age_fifth,
       </if>
+      <if test="male != null" >
+        male,
+      </if>
+      <if test="female != null" >
+        female,
+      </if>
       <if test="createdAt != null" >
         created_at,
       </if>
@@ -148,9 +152,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
       <if test="bookId != null" >
         #{bookId,jdbcType=INTEGER},
       </if>
@@ -168,6 +169,12 @@
       </if>
       <if test="ageFifth != null" >
         #{ageFifth,jdbcType=DOUBLE},
+      </if>
+      <if test="male != null" >
+        #{male,jdbcType=DOUBLE},
+      </if>
+      <if test="female != null" >
+        #{female,jdbcType=DOUBLE},
       </if>
       <if test="createdAt != null" >
         #{createdAt,jdbcType=TIMESTAMP},
@@ -189,9 +196,6 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=INTEGER},
-      </if>
       <if test="record.bookId != null" >
         book_id = #{record.bookId,jdbcType=INTEGER},
       </if>
@@ -210,6 +214,12 @@
       <if test="record.ageFifth != null" >
         age_fifth = #{record.ageFifth,jdbcType=DOUBLE},
       </if>
+      <if test="record.male != null" >
+        male = #{record.male,jdbcType=DOUBLE},
+      </if>
+      <if test="record.female != null" >
+        female = #{record.female,jdbcType=DOUBLE},
+      </if>
       <if test="record.createdAt != null" >
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
@@ -224,13 +234,14 @@
   <update id="updateByExample" parameterType="map" >
     update ip_people_chart
     set id = #{record.id,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=INTEGER},
       book_id = #{record.bookId,jdbcType=INTEGER},
       age_first = #{record.ageFirst,jdbcType=DOUBLE},
       age_scond = #{record.ageScond,jdbcType=DOUBLE},
       age_third = #{record.ageThird,jdbcType=DOUBLE},
       age_fourth = #{record.ageFourth,jdbcType=DOUBLE},
       age_fifth = #{record.ageFifth,jdbcType=DOUBLE},
+      male = #{record.male,jdbcType=DOUBLE},
+      female = #{record.female,jdbcType=DOUBLE},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -240,9 +251,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.ipcool.PeopleChart" >
     update ip_people_chart
     <set >
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
       <if test="bookId != null" >
         book_id = #{bookId,jdbcType=INTEGER},
       </if>
@@ -261,6 +269,12 @@
       <if test="ageFifth != null" >
         age_fifth = #{ageFifth,jdbcType=DOUBLE},
       </if>
+      <if test="male != null" >
+        male = #{male,jdbcType=DOUBLE},
+      </if>
+      <if test="female != null" >
+        female = #{female,jdbcType=DOUBLE},
+      </if>
       <if test="createdAt != null" >
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
@@ -272,13 +286,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.PeopleChart" >
     update ip_people_chart
-    set type = #{type,jdbcType=INTEGER},
-      book_id = #{bookId,jdbcType=INTEGER},
+    set book_id = #{bookId,jdbcType=INTEGER},
       age_first = #{ageFirst,jdbcType=DOUBLE},
       age_scond = #{ageScond,jdbcType=DOUBLE},
       age_third = #{ageThird,jdbcType=DOUBLE},
       age_fourth = #{ageFourth,jdbcType=DOUBLE},
       age_fifth = #{ageFifth,jdbcType=DOUBLE},
+      male = #{male,jdbcType=DOUBLE},
+      female = #{female,jdbcType=DOUBLE},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

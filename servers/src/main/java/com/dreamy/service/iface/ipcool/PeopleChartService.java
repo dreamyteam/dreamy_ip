@@ -14,7 +14,7 @@ public interface PeopleChartService {
 
     public List<PeopleChart> getList(PeopleChart peopleChart, Page page);
 
-    public List<PeopleChart> getListByBookId(Integer bookId,Integer type);
+    public List<PeopleChart> getListByBookId(Integer bookId);
 
 
 }
