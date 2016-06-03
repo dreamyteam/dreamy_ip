@@ -88,7 +88,7 @@ public class BookScoreServiceImpl implements BookScoreService {
     @Override
     public String getBookHotIndexByBookId(Integer bookId) {
         List<BookScore> bookScores = getByBookId(bookId);
-        Double hotScore = 0.0;
+        Double hotScore = 10.0;
         if (CollectionUtils.isNotEmpty(bookScores)) {
             Map<Integer, Double> percentMap = getPercentMap(bookScores);
             for (BookScore bookScore : bookScores) {
@@ -105,7 +105,7 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Override
     public String getPropagateIndexByBookId(Integer bookId) {
-        Double propagateIndex = 0.0;
+        Double propagateIndex = 10.0;
 
         KeyWord keyWord = new KeyWord();
         keyWord.bookId(bookId);
@@ -132,7 +132,7 @@ public class BookScoreServiceImpl implements BookScoreService {
 
     @Override
     public String getDevelopIndexByRecord(BookView bookView) {
-        Double developScore = 0.0;
+        Double developScore = 10.0;
         Integer hotIndex = bookView.getHotIndex();
         Integer propagationIndex = bookView.getPropagateIndex();
 
@@ -170,7 +170,7 @@ public class BookScoreServiceImpl implements BookScoreService {
     @Override
     public String getReputationIndexByBookId(Integer bookId) {
         List<BookScore> bookScores = getByBookId(bookId);
-        Double reputationScore = 0.0;
+        Double reputationScore = 10.0;
         if (CollectionUtils.isNotEmpty(bookScores)) {
             Map<Integer, Double> percentMap = getPercentMap(bookScores);
             for (BookScore bookScore : bookScores) {
@@ -211,7 +211,7 @@ public class BookScoreServiceImpl implements BookScoreService {
 
 
     public Double getSearchIndexByBookId(Integer bookId) {
-        Double res = 0.0;
+        Double res = 10.0;
         List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookId);
         if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
             //@todo 目前只取360
