@@ -34,7 +34,7 @@ public class PropagationController extends IpcoolController {
     private static final Map<Integer, String> SCORE_SOURCES = new LinkedHashMap<Integer, String>();
 
     static {
-        SOURCES.put(1, "搜获");
+        SOURCES.put(1, "搜狐");
         SOURCES.put(2, "腾讯");
         SOURCES.put(3, "新浪");
         SOURCES.put(4, "凤凰");

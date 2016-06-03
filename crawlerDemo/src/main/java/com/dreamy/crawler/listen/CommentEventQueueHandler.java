@@ -30,7 +30,7 @@ public class CommentEventQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        Integer bookId = jsonObject.getInteger("ipId");
+        Integer bookId = jsonObject.getInteger("bookId");
         String url = jsonObject.getString("url");
         List<Comment> commentList = commentHandler.getByUrl(url);
         if (CollectionUtils.isNotEmpty(commentList)) {
