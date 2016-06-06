@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
  * Created by wangyongxing on 16/5/31.
  */
 @Component
-public class QiDianHandler {
+public class QiDianMmHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(QiDianHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(QiDianMmHandler.class);
 
     public NetBookInfo crawler(Integer bookId, String url, String operation) {
         NetBookInfo info = null;
@@ -34,7 +34,6 @@ public class QiDianHandler {
                 if (operation.equals(OperationEnums.crawler.getCode())) {
                     getInfo(info, document);
                     getCategory(info, document);
-                    getLabel(info, document);
                 }
                 getOverInfo(info, document);
                 getOverAuthority(info, document);
@@ -44,7 +43,7 @@ public class QiDianHandler {
                 getTicketNum(info, document);
             }
         } else {
-            log.info(" qidian  crawler is empty url=" + url + " book=" + bookId);
+            log.info(" qidianmm  crawler is empty url=" + url + " book=" + bookId);
         }
         return info;
     }
@@ -63,7 +62,7 @@ public class QiDianHandler {
                 info.setInfo(element.text());
             }
         } catch (Exception e) {
-            log.error(" qidian 简介 is error book=" + info.getBookId(), e);
+            log.error(" qidianmm 简介 is error book=" + info.getBookId(), e);
 
         }
 
@@ -138,29 +137,6 @@ public class QiDianHandler {
 
     }
 
-    /**
-     * 作者 自定义标签
-     *
-     * @param info
-     * @param document
-     */
-    public static void getLabel(NetBookInfo info, Document document) {
-
-        StringBuffer labels = new StringBuffer();
-        Elements elements = document.select("div.labels>div.box>a");
-        if (elements != null && elements.size() > 0) {
-            for (Element element : elements) {
-                labels.append(element.text() + ",");
-            }
-        }
-
-        String str = labels.toString();
-        if (StringUtils.isNotEmpty(str)) {
-            info.setLabel(str.substring(0, str.length() - 1));
-        }
-
-
-    }
 
     /**
      * 获取签约信息
