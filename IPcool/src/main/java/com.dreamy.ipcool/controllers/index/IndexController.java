@@ -203,7 +203,7 @@ public class IndexController extends IpcoolController {
             BookRankHistory bookRankHistory = bookRankHistoryService.getTopHistoryByBookIdAndType(bookId, type);
 
             result.put("current_index_value", bookRank.getRankIndex().toString());
-            result.put("current_index_trend", bookRankService.getRankTrendByBookIdAndTypeAndIndex(bookId, type, bookRank.getRankIndex()).toString());
+            result.put("current_index_trend", bookRankHistoryService.getTrendFlag(bookRank.getRankIndex(), bookRankHistory.getRankIndex()).toString());
             result.put("history_top_value", bookRankHistory.getRankIndex().toString());
             result.put("history_top_date", TimeUtils.toString("yyyy-MM-dd", bookRankHistory.getCreatedAt()));
 
