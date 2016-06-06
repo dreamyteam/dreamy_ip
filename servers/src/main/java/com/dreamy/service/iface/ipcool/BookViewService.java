@@ -29,14 +29,14 @@ public interface BookViewService {
      * @param page
      * @return
      */
-    public List<BookView> getList(BookView bookView, Page page);
+    public List<BookView> getList(BookView bookView, Page page,String order);
 
     /**
      * 获取当前表的长度
      *
      * @return
      */
-    Integer getToutleCountByType(Integer type);
+    Integer getTotalCountByType(Integer type);
 
     /**
      * @param id

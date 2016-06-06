@@ -35,7 +35,7 @@ public class NewsMediaTask {
             Page page = new Page();
             page.setPageSize(50);
             page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page);
+            List<BookView> list = bookViewService.getList(bookView, page,null);
             for (BookView book : list) {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("source", book.getType());

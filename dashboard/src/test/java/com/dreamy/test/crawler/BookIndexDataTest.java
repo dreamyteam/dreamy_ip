@@ -1,5 +1,6 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.tasks.BookIndexHistoryTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.PeopleChart;
@@ -26,16 +27,19 @@ public class BookIndexDataTest extends BaseJunitTest {
     BookViewService bookViewService;
     @Autowired
     PeopleChartService peopleChartService;
+    @Autowired
+    BookIndexHistoryTask bookIndexHistoryTask;
 
     @Test
     public void find() {
-        BookIndexData data = bookIndexDataService.getById("158_2");
-        OverviewJson overviewJson = data.getOverviewJson();
-        overviewJson.setMonthChainRatio("100");
-        data.setLastDate("2017");
-        bookIndexDataService.updateInser(data);
-        data = bookIndexDataService.getById("158_2");
-        System.out.println(data);
+        bookIndexHistoryTask.copy();
+//        BookIndexData data = bookIndexDataService.getById("158_2");
+//        OverviewJson overviewJson = data.getOverviewJson();
+//        overviewJson.setMonthChainRatio("100");
+//        data.setLastDate("2017");
+//        bookIndexDataService.updateInser(data);
+//        data = bookIndexDataService.getById("158_2");
+//        System.out.println(data);
     }
 
 
@@ -44,7 +48,7 @@ public class BookIndexDataTest extends BaseJunitTest {
         Page page = new Page();
         page.setPageSize(7000);
         page.setCurrentPage(1);
-        List<BookView> views = bookViewService.getList(new BookView().type(1), page);
+        List<BookView> views = bookViewService.getList(new BookView().type(1), page, null);
 
         for (BookView bookView : views) {
             List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
@@ -85,10 +89,10 @@ public class BookIndexDataTest extends BaseJunitTest {
                 if (data.getSource().equals(IndexSourceEnums.weibo.getType())) {
                     double[] cc = cc(arr);
                     a1 += cc[0];
-                    a2 += cc[0];
-                    a3 += cc[0];
-                    a4 += cc[0];
-                    a5 += cc[0];
+                    a2 += cc[1];
+                    a3 += cc[2];
+                    a4 += cc[3];
+                    a5 += cc[4];
                 } else {
                     a1 += Double.valueOf(arr[0]);
                     a2 += Double.valueOf(arr[1]);

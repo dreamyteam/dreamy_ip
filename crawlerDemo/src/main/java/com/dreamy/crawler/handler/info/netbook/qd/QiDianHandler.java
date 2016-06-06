@@ -155,7 +155,9 @@ public class QiDianHandler {
         }
 
         String str = labels.toString();
-        info.setLabel(str.substring(0, str.length() - 1));
+        if (StringUtils.isNotEmpty(str)) {
+            info.setLabel(str.substring(0, str.length() - 1));
+        }
 
 
     }

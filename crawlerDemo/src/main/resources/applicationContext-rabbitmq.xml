@@ -34,6 +34,7 @@
 
 
     <!--队列声明-->
+    <rabbit:queue name="${queue_douban_comment}"/>
     <rabbit:queue name="${queue_amazon_crawler}"/>
     <rabbit:queue name="${queue_jd_crawler}"/>
     <rabbit:queue name="${queue_dangdang_crawler}"/>
@@ -49,15 +50,12 @@
     <rabbit:queue name="${queue_crawler_qidian}"/>
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
-
-    <rabbit:queue name="${queue_douban_comment}"/>
-
-
+    <rabbit:queue name="${queue_crawler_qidian_mm}"/>
 
     <!--交换器声明-->
     <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
-
+            <rabbit:binding queue="${queue_douban_comment}"/>
             <rabbit:binding queue="${queue_amazon_crawler}"/>
             <rabbit:binding queue="${queue_jd_crawler}"/>
             <rabbit:binding queue="${queue_douban_crawler}"/>
@@ -73,16 +71,14 @@
             <rabbit:binding queue="${queue_crawler_qidian}"/>
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
-            <rabbit:binding queue="${queue_douban_comment}"/>
+            <rabbit:binding queue="${queue_crawler_qidian_mm}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
     <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
     <bean id="simpleMessageConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter"/>
 
-
     <bean id="listenerErrorHandler" class="com.dreamy.crawler.listen.ListenerErrorHandler"/>
-
     <!--亚马逊-->
     <bean id="amazonBookQueueHandler" class="com.dreamy.crawler.listen.AmazonBookQueueHandler"/>
 
@@ -113,6 +109,9 @@
 
     <!-- 网络小说 起点-->
     <bean id="qiDianQueueHandler" class="com.dreamy.crawler.listen.QiDianQueueHandler"/>
+
+    <!-- 网络小说 起点MM-->
+    <bean id="qiDianMmQueueHandler" class="com.dreamy.crawler.listen.QiDianMmQueueHandler"/>
     <!-- 网络小说 纵横-->
     <bean id="zongHengQueueHandler" class="com.dreamy.crawler.listen.ZongHengQueueHandler"/>
     <!-- 网络小说 花语-->
@@ -274,5 +273,16 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="huaYuQueueHandler" method="onMessage" queues="${queue_crawler_huayu}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="qiDianMmQueueHandler" method="onMessage" queues="${queue_crawler_qidian_mm}"/>
     </rabbit:listener-container>
 </beans>  

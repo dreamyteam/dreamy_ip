@@ -29,7 +29,7 @@ public class SougouTest extends BaseJunitTest {
             Page page = new Page();
             page.setPageSize(1);
             page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page);
+            List<BookView> list = bookViewService.getList(bookView, page,null);
 
             for (BookView book : list) {
                 newsSougouHandler.crawler(book.getName(), book.getBookId());

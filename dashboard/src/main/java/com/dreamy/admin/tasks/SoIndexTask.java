@@ -39,7 +39,7 @@ public class SoIndexTask {
             Page page = new Page();
             page.setPageSize(100);
             page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page);
+            List<BookView> list = bookViewService.getList(bookView, page,null);
             for (BookView book : list) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("source", book.getType());
