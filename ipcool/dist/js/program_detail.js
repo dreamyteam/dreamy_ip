@@ -54,13 +54,13 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
-	var _scroll_load = __webpack_require__(20);
+	var _scroll_load = __webpack_require__(9);
 
 	var _scroll_load2 = _interopRequireDefault(_scroll_load);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var VoteProto = __webpack_require__(16); //投票
+	var VoteProto = __webpack_require__(18); //投票
 	// import Tab from '../components/tab.js'
 
 
@@ -158,7 +158,227 @@
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */
+/* 7 */,
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FixTop = function () {
+	    function FixTop(el) {
+	        _classCallCheck(this, FixTop);
+
+	        this.el = el || $('#program_nav');
+	        this.init();
+	    }
+
+	    _createClass(FixTop, [{
+	        key: 'init',
+	        value: function init() {
+	            var _this = this;
+
+	            var self = this;
+	            if (this.el.length > 0) {
+	                (function () {
+	                    var oriOffset = _this.el.offset().top;
+	                    $(window).on('scroll', function () {
+	                        if ($(this).scrollTop() > oriOffset) {
+	                            self.el.addClass('program_nav_scroll');
+	                        } else {
+	                            self.el.removeClass('program_nav_scroll');
+	                        }
+	                    });
+	                })();
+	            }
+	        }
+	    }]);
+
+	    return FixTop;
+	}();
+
+	exports.default = FixTop;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get_value_history = __webpack_require__(10);
+
+	var _get_value_history2 = _interopRequireDefault(_get_value_history);
+
+	var _line = __webpack_require__(11);
+
+	var _line2 = _interopRequireDefault(_line);
+
+	var _radar = __webpack_require__(13);
+
+	var _radar2 = _interopRequireDefault(_radar);
+
+	var _pieMutiple = __webpack_require__(14);
+
+	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
+
+	var _pieDouble = __webpack_require__(15);
+
+	var _pieDouble2 = _interopRequireDefault(_pieDouble);
+
+	var _barVertical = __webpack_require__(16);
+
+	var _barVertical2 = _interopRequireDefault(_barVertical);
+
+	var _barComment = __webpack_require__(17);
+
+	var _barComment2 = _interopRequireDefault(_barComment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ScrollLoad = function () {
+	    function ScrollLoad(cfg) {
+	        _classCallCheck(this, ScrollLoad);
+
+	        this.cfg = cfg;
+	        this.els = null;
+	        this.isLoaded = [];
+	        this.history = null;
+	        this.chart = null;
+	        this.init();
+	    }
+
+	    _createClass(ScrollLoad, [{
+	        key: 'init',
+	        value: function init() {
+	            this.els = $(this.cfg.els);
+	            this.history = this.cfg.history;
+	            this.chart = this.cfg.chart;
+	            this.setDefaultLoaded();
+	            this.listenEvent();
+	        }
+	    }, {
+	        key: 'setDefaultLoaded',
+	        value: function setDefaultLoaded() {
+	            //重置所有isLoaded
+	            var elLength = this.els.length;
+	            for (var i = 0; i < elLength; i++) {
+	                this.isLoaded[i] = false;
+	            }
+	        }
+	    }, {
+	        key: 'listenEvent',
+	        value: function listenEvent() {
+	            var self = this;
+	            function onScroll() {
+	                var scrollTop = $(document).scrollTop(); //滚动条距离
+	                self.els.each(function () {
+	                    var offsetTop = $(this).offset().top; //距离文档顶部距离
+	                    var disTop = offsetTop - scrollTop;
+	                    var curIndex = $(this).index(self.cfg.els);
+	                    if (disTop < 800) {
+	                        if (!self.isLoaded[curIndex]) {
+	                            self.loadCharts($(this));
+	                            self.loadHistory($(this));
+	                            self.isLoaded[curIndex] = true;
+	                        }
+	                    }
+	                });
+	            }
+	            $(window).on("scroll", function () {
+	                onScroll();
+	            });
+	            $(window).on("load", function () {
+	                onScroll();
+	            }); //初始化首屏
+	        }
+	    }, {
+	        key: 'loadHistory',
+	        value: function loadHistory(obj) {
+	            if (obj.find(this.history).length > 0) {
+	                var elememt = obj.find(this.history).eq(0);
+	                var type = elememt.data("type");
+	                new _get_value_history2.default(obj, type);
+	            }
+	        }
+	    }, {
+	        key: 'loadCharts',
+	        value: function loadCharts(obj) {
+	            var self = this;
+	            if (obj.find(this.chart).length > 0) {
+	                var elememts = obj.find(this.chart);
+	                elememts.each(function () {
+	                    self.getChartType($(this));
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'getChartType',
+	        value: function getChartType(el) {
+	            var fetchData = el.data("fetchType");
+	            var idValue = el.attr("id");
+	            var ipName = fetchData.name;
+	            var type = fetchData.type;
+	            if (type == "line") {
+	                new _line2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            } else if (type == "radar") {
+	                new _radar2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            } else if (type == "PieChartMutiple") {
+	                new _pieMutiple2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "PieChartDouble") {
+	                new _pieDouble2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    type: fetchData.chartType,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "BarChartVertical") {
+	                new _barVertical2.default({
+	                    el: idValue,
+	                    name: ipName,
+	                    type: fetchData.chartType,
+	                    left: fetchData.left
+	                });
+	            } else if (type == "BarCommit") {
+	                new _barComment2.default({
+	                    el: idValue,
+	                    name: ipName
+	                });
+	            }
+	        }
+	    }]);
+
+	    return ScrollLoad;
+	}();
+
+	exports.default = ScrollLoad;
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -243,55 +463,7 @@
 	exports.default = GetHistory;
 
 /***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var FixTop = function () {
-	    function FixTop(el) {
-	        _classCallCheck(this, FixTop);
-
-	        this.el = el || $('#program_nav');
-	        this.init();
-	    }
-
-	    _createClass(FixTop, [{
-	        key: 'init',
-	        value: function init() {
-	            var _this = this;
-
-	            var self = this;
-	            if (this.el.length > 0) {
-	                (function () {
-	                    var oriOffset = _this.el.offset().top;
-	                    $(window).on('scroll', function () {
-	                        if ($(this).scrollTop() > oriOffset) {
-	                            self.el.addClass('program_nav_scroll');
-	                        } else {
-	                            self.el.removeClass('program_nav_scroll');
-	                        }
-	                    });
-	                })();
-	            }
-	        }
-	    }]);
-
-	    return FixTop;
-	}();
-
-	exports.default = FixTop;
-
-/***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -302,7 +474,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -449,7 +621,7 @@
 	exports.default = Line;
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -539,7 +711,7 @@
 	exports.default = Chart;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -550,7 +722,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -651,7 +823,7 @@
 	exports.default = Radar;
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -662,7 +834,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -766,7 +938,7 @@
 	exports.default = pieMutiple;
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -777,7 +949,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -919,7 +1091,7 @@
 	exports.default = pieDouble;
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -930,7 +1102,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -1097,7 +1269,7 @@
 	exports.default = barVertical;
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1108,7 +1280,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _baseChart = __webpack_require__(10);
+	var _baseChart = __webpack_require__(12);
 
 	var _baseChart2 = _interopRequireDefault(_baseChart);
 
@@ -1220,7 +1392,7 @@
 	exports.default = barCommit;
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1316,180 +1488,6 @@
 	};
 
 	module.exports = VoteProto;
-
-/***/ },
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get_value_history = __webpack_require__(7);
-
-	var _get_value_history2 = _interopRequireDefault(_get_value_history);
-
-	var _line = __webpack_require__(9);
-
-	var _line2 = _interopRequireDefault(_line);
-
-	var _radar = __webpack_require__(11);
-
-	var _radar2 = _interopRequireDefault(_radar);
-
-	var _pieMutiple = __webpack_require__(12);
-
-	var _pieMutiple2 = _interopRequireDefault(_pieMutiple);
-
-	var _pieDouble = __webpack_require__(13);
-
-	var _pieDouble2 = _interopRequireDefault(_pieDouble);
-
-	var _barVertical = __webpack_require__(14);
-
-	var _barVertical2 = _interopRequireDefault(_barVertical);
-
-	var _barComment = __webpack_require__(15);
-
-	var _barComment2 = _interopRequireDefault(_barComment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ScrollLoad = function () {
-	    function ScrollLoad(cfg) {
-	        _classCallCheck(this, ScrollLoad);
-
-	        this.cfg = cfg;
-	        this.els = null;
-	        this.isLoaded = [];
-	        this.history = null;
-	        this.chart = null;
-	        this.init();
-	    }
-
-	    _createClass(ScrollLoad, [{
-	        key: 'init',
-	        value: function init() {
-	            this.els = $(this.cfg.els);
-	            this.history = this.cfg.history;
-	            this.chart = this.cfg.chart;
-	            this.setDefaultLoaded();
-	            this.listenEvent();
-	        }
-	    }, {
-	        key: 'setDefaultLoaded',
-	        value: function setDefaultLoaded() {
-	            //重置所有isLoaded
-	            var elLength = this.els.length;
-	            for (var i = 0; i < elLength; i++) {
-	                this.isLoaded[i] = false;
-	            }
-	        }
-	    }, {
-	        key: 'listenEvent',
-	        value: function listenEvent() {
-	            var self = this;
-	            function onScroll() {
-	                var scrollTop = $(document).scrollTop(); //滚动条距离
-	                self.els.each(function () {
-	                    var offsetTop = $(this).offset().top; //距离文档顶部距离
-	                    var disTop = offsetTop - scrollTop;
-	                    var curIndex = $(this).index(self.cfg.els);
-	                    if (disTop < 800) {
-	                        if (!self.isLoaded[curIndex]) {
-	                            self.loadCharts($(this));
-	                            self.loadHistory($(this));
-	                            self.isLoaded[curIndex] = true;
-	                        }
-	                    }
-	                });
-	            }
-	            $(window).on("scroll", function () {
-	                onScroll();
-	            });
-	            $(window).on("load", function () {
-	                onScroll();
-	            }); //初始化首屏
-	        }
-	    }, {
-	        key: 'loadHistory',
-	        value: function loadHistory(obj) {
-	            if (obj.find(this.history).length > 0) {
-	                var elememt = obj.find(this.history).eq(0);
-	                var type = elememt.data("type");
-	                new _get_value_history2.default(obj, type);
-	            }
-	        }
-	    }, {
-	        key: 'loadCharts',
-	        value: function loadCharts(obj) {
-	            var self = this;
-	            if (obj.find(this.chart).length > 0) {
-	                var elememts = obj.find(this.chart);
-	                elememts.each(function () {
-	                    self.getChartType($(this));
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'getChartType',
-	        value: function getChartType(el) {
-	            var fetchData = el.data("fetchType");
-	            var idValue = el.attr("id");
-	            var ipName = fetchData.name;
-	            var type = fetchData.type;
-	            if (type == "line") {
-	                new _line2.default({
-	                    el: idValue,
-	                    name: ipName
-	                });
-	            } else if (type == "radar") {
-	                new _radar2.default({
-	                    el: idValue,
-	                    name: ipName
-	                });
-	            } else if (type == "PieChartMutiple") {
-	                new _pieMutiple2.default({
-	                    el: idValue,
-	                    name: ipName,
-	                    left: fetchData.left
-	                });
-	            } else if (type == "PieChartDouble") {
-	                new _pieDouble2.default({
-	                    el: idValue,
-	                    name: ipName,
-	                    type: fetchData.chartType,
-	                    left: fetchData.left
-	                });
-	            } else if (type == "BarChartVertical") {
-	                new _barVertical2.default({
-	                    el: idValue,
-	                    name: ipName,
-	                    type: fetchData.chartType,
-	                    left: fetchData.left
-	                });
-	            } else if (type == "BarCommit") {
-	                new _barComment2.default({
-	                    el: idValue,
-	                    name: ipName
-	                });
-	            }
-	        }
-	    }]);
-
-	    return ScrollLoad;
-	}();
-
-	exports.default = ScrollLoad;
 
 /***/ }
 /******/ ]);

@@ -47,7 +47,7 @@
 
 	"use strict";
 
-	var _validate = __webpack_require__(19);
+	var _validate = __webpack_require__(5);
 
 	var _validate2 = _interopRequireDefault(_validate);
 
@@ -63,7 +63,7 @@
 
 /***/ },
 
-/***/ 19:
+/***/ 5:
 /***/ function(module, exports) {
 
 	"use strict";

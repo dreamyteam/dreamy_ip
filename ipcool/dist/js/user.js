@@ -51,88 +51,42 @@
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
+	var _avatar_upload = __webpack_require__(20);
+
+	var _avatar_upload2 = _interopRequireDefault(_avatar_upload);
+
+	var _validate = __webpack_require__(5);
+
+	var _validate2 = _interopRequireDefault(_validate);
+
+	var _limiteChoose = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/limiteChoose.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _limiteChoose2 = _interopRequireDefault(_limiteChoose);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var cropper = __webpack_require__(18);
-	// var Avatar = require('../components/avatar_upload.js');
-
 	$(function () {
-	    /* $("#avatar_mask").on("click",function(){
-	         var avatar = new Avatar({
-	             input: '#avatar_input_upload',
-	             preview: '#avatar_upload',
-	             confrimBtn: "#avatar_upload_submit"
-	         })
-	     })*/
-
-	    $('#avatar_mask').on('click', function () {
-	        var $inputImage = $("#avatar_input_upload");
-	        var URL = window.URL || window.webkitURL;
-	        var blobURL;
-	        if (URL) {
-	            $inputImage.change(function () {
-	                var files = this.files;
-	                var file;
-	                if (files && files.length) {
-	                    file = files[0];
-	                    if (/^image\/\w+$/.test(file.type)) {
-	                        blobURL = URL.createObjectURL(file);
-	                        // 弹框
-	                        var avatar_popup = new _pop_up2.default('#avatar_popup');
-	                        avatar_popup.alert();
-	                        var $avatar = $("#avatar_upload");
-	                        $avatar.cropper({
-	                            aspectRatio: 1 / 1,
-	                            viewMode: 3,
-	                            dragModel: 'move',
-	                            highlight: false,
-	                            background: false,
-	                            crop: function crop(e) {
-	                                // console.log(e.x);
-	                                // console.log(e.y);
-	                                // console.log(e.width);
-	                                // console.log(e.height);
-	                                // console.log(e.scaleX);
-	                                // console.log(e.scaleY);
-	                            }
-	                        });
-	                        $avatar.one('built.cropper', function () {
-	                            URL.revokeObjectURL(blobURL);
-	                        }).cropper('reset').cropper('replace', blobURL);
-
-	                        //发送ajax
-	                        $("#avatar_upload_submit").off("click");
-	                        $("#avatar_upload_submit").on("click", function () {
-	                            avatar_popup.destory();
-	                            var fd = new FormData();
-	                            fd.append("file", file);
-	                            $.ajax({
-	                                url: '/upload/img',
-	                                type: 'POST',
-	                                processData: false,
-	                                contentType: false,
-	                                data: fd,
-	                                success: function success(result) {
-	                                    console.log(result);
-	                                    if (result.error_code == 0) {
-	                                        var image_url = result.data.image_url;
-	                                        //赋值hidden input
-	                                        $("#avatar_image").attr("src", image_url);
-	                                        $("#hidden_avatar").val(image_url);
-	                                    } else if (result.error_code > 0) {
-	                                        console.log(result.error_msg);
-	                                    }
-	                                }
-	                            });
-	                            return false;
-	                        });
-	                    } else {
-	                        window.alert('请选择图片文件');
-	                    }
-	                }
-	            });
-	        }
+	    $("#avatar_mask").on("click", function () {
+	        var avatar = new _avatar_upload2.default({
+	            input: '#avatar_input_upload',
+	            preview: '#avatar_upload',
+	            confrimBtn: "#avatar_upload_submit",
+	            cancleBtn: "#avatar_upload_cancle",
+	            bioImage: ".user_avatar_container img",
+	            navImage: "#currentUser img"
+	        });
 	    });
+
+	    var applyValidate = new _validate2.default({
+	        el: "#pwdModify",
+	        inputBoxs: ".input_content",
+	        btnSubmit: "input[type='submit']"
+	    });
+
+	    var companyLimite = new _limiteChoose2.default("#company_choose_form", 3);
+	    var personalLimite = new _limiteChoose2.default("#personal_choose_form", 5);
+
+	    var personalInfoForm = new _validate2.default({});
 	});
 
 /***/ },
@@ -205,7 +159,287 @@
 
 /***/ },
 
-/***/ 18:
+/***/ 5:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	//TODO 组织提交
+
+	var Validate = function () {
+	    function Validate(cfg) {
+	        _classCallCheck(this, Validate);
+
+	        this.cfg = cfg;
+	        this.el = null;
+	        this.inputBoxs = null; //input 容器 用于查找 input 和 errmsg
+	        this.btnSubmit = null;
+	        this.init();
+	    }
+
+	    _createClass(Validate, [{
+	        key: "init",
+	        value: function init() {
+	            this.el = $(this.cfg.el);
+	            this.inputBoxs = this.el.find(this.cfg.inputBoxs);
+	            this.btnSubmit = this.el.find(this.cfg.btnSubmit);
+	            this.errMsg = ".err_msg";
+	            this.validateBlur();
+	            this.checkSubmit();
+	        }
+	    }, {
+	        key: "checkRequired",
+	        value: function checkRequired(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            if (obj.val() == '') {
+	                var errText = obj.data("required") ? obj.data("required") : "必填";
+	                errMsg.show().html(errText);
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                errMsg.hide();
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "checkMail",
+	        value: function checkMail(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            var regMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	            if (!regMail.test(obj.val())) {
+	                errMsg.show().html("请输入正确的邮箱格式");
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                errmsg.hide();
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "checkSelected",
+	        value: function checkSelected(obj, parent, canSubmit) {
+	            var self = this;
+	            var errMsg = parent.find(this.errMsg);
+	            if (obj.val() == 0) {
+	                var errText = obj.data("required") ? obj.data("required") : "您需要选择类型";
+	                errMsg.show().html(errText);
+	                if (canSubmit) {
+	                    self.canSubmit = false;
+	                }
+	            } else {
+	                errMsg.hide();
+	                if (canSubmit) {
+	                    self.canSubmit = true;
+	                }
+	            }
+	        }
+	    }, {
+	        key: "validateBlur",
+	        value: function validateBlur() {
+	            var self = this;
+	            this.inputBoxs.each(function () {
+	                var curBox = $(this);
+	                var curInput = $(this).find("input");
+	                var errMsg = curBox.find(self.errMsg);
+	                curInput.on("blur", function () {
+	                    if (curInput.attr("required")) {
+	                        //检测是否为空
+	                        self.checkRequired(curInput, curBox, false);
+	                    }
+	                    if (curInput.attr("type") == "email") {
+	                        self.checkMail(curInput, curBox, true);
+	                    }
+	                });
+	                curInput.on("focus", function () {
+	                    console.log(errMsg);
+	                    errMsg.hide().html("");
+	                });
+	                // select框
+	                var curSelect = $(this).find("select");
+	                curSelect.on("blur", function () {
+	                    if (curSelect.attr("required")) {
+	                        self.checkSelected(curSelect, curBox, true);
+	                    }
+	                });
+	                curSelect.on("focus", function () {
+	                    errMsg.hide();
+	                });
+	            });
+	        }
+	    }, {
+	        key: "validateSubmit",
+	        value: function validateSubmit() {
+	            var self = this;
+	            this.inputBoxs.each(function () {
+	                var curBox = $(this);
+	                var curInput = $(this).find("input");
+	                if (curInput.attr("required")) {
+	                    //检测是否为空
+	                    self.checkRequired(curInput, curBox, true);
+	                }
+	                if (curInput.attr("type") == "email") {
+	                    self.checkMail(curInput, curBox, true);
+	                }
+	                var curSelect = $(this).find("select");
+	                if (curSelect.attr("required")) {
+	                    self.checkSelected(curSelect, curBox, true);
+	                }
+	            });
+	        }
+	    }, {
+	        key: "checkSubmit",
+	        value: function checkSubmit() {
+	            var self = this;
+	            this.btnSubmit.on("click", function () {
+	                self.validateSubmit();
+	                if (!self.canSubmit) {
+	                    return false;
+	                }
+	            });
+	        }
+	    }]);
+
+	    return Validate;
+	}();
+
+	exports.default = Validate;
+
+/***/ },
+
+/***/ 20:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _pop_up = __webpack_require__(2);
+
+	var _pop_up2 = _interopRequireDefault(_pop_up);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var cropper = __webpack_require__(21);
+
+
+	function Avatar(cfg) {
+	    this.cfg = cfg;
+	    this.input = null; //输入框
+	    this.preview = null; //图片采取预览框
+	    this.confrimBtn = null;
+	    this.originFileType = null; //原始图片类型
+	    this.originFileName = null; //原始图片名称
+	    this.init();
+	}
+	Avatar.prototype = {
+	    init: function init() {
+	        this.input = $(this.cfg.input);
+	        this.preview = $(this.cfg.preview);
+	        this.confrimBtn = $(this.cfg.confrimBtn);
+	        this.inputHandler();
+	    },
+	    inputHandler: function inputHandler() {
+	        var self = this;
+	        var URL = window.URL || window.webkitURL;
+	        this.input.on("change", function () {
+	            var files = this.files;
+	            var file;
+	            var blobURL;
+	            if (files && files.length) {
+	                file = files[0];
+	                if (/^image\/\w+$/.test(file.type)) {
+	                    // 是图片文件的处理TODO 非图片文件提示
+	                    self.originFileType = file.type;
+	                    self.originFileName = file.name;
+	                    //弹窗
+	                    var avatar_popup = new _pop_up2.default("#avatar_popup");
+	                    avatar_popup.alert();
+
+	                    console.log(self.originFileType + self.originFileName);
+	                    blobURL = URL.createObjectURL(file);
+	                    //此处正式时候为弹窗
+	                    self.preview.cropper({
+	                        aspectRatio: 1 / 1
+	                    }).cropper('replace', blobURL);
+	                    self.confrimBtn.off('click');
+	                    self.confrimBtn.on("click", function () {
+	                        self.cropImg();
+	                    });
+	                }
+	            }
+	        });
+	    },
+	    cropImg: function cropImg() {
+	        var size = {
+	            width: 100,
+	            height: 100
+	        };
+	        var croppedCanvas = this.preview.cropper("getCroppedCanvas", size); // 生成canvas对象
+	        var croppedCanvasUrl = croppedCanvas.toDataURL("image/png"); //Base64
+
+	        console.log(croppedCanvasUrl);
+	        // var croppedBlob = dataURLtoBlob(croppedCanvasUrl);
+	        // croppedBlob.name = this.originFileName;
+	        // var w = window.open('about:blank', 'image from canvas');
+	        // w.document.write("<img src='" + crop + "' alt='from canvas'/>");
+
+	        // this.uploadAjax(croppedBlob);
+
+	        /* function dataURLtoBlob(dataurl) { //字符串转二进制
+	             var arr = dataurl.split(','),
+	                 mime = arr[0].match(/:(.*?);/)[1],
+	                 bstr = atob(arr[1]),
+	                 n = bstr.length,
+	                 u8arr = new Uint8Array(n);
+	             while (n--) {
+	                 u8arr[n] = bstr.charCodeAt(n);
+	             }
+	             return new Blob([u8arr], { type: mime });
+	         }*/
+	    },
+	    uploadAjax: function uploadAjax(croppedBlob) {
+	        console.log(croppedBlob);
+	        var fd = new FormData();
+	        fd.append("file", croppedBlob);
+	        $.ajax({
+	            url: '/upload/img',
+	            type: 'POST',
+	            processData: false,
+	            contentType: false,
+	            data: fd,
+	            success: function success(result) {
+	                console.log(result);
+	                if (result.error_code == 0) {
+	                    // var image_url = result.data.image_url;
+	                    //赋值hidden input
+	                    // $("#avatar_image").attr("src", image_url);
+	                    // $("#hidden_avatar").val(image_url);
+	                } else if (result.error_code > 0) {
+	                        console.log(result.error_msg);
+	                    }
+	            }
+	        });
+	    }
+	};
+	module.exports = Avatar;
+
+/***/ },
+
+/***/ 21:
 /***/ function(module, exports) {
 
 	/*!
