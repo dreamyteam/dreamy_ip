@@ -1,6 +1,5 @@
 @import "./components/searchbar.scss";
 @import "./components/pagging.scss";
-
 section.search_count {
     padding: 22px 30px;
     font-size: 14px;
@@ -45,22 +44,30 @@ section.search_result {
             h2 {
                 font-size: 24px;
                 a {
+                    max-width: 440px;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    overflow: hidden;
+                    display: inline-block;
+                    transition: color 300ms ease;
+                    color: #5E5E5E;
+                    text-overflow: ellipsis;
                     display: inline-block;
                     transition: color 300ms ease;
                     color: #5E5E5E;
                     &:hover {
                         color: #00a69d;
                     }
-                }
-                span {
-                    display: inline-block;
-                    margin-left: 10px;
-                    border: 1px solid #00A69D;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    color: #00A69D;
-                    padding: 2px 3px;
-                    vertical-align: middle;
+                    span {
+                        display: inline-block;
+                        margin-left: 10px;
+                        border: 1px solid #00A69D;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        color: #00A69D;
+                        padding: 2px 3px;
+                        vertical-align: middle;
+                    }
                 }
             }
             h6 {
