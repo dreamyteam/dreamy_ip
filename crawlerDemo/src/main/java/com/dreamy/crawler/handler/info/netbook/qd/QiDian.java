@@ -21,6 +21,10 @@ public class QiDian {
     @ExtractBy("//div[@class=\"swd\"]//a/text()")
     private List<String> authoers;
 
+
+    @ExtractBy("//div[@class=\"swd\"]//a/@href")
+    private List<String> authoerUrls;
+
     public List<String> getUrls() {
         return urls;
     }
@@ -31,5 +35,9 @@ public class QiDian {
 
     public List<String> getAuthoers() {
         return authoers;
+    }
+
+    public List<String> getAuthoerUrls() {
+        return authoerUrls;
     }
 }

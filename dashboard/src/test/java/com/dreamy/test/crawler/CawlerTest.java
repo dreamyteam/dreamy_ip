@@ -2,6 +2,7 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.admin.service.SinaLoginService;
 import com.dreamy.admin.tasks.KeyWorkTask;
+import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
@@ -49,12 +50,13 @@ public class CawlerTest extends BaseJunitTest {
     private BookScoreService bookScoreService;
 
 
-    @Value("${queue_crawler_qidian}")
+    @Value("${queue_crawler_qidian_mm}")
     private String queueName;
 
     @Test
     public void test() {
-        List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo().source(CrawlerSourceEnums.qidian.getType()), null);
+        System.out.println(11);
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(new BookCrawlerInfo().source(CrawlerSourceEnums.qidianmm.getType()), new Page(1,100));
 
         for (BookCrawlerInfo info : list) {
             Map<String, Object> map = new HashMap<>();
