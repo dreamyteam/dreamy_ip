@@ -27,7 +27,7 @@ public interface BookRankHistoryService {
      * @param bookId
      * @return
      */
-    List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type,Page page);
+    List<BookRankHistory> getByBookIdAndType(Integer bookId, Integer type, Page page);
 
 
     /**
@@ -38,8 +38,12 @@ public interface BookRankHistoryService {
     BookRankHistory getTopHistoryByBookIdAndType(Integer bookId, Integer type);
 
 
-
-
+    /**
+     * @param currentIndex
+     * @param historyTopIndex
+     * @return
+     */
+    Integer getTrendFlag(Integer currentIndex, Integer historyTopIndex);
 
 
 }

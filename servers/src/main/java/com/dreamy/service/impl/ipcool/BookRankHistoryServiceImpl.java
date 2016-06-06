@@ -4,6 +4,7 @@ import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookRankHistoryDao;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookRankHistoryConditions;
+import com.dreamy.enums.BookRankTrendEnums;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
@@ -69,5 +70,17 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
         }
 
         return bookRankHistory;
-    } 
+    }
+
+    @Override
+    public Integer getTrendFlag(Integer currentIndex, Integer historyTopIndex) {
+        Integer res = BookRankTrendEnums.keep.getType();
+        if (currentIndex > historyTopIndex) {
+            res = BookRankTrendEnums.up.getType();
+        } else if (currentIndex < historyTopIndex) {
+            res = BookRankTrendEnums.down.getType();
+        }
+
+        return res;
+    }
 }
