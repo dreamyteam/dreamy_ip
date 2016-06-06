@@ -29,7 +29,7 @@
 
     <!--默认配置模版-->
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory" exchange=""/>
-
+    <rabbit:queue name="${queue_douban_comment}"/>
     <rabbit:queue name="${queue_amazon_crawler}"/>
     <rabbit:queue name="${queue_jd_crawler}"/>
     <rabbit:queue name="${queue_dangdang_crawler}"/>
@@ -45,10 +45,12 @@
     <rabbit:queue name="${queue_crawler_qidian}"/>
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
+    <rabbit:queue name="${queue_crawler_qidian_mm}"/>
 
     <!--交换器声明-->
     <rabbit:direct-exchange name="directExchange">
         <rabbit:bindings>
+            <rabbit:binding queue="${queue_douban_comment}"/>
             <rabbit:binding queue="${queue_amazon_crawler}"/>
             <rabbit:binding queue="${queue_jd_crawler}"/>
             <rabbit:binding queue="${queue_douban_crawler}"/>
@@ -64,6 +66,7 @@
             <rabbit:binding queue="${queue_crawler_qidian}"/>
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
+            <rabbit:binding queue="${queue_crawler_qidian_mm}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 

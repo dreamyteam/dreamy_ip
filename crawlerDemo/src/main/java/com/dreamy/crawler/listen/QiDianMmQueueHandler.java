@@ -34,7 +34,7 @@ public class QiDianMmQueueHandler extends AbstractQueueHandler {
             crawlerService.operationNetBook(operation,key, netBookInfo, bookId);
 
         } catch (Exception e) {
-            log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " url:" + url);
+            log.warn("QiDianMmQueueHandler  failed: bookId:" + bookId + " url:" + url);
         } finally {
 
         }
