@@ -26,4 +26,6 @@ public interface BookIndexDataService {
 
 
     public BookIndexData getById(String id);
+
+    public BookIndexData queryById(Integer id);
 }

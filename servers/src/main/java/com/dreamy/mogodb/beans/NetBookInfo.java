@@ -1,9 +1,15 @@
 package com.dreamy.mogodb.beans;
 
+import org.springframework.data.annotation.Id;
+
 /**
- * Created by wangyongxing on 16/4/5.
+ * Created by wangyongxing on 16/5/30.
  */
-public class Member {
+public class NetBookInfo {
+
+    @Id
+    private Integer bookId;
+
     /**
      * 作品名称
      */
@@ -44,9 +50,9 @@ public class Member {
     private Integer ticketNum;
 
     /**
-     * 作品类型
+     * 作品分类
      */
-    private String type;
+    private String category;
 
     /**
      * 标签
@@ -56,11 +62,23 @@ public class Member {
     /**
      * 评分
      */
-    private Double score;
+    private String score;
     /**
      * 授权状态
      */
     private String authority;
+    /**
+     * 评论数
+     */
+    private Integer commentNum;
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
 
     public String getMonthSort() {
         return monthSort;
@@ -102,13 +120,6 @@ public class Member {
         this.ticketNum = ticketNum;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getLabel() {
         return label;
@@ -118,11 +129,11 @@ public class Member {
         this.label = label;
     }
 
-    public Double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -166,5 +177,19 @@ public class Member {
         this.info = info;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
 }

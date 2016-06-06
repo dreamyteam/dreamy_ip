@@ -1,28 +1,28 @@
 package com.dreamy.crawler.service;
 
-import com.dreamy.domain.ipcool.BookCrawlerInfo;
-import com.dreamy.domain.ipcool.BookScore;
-import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
-import com.dreamy.service.iface.ipcool.BookScoreService;
-import com.dreamy.service.iface.ipcool.IpBookService;
+import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.service.cache.RedisClientService;
+import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.service.iface.mongo.NetBookInfoService;
 import com.dreamy.service.mq.QueueService;
+import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
 import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,9 +46,9 @@ public class CrawlerServiceImpl implements CrawlerService {
 //    @Value("${queue_crawler_comment}")
 //    private String commentQueueName;
 
+
     @Autowired
-    @Qualifier("rawValueOperations")
-    private ValueOperations<String, Integer> rawValueOperations;
+    private RedisClientService redisClientService;
 
 
     @Value("${queue_crawler_over}")
@@ -62,8 +62,15 @@ public class CrawlerServiceImpl implements CrawlerService {
     private BookInfoService bookInfoService;
     @Autowired
     BookCrawlerInfoService bookCrawlerInfoService;
-
+    @Autowired
     BookScoreService bookScoreService;
+    @Autowired
+    NetBookInfoService netBookInfoService;
+
+    @Autowired
+    private BookTagsService bookTagsService;
+    @Autowired
+    private BookViewService bookViewService;
 
     @Override
     public void pushAll(String isbn, String url, Integer bookId) {
@@ -148,13 +155,74 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId) {
-        long num = rawValueOperations.increment(key, -1);
+        long num = redisClientService.incrBy(key, -1L);
         if (num < 1) {
-            rawValueOperations.getOperations().delete(key);
+            redisClientService.del(key);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("bookId", bookId);
             queueService.push(queueName, map);
         }
+    }
+
+    @Override
+    public void operationNetBook(String operation, String key, NetBookInfo bookInfo, Integer bookId) {
+        try {
+            if (bookInfo != null) {
+                netBookInfoService.updateInser(bookInfo);
+                if (operation.equals(OperationEnums.crawler.getCode())) {
+                    createTag(bookId, bookInfo.getLabel());
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("operationNetBook is error bookId is " + bookId, e);
+        } finally {
+            //check(key, bookId);
+        }
+    }
+
+
+    private void createTag(final Integer bookId, final String tags) {
+
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                BookView oldBookView = bookViewService.getByBookId(bookId);
+                NetBookInfo bookInfo = netBookInfoService.getById(bookId);
+                if (oldBookView == null && bookInfo != null) {
+                    BookView bookView = new BookView();
+                    bookView.setName(bookInfo.getTitle());
+                    bookView.setImageUrl(bookInfo.getImage());
+                    bookView.introduction(bookInfo.getInfo());
+                    bookView.setAuthor(bookInfo.getAuthor());
+                    bookView.setType(2);
+                    bookView.setStatus(0);
+                    bookView.bookId(bookId);
+                    bookViewService.save(bookView);
+                    if (StringUtils.isNotEmpty(tags)) {
+                        String arr[] = tags.split(",");
+                        int size = arr.length;
+                        int tagId = 0;
+                        for (int i = 0; i < size; i++) {
+                            List<BookTags> bookTagsList = bookTagsService.getByName(arr[i]);
+
+                            if (CollectionUtils.isEmpty(bookTagsList)) {
+                                BookTags bookTags = new BookTags();
+                                bookTags.name(arr[i]);
+                                bookTagsService.save(bookTags);
+                                tagId = bookTags.getId();
+                            } else {
+                                tagId = bookTagsList.get(0).getId();
+                            }
+                            BookTagsMap bookTagsMap = new BookTagsMap();
+                            bookTagsMap.bookId(bookId).tagId(tagId);
+                            bookTagsService.saveTagMap(bookTagsMap);
+                        }
+                    }
+                }
+                return null;
+            }
+        });
+
     }
 
     private void score(final BookInfo bookInfo, final Integer type, final Integer bookId) {
@@ -165,14 +233,16 @@ public class CrawlerServiceImpl implements CrawlerService {
                 bookScore.source(type);
                 bookScore.status(0);
                 bookScore.bookId(bookId);
-                if (bookInfo.getCommentNum() != null) {
-                    bookScore.commentNum(bookInfo.getCommentNum());
-                }
-                if (bookInfo.getSaleSort() != null) {
-                    bookScore.saleSort(Integer.valueOf(bookInfo.getSaleSort()));
-                }
-                if (bookInfo.getScore() != null) {
-                    bookScore.setScore(Double.valueOf(bookInfo.getScore()));
+                bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
+                bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",", "")) : 0);
+                if (type == CrawlerSourceEnums.amazon.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                } else if (type == CrawlerSourceEnums.jd.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.dangdang.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.douban.getType()) {
+                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                 }
                 bookScoreService.saveUpdate(bookScore);
                 return null;

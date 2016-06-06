@@ -36,7 +36,7 @@ public interface BookViewService {
      *
      * @return
      */
-    Integer getToutleCount();
+    Integer getToutleCountByType(Integer type);
 
     /**
      * @param id
@@ -55,7 +55,7 @@ public interface BookViewService {
      * @param order
      * @return
      */
-    public List<BookView> getListByPageAndOrder(Page page, String order);
+    public List<BookView> getListByPageAndOrderAndType(Page page, String order,Integer type);
 
     /**
      * @param bookId

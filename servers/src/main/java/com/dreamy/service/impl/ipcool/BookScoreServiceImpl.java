@@ -2,16 +2,14 @@ package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookScoreDao;
-import com.dreamy.domain.ipcool.BookScore;
-import com.dreamy.domain.ipcool.BookScoreConditions;
-import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.KeyWord;
+import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
+import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.utils.ArrayUtils;
 import com.dreamy.utils.BeanUtils;
@@ -38,27 +36,28 @@ public class BookScoreServiceImpl implements BookScoreService {
     @Autowired
     private KeyWordService keyWordService;
 
+    @Autowired
+    private PeopleChartService peopleChartService;
+
     @Override
     public void saveUpdate(BookScore bookScore) {
 
         BookScoreConditions conditions = new BookScoreConditions();
         conditions.createCriteria().andBookIdEqualTo(bookScore.getBookId()).andSourceEqualTo(bookScore.getSource());
-        List<BookScore> list= bookScoreDao.selectByExample(conditions);
-        if(CollectionUtils.isNotEmpty(list))
-        {
-            BookScore old=list.get(0);
-            if(bookScore.getCommentNum()>0){
+        List<BookScore> list = bookScoreDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(list)) {
+            BookScore old = list.get(0);
+            if (bookScore.getCommentNum() > 0) {
                 old.commentNum(bookScore.getCommentNum());
             }
-            if(bookScore.getScore()>0){
+            if (bookScore.getScore() > 0) {
                 old.score(bookScore.getScore());
             }
-            if(bookScore.getSaleSort()>0){
+            if (bookScore.getSaleSort() > 0) {
                 old.saleSort(bookScore.getSaleSort());
             }
             bookScoreDao.update(old);
-        }
-        else{
+        } else {
             bookScoreDao.save(bookScore);
         }
 
@@ -77,23 +76,6 @@ public class BookScoreServiceImpl implements BookScoreService {
         return bookScoreDao.selectByExample(conditions);
     }
 
-    @Override
-    public String getBookHotIndexByBookId(Integer bookId) {
-        List<BookScore> bookScores = getByBookId(bookId);
-        Double hotScore = 0.0;
-        if (CollectionUtils.isNotEmpty(bookScores)) {
-            Map<Integer, Double> percentMap = getPercentMap(bookScores);
-            for (BookScore bookScore : bookScores) {
-                Integer commentNum = bookScore.getCommentNum();
-                Double marketPercent = percentMap.get(bookScore.getSource());
-                hotScore += marketPercent * commentNum;
-            }
-
-            hotScore = hotScore / 3.2 + getSearchIndexByBookId(bookId) * 4;
-        }
-
-        return "" + hotScore.intValue();
-    }
 
     @Override
     public List<BookScore> getByBookId(Integer bookId) {
@@ -103,9 +85,28 @@ public class BookScoreServiceImpl implements BookScoreService {
         return bookScoreDao.selectByExample(conditions);
     }
 
+
+    @Override
+    public String getBookHotIndexByBookId(Integer bookId) {
+        List<BookScore> bookScores = getByBookId(bookId);
+        Double hotScore = 10.0;
+        if (CollectionUtils.isNotEmpty(bookScores)) {
+            Map<Integer, Double> percentMap = getPercentMap(bookScores);
+            for (BookScore bookScore : bookScores) {
+                Integer commentNum = bookScore.getCommentNum();
+                Double marketPercent = percentMap.get(bookScore.getSource());
+                hotScore += marketPercent * commentNum;
+            }
+
+            hotScore = Math.log10(hotScore + (hotScore * getSearchIndexByBookId(bookId) / 300)) * 1000;
+        }
+
+        return "" + hotScore.intValue();
+    }
+
     @Override
     public String getPropagateIndexByBookId(Integer bookId) {
-        Double propagateIndex = 0.0;
+        Double propagateIndex = 10.0;
 
         KeyWord keyWord = new KeyWord();
         keyWord.bookId(bookId);
@@ -120,41 +121,46 @@ public class BookScoreServiceImpl implements BookScoreService {
         List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
         if (CollectionUtils.isNotEmpty(keyWords)) {
             for (KeyWord word : keyWords) {
-                propagateIndex += map.get(word.getSource()) * word.getIndexNum();
+//                Integer source = word.getSource();
+//                Integer type = KeyWordEnums.weibo.getType();
+//                if (source != type) {
+                    propagateIndex += map.get(word.getSource()) * word.getIndexNum();
+//                }
             }
 
+            propagateIndex = Math.log10(propagateIndex) * 1000;
         }
         return "" + propagateIndex.intValue();
     }
 
     @Override
     public String getDevelopIndexByRecord(BookView bookView) {
-        Double developScore = 0.0;
+        Double developScore = 10.0;
         Integer hotIndex = bookView.getHotIndex();
         Integer propagationIndex = bookView.getPropagateIndex();
 
-        List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
-        if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
+        developScore += (hotIndex + propagationIndex) * 0.5;
+
+        List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
+        if (CollectionUtils.isNotEmpty(peopleChartList)) {
             int i = 0;
-            for (BookIndexData bookIndexData : bookIndexDatas) {
-                String[] ages = bookIndexData.getAge();
-                if (ArrayUtils.isNotEmpty(ages)) {
-                    developScore += 15 * Double.parseDouble(ages[0]) + 23 * Double.parseDouble(ages[1]) + 28 * Double.parseDouble(ages[1]) + 16 * Double.parseDouble(ages[0]) + 8 * Double.parseDouble(ages[0]);
-                    i++;
-                }
+            Double sexScore = 0.0;
+            for (PeopleChart peopleChart : peopleChartList) {
+                sexScore += 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                i++;
             }
 
-            developScore = 0.01 * (hotIndex + propagationIndex) * developScore / i;
+            developScore *= (sexScore / i) / (20.512);
         }
-
 
         return "" + (developScore.intValue());
     }
 
+
     @Override
     public String getReputationIndexByBookId(Integer bookId) {
         List<BookScore> bookScores = getByBookId(bookId);
-        Double reputationScore = 0.0;
+        Double reputationScore = 10.0;
         if (CollectionUtils.isNotEmpty(bookScores)) {
             Map<Integer, Double> percentMap = getPercentMap(bookScores);
             for (BookScore bookScore : bookScores) {
@@ -163,7 +169,7 @@ public class BookScoreServiceImpl implements BookScoreService {
                 reputationScore += marketPercent * score;
             }
 
-            reputationScore = reputationScore * 123.45;
+            reputationScore = Math.log10(reputationScore * 123.45) * 1000;
         }
 
         return "" + reputationScore.intValue();
@@ -195,7 +201,7 @@ public class BookScoreServiceImpl implements BookScoreService {
 
 
     public Double getSearchIndexByBookId(Integer bookId) {
-        Double res = 0.0;
+        Double res = 10.0;
         List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookId);
         if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
             //@todo 目前只取360
@@ -213,6 +219,4 @@ public class BookScoreServiceImpl implements BookScoreService {
 
         return res;
     }
-
-
 }

@@ -1,28 +1,44 @@
 #set($layout = "/layout/layout_homepage.vm")
-<div id="home_page">
+
+<div id="loading">
+    <span class="loading_logo"></span>
+</div>
+<div id="home_page" style="display: none">
     <div class="section sec_1">
         <div class="background_layer"></div>
         <header>
             <nav class="clearfix">
                 <span class="logo"></span>
                 <ul class="home_page_nav_left">
-                    <li><a href="">首页</a></li>
-                    <li><a href="">排行</a></li>
-                    <li><a href="">机遇</a></li>
-                    <li><a href="">人才</a></li>
-                    <li><a href="">关于</a></li>
+                    <li class="active"><a href="/">首页</a></li>
+                    <li><a href="/rank/list">排行</a></li>
+                    <li><a href="/about/empty">机遇</a></li>
+                    <li><a href="/about/empty">人才</a></li>
+                    <li><a href="/about/us">关于</a></li>
                 </ul>
                 <ul class="home_page_nav_right">
-                    <!-- case 1 -->
-                    <li>
-                        <button id="login">登录</button>
-                    </li>
-                    <li>
-                        <button id="register">免费注册</button>
-                    </li>
-                    <!-- case 2 -->
-                    <!-- <li><a href="#">认证</a></li> -->
-                    <!-- <li><span>Jeff</span><img src="../assets/images/avatar.png"></li> -->
+                    #if($!thisUser.userKey)
+                        <li><a href="/about/empty">认证</a></li>
+                        <li>$!thisUser.username</li>
+                        <li id="currentUser">
+                            <img src="$!thisUser.imageUrl">
+                            <div class="user_menu" id="user_menu">
+                                <ul class="user_menu_contaienr">
+                                    <li><a href="/about/empty"><i class="icon_follow"></i>我关注的</a></li>
+                                    <li><a href="/user/bio?pageName=bio"><i class="icon_info"></i>基本信息</a></li>
+                                    <li><a href="/user/modify/password?pageName=password"><i class="icon_pwd"></i>修改密码</a></li>
+                                    <li><a href="/logout"><i class="icon_logout"></i>退出登录</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    #else
+                        <li>
+                            <button id="login">登录</button>
+                        </li>
+                        <li>
+                            <button id="register">免费注册</button>
+                        </li>
+                    #end
                 </ul>
             </nav>
         </header>
@@ -33,6 +49,7 @@
                 <input type="submit" class="submit" value="" />
             </div>
         </form>
+        <span class="icon_down"></span>
     </div>
     <div class="section sec_2">
         <h1 class="title">多维IP一站式收录 数据价值全面分析</h1>
@@ -364,7 +381,7 @@
                                 <li>全年排片容量查询</li>
                                 <li>协助票房收益最大化</li>
                             </ul>
-                            <a class="product_btn film_row_piece" href="#">即将上线</a>
+                            <a class="product_btn film_row_piece" href="/about/empty">即将上线</a>
                         </div>
                     </li>
                     <li class="single_product">
@@ -376,7 +393,7 @@
                                 <li>科学预测票房趋势</li>
                                 <li>预测票房</li>
                             </ul>
-                            <a class="product_btn time_machine" href="#">即将上线</a>
+                            <a class="product_btn time_machine" href="/about/empty">即将上线</a>
                         </div>
                     </li>
                     <li class="single_product">
@@ -388,7 +405,7 @@
                                 <li>制作成本预算</li>
                                 <li>模拟上线票房预测</li>
                             </ul>
-                            <a class="product_btn simulator" href="#">即将上线</a>
+                            <a class="product_btn simulator" href="/about/empty">即将上线</a>
                         </div>
                     </li>
                     <li class="single_product">
@@ -399,7 +416,7 @@
                                 <li>项目招募信息</li>
                                 <li>发表期待与参与意愿</li>
                             </ul>
-                            <a class="product_btn changce" href="#">即将上线</a>
+                            <a class="product_btn changce" href="/about/empty">即将上线</a>
                         </div>
                     </li>
                     <li class="single_product">
@@ -411,7 +428,7 @@
                                 <li>招募信息发布</li>
                                 <li>专业人才对接</li>
                             </ul>
-                            <a class="product_btn announce" href="#">即将上线</a>
+                            <a class="product_btn announce" href="/about/empty">即将上线</a>
                         </div>
                     </li>
                 </ul>
@@ -428,8 +445,8 @@
                     <ul>
                         <li>首页</li>
                         <li><a href="/rank/list">排行</a></li>
-                        <li><a href="">机遇</a></li>
-                        <li><a href="">人才</a></li>
+                        <li><a href="/about/empty">机遇</a></li>
+                        <li><a href="/about/empty">人才</a></li>
                     </ul>
                 </div>
                 <div class="sec_7_section_left">

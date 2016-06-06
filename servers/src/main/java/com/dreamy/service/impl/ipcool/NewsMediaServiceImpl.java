@@ -44,4 +44,9 @@ public class NewsMediaServiceImpl implements NewsMediaService {
         }
         return newsMediaDao.selectByExample(conditions);
     }
+
+    @Override
+    public List<NewsMedia> getDefaultList() {
+        return null;
+    }
 }

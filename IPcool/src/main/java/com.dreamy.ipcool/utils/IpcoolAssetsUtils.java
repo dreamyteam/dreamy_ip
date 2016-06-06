@@ -25,25 +25,19 @@ public class IpcoolAssetsUtils extends AssetsService {
     private static String projectName = "ipcool";
     public static List __cssMap = new ArrayList<Map>();
     public static List __jsMap = new ArrayList<Map>();
-
-    @Autowired
-    private RedisClientService redisClientService;
-
-    @Autowired
-    private CommonService commonService;
+    public static Boolean isDev = true;
 
 
     public static String getCssByKey(String key) {
         String sourceHtml = "";
 
         List<Map<String, Object>> cssMap = __cssMap;
-        CommonService commonService = new CommonServiceImpl();
         if (CollectionUtils.isNotEmpty(cssMap)) {
             for (Map<String, Object> map : cssMap) {
                 if (key.equals(map.get("key"))) {
                     ArrayList keyValue = (ArrayList) map.get("value");
                     if (CollectionUtils.isNotEmpty(keyValue)) {
-                        sourceHtml += "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValue.get(0) + "\">\r\n";
+                        sourceHtml += "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + getAssetsHost(isDev) + "/" + projectName + keyValue.get(0) + "\">\r\n";
                     }
                     break;
                 }
@@ -58,7 +52,6 @@ public class IpcoolAssetsUtils extends AssetsService {
         String sourceHtml = "";
 
         List<Map<String, Object>> jsMap = __jsMap;
-        CommonService commonService = new CommonServiceImpl();
 
         if (CollectionUtils.isNotEmpty(jsMap)) {
             for (Map<String, Object> map : jsMap) {
@@ -66,7 +59,7 @@ public class IpcoolAssetsUtils extends AssetsService {
 
                     ArrayList keyValues = (ArrayList) map.get("value");
                     if (CollectionUtils.isNotEmpty(keyValues)) {
-                        sourceHtml += "<script type=\"text/javascript\" src=\"" + getAssetsHost(commonService.isDev()) + "/" + projectName + keyValues.get(0) + "\"></script>\r\n";
+                        sourceHtml += "<script type=\"text/javascript\" src=\"" + getAssetsHost(isDev) + "/" + projectName + keyValues.get(0) + "\"></script>\r\n";
                     }
                     break;
                 }
@@ -79,8 +72,7 @@ public class IpcoolAssetsUtils extends AssetsService {
     }
 
     public static void getCssMap() {
-        CommonService commonService = new CommonServiceImpl();
-        String resourceMapStr = getAssetsResourceMapJson(commonService.isDev(), projectName);
+        String resourceMapStr = getAssetsResourceMapJson(isDev, projectName);
 
         if (StringUtils.isNotEmpty(resourceMapStr)) {
             Map<String, Object> resourceMap = JsonUtils.toMap(resourceMapStr);
@@ -92,8 +84,7 @@ public class IpcoolAssetsUtils extends AssetsService {
 
 
     public static void getJsMap() {
-        CommonService commonService = new CommonServiceImpl();
-        String resourceMapStr = getAssetsResourceMapJson(commonService.isDev(), projectName);
+        String resourceMapStr = getAssetsResourceMapJson(isDev, projectName);
 
         if (StringUtils.isNotEmpty(resourceMapStr)) {
             Map<String, Object> resourceMap = JsonUtils.toMap(resourceMapStr);

@@ -1,3 +1,7 @@
+
+#set($cssName = "program_detail_page.css")
+#set($jsName = "program_detail.js")
+
 <div class="container">
     #parse("/index/common.vm")
 

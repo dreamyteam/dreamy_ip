@@ -3,6 +3,7 @@ package com.dreamy.admin.tasks.rank;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.HotWord;
@@ -34,8 +35,8 @@ import java.util.Map;
  * Time: 上午11:08
  */
 @Component
-public class UpdateRankAndIndexTask {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateRankAndIndexTask.class);
+public class UpdateIndexTask {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateIndexTask.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -87,33 +88,31 @@ public class UpdateRankAndIndexTask {
     private String newsSougouQueue;
 
 
-    private Long stepValue = 1L;
-
-    //    @Scheduled(cron = "0 15 2 * * ?")
-    @Scheduled(fixedDelay = 1000 * 60 * 60 * 10)
+    @Scheduled(cron = "0 30 10s * * ?")
+//    @Scheduled(fixedDelay = 100000)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
-        Page page = new Page();
-        page.setPageSize(500);
+
         int currentPage = 1;
-        BookView entity = new BookView();
-        while (true) {
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getList(entity, page);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
-
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
                     }
+                    currentPage++;
+                } else {
+                    isLoop = false;
                 }
 
-                if (!page.isHasNextPage()) {
-                    break;
-                }
-                currentPage++;
             } catch (Exception e) {
-                LOGGER.error("update rank jod error ", e);
+                LOGGER.error("update index jod error ", e);
                 break;
             }
         }
@@ -151,47 +150,57 @@ public class UpdateRankAndIndexTask {
             String cacheKey = commonParams.get("key");
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
-                redisClientService.setNumber(cacheKey, (long) 0);
-                redisClientService.expire(cacheKey, 60 * 60 * 24);
+                redisClientService.setNumber(cacheKey, 10L);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.amazon.getType()));
                     pushToQueue(amazonQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
                     pushToQueue(jdQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.dangdang.getType()));
                     pushToQueue(dangdangQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.douban.getType())) {
                     Map<String, String> params = commonParams;
                     params.put("url", salePlatformUrls.get(CrawlerSourceEnums.douban.getType()));
                     pushToQueue(doubanQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
 
                 Map<String, String> params = commonParams;
 
-
-                params.put("name", bookView.getName());
-                pushToQueue(s360IndexQueue, params);
-                pushToQueue(wbKeyWordQueue, params);
-                pushToQueue(wxKeyWordQueue, params);
-                pushToQueue(bsKeyWordQueue, params);
+                params.put("name", "《" + bookView.getName() + "》 " + bookView.getAuthor());
                 pushToQueue(newsSougouQueue, params);
+                pushToQueue(s360IndexQueue, params);
+
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {
                     params.put("cookie", hotWord.getCookie());
                     pushToQueue(wbIndexQueue, params);
+                } else {
+                    redisClientService.incrBy(cacheKey, -1L);
                 }
+
+                pushToQueue(bsKeyWordQueue, params);
+                pushToQueue(wbKeyWordQueue, params);
+                pushToQueue(wxKeyWordQueue, params);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,7 +209,6 @@ public class UpdateRankAndIndexTask {
 
     private void pushToQueue(String queueName, Map<String, String> params) {
         queueService.push(queueName, params);
-        redisClientService.incrBy(params.get("key"), stepValue);
     }
 
 }

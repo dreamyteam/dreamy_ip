@@ -46,6 +46,11 @@
     <rabbit:queue name="${queue_keyword_baidu_sougou}"/>
     <rabbit:queue name="${queue_news_sougou}"/>
     <rabbit:queue name="${queue_crawler_over}"/>
+    <rabbit:queue name="${queue_crawler_qidian}"/>
+    <rabbit:queue name="${queue_crawler_zongheng}"/>
+    <rabbit:queue name="${queue_crawler_huayu}"/>
+
+    <rabbit:queue name="${queue_crawler_comment}"/>
 
 
 
@@ -65,6 +70,10 @@
             <rabbit:binding queue="${queue_keyword_baidu_sougou}"/>
             <rabbit:binding queue="${queue_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_over}"/>
+            <rabbit:binding queue="${queue_crawler_qidian}"/>
+            <rabbit:binding queue="${queue_crawler_zongheng}"/>
+            <rabbit:binding queue="${queue_crawler_huayu}"/>
+            <rabbit:binding queue="${queue_crawler_comment}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -102,8 +111,14 @@
     <!--新闻媒体 news.sougou-->
     <bean id="newsMediaQueueHandler" class="com.dreamy.crawler.listen.NewsMediaQueueHandler"/>
 
+    <!-- 网络小说 起点-->
+    <bean id="qiDianQueueHandler" class="com.dreamy.crawler.listen.QiDianQueueHandler"/>
+    <!-- 网络小说 纵横-->
+    <bean id="zongHengQueueHandler" class="com.dreamy.crawler.listen.ZongHengQueueHandler"/>
+    <!-- 网络小说 花语-->
+    <bean id="huaYuQueueHandler" class="com.dreamy.crawler.listen.HuaYuQueueHandler"/>
 
-    <!--队列监听-->
+    <!--&lt;!&ndash;队列监听&ndash;&gt;-->
     <!--<rabbit:listener-container-->
             <!--connection-factory="connectionFactory"-->
             <!--auto-startup="true"-->
@@ -227,4 +242,37 @@
         <rabbit:listener ref="dangBookQueueHandler" method="onMessage" queues="${queue_dangdang_crawler}"/>
     </rabbit:listener-container>
 
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="qiDianQueueHandler" method="onMessage" queues="${queue_crawler_qidian}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="zongHengQueueHandler" method="onMessage" queues="${queue_crawler_zongheng}"/>
+    </rabbit:listener-container>
+
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="huaYuQueueHandler" method="onMessage" queues="${queue_crawler_huayu}"/>
+    </rabbit:listener-container>
 </beans>  

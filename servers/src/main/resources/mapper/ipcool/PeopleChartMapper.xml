@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamy.mapper.ipcool.PeopleChartMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.PeopleChart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="age_first" property="ageFirst" jdbcType="DOUBLE" />
+    <result column="age_scond" property="ageScond" jdbcType="DOUBLE" />
+    <result column="age_third" property="ageThird" jdbcType="DOUBLE" />
+    <result column="age_fourth" property="ageFourth" jdbcType="DOUBLE" />
+    <result column="age_fifth" property="ageFifth" jdbcType="DOUBLE" />
+    <result column="male" property="male" jdbcType="DOUBLE" />
+    <result column="female" property="female" jdbcType="DOUBLE" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, book_id, age_first, age_scond, age_third, age_fourth, age_fifth, male, female, 
+    created_at, updated_at
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.PeopleChartConditions" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ip_people_chart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="paginationSql" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ip_people_chart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ip_people_chart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dreamy.domain.ipcool.PeopleChartConditions" >
+    delete from ip_people_chart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dreamy.domain.ipcool.PeopleChart" useGeneratedKeys="true" keyProperty="id" >
+    insert into ip_people_chart (book_id, age_first, age_scond, 
+      age_third, age_fourth, age_fifth, 
+      male, female, created_at, 
+      updated_at)
+    values (#{bookId,jdbcType=INTEGER}, #{ageFirst,jdbcType=DOUBLE}, #{ageScond,jdbcType=DOUBLE}, 
+      #{ageThird,jdbcType=DOUBLE}, #{ageFourth,jdbcType=DOUBLE}, #{ageFifth,jdbcType=DOUBLE}, 
+      #{male,jdbcType=DOUBLE}, #{female,jdbcType=DOUBLE}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.PeopleChart" useGeneratedKeys="true" keyProperty="id" >
+    insert into ip_people_chart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="ageFirst != null" >
+        age_first,
+      </if>
+      <if test="ageScond != null" >
+        age_scond,
+      </if>
+      <if test="ageThird != null" >
+        age_third,
+      </if>
+      <if test="ageFourth != null" >
+        age_fourth,
+      </if>
+      <if test="ageFifth != null" >
+        age_fifth,
+      </if>
+      <if test="male != null" >
+        male,
+      </if>
+      <if test="female != null" >
+        female,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="ageFirst != null" >
+        #{ageFirst,jdbcType=DOUBLE},
+      </if>
+      <if test="ageScond != null" >
+        #{ageScond,jdbcType=DOUBLE},
+      </if>
+      <if test="ageThird != null" >
+        #{ageThird,jdbcType=DOUBLE},
+      </if>
+      <if test="ageFourth != null" >
+        #{ageFourth,jdbcType=DOUBLE},
+      </if>
+      <if test="ageFifth != null" >
+        #{ageFifth,jdbcType=DOUBLE},
+      </if>
+      <if test="male != null" >
+        #{male,jdbcType=DOUBLE},
+      </if>
+      <if test="female != null" >
+        #{female,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dreamy.domain.ipcool.PeopleChartConditions" resultType="java.lang.Integer" >
+    select count(*) from ip_people_chart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ip_people_chart
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ageFirst != null" >
+        age_first = #{record.ageFirst,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ageScond != null" >
+        age_scond = #{record.ageScond,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ageThird != null" >
+        age_third = #{record.ageThird,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ageFourth != null" >
+        age_fourth = #{record.ageFourth,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ageFifth != null" >
+        age_fifth = #{record.ageFifth,jdbcType=DOUBLE},
+      </if>
+      <if test="record.male != null" >
+        male = #{record.male,jdbcType=DOUBLE},
+      </if>
+      <if test="record.female != null" >
+        female = #{record.female,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ip_people_chart
+    set id = #{record.id,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      age_first = #{record.ageFirst,jdbcType=DOUBLE},
+      age_scond = #{record.ageScond,jdbcType=DOUBLE},
+      age_third = #{record.ageThird,jdbcType=DOUBLE},
+      age_fourth = #{record.ageFourth,jdbcType=DOUBLE},
+      age_fifth = #{record.ageFifth,jdbcType=DOUBLE},
+      male = #{record.male,jdbcType=DOUBLE},
+      female = #{record.female,jdbcType=DOUBLE},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.ipcool.PeopleChart" >
+    update ip_people_chart
+    <set >
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="ageFirst != null" >
+        age_first = #{ageFirst,jdbcType=DOUBLE},
+      </if>
+      <if test="ageScond != null" >
+        age_scond = #{ageScond,jdbcType=DOUBLE},
+      </if>
+      <if test="ageThird != null" >
+        age_third = #{ageThird,jdbcType=DOUBLE},
+      </if>
+      <if test="ageFourth != null" >
+        age_fourth = #{ageFourth,jdbcType=DOUBLE},
+      </if>
+      <if test="ageFifth != null" >
+        age_fifth = #{ageFifth,jdbcType=DOUBLE},
+      </if>
+      <if test="male != null" >
+        male = #{male,jdbcType=DOUBLE},
+      </if>
+      <if test="female != null" >
+        female = #{female,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.PeopleChart" >
+    update ip_people_chart
+    set book_id = #{bookId,jdbcType=INTEGER},
+      age_first = #{ageFirst,jdbcType=DOUBLE},
+      age_scond = #{ageScond,jdbcType=DOUBLE},
+      age_third = #{ageThird,jdbcType=DOUBLE},
+      age_fourth = #{ageFourth,jdbcType=DOUBLE},
+      age_fifth = #{ageFifth,jdbcType=DOUBLE},
+      male = #{male,jdbcType=DOUBLE},
+      female = #{female,jdbcType=DOUBLE},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="paginationSql" >
+    <if test="page != null" >
+      limit  #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
+    </if>
+  </sql>
+</mapper>

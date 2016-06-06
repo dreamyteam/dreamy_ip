@@ -1,47 +1,38 @@
-<header class="ipcool_hearder clearfix">
-    <div class="inner">
-        <a href="/" class="logo"></a>
-        <!--搜索框 用户中心显示-->
-
-    ##        <form class="search_bar_container" action="/search.html">
-    ##            <div class="form_search">
-    ##
-    ##                <input type="text" name="content" class="search" placeholder="试试搜索美人鱼">
-    ##                <input class="submit" type="submit" value="">
-    ##
-    ##            </div>
-    ##        </form>
-        <!-- 搜索框 结束 -->
-
-        <!--注册 登录按钮-->
-        <!--
-            <button class="register">注册</button>
-            <button class="login">登录</button>
-        </nav> -->
-        <!--登录后用户id-->
-
-        #if($!thisUser.userKey)
-            <div class="user">
-                <h2 class="user_name">$!thisUser.username </h2>
-
-                <div class="user_menu">
-                    <div class="arrow">
-                        <span></span><em></em>
+<header class="ipcool_hearder">
+    <nav class="clearfix">
+        <span class="logo"></span>
+        <ul class="home_page_nav_left">
+            <li><a href="/">首页</a></li>
+            <li><a href="/rank/list">排行</a></li>
+            <li><a href="/about/empty">机遇</a></li>
+            <li><a href="/about/empty">人才</a></li>
+            <li><a href="/about/us">关于</a></li>
+        </ul>
+        <ul class="home_page_nav_right">
+##            <li><a href="#">动态</a></li>
+            #if($!thisUser.userKey)
+                <li><a href="/about/empty">认证</a></li>
+                <li>$!thisUser.username</li>
+                <li id="currentUser">
+                    <img src="$!thisUser.imageUrl">
+                    <div class="user_menu" id="user_menu">
+                        <ul class="user_menu_contaienr">
+                            <li><a href="/about/empty"><i class="icon_follow"></i>我关注的</a></li>
+                            <li><a href="/user/bio?pageName=bio"><i class="icon_info"></i>基本信息</a></li>
+                            <li><a href="/user/modify/password?pageName=password"><i class="icon_pwd"></i>修改密码</a></li>
+                            <li><a href="/logout"><i class="icon_logout"></i>退出登录</a></li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li><a href="/user/bio?pageName=bio">账号设置</a></li>
-                        <li><a href="/user/modify/password?pageName=password">修改密码</a></li>
-                        <li><a href="/logout">退出登录</a></li>
-                    </ul>
-                </div>
-            </div>
-        #else
-            <nav>
-                <button class="register" id="register">注册</button>
-                <button class="login" id="login">登录</button>
-            </nav>
-        #end
-    </div>
+                </li>
+            #else
+                <li>
+                    <button id="login">登录</button>
+                </li>
+                <li>
+                    <button id="register">注册</button>
+                </li>
+            #end
+        </ul>
+    </nav>
 </header>
-
 

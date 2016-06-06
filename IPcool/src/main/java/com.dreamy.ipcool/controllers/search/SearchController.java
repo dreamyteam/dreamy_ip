@@ -35,7 +35,7 @@ public class SearchController extends IpcoolController {
 
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
-        BookView bookView = new BookView().name(content);
+        BookView bookView = new BookView().name(content).type(BookTypeEnums.chuban.getType());
         List<BookView> list = bookViewService.getList(bookView, page);
 
         if (CollectionUtils.isNotEmpty(list)) {
@@ -44,7 +44,10 @@ public class SearchController extends IpcoolController {
                 bookIds.add(view.getBookId());
             }
             Map<Integer, Integer> rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
-            model.put("rankMap", rankMap);
+            if (rankMap != null) {
+                model.put("rankMap", rankMap);
+            }
+
         } else {
             list = null;
         }

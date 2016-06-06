@@ -70,10 +70,10 @@
             <div>
     </section>
     <!--综合价值-->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">综合价值</h1>
 
-        <div class="values_container"  id="composite_values">
+        <div class="values_container scroll_load_history" data-type="5">
             <!--综合指数 -->
             <div class="values_content">
                 <h2 class="program_title">综合指数</h2>
@@ -98,7 +98,12 @@
             </div>
         </div>
         <!--综合价值 图表 -->
-        <div id="chart_comprehensive_value" class="line_charts" data-fetch-url="/comprehensive/history?ip=$!{view.bookId}"></div>
+        <div id="chart_comprehensive_value"
+             class="line_charts scroll_load_chart"
+             data-fetch-type='{"name":"$!{view.name}","type":"line"}'
+             data-fetch-url="/comprehensive/history?ip=$!{view.bookId}">
+        </div>
+
         <div class="program_tab" id="program_tab">
             <h3 class="title">市场地位</h3>
             <ul class="tab_tags">
@@ -184,12 +189,11 @@
             <a href="/index/comprehensive.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
-
     <!-- 开发潜力 -->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">开发潜力</h1>
         <!-- 指数们 -->
-        <div class="values_container" id="develop_values">
+        <div class="values_container scroll_load_history" data-type=2>
             <!--综合指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前潜力指数</h2>
@@ -211,11 +215,16 @@
             <!--同类排名 -->
             <div class="values_content">
                 <h2 class="program_title">当前排名</h2>
-                <h5 class="number highest_histroy_value">$!{drank}</h5>
+                <h5 class="number ">$!{drank}</h5>
             </div>
         </div>
         <!-- 潜力模型图表 -->
-        <div id="chart_potential_model" data-fetch-url="/developIndex/history?ip=$!{view.bookId}"></div>
+        <div id="chart_potential_model"
+             class="scroll_load_chart"
+             data-fetch-type='{"name":"$!{view.name}","type":"radar"}'
+             data-fetch-url="/developIndex/history?ip=$!{view.bookId}">
+
+        </div>
         <!-- 最受期待的开发项目 -->
         <div class="vote_container">
             <h3>最受期待的开发项目</h3>
@@ -228,12 +237,11 @@
             <a href="/index/potential?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
-
     <!-- 热度趋势 -->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">热度趋势</h1>
         <!-- 指数们 -->
-        <div class="values_container" id="hot_values">
+        <div class="values_container scroll_load_history" data-type=1>
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">当前指数</h2>
@@ -258,18 +266,21 @@
             </div>
         </div>
         <!-- 热度趋势图表 -->
-        <div id="chart_heat_trend" class="line_charts" data-fetch-url="/hotIndex/history?ip=${view.bookId}"></div>
+        <div id="chart_heat_trend"
+             class="line_charts scroll_load_chart"
+             data-fetch-type='{"name":"$!{view.name}","type":"line"}'
+             data-fetch-url="/hotIndex/history?ip=${view.bookId}">
+        </div>
         <!-- 查看全部 -->
         <div class="program_showMore hidden">
             <a href="/index/heat.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
-
     <!-- 传播能力 -->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">传播能力</h1>
         <!-- 指数们 -->
-        <div class="values_container" id="propagate_values">
+        <div class="values_container scroll_load_history" data-type=3>
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">传播指数</h2>
@@ -294,25 +305,37 @@
             </div>
         </div>
         <!-- 传播指数图表 -->
-        <div id="chart_transmission_index" class="line_charts" data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}"></div>
+        <div id="chart_transmission_index"
+             class="line_charts scroll_load_chart"
+             data-fetch-type='{"name":"$!{view.name}","type":"line"}'
+             data-fetch-url="/propagateIndex/history?ip=$!{view.bookId}">
+
+        </div>
         <!-- 新闻平台 社交平台 饼图 容器-->
         <div class="col_2_container">
             <!--新闻平台图表-->
-            <div class="col" id="chart_media_platform" data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}"></div>
+            <div class="col scroll_load_chart"
+                 id="chart_media_platform"
+                 data-fetch-type='{"name":"$!{view.name}","type":"PieChartMutiple","left":"center"}'
+                 data-fetch-url="/propagation/newMedia?ip=$!{view.bookId}">
+            </div>
             <!--社交平台图表-->
-            <div class="col" id="chart_social_platform" data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}"></div>
+            <div class="col scroll_load_chart"
+                 id="chart_social_platform"
+                 data-fetch-type='{"name":"$!{view.name}","type":"PieChartDouble","left":"center","chartType":"social"}'
+                 data-fetch-url="/propagation/socialMedia?ip=$!{view.bookId}">
+            </div>
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
-
     <!--用户活跃-->
-    <section  #if($view.getType() == 1) class="hidden" #end>
+    <section class="scroll_load hidden"  #if($view.getType() == 1)  #end>
         <h1 class="title">用户活跃</h1>
         <!-- 指数们 -->
-        <div class="values_container" id="reputation_values">
+        <div class="values_container scroll_load_history" data-type=4>
             <!--当前指数指数 -->
             <div class="values_content">
                 <h2 class="program_title">用户活跃指数</h2>
@@ -337,23 +360,33 @@
             </div>
         </div>
         <!-- 用户活跃度图表 -->
-        <div id="chart_user_vitalty" class="line_charts" data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" ></div>
+        <div id="chart_user_vitalty"
+             class="line_charts scroll_load_chart"
+             data-fetch-type='{"name":"$!{view.name}","type":"line"}'
+             data-fetch-url="/activityIndex/history?ip=$!{view.bookId}" >
+        </div>
         <!-- 查看全部 -->
         <div class="program_showMore hidden">
             <a href="/index/propagation.html?ip=$!{view.id}">查看全部</a>
         </div>
     </section>
-
-
     <!--用户分析-->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">用户分析</h1>
         <!-- 受众年龄分布 容器-->
-        <div class="col_2_container">
+        <div class="col_2_container ">
             <!--男女比例分布 图表-->
-            <div class="col" id="chart_sex_distribution" data-fetch-url="/user/sex?ip=$!{view.bookId}"></div>
+            <div class="col scroll_load_chart"
+                 id="chart_sex_distribution"
+                 data-fetch-type='{"name":"$!{view.name}","type":"PieChartDouble","left":"center","chartType":"sex"}'
+                 data-fetch-url="/user/sex?ip=$!{view.bookId}">
+            </div>
             <!--年龄分布 图表-->
-            <div class="col" id="chart_age_distribution" data-fetch-url="/user/age?ip=$!{view.bookId}"></div>
+            <div class="col scroll_load_chart"
+                 id="chart_age_distribution"
+                 data-fetch-type='{"name":"$!{view.name}","type":"BarChartVertical","left":"center","chartType":"age"}'
+                 data-fetch-url="/user/age?ip=$!{view.bookId}">
+            </div>
         </div>
         <!-- 查看全部 -->
         <div class="program_showMore hidden">
@@ -361,7 +394,7 @@
         </div>
     </section>
     <!-- 点评 -->
-    <section>
+    <section class="scroll_load">
         <h1 class="title">点评</h1>
         <!-- 点评指数 图表 容器 -->
         <div class="review_container">
@@ -372,7 +405,11 @@
             </div>
             <div class="review_chart">
 ##                <button>写点评</button>
-                <div id="chart_reviews" data-fetch-url="/user/score?ip=$!{view.bookId}"></div>
+                <div id="chart_reviews"
+                     class="scroll_load_chart"
+                     data-fetch-type='{"name":"$!{view.name}","type":"BarCommit"}'
+                     data-fetch-url="/user/score?ip=$!{view.bookId}">
+                </div>
             </div>
         </div>
         <ul class="comments_container">
@@ -393,5 +430,4 @@
             #end
         </ul>
     </section>
-
 </div>

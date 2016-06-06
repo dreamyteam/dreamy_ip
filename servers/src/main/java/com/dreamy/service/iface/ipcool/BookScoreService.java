@@ -3,10 +3,8 @@ package com.dreamy.service.iface.ipcool;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.mogodb.beans.Book;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/28.

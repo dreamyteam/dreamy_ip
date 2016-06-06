@@ -3,11 +3,15 @@ package com.dreamy.admin.service;
 import com.dreamy.domain.sys.SysOption;
 import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.service.cache.CommonService;
+import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.sys.SysOptionService;
 import com.dreamy.utils.ConstStrings;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.sina.CrawSina;
 import com.dreamy.utils.sina.LoginSina;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +24,9 @@ import java.util.Map;
 public class SinaLoginService {
 
     @Resource
-    CommonService commonService;
+    @Autowired
+    @Qualifier("rawValueOperations")
+    private ValueOperations<String, Object> rawValueOperations;
 
     @Resource
     private SysOptionService sysOptionService;
@@ -39,11 +45,11 @@ public class SinaLoginService {
                     LoginSina ls = new LoginSina(values[0], values[1]);
                     ls.dologinSina();
                     if (StringUtils.isNotEmpty(CrawSina.Cookie)) {
-                        commonService.getCacheService().set(RedisConstEnums.weiboCookieName.getCacheKey() + j, CrawSina.Cookie, 3600);
+                        rawValueOperations.set(RedisConstEnums.weiboCookieName.getCacheKey() + j, CrawSina.Cookie);
                         j++;
                     }
                 }
-                commonService.getCacheService().put(RedisConstEnums.weibo.getCacheKey(), j);
+                rawValueOperations.set(RedisConstEnums.weibo.getCacheKey(), j+"");
 
             }
 

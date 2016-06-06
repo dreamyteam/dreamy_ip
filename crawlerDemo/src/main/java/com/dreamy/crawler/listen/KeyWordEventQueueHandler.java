@@ -43,8 +43,6 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
         finally {
             crawlerService.check(key,bookId);
         }
-
-
     }
 
 }
