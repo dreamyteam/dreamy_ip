@@ -32,14 +32,16 @@
                             src="$!{view.imageUrl}"></a>
 
                     <div class="sresult_content">
-                        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a></h2>
-                          <span class="type">
-                              #foreach($bookType in $typeEnums)
+                        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
+                            <span class="type">
+                                #foreach($bookType in $typeEnums)
                                #if($bookType.getType() == $view.getType())
-                                  $bookType.getDescription()
-                              #end
+                                    $bookType.getDescription()
+                                #end
                             #end
-                          </span>
+                            </span>
+                        </h2>
+
                         <h6>作者: $!{view.author}</h6>
                         <ul class="quotient">
                             <li>
