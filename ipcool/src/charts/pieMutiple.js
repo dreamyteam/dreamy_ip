@@ -18,6 +18,7 @@ export default class pieMutiple extends Chart {
             },
             tooltip: {
                 trigger: 'item',
+                formatter: '{a}<br/>{b} : {d}%'
             },
             series: [{
                 name: this.name,
