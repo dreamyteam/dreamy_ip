@@ -61,7 +61,7 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
         p.setPageSize(1);
 
         conditions.setPage(p);
-        conditions.setOrderByClause("rank_index");
+        conditions.setOrderByClause("rank_index desc");
 
         List<BookRankHistory> bookRankHistoryList = bookRankHistoryDao.selectByExample(conditions);
         if (CollectionUtils.isNotEmpty(bookRankHistoryList)) {
@@ -69,12 +69,5 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
         }
 
         return bookRankHistory;
-    }
-
-//    @Override
-//    public int delByBookIdAndTypeAndDate(Integer bookId, Integer type, Date date) {
-//        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
-//        conditions.createCriteria().andBookIdEqualTo(bookId).andTypeEqualTo(type).andCreatedAtEqualTo(TimeUtils.getDate(date));
-//        return bookRankHistoryDao.deleteByExample(conditions);
-//    }
+    } 
 }
