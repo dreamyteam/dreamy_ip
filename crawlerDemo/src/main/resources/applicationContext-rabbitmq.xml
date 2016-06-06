@@ -50,6 +50,8 @@
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
 
+    <rabbit:queue name="${queue_crawler_comment}"/>
+
 
 
     <!--交换器声明-->
@@ -71,6 +73,7 @@
             <rabbit:binding queue="${queue_crawler_qidian}"/>
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
+            <rabbit:binding queue="${queue_crawler_comment}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
