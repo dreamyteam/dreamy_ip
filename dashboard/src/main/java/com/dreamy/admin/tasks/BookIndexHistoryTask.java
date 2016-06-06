@@ -35,7 +35,7 @@ public class BookIndexHistoryTask {
             Page page = new Page();
             page.setPageSize(200);
             page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(entity, page);
+            List<BookView> list = bookViewService.getList(entity, page,null);
             for(BookView info:list){
                 BookIndexHistory history=new BookIndexHistory();
                 history.setHotIndex(info.getHotIndex());

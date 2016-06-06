@@ -61,7 +61,7 @@ public class IndexController extends IpcoolController {
         getCommonDataOfPage(ipId, model, request);
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
 
-        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCountByType(BookTypeEnums.chuban.getType())));
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(BookTypeEnums.chuban.getType())));
         model.put("bookLevels", BookLevelEnums.values());
         model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
 
@@ -137,7 +137,7 @@ public class IndexController extends IpcoolController {
         getCommonDataOfPage(ipId, model, request);
 
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
-        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getToutleCountByType(BookTypeEnums.chuban.getType())));
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(BookTypeEnums.chuban.getType())));
         model.put("bookLevels", BookLevelEnums.values());
         model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
         model.put("rankEnums", BookIndexTypeEnums.values());

@@ -7,6 +7,7 @@ import com.dreamy.domain.ipcool.BookViewConditions;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,7 +33,7 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
-    public List<BookView> getList(BookView bookView, Page page) {
+    public List<BookView> getList(BookView bookView, Page page, String order) {
         Map<String, Object> params = BeanUtils.toQueryMap(bookView);
         BookViewConditions conditions = new BookViewConditions();
         conditions.createCriteria().addByMap(params);
@@ -41,11 +42,14 @@ public class BookViewServiceImpl implements BookViewService {
             conditions.setPage(page);
         }
         conditions.setOrderByClause("book_id  desc");
+        if (StringUtils.isNotEmpty(order)) {
+            conditions.setOrderByClause(order);
+        }
         return bookViewDao.selectByExample(conditions);
     }
 
     @Override
-    public Integer getToutleCountByType(Integer type) {
+    public Integer getTotalCountByType(Integer type) {
         BookViewConditions conditions = new BookViewConditions();
         conditions.createCriteria().andIdGreaterThan(0);
         return bookViewDao.countByExample(conditions);
@@ -68,11 +72,19 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
-    public List<BookView> getListByPageAndOrderAndType(Page page, String order,Integer type) {
+    public List<BookView> getListByPageAndOrderAndType(Page page, String order, Integer type) {
         BookViewConditions conditions = new BookViewConditions();
-        conditions.createCriteria().andTypeEqualTo(type);
+        if (type != null) {
+            conditions.createCriteria().andTypeEqualTo(type);
+        }
         conditions.setPage(page);
         conditions.setOrderByClause(order);
+
+        if (page != null) {
+            page.setTotalNum(bookViewDao.countByExample(conditions));
+            conditions.setPage(page);
+        }
+
         return bookViewDao.selectByExample(conditions);
     }
 

@@ -48,7 +48,7 @@ public class BookIndexDataTest extends BaseJunitTest {
         Page page = new Page();
         page.setPageSize(7000);
         page.setCurrentPage(1);
-        List<BookView> views = bookViewService.getList(new BookView().type(1), page);
+        List<BookView> views = bookViewService.getList(new BookView().type(1), page, null);
 
         for (BookView bookView : views) {
             List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
