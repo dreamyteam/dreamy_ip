@@ -52,7 +52,7 @@ public class KeyWorkTask {
                 Page page = new Page();
                 page.setPageSize(20);
                 page.setCurrentPage(currentPage);
-                List<BookView> list = bookViewService.getList(bookView, page);
+                List<BookView> list = bookViewService.getList(bookView, page,null);
                 for (BookView book : list) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("source", book.getType());
@@ -85,7 +85,7 @@ public class KeyWorkTask {
                 Page page = new Page();
                 page.setPageSize(50);
                 page.setCurrentPage(currentPage);
-                List<BookView> list = bookViewService.getList(entity, page);
+                List<BookView> list = bookViewService.getList(entity, page,null);
                 for (BookView bookView : list) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("bookId", bookView.getBookId());
@@ -111,7 +111,7 @@ public class KeyWorkTask {
                 Page page = new Page();
                 page.setPageSize(50);
                 page.setCurrentPage(currentPage);
-                List<BookView> list = bookViewService.getList(entity, page);
+                List<BookView> list = bookViewService.getList(entity, page,null);
                 for (BookView bookView : list) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("source", bookView.getType());
