@@ -50,7 +50,7 @@
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
 
-    <rabbit:queue name="${queue_crawler_comment}"/>
+    <rabbit:queue name="${queue_douban_comment}"/>
 
 
 
@@ -73,7 +73,7 @@
             <rabbit:binding queue="${queue_crawler_qidian}"/>
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
-            <rabbit:binding queue="${queue_crawler_comment}"/>
+            <rabbit:binding queue="${queue_douban_comment}"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -119,16 +119,16 @@
     <bean id="huaYuQueueHandler" class="com.dreamy.crawler.listen.HuaYuQueueHandler"/>
 
     <!--&lt;!&ndash;队列监听&ndash;&gt;-->
-    <!--<rabbit:listener-container-->
-            <!--connection-factory="connectionFactory"-->
-            <!--auto-startup="true"-->
-            <!--acknowledge="auto"-->
-            <!--prefetch="1"-->
-            <!--concurrency="1"-->
-            <!--message-converter="simpleMessageConverter"-->
-            <!--error-handler="listenerErrorHandler">-->
-        <!--<rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_crawler_comment}"/>-->
-    <!--</rabbit:listener-container>-->
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="commentEventQueueHandler" method="onMessage" queues="${queue_douban_comment}"/>
+    </rabbit:listener-container>
     <rabbit:listener-container
             connection-factory="connectionFactory"
             auto-startup="true"

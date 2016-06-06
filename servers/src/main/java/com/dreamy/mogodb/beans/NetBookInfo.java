@@ -72,6 +72,8 @@ public class NetBookInfo {
      */
     private Integer commentNum;
 
+    private String authorUrl;
+
     public Integer getBookId() {
         return bookId;
     }
@@ -191,5 +193,13 @@ public class NetBookInfo {
 
     public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
+    }
+
+    public String getAuthorUrl() {
+        return authorUrl;
+    }
+
+    public void setAuthorUrl(String authorUrl) {
+        this.authorUrl = authorUrl;
     }
 }

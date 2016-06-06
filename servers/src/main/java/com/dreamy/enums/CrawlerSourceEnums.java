@@ -13,7 +13,8 @@ public enum CrawlerSourceEnums {
     douban(4, "豆瓣", "douban", 0.5),
     qidian(5, "起点", "qidian", 0.5),
     zongheng(6, "纵横", "zongheng", 0.5),
-    huayu(7, "花语", "huayu", 0.5);
+    huayu(7, "花语", "huayu", 0.5),
+    qidianmm(8, "起点MM", "qidianmm", 0.5);
 
     private Integer type;
 
