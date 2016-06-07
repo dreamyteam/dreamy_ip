@@ -4,25 +4,20 @@ import com.dreamy.beans.UserSession;
 import com.dreamy.beans.params.IpApplyParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserApply;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.UserApplyService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.omg.CORBA.MARSHAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,7 +37,7 @@ public class ApplyController extends IpcoolController {
 
         List<Integer> wrongTypes = JsonUtils.toList(Integer.class, request.getParameter("wrongTypes"));
         map.put("wrongTypes", wrongTypes);
-        map.put("booTypeEnums", BookTypeEnums.values());
+        map.put("booTypeEnums", IpTypeEnums.values());
 
         user.userName(HttpUtils.decodeUrl(user.getUserName()));
         applyParams.setIpName(HttpUtils.decodeUrl(applyParams.getIpName()));

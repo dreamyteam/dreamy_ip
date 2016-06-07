@@ -1,7 +1,7 @@
 package com.dreamy.handler.sougou;
 
 import com.dreamy.domain.ipcool.NewsMedia;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.service.iface.ipcool.NewsMediaService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.PatternUtils;
@@ -57,7 +57,7 @@ public class NewsSougouHandler {
             NewsSougou sougou = ooSpider.<NewsSougou>get(url);
             if (sougou != null) {
                 NewsMedia newsMedia = new NewsMedia();
-                newsMedia.type(BookTypeEnums.chuban.getType());
+                newsMedia.type(IpTypeEnums.chuban.getType());
                 newsMedia.source(source + 1);
                 newsMedia.bookId(bookId);
                 newsMedia.num(Integer.valueOf(PatternUtils.getNum(sougou.getNum())));

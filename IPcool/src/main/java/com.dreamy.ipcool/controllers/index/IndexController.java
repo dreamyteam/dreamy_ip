@@ -61,7 +61,7 @@ public class IndexController extends IpcoolController {
         getCommonDataOfPage(ipId, model, request);
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
 
-        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(BookTypeEnums.chuban.getType())));
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(IpTypeEnums.chuban.getType())));
         model.put("bookLevels", BookLevelEnums.values());
         model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
 
@@ -137,11 +137,11 @@ public class IndexController extends IpcoolController {
         getCommonDataOfPage(ipId, model, request);
 
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
-        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(BookTypeEnums.chuban.getType())));
+        model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(IpTypeEnums.chuban.getType())));
         model.put("bookLevels", BookLevelEnums.values());
         model.put("rankPositions", bookRankService.getRankPositionAndDetailByBookIdAndType(rankIndex, BookIndexTypeEnums.composite.getType()));
         model.put("rankEnums", BookIndexTypeEnums.values());
-        model.put("typeEnums", BookTypeEnums.values());
+        model.put("typeEnums", IpTypeEnums.values());
         model.put("trendEnums", BookRankTrendEnums.values());
         model.put("developEnums", BookIpDevelopTypeEnums.values());
 
@@ -228,7 +228,7 @@ public class IndexController extends IpcoolController {
             pageName = "detail";
         }
         model.put("pageName", pageName);
-        model.put("typeEnums", BookTypeEnums.values());
+        model.put("typeEnums", IpTypeEnums.values());
 
         List<BookRank> list = bookRankService.getBookRankByBookId(bookId);
         if (CollectionUtils.isNotEmpty(list)) {

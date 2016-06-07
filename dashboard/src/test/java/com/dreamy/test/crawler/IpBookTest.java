@@ -2,9 +2,7 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
-import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;

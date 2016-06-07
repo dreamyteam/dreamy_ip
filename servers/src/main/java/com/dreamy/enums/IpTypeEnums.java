@@ -6,14 +6,14 @@ package com.dreamy.enums;
  * Date: 16/5/4
  * Time: 下午4:12
  */
-public enum BookTypeEnums {
+public enum IpTypeEnums {
     chuban(1, "出版文学"),
     net(2, "网络文学");
     private Integer type;
 
     private String Description;
 
-    BookTypeEnums(Integer type, String description) {
+    IpTypeEnums(Integer type, String description) {
         this.type = type;
         Description = description;
     }

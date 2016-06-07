@@ -1,10 +1,9 @@
 package com.dreamy.admin.tasks;
 
-import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.enums.RedisConstEnums;
 import com.dreamy.service.cache.RedisClientService;
@@ -21,7 +20,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -62,7 +60,7 @@ public class TestTask {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
 

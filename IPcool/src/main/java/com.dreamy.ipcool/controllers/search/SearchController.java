@@ -2,7 +2,7 @@ package com.dreamy.ipcool.controllers.search;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -35,7 +35,7 @@ public class SearchController extends IpcoolController {
 
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
-        BookView bookView = new BookView().name(content).type(BookTypeEnums.chuban.getType());
+        BookView bookView = new BookView().name(content).type(IpTypeEnums.chuban.getType());
         List<BookView> list = bookViewService.getList(bookView, page,"composite_index desc");
 
         if (CollectionUtils.isNotEmpty(list)) {
@@ -52,11 +52,13 @@ public class SearchController extends IpcoolController {
             list = null;
         }
 
-        model.put("typeEnums", BookTypeEnums.values());
+        model.put("typeEnums", IpTypeEnums.values());
         model.put("list", list);
         model.put("page", page);
         model.put("content", content);
 
         return "/search/result";
     }
+
+
 }
