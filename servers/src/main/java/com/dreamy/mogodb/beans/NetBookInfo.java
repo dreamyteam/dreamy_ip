@@ -10,6 +10,8 @@ public class NetBookInfo {
     @Id
     private Integer bookId;
 
+    private Integer code;
+
     /**
      * 作品名称
      */
@@ -201,5 +203,13 @@ public class NetBookInfo {
 
     public void setAuthorUrl(String authorUrl) {
         this.authorUrl = authorUrl;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

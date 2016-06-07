@@ -3,6 +3,7 @@ package com.dreamy.crawler.handler.info.netbook.qd;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,6 +31,8 @@ public class QiDianMmHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 info = new NetBookInfo();
+                String code = PatternUtils.getNum(url);
+                info.setCode(Integer.valueOf(code));
                 info.setBookId(bookId);
                 if (operation.equals(OperationEnums.crawler.getCode())) {
                     getInfo(info, document);

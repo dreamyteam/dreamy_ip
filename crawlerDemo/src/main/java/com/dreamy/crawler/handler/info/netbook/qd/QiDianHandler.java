@@ -3,6 +3,8 @@ package com.dreamy.crawler.handler.info.netbook.qd;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,13 +34,17 @@ public class QiDianHandler {
             if (document != null) {
                 info = new NetBookInfo();
                 info.setBookId(bookId);
+                String code = PatternUtils.getNum(url);
+                info.setCode(Integer.valueOf(code));
                 if (operation.equals(OperationEnums.crawler.getCode())) {
                     getInfo(info, document);
                     getCategory(info, document);
                     getLabel(info, document);
                 }
                 getOverInfo(info, document);
+                getAuthorUrl(info, document);
                 getOverAuthority(info, document);
+                getCommentNum(info, document);
                 getClickNum(info, document);
                 getRecommendNum(info, document);
                 getScore(info, document);
@@ -60,10 +67,48 @@ public class QiDianHandler {
             Elements elements = document.getElementById("contentdiv").getElementsByAttributeValue("itemprop", "description");
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
-                info.setInfo(element.text());
+                info.setInfo(element.text().replace(" ", ""));
             }
         } catch (Exception e) {
             log.error(" qidian 简介 is error book=" + info.getBookId(), e);
+
+        }
+
+
+    }
+
+    /**
+     * 解析 评论人数
+     *
+     * @param info
+     * @param document
+     */
+    private void getCommentNum(NetBookInfo info, Document document) {
+
+        Element element = document.getElementById("div_pingjiarenshu");
+        if (element != null) {
+            String num = PatternUtils.extracte("评价人数:(.*?)人", element.text());
+            info.setCommentNum(Integer.valueOf(num));
+        }
+
+
+    }
+
+
+    /**
+     * 解析 作者链接
+     *
+     * @param info
+     * @param document
+     */
+    private void getAuthorUrl(NetBookInfo info, Document document) {
+
+        Elements elements = document.getElementsByAttributeValue("itemprop", "author");
+        if (elements != null && elements.size() > 0) {
+            Elements element = elements.first().getElementsByAttributeValue("itemprop", "url");
+            if (element != null) {
+                info.setAuthorUrl(element.attr("href"));
+            }
 
         }
 
@@ -206,22 +251,10 @@ public class QiDianHandler {
         Elements elements = document.getElementsByClass("ballot_data");
         if (elements != null && elements.size() > 0) {
             Element element = elements.first();
-            String num = getResult(element.text());
+            String num = PatternUtils.extracte("本月票数：(.*?)票", element.text());
             info.setTicketNum(Integer.valueOf(num));
         }
     }
 
-    public static String getResult(String str) {
-        String result = "0";
-        Pattern p = Pattern.compile("本月票数：(.*?)票");
-        Matcher m = p.matcher(str);
-        while (m.find()) {
-            result = m.group(1);
-        }
-        if (StringUtils.isEmpty(result)) {
-            return "0";
-        }
-        return result;
 
-    }
 }

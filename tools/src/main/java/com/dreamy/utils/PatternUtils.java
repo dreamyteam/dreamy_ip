@@ -44,5 +44,19 @@ public final class PatternUtils {
         return date;
     }
 
+    public static String extracte(String reg, String str) {
+        String result = "0";
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+            result = m.group(1);
+        }
+        if (StringUtils.isEmpty(result)) {
+            return "0";
+        }
+        return result;
+
+    }
+
 
 }

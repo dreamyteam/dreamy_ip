@@ -33,6 +33,8 @@ public class HuaYuHandler {
             if (document != null) {
                 info = new NetBookInfo();
                 info.setBookId(bookId);
+                String code = PatternUtils.getNum(url);
+                info.setCode(Integer.valueOf(code));
                 if (operation.equals(OperationEnums.crawler.getCode())) {
                     getImage(info, document);
                     getInfo(info, document);
