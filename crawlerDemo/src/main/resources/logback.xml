@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
-	<contextName>logback</contextName>
+    <contextName>logback</contextName>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>   
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
         </encoder>
     </appender>
-	
-	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logPath}/crawlerDemo.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${logPath}/crawlerDemo.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<maxHistory>3</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>
-				[%d{yyyy-MM-dd HH:mm:ss.sss}][host:%X{req.remoteHost}][param:%X{req.queryString}][URL:%X{req.requestURL}]%n LEVEL:%p,CLASSNAME:%logger, LINE :%L, MESSAGE :"%m" %n EXCEPTION :%xEx %n%n
-				<charset>UTF-8</charset>
-			</pattern>
-		</encoder>
-	</appender>
 
-	<logger name="dao" level="INFO">
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/crawlerDemo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/crawlerDemo.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                [%d{yyyy-MM-dd
+                HH:mm:ss.sss}][host:%X{req.remoteHost}][param:%X{req.queryString}][URL:%X{req.requestURL}]%n
+                LEVEL:%p,CLASSNAME:%logger, LINE :%L, MESSAGE :"%m" %n EXCEPTION :%xEx %n%n
+                <charset>UTF-8</charset>
+            </pattern>
+        </encoder>
+    </appender>
 
-		<appender-ref ref="daoFILE" />
-	</logger>
-	<logger name="com.ibatis" level="INFO" />
-	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="INFO" />
-	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="INFO" />
-	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="INFO" />
-	<logger name="java.sql.Connection" level="INFO" />
-	<logger name="java.sql.Statement" level="INFO" />
-	<logger name="java.sql" level="INFO"/>
-	<logger name="java.sql.PreparedStatement" level="INFO" />
-	<logger name="com.dreamy.handler" level="ERROR" />
-	<root level="ERROR">
-	    <appender-ref ref="ERROR_FILE" />  
-	</root>
-		
+    <logger name="dao" level="INFO">
+
+        <appender-ref ref="daoFILE"/>
+    </logger>
+    <logger name="com.ibatis" level="INFO"/>
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="INFO"/>
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="INFO"/>
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="INFO"/>
+    <logger name="java.sql.Connection" level="INFO"/>
+    <logger name="java.sql.Statement" level="INFO"/>
+    <logger name="java.sql" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>
+    <logger name="com.dreamy.handler" level="ERROR"/>
+    <root level="ERROR">
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
 </configuration>

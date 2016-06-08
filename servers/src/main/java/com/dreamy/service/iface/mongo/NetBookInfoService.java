@@ -1,6 +1,5 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 
 /**

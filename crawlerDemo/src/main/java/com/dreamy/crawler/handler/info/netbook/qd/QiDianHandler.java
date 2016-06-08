@@ -102,13 +102,29 @@ public class QiDianHandler {
      * @param document
      */
     private void getAuthorUrl(NetBookInfo info, Document document) {
+        try {
+            Elements elements = document.getElementsByAttributeValue("itemprop", "author");
+            if (elements != null && elements.size() > 0) {
+                Elements element = elements.first().getElementsByAttributeValue("itemprop", "url");
+                if (element != null) {
+                    String url = element.attr("href");
+                    String html = HttpUtils.getHtmlGet(url);
+                    Document urlDocument = Jsoup.parse(html);
+                    if (urlDocument != null) {
+                        Elements elements1 = urlDocument.getElementsByAttributeValue("title", "起点ID");
+                        if (elements1 != null && elements1.size() > 0) {
+                            Element element1 = elements1.first();
+                            String id = PatternUtils.getNum(element1.text());
+                            String authorUrl = "http://t.qidian.com/Friend/HisFollower.php?id=" + id;
+                            info.setAuthorUrl(authorUrl);
 
-        Elements elements = document.getElementsByAttributeValue("itemprop", "author");
-        if (elements != null && elements.size() > 0) {
-            Elements element = elements.first().getElementsByAttributeValue("itemprop", "url");
-            if (element != null) {
-                info.setAuthorUrl(element.attr("href"));
+
+                        }
+                    }
+                }
+
             }
+        } catch (Exception e) {
 
         }
 

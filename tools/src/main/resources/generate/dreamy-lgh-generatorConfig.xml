@@ -42,26 +42,26 @@
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="members" domainObjectName="user.Members">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="orders" domainObjectName="user.Orders">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="star" domainObjectName="star.Star">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="star_follow" domainObjectName="star.StarFollow">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
 
         <!--<table tableName="sys_setting" domainObjectName="sys.Setting">-->
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
-          <!--<table tableName="banner" domainObjectName="banner.Banner">-->
+        <!--<table tableName="banner" domainObjectName="banner.Banner">-->
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
-   <table tableName="news" domainObjectName="news.News">
-        <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        <table tableName="news" domainObjectName="news.News">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 
 

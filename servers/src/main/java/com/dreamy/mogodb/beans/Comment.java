@@ -6,7 +6,6 @@ package com.dreamy.mogodb.beans;
 public class Comment {
 
 
-
     private String author;
     private String image;
 
