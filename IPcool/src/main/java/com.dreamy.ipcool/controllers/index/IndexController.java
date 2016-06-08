@@ -235,7 +235,7 @@ public class IndexController extends IpcoolController {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
                 if (rank.getType().equals(BookIndexTypeEnums.composite.getType())) {
-                    model.put("crank", rankIndex + 1);
+                    model.put("crank", rankIndex);
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
                     model.put("drank", rankIndex);//开发潜力指数排名
