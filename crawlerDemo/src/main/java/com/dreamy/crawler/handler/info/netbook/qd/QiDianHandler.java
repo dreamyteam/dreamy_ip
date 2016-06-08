@@ -125,7 +125,7 @@ public class QiDianHandler {
 
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
 

@@ -46,6 +46,9 @@
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
     <rabbit:queue name="${queue_crawler_qidian_mm}"/>
+    <rabbit:queue name="${queue_crawler_qidian_fans}"/>
+
+
 
     <!--交换器声明-->
     <rabbit:direct-exchange name="directExchange">
@@ -67,6 +70,8 @@
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
             <rabbit:binding queue="${queue_crawler_qidian_mm}"/>
+            <rabbit:binding queue="${queue_crawler_qidian_fans}"/>
+
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
