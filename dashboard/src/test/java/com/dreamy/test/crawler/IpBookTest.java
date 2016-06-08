@@ -1,9 +1,12 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.tasks.rank.CreateRankTask;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookRankEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
@@ -39,6 +42,12 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private FlushBookRankToDb flushBookRankToDb;
+
+    @Autowired
+    private CreateRankTask createRankTask;
+
+    @Autowired
+    private RedisClientService redisClientService;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -143,10 +152,13 @@ public class IpBookTest extends BaseJunitTest {
 //            }
 //        }
 
-        flushBookRankToDb.run();
+//        createRankTask.run();
+//        flushBookRankToDb.run();
 
+        BookView bookView = bookViewService.getById(5837);
+        Long rankNum = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookView.getBookId().toString());
 
-
+        System.err.println(rankNum);
     }
 
 }
