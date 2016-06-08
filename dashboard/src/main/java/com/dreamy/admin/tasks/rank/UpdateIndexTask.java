@@ -3,6 +3,7 @@ package com.dreamy.admin.tasks.rank;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
@@ -88,10 +89,14 @@ public class UpdateIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 30 12 * * ?")
-//    @Scheduled(fixedDelay = 100000)
+    @Scheduled(cron = "0 30 2 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
+
+        redisClientService.del(BookRankEnums.composite.getCacheKey());
+        redisClientService.del(BookRankEnums.develop.getCacheKey());
+        redisClientService.del(BookRankEnums.propagation.getCacheKey());
+        redisClientService.del(BookRankEnums.hot.getCacheKey());
 
         int currentPage = 1;
         Page page = new Page();
