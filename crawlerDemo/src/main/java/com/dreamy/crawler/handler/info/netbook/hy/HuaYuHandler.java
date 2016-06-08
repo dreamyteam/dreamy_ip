@@ -2,6 +2,8 @@ package com.dreamy.crawler.handler.info.netbook.hy;
 
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.mogodb.beans.NetBookTicket;
+import com.dreamy.service.iface.mongo.NetBookTicketService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
@@ -11,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
@@ -23,7 +26,8 @@ import java.util.regex.Pattern;
 public class HuaYuHandler {
 
     private static final Logger log = LoggerFactory.getLogger(HuaYuHandler.class);
-
+    @Autowired
+    public NetBookTicketService netBookTicketService;
 
     public NetBookInfo crawler(Integer bookId, String url, String operation) {
         NetBookInfo info = null;
@@ -163,14 +167,19 @@ public class HuaYuHandler {
      * @param info
      * @param document
      */
-    public static void getTicketNum(NetBookInfo info, Document document) {
+    private void getTicketNum(NetBookInfo info, Document document) {
         try {
-            Elements elements = document.getElementsByClass("booknumber");
-            if (elements != null && elements.size() > 0) {
-                Element element = elements.first();
-                String tickeNum = getResult("总红票：([0-9]*)", element.text());
-                info.setTicketNum(Integer.valueOf(tickeNum));
+            NetBookTicket ticket= netBookTicketService.getById(info.getCode());
+            if(ticket!=null){
+                info.setTicketNum(ticket.getTicketNum());
             }
+
+//            Elements elements = document.getElementsByClass("booknumber");
+//            if (elements != null && elements.size() > 0) {
+//                Element element = elements.first();
+//                String tickeNum = getResult("总红票：([0-9]*)", element.text());
+//                info.setTicketNum(Integer.valueOf(tickeNum));
+//            }
         } catch (Exception e) {
             log.error(" huyua 总红票数 is error book=" + info.getBookId(), e);
         }

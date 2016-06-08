@@ -39,6 +39,7 @@ public class QiDianMmHandler {
                     getCategory(info, document);
                 }
                 getOverInfo(info, document);
+                getAuthorUrl(info, document);
                 getOverAuthority(info, document);
                 getClickNum(info, document);
                 getRecommendNum(info, document);
@@ -66,6 +67,25 @@ public class QiDianMmHandler {
             }
         } catch (Exception e) {
             log.error(" qidianmm 简介 is error book=" + info.getBookId(), e);
+
+        }
+
+
+    }
+    /**
+     * 解析 作者链接
+     *
+     * @param info
+     * @param document
+     */
+    private void getAuthorUrl(NetBookInfo info, Document document) {
+
+        Elements elements = document.getElementsByAttributeValue("itemprop", "author");
+        if (elements != null && elements.size() > 0) {
+            Elements element = elements.first().getElementsByAttributeValue("itemprop", "url");
+            if (element != null) {
+                info.setAuthorUrl(element.attr("href"));
+            }
 
         }
 

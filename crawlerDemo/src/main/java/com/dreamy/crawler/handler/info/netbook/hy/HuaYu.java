@@ -13,13 +13,13 @@ public class HuaYu {
     private List<String> urls;
 
     @ExtractBy("//div[@class=\"table_con\"]//ul//li//span[@class=\"click\"]/text()")
-    private List<Integer> num;
+    private List<String> num;
 
     public List<String> getUrls() {
         return urls;
     }
 
-    public List<Integer> getNum() {
+    public List<String> getNum() {
         return num;
     }
 }
