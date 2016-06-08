@@ -30,7 +30,7 @@
     <rabbit:template id="defaultTemplate" connection-factory="connectionFactory"
                      message-converter="jsonMessageConverter"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange" />
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="directExchange"/>
 
 
     <!--队列声明-->
@@ -164,15 +164,15 @@
     </rabbit:listener-container>
 
     <rabbit:listener-container
-        connection-factory="connectionFactory"
-        auto-startup="true"
-        acknowledge="auto"
-        prefetch="1"
-        concurrency="1"
-        message-converter="simpleMessageConverter"
-        error-handler="listenerErrorHandler">
-    <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>
-</rabbit:listener-container>
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="soIndexEventQueueHandler" method="onMessage" queues="${queue_index_360}"/>
+    </rabbit:listener-container>
 
     <rabbit:listener-container
             connection-factory="connectionFactory"

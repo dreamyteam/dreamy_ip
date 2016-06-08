@@ -116,12 +116,11 @@
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <!--<table tableName="ip_user_intention_vote" domainObjectName="user.IntentionVote">-->
-            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
         <table tableName="ip_people_chart" domainObjectName="ipcool.PeopleChart">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
-
 
 
     </context>
