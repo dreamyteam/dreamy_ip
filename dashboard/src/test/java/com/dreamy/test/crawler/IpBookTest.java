@@ -1,5 +1,6 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.beans.Page;
@@ -41,6 +42,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private FlushBookRankToDb flushBookRankToDb;
+
+    @Autowired
+    private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -125,27 +129,28 @@ public class IpBookTest extends BaseJunitTest {
 //
 //        System.err.println(index);
 
-//        int currentPage = 1;
-//        Page page = new Page();
-//        page.setPageSize(100);
-//        Boolean isLoop = true;
-//
-//        while (isLoop) {
-//            page.setCurrentPage(currentPage);
-//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
-//            if (CollectionUtils.isNotEmpty(bookViewList)) {
-//                for (BookView bookView : bookViewList) {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
 //                    Map<String, String> params = new HashMap<>();
 //                    params.put("bookId", "" + bookView.getBookId());
 //                    queueService.push(BookOverQueue, params);
-//                }
-//                currentPage++;
-//            } else {
-//                isLoop = false;
-//            }
-//        }
+                    crawlerFinishQueueHandler.updateRank(bookView);
+                }
+                currentPage++;
+            } else {
+                isLoop = false;
+            }
+        }
 
-        flushBookRankToDb.run();
+//        flushBookRankToDb.run();
 
 
 
