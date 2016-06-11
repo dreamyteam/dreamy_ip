@@ -4,8 +4,10 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
+import com.dreamy.service.iface.CommonService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.SearchService;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +35,14 @@ public class SearchController extends IpcoolController {
     @Autowired
     private BookRankService bookRankService;
 
+    @Autowired
+    private SearchService searchService;
+
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
         BookView bookView = new BookView().name(content).type(IpTypeEnums.chuban.getType());
-        List<BookView> list = bookViewService.getList(bookView, page,"composite_index desc");
-
+        List<BookView> list = bookViewService.getList(bookView, page, "composite_index desc");
+        searchService.getBookViewByName(content, page);
         if (CollectionUtils.isNotEmpty(list)) {
             List<Integer> bookIds = new LinkedList<Integer>();
             for (BookView view : list) {

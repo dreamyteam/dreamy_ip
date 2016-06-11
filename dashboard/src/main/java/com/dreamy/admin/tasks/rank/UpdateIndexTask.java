@@ -155,7 +155,7 @@ public class UpdateIndexTask {
             String cacheKey = commonParams.get("key");
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
-                redisClientService.setNumber(cacheKey, 10L);
+                redisClientService.setNumber(cacheKey, 9L);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
@@ -165,13 +165,13 @@ public class UpdateIndexTask {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
 
-                if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
-                    Map<String, String> params = commonParams;
-                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
-                    pushToQueue(jdQueue, params);
-                } else {
-                    redisClientService.incrBy(cacheKey, -1L);
-                }
+//                if (salePlatformUrls.containsKey(CrawlerSourceEnums.jd.getType())) {
+//                    Map<String, String> params = commonParams;
+//                    params.put("url", salePlatformUrls.get(CrawlerSourceEnums.jd.getType()));
+//                    pushToQueue(jdQueue, params);
+//                } else {
+//                    redisClientService.incrBy(cacheKey, -1L);
+//                }
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.dangdang.getType())) {
                     Map<String, String> params = commonParams;
