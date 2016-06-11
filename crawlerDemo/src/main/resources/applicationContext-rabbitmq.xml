@@ -51,6 +51,7 @@
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
     <rabbit:queue name="${queue_crawler_qidian_mm}"/>
+    <rabbit:queue name="${queue_crawler_qidian_fans}"/>
 
     <!--交换器声明-->
     <rabbit:direct-exchange name="directExchange">
@@ -72,6 +73,8 @@
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
             <rabbit:binding queue="${queue_crawler_qidian_mm}"/>
+            <rabbit:binding queue="${queue_crawler_qidian_fans}"/>
+
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
@@ -116,6 +119,8 @@
     <bean id="zongHengQueueHandler" class="com.dreamy.crawler.listen.ZongHengQueueHandler"/>
     <!-- 网络小说 花语-->
     <bean id="huaYuQueueHandler" class="com.dreamy.crawler.listen.HuaYuQueueHandler"/>
+
+    <bean id="qiDianFanQueueHandler" class="com.dreamy.crawler.listen.QiDianFanQueueHandler"/>
 
     <!--&lt;!&ndash;队列监听&ndash;&gt;-->
     <rabbit:listener-container
@@ -284,5 +289,15 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="qiDianMmQueueHandler" method="onMessage" queues="${queue_crawler_qidian_mm}"/>
+    </rabbit:listener-container>
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="qiDianFanQueueHandler" method="onMessage" queues="${queue_crawler_qidian_fans}"/>
     </rabbit:listener-container>
 </beans>  
