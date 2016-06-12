@@ -156,14 +156,16 @@ public class AmazonCrawlerBookHandler {
      */
     private void getTotalCommentNumAndScore(BookInfo bean, Document document) {
         Integer commentNumString = 0;
-        String score = "0";
+        double score = 0.0;
         try {
             Element star = document.getElementById("summaryStars");
             if (star != null) {
                 Element element = star.getElementsByTag("a").first();
                 String[] scoreAndComment = element.text().split("星");
                 commentNumString = Integer.parseInt(scoreAndComment[1].replaceFirst(",", "").substring(1));
-                score = scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1);
+                String result = scoreAndComment[0].substring(2, scoreAndComment[0].length() - 1);
+                score = Double.valueOf(result);
+
             }
         } catch (NumberFormatException e) {
             log.error("解析amazon评论总数和评分异常", e);
@@ -190,7 +192,7 @@ public class AmazonCrawlerBookHandler {
         } catch (Exception e) {
             log.error("解析 amazon 图书销售排名 异常", e);
         } finally {
-            bean.setSaleSort(PatternUtils.getNum(saleSort));
+            bean.setSaleSort(Integer.valueOf(PatternUtils.getNum(saleSort)));
         }
 
     }
@@ -349,5 +351,8 @@ public class AmazonCrawlerBookHandler {
         }
     }
 
-
+    public static void main(String[] args) {
+            String url="https://www.amazon.cn/%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0-%E7%8E%8B%E5%B0%8F%E6%B3%A2/dp/B019PP1WC0/ref=sr_1_3?s=books&ie=UTF8&qid=1461738238&sr=1-3&keywords=%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0";
+        System.out.println(HttpUtils.getHtmlGet(url));
+    }
 }

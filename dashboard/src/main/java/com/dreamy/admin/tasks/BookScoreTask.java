@@ -3,6 +3,7 @@ package com.dreamy.admin.tasks;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.IpBookService;
@@ -15,7 +16,7 @@ import java.util.List;
 
 /**
  * Created by wangyongxing on 16/5/9.
- *
+ * <p>
  * 抽取 积分 排名
  */
 @Component
@@ -47,16 +48,17 @@ public class BookScoreTask {
                     bookScore.source(bookInfo.getSource());
                     bookScore.status(0);
                     bookScore.bookId(bookInfo.getIpId());
+                    int type = bookInfo.getSource();
                     bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
-                    bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",", "")) : 0);
-                    if (bookInfo.getSource() == 1) {
-                        bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
-                    } else if (bookInfo.getSource() == 2) {
-                        bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
-                    } else if (bookInfo.getSource() == 3) {
-                        bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
-                    } else if (bookInfo.getSource() == 4) {
-                        bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
+                    bookScore.saleSort(bookInfo.getSaleSort() != null ? bookInfo.getSaleSort() : 0);
+                    if (type == CrawlerSourceEnums.amazon.getType()) {
+                        bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                    } else if (type == CrawlerSourceEnums.jd.getType()) {
+                        bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    } else if (type == CrawlerSourceEnums.dangdang.getType()) {
+                        bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    } else if (type == CrawlerSourceEnums.douban.getType()) {
+                        bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                     }
                     bookScoreService.saveUpdate(bookScore);
 

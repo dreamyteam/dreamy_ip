@@ -35,6 +35,7 @@ public class DangDangCrawlerBookHandler {
                 if (CollectionUtils.isNotEmpty(list)) {
                     String crawlerUrl = list.get(0);
                     BookInfo bookInfo = crawler(crawlerUrl, operation);
+
                     return bookInfo;
                 }
             }
@@ -225,8 +226,8 @@ public class DangDangCrawlerBookHandler {
             String str[] = result.split(";");
             if (str != null && str.length > 1) {
                 String s = str[str.length - 1];
-                String info = PatternUtils.getNum(s);
-                bookInfo.setSaleSort(info);
+                String sort = PatternUtils.getNum(s);
+                bookInfo.setSaleSort(Integer.valueOf(sort));
             }
 
 
@@ -241,6 +242,7 @@ public class DangDangCrawlerBookHandler {
      */
     public void getScore(BookInfo bookInfo, Document document) {
         try {
+            double core = 0.0;
             Element element = document.getElementById("pid_span");
             if (element != null) {
                 String product_id = element.attr("product_id");
@@ -251,7 +253,8 @@ public class DangDangCrawlerBookHandler {
                     if (CollectionUtils.isNotEmpty(map1)) {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
                         if (CollectionUtils.isNotEmpty(map1)) {
-                            String core = map2.get("good_rate").toString();
+                            String str = (String) map2.get("good_rate");
+                            core=Double.valueOf(str);
                             bookInfo.setScore(core);
                         }
                     }

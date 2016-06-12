@@ -102,7 +102,11 @@ public class CrawlerServiceImpl implements CrawlerService {
                     bookCrawlerInfo.status(1);
                     bookCrawlerInfo.bookId(ipBook.getId());
                     bookCrawlerInfo.setSource(type);
-                    bookCrawlerInfo.url(url);
+                    if (StringUtils.isEmpty(url)) {
+                        bookCrawlerInfo.url(bookInfo.getUrl());
+                    } else {
+                        bookCrawlerInfo.url(url);
+                    }
                     bookCrawlerInfoService.save(bookCrawlerInfo);
                     if (StringUtils.isNotEmpty(bookInfo.getISBN())) {
                         pushAll(bookInfo.getISBN(), url, ipBook.getId());
@@ -134,7 +138,11 @@ public class CrawlerServiceImpl implements CrawlerService {
                     bookCrawlerInfo.status(1);
                     bookCrawlerInfo.bookId(bookId);
                     bookCrawlerInfo.setSource(type);
-                    bookCrawlerInfo.url(url);
+                    if (StringUtils.isEmpty(url)) {
+                        bookCrawlerInfo.url(bookInfo.getUrl());
+                    } else {
+                        bookCrawlerInfo.url(url);
+                    }
                     bookCrawlerInfoService.save(bookCrawlerInfo);
                     bookInfo.setId(bookInfo.getISBN() + "_" + type);
                 } else {
@@ -234,15 +242,15 @@ public class CrawlerServiceImpl implements CrawlerService {
                 bookScore.status(0);
                 bookScore.bookId(bookId);
                 bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
-                bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",", "")) : 0);
+                bookScore.saleSort(bookInfo.getSaleSort() != null ? bookInfo.getSaleSort() : 0);
                 if (type == CrawlerSourceEnums.amazon.getType()) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
                 } else if (type == CrawlerSourceEnums.jd.getType()) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
                 } else if (type == CrawlerSourceEnums.dangdang.getType()) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
                 } else if (type == CrawlerSourceEnums.douban.getType()) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                 }
                 bookScoreService.saveUpdate(bookScore);
                 return null;

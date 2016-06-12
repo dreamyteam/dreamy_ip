@@ -75,7 +75,7 @@ public class DouBanCrawlerBookHandler {
                     getISBN(bean, document);
                     getPess(bean, document);
                     getAuthor(bean, document);
-                    getPessTime(bean,document);
+                    getPessTime(bean, document);
                 }
                 getCommentNum(bean, document);
                 getScore(bean, document);
@@ -127,7 +127,7 @@ public class DouBanCrawlerBookHandler {
             Element element = document.getElementById("info");
             if (element != null) {
                 String str = element.text().replace(" ", "");
-                String result =getResult("ISBN:([0-9]*)",str);
+                String result = getResult("ISBN:([0-9]*)", str);
                 bookInfo.setISBN(result);
             }
         } catch (Exception e) {
@@ -204,6 +204,7 @@ public class DouBanCrawlerBookHandler {
 
     /**
      * 解析 出版社
+     *
      * @param bookInfo
      * @param document
      */
@@ -220,6 +221,7 @@ public class DouBanCrawlerBookHandler {
 
     /**
      * 解析 作者
+     *
      * @param bookInfo
      * @param document
      */
@@ -237,6 +239,7 @@ public class DouBanCrawlerBookHandler {
 
     /**
      * 解析 出版时间
+     *
      * @param bookInfo
      * @param document
      */
@@ -309,11 +312,21 @@ public class DouBanCrawlerBookHandler {
      * @param document
      */
     private void getScore(BookInfo bookInfo, Document document) {
-        Elements elements = document.select("div.rating_wrap>div.rating_self>strong");
-        if (elements != null && elements.size() > 0) {
-            Element element = elements.first();
-            bookInfo.setScore(element.text());
+        double score = 0.0;
+        try {
+            Elements elements = document.select("div.rating_wrap>div.rating_self>strong");
+            if (elements != null && elements.size() > 0) {
+                Element element = elements.first();
+                score = Double.valueOf(element.text());
+
+            }
+
+        } catch (Exception e) {
+            log.error("解析评分异常", e);
+        } finally {
+            bookInfo.setScore(score);
         }
+
 
     }
 

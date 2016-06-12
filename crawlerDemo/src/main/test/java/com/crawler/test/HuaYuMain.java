@@ -25,14 +25,14 @@ import java.util.regex.Pattern;
  */
 public class HuaYuMain {
 
-    public static void main11(String[] args) {
+    public static void main(String[] args) {
         String url = "http://huayu.baidu.com/store/c0/c0/u5/p1/v1/s0/ALL.html";
         OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), HuaYu.class);
         HuaYu huaYu = ooSpider.<HuaYu>get(url);
         System.out.println(111);
     }
 
-    public static void main(String[] args) {
+    public static void main11(String[] args) {
         String url = "http://book.zongheng.com/store/c0/c0/b1/u0/p1/v1/s9/t0/ALL.html";
         OOSpider ooSpider = OOSpider.create(Site.me().setSleepTime(0), ZongHeng.class);
         ZongHeng zongHeng = ooSpider.<ZongHeng>get(url);

@@ -4,9 +4,7 @@ import com.dreamy.crawler.selenium.SeleniumDownloader;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 
-import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.PatternUtils;
-import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,6 +16,9 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Task;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/6.
@@ -44,8 +45,9 @@ public class JdCrawlerBookHandler {
 
 
     public BookInfo crawler(String url, String operation) {
-        String html = seleniumDownloader(url);
+        String html = HttpUtils.getHtmlGet(url);//seleniumDownloader(url);
         BookInfo bean = null;
+        String code = PatternUtils.getNum(url);
         if (StringUtils.isNotEmpty(html)) {
             Document document = Jsoup.parse(html);
             if (document != null) {
@@ -57,9 +59,8 @@ public class JdCrawlerBookHandler {
                     imageAndTitle(bean, document);
                     infoAndAuthorInfo(bean, document);
                 }
-                saleSort(bean, document);
-                score(bean, document);
-                commentNum(bean, document);
+                saleSort(bean, code);
+                score(bean, code);
 
             }
 
@@ -73,14 +74,27 @@ public class JdCrawlerBookHandler {
      * 解析平台销售排名
      *
      * @param bean
-     * @param document
+     * @param code
      */
-    private void saleSort(BookInfo bean, Document document) {
-        Element element = document.getElementById("summary-order");
-        if (element != null) {
-            String sort = PatternUtils.getNum(element.text());
-            bean.setSaleSort(sort);
+    private void saleSort(BookInfo bean, String code) {
+//        Element element = document.getElementById("summary-order");
+//        if (element != null) {
+//            String sort = PatternUtils.getNum(element.text());
+//            bean.setSaleSort(sort);
+//        }
+        int sort = 0;
+        String url = "http://c.3.cn/book?skuId=" + code + "&cat=1713,3258,3320&area=1_72_2799_0";
+        String json = HttpUtils.getHtmlGet(url);
+        if (StringUtils.isNotEmpty(json)) {
+            Map<String, Integer> map = JsonUtils.toMap(json);
+            int rank = map.get("rank");
+            if (rank > 0) {
+                sort = rank;
+            }
+
         }
+        bean.setSaleSort(sort);
+
 
     }
 
@@ -102,17 +116,36 @@ public class JdCrawlerBookHandler {
     }
 
     /**
-     * 平台评分
+     * 平台评分 总评价数
      *
      * @param bean
-     * @param document
+     * @param code
      */
-    private void score(BookInfo bean, Document document) {
-        Elements elements = document.getElementsByClass("rate");
-        if (elements != null && elements.size() > 0) {
-            Element element = elements.first();
-            String score = PatternUtils.getNum(element.text());
-            bean.setScore(score);
+    private void score(BookInfo bean, String code) {
+//        Elements elements = document.getElementsByClass("rate");
+//        if (elements != null && elements.size() > 0) {
+//            Element element = elements.first();
+//            String score = PatternUtils.getNum(element.text());
+//            bean.setScore(score);
+//        }
+        String url = "http://club.jd.com/clubservice.aspx?method=GetCommentsCount&referenceIds=" + code;
+        String json = HttpUtils.getHtmlGet(url);
+        int commentNum = 0;
+        double score = 0.0;
+        if (StringUtils.isNotEmpty(json)) {
+            Map<String, Object> map = JsonUtils.toMap(json);
+            List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("CommentsCount");
+            if (CollectionUtils.isNotEmpty(list)) {
+                Map<String, Object> map1 = list.get(0);
+                commentNum = (Integer) map1.get("CommentCount");
+                score = (Double) map1.get("GoodRate") * 100;
+                bean.setScore(score);
+                bean.setCommentNum(commentNum);
+
+
+            }
+
+
         }
 
 
@@ -222,6 +255,22 @@ public class JdCrawlerBookHandler {
         }
 
 
+    }
+
+    public static void main(String[] args) {
+        String url = "http://c.3.cn/book?skuId=11909886&cat=1713,3258,3320&area=1_72_2799_0";
+        url = "http://club.jd.com/clubservice.aspx?method=GetCommentsCount&referenceIds=11909886";
+        String json = HttpUtils.getHtmlGet(url);
+        System.out.println(json);
+        Map<String, Object> map = JsonUtils.toMap(json);
+        List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("CommentsCount");
+        if (CollectionUtils.isNotEmpty(list)) {
+            Map<String, Object> map1 = list.get(0);
+            int commentNum = (Integer) map1.get("CommentCount");
+            double score = (Double) map1.get("GoodRate");
+
+
+        }
     }
 
 

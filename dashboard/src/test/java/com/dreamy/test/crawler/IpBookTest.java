@@ -5,7 +5,7 @@ import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookTypeEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
@@ -117,7 +117,7 @@ public class IpBookTest extends BaseJunitTest {
         bookInfo.setCrawlerId(20000);
         bookInfo.setCommentNum(21212);
         bookInfo.setAuthor("测试");
-        bookInfo.setSaleSort("12");
+        bookInfo.setSaleSort(12);
         bookInfo.setInfo("adadads");
         bookInfoService.updateInser(bookInfo);
     }
@@ -136,7 +136,7 @@ public class IpBookTest extends BaseJunitTest {
 
         while (isLoop) {
             page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
 //                    Map<String, String> params = new HashMap<>();
@@ -151,7 +151,6 @@ public class IpBookTest extends BaseJunitTest {
         }
 
 //        flushBookRankToDb.run();
-
 
 
     }
