@@ -34,7 +34,7 @@ public class BookInfo {
     /**
      * 销售排名
      */
-    private String saleSort;
+    private Integer saleSort;
     /**
      * 封面
      */
@@ -51,7 +51,7 @@ public class BookInfo {
     /**
      * 评分
      */
-    private String score;
+    private Double score;
     /**
      * 作者简介
      */
@@ -139,18 +139,18 @@ public class BookInfo {
         this.pushTime = pushTime;
     }
 
-    public String getSaleSort() {
+    public Integer getSaleSort() {
         return saleSort;
     }
 
-    public void setSaleSort(String saleSort) {
+    public void setSaleSort(Integer saleSort) {
         this.saleSort = saleSort;
     }
-    public String getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 

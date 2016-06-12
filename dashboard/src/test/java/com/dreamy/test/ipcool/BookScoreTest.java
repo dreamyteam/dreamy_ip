@@ -34,14 +34,10 @@ public class BookScoreTest extends BaseJunitTest {
     BookScoreTask bookScoreTask;
 
 
-
     @Test
     public void score() {
         bookScoreTask.crawler();
     }
-
-
-
 
 
     @Test
@@ -65,16 +61,17 @@ public class BookScoreTest extends BaseJunitTest {
                 bookScore.source(bookInfo.getSource());
                 bookScore.status(0);
                 bookScore.bookId(bookInfo.getIpId());
+                int type = bookInfo.getSource();
                 bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
-                bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",","")) : 0);
-                if (bookInfo.getSource() == 1) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore())? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
-                } else if (bookInfo.getSource() == 2) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore())?  Double.valueOf(bookInfo.getScore()) : 0.0);
-                } else if (bookInfo.getSource() == 3) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore())? Double.valueOf(bookInfo.getScore()) : 0.0);
-                } else if (bookInfo.getSource() == 4) {
-                    bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore())?  Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
+                bookScore.saleSort(bookInfo.getSaleSort() != null ? bookInfo.getSaleSort() : 0);
+                if (type == CrawlerSourceEnums.amazon.getType()) {
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                } else if (type == CrawlerSourceEnums.jd.getType()) {
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.dangdang.getType()) {
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                } else if (type == CrawlerSourceEnums.douban.getType()) {
+                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
                 }
 
                 bookScoreService.saveUpdate(bookScore);
@@ -83,32 +80,6 @@ public class BookScoreTest extends BaseJunitTest {
         }
 
 
-    }
-    @Test
-    public void insertValueOne() {
-
-        List<BookInfo> bookInfos = bookInfoService.getListByIpId(2);
-        BookScore bookScore = null;
-        for (BookInfo bookInfo : bookInfos) {
-            bookScore = new BookScore();
-            bookScore.source(bookInfo.getSource());
-            bookScore.status(0);
-            bookScore.bookId(bookInfo.getIpId());
-            bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
-            bookScore.saleSort(StringUtils.isNotEmpty(bookInfo.getSaleSort()) ? Integer.valueOf(bookInfo.getSaleSort().replace(",", "")) : 0);
-            if (bookInfo.getSource() == 1) {
-                bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
-            } else if (bookInfo.getSource() == 2) {
-                bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
-            } else if (bookInfo.getSource() == 3) {
-                bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) : 0.0);
-            } else if (bookInfo.getSource() == 4) {
-                bookScore.score(StringUtils.isNotEmpty(bookInfo.getScore()) ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
-            }
-            bookScoreService.saveUpdate(bookScore);
-
-
-        }
     }
 
 

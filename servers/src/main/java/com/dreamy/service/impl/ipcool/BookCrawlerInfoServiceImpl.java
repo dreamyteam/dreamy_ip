@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,7 +23,13 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
 
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
-        bookCrawlerInfoDao.save(info);
+        BookCrawlerInfo entity = new BookCrawlerInfo();
+        entity.setBookId(info.getBookId());
+        entity.setSource(info.getSource());
+        List<BookCrawlerInfo> list = getByRecord(entity);
+        if (CollectionUtils.isEmpty(list)) {
+            bookCrawlerInfoDao.save(info);
+        }
         return info;
     }
 
