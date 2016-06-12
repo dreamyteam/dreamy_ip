@@ -37,6 +37,7 @@ public class QiDianTest extends BaseJunitTest {
             List<String> urls = qiDian.getUrls();
             List<String> names = qiDian.getTitles();
             List<String> authoers = qiDian.getAuthoers();
+            List<String> authoerUrls = qiDian.getAuthoerUrls();
             for (int j = 0; j< size; j++) {
                  info = new NetBookInfo();
                 String utl = urls.get(j);
@@ -44,6 +45,7 @@ public class QiDianTest extends BaseJunitTest {
                 info.setAuthor(authoers.get(j));
                 String code = PatternUtils.getNum(utl);
                 info.setImage("http://image.cmfu.com/books/" + code + "/" + code + ".jpg");
+                info.setAuthorUrl(authoerUrls.get(j));
 
                 IpBook ipBook = new IpBook();
                 ipBook.setType(2);

@@ -51,6 +51,8 @@ public class QiDianMian {
                 getInfo(info, document);
                 getClickNum(info, document);
                 getRecommendNum(info, document);
+                getCommentNum(info, document);
+                getAuthorUrl(info, document);
                 getOverInfo(info, document);
                 getOverAuthority(info, document);
                 getScore(info, document);
@@ -68,6 +70,33 @@ public class QiDianMian {
         if (elements != null && elements.size() > 0) {
             Element element = elements.first();
             info.setInfo(element.text());
+        }
+
+
+    }
+
+    public static void getCommentNum(NetBookInfo info, Document document) {
+
+        Element element = document.getElementById("div_pingjiarenshu");
+        if (element != null) {
+
+            String num = getResult("评价人数:(.*?)人", element.text());
+            System.out.println(num);
+        }
+
+
+    }
+
+
+    public static void getAuthorUrl(NetBookInfo info, Document document) {
+
+        Elements elements = document.getElementsByAttributeValue("itemprop", "author");
+        if (elements != null && elements.size() > 0) {
+            Elements element = elements.first().getElementsByAttributeValue("itemprop", "url");
+            if (element != null) {
+                info.setAuthorUrl(element.attr("href"));
+            }
+
         }
 
 
@@ -171,14 +200,16 @@ public class QiDianMian {
         Elements elements = document.getElementsByClass("ballot_data");
         if (elements != null && elements.size() > 0) {
             Element element = elements.first();
-            String num = getResult(element.text());
+            String num = getResult("本月票数：(.*?)票", element.text());
             info.setTicketNum(Integer.valueOf(num));
         }
     }
 
-    public static String getResult(String str) {
+
+    public static String getResult(String reg, String str) {
         String result = "0";
-        Pattern p = Pattern.compile("本月票数：(.*?)票");
+        //"总点击：([0-9]*)"
+        Pattern p = Pattern.compile(reg);
         Matcher m = p.matcher(str);
         while (m.find()) {
             result = m.group(1);
