@@ -10,6 +10,7 @@ import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -32,7 +33,7 @@ public class CreateRankTask {
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
 
 
-//    @Scheduled(cron = "0 50 15 * * ?")
+    @Scheduled(cron = "0 30 00 * * ?")
 //    @Scheduled(fixedDelay = 100000)
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));

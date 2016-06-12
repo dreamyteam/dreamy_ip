@@ -43,7 +43,7 @@ public class FlushBookRankToDb {
     @Autowired
     private BookRankHistoryService bookRankHistoryService;
 
-    @Scheduled(cron = "0 01 15 * * ?")
+    @Scheduled(cron = "0 42 00 * * ?")
     public void run() {
         Page page = new Page();
         page.setPageSize(500);

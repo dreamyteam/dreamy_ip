@@ -16,8 +16,11 @@ public class CommonService {
 
     @Autowired
     private LocalCache localCache;
+
     @Autowired
     private RedisCache redisCache;
+
+
 
     public boolean isDev() {
         if (StringUtils.isNotEmpty(devModel) && !devModel.equals("dev")) {
@@ -33,6 +36,8 @@ public class CommonService {
         CacheService cacheService = isDev() ? localCache : redisCache;
         return cacheService;
     }
+
+
 
 
 }

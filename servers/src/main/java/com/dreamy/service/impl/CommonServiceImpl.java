@@ -22,6 +22,8 @@ public class CommonServiceImpl implements CommonService {
     @Value("${assetsDomain}")
     private String assetsDomain;
 
+    @Value("${searchDomain}")
+    private String searchDomain;
 
     @Override
     public String getDomain() {
@@ -40,5 +42,10 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public String getAssetsDomain() {
         return assetsDomain;
+    }
+
+    @Override
+    public String getSearchDomain() {
+        return searchDomain;
     }
 }

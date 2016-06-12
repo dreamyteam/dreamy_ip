@@ -1,12 +1,12 @@
 package com.dreamy.test.crawler;
 
-import com.dreamy.admin.tasks.rank.CreateRankTask;
+import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateIndexTask;
+import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
@@ -44,10 +44,7 @@ public class IpBookTest extends BaseJunitTest {
     private FlushBookRankToDb flushBookRankToDb;
 
     @Autowired
-    private CreateRankTask createRankTask;
-
-    @Autowired
-    private RedisClientService redisClientService;
+    private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -132,33 +129,31 @@ public class IpBookTest extends BaseJunitTest {
 //
 //        System.err.println(index);
 
-//        int currentPage = 1;
-//        Page page = new Page();
-//        page.setPageSize(100);
-//        Boolean isLoop = true;
-//
-//        while (isLoop) {
-//            page.setCurrentPage(currentPage);
-//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
-//            if (CollectionUtils.isNotEmpty(bookViewList)) {
-//                for (BookView bookView : bookViewList) {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
 //                    Map<String, String> params = new HashMap<>();
 //                    params.put("bookId", "" + bookView.getBookId());
 //                    queueService.push(BookOverQueue, params);
-//                }
-//                currentPage++;
-//            } else {
-//                isLoop = false;
-//            }
-//        }
+                    crawlerFinishQueueHandler.updateRank(bookView);
+                }
+                currentPage++;
+            } else {
+                isLoop = false;
+            }
+        }
 
-//        createRankTask.run();
 //        flushBookRankToDb.run();
 
-        BookView bookView = bookViewService.getById(5837);
-        Long rankNum = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookView.getBookId().toString());
 
-        System.err.println(rankNum);
+
     }
 
 }
