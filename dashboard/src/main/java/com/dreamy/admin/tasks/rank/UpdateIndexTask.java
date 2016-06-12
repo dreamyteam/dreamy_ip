@@ -89,7 +89,7 @@ public class UpdateIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 35 16 * * ?")
+    @Scheduled(cron = "0 00 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
