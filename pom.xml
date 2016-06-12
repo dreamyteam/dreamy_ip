@@ -20,7 +20,7 @@
         <module>tools</module>
         <module>servers</module>
         <module>dashboard</module>
-        <module>crawler</module>
+        <!--<module>crawler</module>-->
         <module>IPcool</module>
         <module>crawlerDemo</module>
     </modules>
