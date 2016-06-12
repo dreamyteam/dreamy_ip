@@ -4,8 +4,8 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.BookTypeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.service.cache.RedisClientService;
@@ -89,7 +89,7 @@ public class UpdateIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 30 16 * * ?")
+    @Scheduled(cron = "0 35 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
@@ -106,7 +106,7 @@ public class UpdateIndexTask {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", BookTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
                         updateByBookView(bookView);
