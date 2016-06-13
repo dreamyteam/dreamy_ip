@@ -28,5 +28,7 @@ public interface PeopleChartService {
      */
     public List<PeopleChart> getListByBookId(Integer bookId);
 
+    public void saveOrUpdate(PeopleChart peopleChart);
+
 
 }
