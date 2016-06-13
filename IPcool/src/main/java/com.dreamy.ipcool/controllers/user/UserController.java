@@ -1,22 +1,31 @@
 package com.dreamy.ipcool.controllers.user;
 
+import com.dreamy.beans.InterfaceBean;
 import com.dreamy.beans.UserSession;
 import com.dreamy.beans.params.ModifyPasswordParams;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserAttach;
+import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.enums.QualificationEnums;
 import com.dreamy.enums.SexEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
+import com.dreamy.service.iface.ShortMessageService;
+import com.dreamy.service.iface.VerificationCodeService;
 import com.dreamy.service.iface.user.UserAttachService;
 import com.dreamy.service.iface.user.UserService;
+import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.PasswordUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.asynchronous.AsynchronousService;
+import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,6 +42,12 @@ public class UserController extends IpcoolController {
 
     @Autowired
     private UserAttachService userAttachService;
+
+    @Autowired
+    private VerificationCodeService verificationCodeService;
+
+    @Autowired
+    private ShortMessageService shortMessageService;
 
     @RequestMapping("/bio")
     public String bio(ModelMap map, HttpServletRequest request) {
@@ -122,4 +137,100 @@ public class UserController extends IpcoolController {
         }
         return redirect("/");
     }
+
+    @RequestMapping(value = "/getpwd/verificationCode")
+    @ResponseBody
+    public void getVerificationCode(User param, HttpServletResponse response) {
+        InterfaceBean bean = new InterfaceBean().success();
+        String mobile = param.getPhone();
+        if (StringUtils.isEmpty(mobile)) {
+            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
+        } else {
+            User user = userService.getUserByMobile(mobile);
+            if (user.getId() == null) {
+                bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码不存在");
+            } else {
+                AsynchronousService.submit(new ObjectCallable(mobile) {
+                    @Override
+                    public Object run() throws Exception {
+                        String code = verificationCodeService.createVerificationCode(4);
+                        if (StringUtils.isNotEmpty(code)) {
+                            verificationCodeService.saveCodeToCache(name, code);
+                            shortMessageService.send(name, "【IP库】您的验证码是" + code);
+                        }
+                        return null;
+                    }
+                });
+            }
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+    }
+
+    @RequestMapping("/getpwd/checkPhoneCode")
+    public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
+        InterfaceBean bean = new InterfaceBean().success();
+        String mobile = (String) request.getAttribute("phone");
+        String code = (String) request.getAttribute("checkCode");
+
+        ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
+        String errorMsg = "";
+
+        //空值判断
+        if (StringUtils.isEmpty(mobile)) {
+            errorMsg = ("手机号码不能为空！");
+        } else if (StringUtils.isEmpty(code)) {
+            errorMsg = ("验证码不能为空！");
+        }
+
+        if (StringUtils.isEmpty(errorMsg)) {
+            String verificationCode = verificationCodeService.getCodeFromCache(mobile);
+            if (!code.equals(verificationCode)) {
+                errorMsg = ("验证码错误");
+            }
+        }
+
+        if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums.setErrorMsg(errorMsg);
+
+            bean.failure(errorCodeEnums);
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+    }
+
+    @RequestMapping("/getpwd/doPwd")
+    public void doPwd(HttpServletRequest request, HttpServletResponse response, ModifyPasswordParams passwordParams) {
+        InterfaceBean bean = new InterfaceBean().success();
+        String mobile = (String) request.getAttribute("phone");
+
+        ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
+        String errorMsg = "";
+        if(StringUtils.isEmpty(mobile)) {
+            errorMsg = ("手机号码不能为空！");
+        }
+        User user = userService.getUserByMobile(mobile);
+        if(user == null) {
+            errorMsg = ("手机号码不存在！");
+        }
+
+        if (StringUtils.isEmpty(errorMsg)) {
+            if (passwordParams.getNewPassword().equals(passwordParams.getNewPasswordConfirm()) && StringUtils.isNotEmpty(passwordParams.getNewPassword())) {
+                user.setPassword(PasswordUtils.createPassword(passwordParams.getCurrentPassword()));
+                userService.save(user);
+            }else {
+                errorMsg = ("两次密码不一致！");
+            }
+        }
+
+        if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums.setErrorMsg(errorMsg);
+
+            bean.failure(errorCodeEnums);
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+
+    }
+
 }

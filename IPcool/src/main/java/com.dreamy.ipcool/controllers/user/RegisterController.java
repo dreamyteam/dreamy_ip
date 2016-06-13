@@ -89,7 +89,7 @@ public class RegisterController extends IpcoolController {
             User user = userService.getUserByMobile(param.getMobile());
             if (user.getId() == null) {
                 user.phone(param.getMobile());
-                user.userName(param.getMobile());
+                user.userName(param.getUserName());
                 user.password(PasswordUtils.createPassword(param.getPassword()));
                 user.userKey(registerService.createUserKey(param));
 
