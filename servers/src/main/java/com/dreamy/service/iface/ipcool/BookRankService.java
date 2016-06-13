@@ -109,5 +109,13 @@ public interface BookRankService {
      */
     List<BookRank> getBookRankByBookId(Integer bookId);
 
+    /**
+     *
+     * @param order
+     * @param type
+     * @return
+     */
+    List<BookRank> getBookRankByOrderAndType(String order,Integer type,Page page);
+
 
 }

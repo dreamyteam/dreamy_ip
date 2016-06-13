@@ -137,7 +137,8 @@ public class BookRankServiceImpl implements BookRankService {
     @Override
     public Map<Integer, Integer> getCompositeRankMapByBookIds(List<Integer> bookIds) {
         if (CollectionUtils.isNotEmpty(bookIds)) {
-            Map<Integer, Integer> map = getCompositeRankMapByBookIdFromRedis(bookIds);
+//            Map<Integer, Integer> map = getCompositeRankMapByBookIdFromRedis(bookIds);
+            Map<Integer, Integer> map = new HashMap<>();
             if (map.size() < bookIds.size()) {
                 BookRankConditions bookRankConditions = new BookRankConditions();
                 bookRankConditions.createCriteria().andBookIdIn(bookIds);
@@ -238,14 +239,20 @@ public class BookRankServiceImpl implements BookRankService {
 
     @Override
     public List<BookRank> getBookRankByBookId(Integer bookId) {
+        BookRankConditions conditions = new BookRankConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
 
+        return bookRankDao.selectByExample(conditions);
+    }
+
+    public List<BookRank> getBookRankByBookIdFromRedis(Integer bookId){
+        List<BookRank> bookRankList = new LinkedList<>();
         Long crank = redisClientService.reverseZrank(BookRankEnums.composite.getCacheKey(), bookId.toString());
         Long drank = redisClientService.reverseZrank(BookRankEnums.develop.getCacheKey(), bookId.toString());
         Long prank = redisClientService.reverseZrank(BookRankEnums.propagation.getCacheKey(), bookId.toString());
         Long hrank = redisClientService.reverseZrank(BookRankEnums.hot.getCacheKey(), bookId.toString());
 
 
-        List<BookRank> bookRankList = new LinkedList<>();
         BookRank bookRank = new BookRank();
         if (crank == null || crank <= 0) {
             bookRank = getByBookIdAndType(bookId, BookIndexTypeEnums.composite.getType());
@@ -283,7 +290,16 @@ public class BookRankServiceImpl implements BookRankService {
         bookRankList.add(bookRank);
 
         return bookRankList;
+    }
 
+    @Override
+    public List<BookRank> getBookRankByOrderAndType(String order, Integer type, Page page) {
+        BookRankConditions conditions = new BookRankConditions();
+        conditions.createCriteria().andTypeEqualTo(type);
 
+        conditions.setPage(page);
+        conditions.setOrderByClause(order);
+
+        return bookRankDao.selectByExample(conditions);
     }
 }
