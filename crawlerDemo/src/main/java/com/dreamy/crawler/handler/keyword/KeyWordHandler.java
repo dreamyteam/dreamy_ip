@@ -1,36 +1,21 @@
 package com.dreamy.crawler.handler.keyword;
 
+import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
-import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
-import com.dreamy.service.iface.mongo.UserAgentService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.PatternUtils;
-import com.dreamy.utils.StringUtils;
-import com.dreamy.utils.sina.CrawSina;
-import com.dreamy.utils.sina.LoginSina;
-import com.dreamy.utils.sina.SinaHttpUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -45,7 +30,7 @@ public class KeyWordHandler {
     @Resource
     KeyWordService keyWordService;
     @Resource
-    CommonService commonService;
+    CrawlerService crawlerService;
 
     public void crawler(String word, Integer bookId) {
         getBaidu(word, bookId);
@@ -76,6 +61,7 @@ public class KeyWordHandler {
                 keyWord.indexNum(NumberUtils.randomInt(1, 100));
             }
             keyWordService.saveOrUpdate(keyWord);
+            crawlerService.saveKeyWordHistory(keyWord);
 
         }
 
@@ -93,7 +79,7 @@ public class KeyWordHandler {
         Document document = Jsoup.parse(html);
         if (document != null) {
             Elements elements = document.getElementsByClass("nums");
-            KeyWord keyWord =new KeyWord();
+            KeyWord keyWord = new KeyWord();
             keyWord.bookId(bookId);
             keyWord.source(KeyWordEnums.so.getType());
             if (elements != null && elements.size() > 0) {
@@ -102,11 +88,13 @@ public class KeyWordHandler {
                 String num = PatternUtils.getNum(result);
                 keyWord.indexNum(Integer.valueOf(num));
             } else {
-                keyWord.setIndexNum(NumberUtils.randomInt(1,100));
+                keyWord.setIndexNum(NumberUtils.randomInt(1, 100));
             }
             keyWordService.saveOrUpdate(keyWord);
+            crawlerService.saveKeyWordHistory(keyWord);
         }
     }
+
 
 
 }

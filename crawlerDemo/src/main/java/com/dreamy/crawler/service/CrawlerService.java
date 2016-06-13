@@ -1,5 +1,8 @@
 package com.dreamy.crawler.service;
 
+import com.dreamy.domain.ipcool.KeyWord;
+import com.dreamy.domain.ipcool.NewsMedia;
+import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 
@@ -25,7 +28,11 @@ public interface CrawlerService {
     public void operationNetBook(String operation,String key, NetBookInfo bookInfo, Integer bookId);
 
 
+    public void saveKeyWordHistory(KeyWord keyWord);
 
+    public void saveNewsMediaHistory(NewsMedia newsMedia);
+
+    public void saveBookIndexDataHistory(BookIndexData bookIndexData);
 
 
 }

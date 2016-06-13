@@ -1,5 +1,6 @@
 package com.dreamy.crawler.handler.keyword;
 
+import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.enums.RedisConstEnums;
@@ -45,6 +46,9 @@ public class KeyWordWeiBoHandler {
     @Resource
     CommonService commonService;
 
+    @Resource
+    CrawlerService crawlerService;
+
     public void crawler(String word, Integer bookId) {
         getSina(word, bookId);
     }
@@ -79,6 +83,7 @@ public class KeyWordWeiBoHandler {
                 keyWord.indexNum(NumberUtils.randomInt(1,10));
             }
             keyWordService.saveOrUpdate(keyWord);
+            crawlerService.saveKeyWordHistory(keyWord);
         } catch (Exception e) {
             log.error("微博搜索结果 失败 ", e);
         }

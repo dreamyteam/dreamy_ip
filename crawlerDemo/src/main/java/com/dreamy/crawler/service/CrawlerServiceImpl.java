@@ -3,16 +3,15 @@ package com.dreamy.crawler.service;
 import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
-import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.mogodb.beans.*;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
-import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.service.iface.mongo.NetBookInfoService;
+import com.dreamy.service.iface.mongo.*;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
 import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.slf4j.Logger;
@@ -21,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,14 @@ public class CrawlerServiceImpl implements CrawlerService {
     private BookTagsService bookTagsService;
     @Autowired
     private BookViewService bookViewService;
+
+    @Resource
+    KeyWordHistoryService keyWordHistoryService;
+
+    @Resource
+    NewsMediaHistoryService newsMediaHistoryService;
+    @Resource
+    BookIndexDataHistoryService bookIndexDataHistoryService;
 
     @Override
     public void pushAll(String isbn, String url, Integer bookId) {
@@ -188,6 +197,82 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
     }
 
+    @Override
+    public void saveKeyWordHistory(final KeyWord keyWord) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                KeyWordHistory history = new KeyWordHistory();
+                history.setBookId(keyWord.getBookId());
+                history.setSource(keyWord.getSource());
+                history.setNum(keyWord.getIndexNum());
+                history.setCreateDate(TimeUtils.toString(null, new Date()));
+                history.setId(keyWord.getBookId() + "-" + keyWord.getSource() + "-" + TimeUtils.toString(null, new Date()));
+                keyWordHistoryService.updateInser(history);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public void saveNewsMediaHistory(final NewsMedia newsMedia) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                NewsMediaHistory history = new NewsMediaHistory();
+                history.setSource(newsMedia.getSource());
+                history.setNum(newsMedia.getNum());
+                history.setCreateDate(TimeUtils.toString(null, new Date()));
+                history.setId(newsMedia.getBookId() + "-" + newsMedia.getSource() + "-" + TimeUtils.toString(null, new Date()));
+                newsMediaHistoryService.updateInser(history);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public void saveBookIndexDataHistory(final BookIndexData bookIndexData) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                BookIndexDataHistory history = new BookIndexDataHistory();
+                history.setSource(bookIndexData.getSource());
+                history.setFemale(bookIndexData.getFemale());
+                history.setMale(bookIndexData.getMale());
+                history.setBookId(bookIndexData.getBookId());
+                history.setCreateDate(TimeUtils.toString(null, new Date()));
+                if (bookIndexData.getOverviewJson() != null) {
+                    OverviewJson overviewJson = bookIndexData.getOverviewJson();
+                    history.setMonthIndex(Integer.valueOf(overviewJson.getMonthIndex()));
+                    history.setWeekIndex(Integer.valueOf(overviewJson.getWeekIndex()));
+                    history.setMonthYearRatio(overviewJson.getMonthYearRatio());
+                    history.setMonthChainRatio(overviewJson.getMonthChainRatio());
+                    history.setWeekChainRatio(overviewJson.getWeekChainRatio());
+                    history.setWeekYearRatio(overviewJson.getWeekYearRatio());
+                }
+                if (bookIndexData.getMedia() != null) {
+                    String str[] = bookIndexData.getMedia();
+                    int length = str.length;
+                    String mediaNum = str[length - 1];
+                    history.setMediaNum(Integer.valueOf(mediaNum));
+
+
+                }
+                if (bookIndexData.getIndex() != null) {
+                    String index[] = bookIndexData.getIndex();
+                    int length = index.length;
+                    String searchNum = index[length - 1];
+                    history.setSearchNum(Integer.valueOf(searchNum));
+
+
+                }
+                history.setId(bookIndexData.getBookId() + "-" + bookIndexData.getSource() + "-" + TimeUtils.toString(null, new Date()));
+                bookIndexDataHistoryService.updateInser(history);
+                return null;
+            }
+        });
+    }
+
 
     private void createTag(final Integer bookId, final String tags) {
 
@@ -241,16 +326,16 @@ public class CrawlerServiceImpl implements CrawlerService {
                 bookScore.source(type);
                 bookScore.status(0);
                 bookScore.bookId(bookId);
-                bookScore.commentNum(bookInfo.getCommentNum() != null ? Integer.valueOf(bookInfo.getCommentNum()) : 0);
+                bookScore.commentNum(bookInfo.getCommentNum() != null ? bookInfo.getCommentNum() : 0);
                 bookScore.saleSort(bookInfo.getSaleSort() != null ? bookInfo.getSaleSort() : 0);
                 if (type == CrawlerSourceEnums.amazon.getType()) {
-                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 20.0 : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? bookInfo.getScore() * 20.0 : 0.0);
                 } else if (type == CrawlerSourceEnums.jd.getType()) {
-                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? bookInfo.getScore() : 0.0);
                 } else if (type == CrawlerSourceEnums.dangdang.getType()) {
-                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? bookInfo.getScore() : 0.0);
                 } else if (type == CrawlerSourceEnums.douban.getType()) {
-                    bookScore.score(bookInfo.getScore() != null ? Double.valueOf(bookInfo.getScore()) * 10.0 : 0.0);
+                    bookScore.score(bookInfo.getScore() != null ? bookInfo.getScore() * 10.0 : 0.0);
                 }
                 bookScoreService.saveUpdate(bookScore);
                 return null;

@@ -1,5 +1,6 @@
 package com.dreamy.crawler.handler.keyword;
 
+import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.enums.RedisConstEnums;
@@ -40,6 +41,9 @@ public class KeyWordWeiXinHandler {
     @Autowired
     HashOperations<String, String, String> hashOperationsString;
 
+    @Resource
+    CrawlerService crawlerService;
+
 
     public void crawler(String word, Integer bookId) {
         getWeiXin(word, bookId);
@@ -63,7 +67,7 @@ public class KeyWordWeiXinHandler {
         if (CollectionUtils.isNotEmpty(set)) {
             num = set.size();
             List<String> list = new ArrayList(set);
-            filed = list.get(NumberUtils.randomInt(1, num-1));
+            filed = list.get(NumberUtils.randomInt(1, num - 1));
             cookie = hashOperationsString.get(key, filed);
         }
         crawleringByProxy(url, cookie, bookId, filed);
@@ -97,6 +101,7 @@ public class KeyWordWeiXinHandler {
                     }
                 }
                 keyWordService.saveOrUpdate(keyWord);
+                crawlerService.saveKeyWordHistory(keyWord);
             }
 
         }

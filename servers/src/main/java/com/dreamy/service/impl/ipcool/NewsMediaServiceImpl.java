@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.NewsMedia;
 import com.dreamy.domain.ipcool.NewsMediaConditions;
 import com.dreamy.service.iface.ipcool.NewsMediaService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,17 +29,17 @@ public class NewsMediaServiceImpl implements NewsMediaService {
 
     @Override
     public Integer delByBookId(Integer bookId) {
-        NewsMediaConditions conditions=new NewsMediaConditions();
+        NewsMediaConditions conditions = new NewsMediaConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId);
         return newsMediaDao.deleteByExample(conditions);
     }
 
     @Override
     public List<NewsMedia> getList(NewsMedia media, Page page) {
-        Map<String,Object> params= BeanUtils.toQueryMap(media);
-        NewsMediaConditions conditions=new NewsMediaConditions();
+        Map<String, Object> params = BeanUtils.toQueryMap(media);
+        NewsMediaConditions conditions = new NewsMediaConditions();
         conditions.createCriteria().addByMap(params);
-        if(page!=null){
+        if (page != null) {
             page.setTotalNum(newsMediaDao.countByExample(conditions));
             conditions.setPage(page);
         }
@@ -46,7 +47,22 @@ public class NewsMediaServiceImpl implements NewsMediaService {
     }
 
     @Override
-    public List<NewsMedia> getDefaultList() {
-        return null;
+    public List<NewsMedia> getByBookIdAndSource(Integer bookId, Integer source) {
+        NewsMediaConditions conditions = new NewsMediaConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andSourceEqualTo(source);
+        return newsMediaDao.selectByExample(conditions);
+    }
+
+
+    @Override
+    public void saveOrUpdate(NewsMedia newsMedia) {
+        List<NewsMedia> list = getByBookIdAndSource(newsMedia.getBookId(), newsMedia.getSource());
+        if (CollectionUtils.isNotEmpty(list)) {
+            newsMedia.setId(list.get(0).getId());
+            newsMediaDao.update(newsMedia);
+        } else {
+            save(newsMedia);
+        }
+
     }
 }
