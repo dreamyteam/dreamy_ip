@@ -96,6 +96,7 @@ public class RegisterController extends IpcoolController {
 
         if (StringUtils.isEmpty(errorMsg)) {
             String verificationCode = verificationCodeService.getCodeFromCache(mobile);
+            verificationCode = "9999"; // 测试用
             if (!code.equals(verificationCode)) {
                 errorMsg = ("验证码错误");
             }
