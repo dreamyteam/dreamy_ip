@@ -2,7 +2,7 @@ package com.dreamy.enums;
 
 /**
  * Created with IntelliJ IDEA.
- * User: yujianfu (yujianfu@duotin.com)
+ * user: yujianfu (yujianfu@duotin.com)
  * Date: 16/5/7
  * Time: 下午4:12
  */
@@ -19,7 +19,10 @@ public enum ErrorCodeEnums {
     image_upload_failed(9001, "图片上传失败"),
 
     //投票
-    vote_failed(10001, "投票失败");
+    vote_failed(10001, "投票失败"),
+
+    // 找回密码
+    check_phone(1001, "验证手机失败");
 
 
     private Integer errorCode;

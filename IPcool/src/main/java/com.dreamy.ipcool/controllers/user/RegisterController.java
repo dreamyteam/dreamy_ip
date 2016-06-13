@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
- * User: yujianfu (yujianfu@duotin.com)
+ * user: yujianfu (yujianfu@duotin.com)
  * Date: 16/5/9
  * Time: 下午2:42
  */
@@ -54,7 +54,7 @@ public class RegisterController extends IpcoolController {
         if (StringUtils.isEmpty(mobile)) {
             bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
         } else {
-//            User user = userService.getUserByMobile(param.getMobile());
+//            user user = userService.getUserByMobile(param.getMobile());
 //            if (user.getId() != null) {
 //            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
 //            } else {
@@ -103,8 +103,8 @@ public class RegisterController extends IpcoolController {
         }
 
         if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums = ErrorCodeEnums.get_verification_code_failed;
             errorCodeEnums.setErrorMsg(errorMsg);
-
             bean.failure(errorCodeEnums);
         }
 

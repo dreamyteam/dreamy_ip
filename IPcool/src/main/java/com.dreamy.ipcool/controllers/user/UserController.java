@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
- * User: yujianfu (yujianfu@duotin.com)
+ * user: yujianfu (yujianfu@duotin.com)
  * Date: 16/4/26
  * Time: 下午7:37
  */
@@ -163,8 +163,8 @@ public class UserController extends IpcoolController {
         }
 
         if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums = ErrorCodeEnums.check_phone;
             errorCodeEnums.setErrorMsg(errorMsg);
-
             bean.failure(errorCodeEnums);
         }else {
             bean.data("{userId:"+ userId +"}");
@@ -198,8 +198,8 @@ public class UserController extends IpcoolController {
         }
 
         if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums = ErrorCodeEnums.check_phone;
             errorCodeEnums.setErrorMsg(errorMsg);
-
             bean.failure(errorCodeEnums);
         }
 
