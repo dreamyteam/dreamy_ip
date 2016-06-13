@@ -77,6 +77,38 @@ public class RegisterController extends IpcoolController {
         interfaceReturn(response, JsonUtils.toString(bean), "");
     }
 
+    @RequestMapping(value = "/user/register/checkPhoneCode")
+    @ResponseBody
+    public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
+        InterfaceBean bean = new InterfaceBean().success();
+        String mobile = (String) request.getAttribute("mobile");
+        String code = (String) request.getAttribute("checkCode");
+
+        ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
+        String errorMsg = "";
+
+        //空值判断
+        if (StringUtils.isEmpty(mobile)) {
+            errorMsg = ("手机号码不能为空！");
+        } else if (StringUtils.isEmpty(code)) {
+            errorMsg = ("验证码不能为空！");
+        }
+
+        if (StringUtils.isEmpty(errorMsg)) {
+            String verificationCode = verificationCodeService.getCodeFromCache(mobile);
+            if (!code.equals(verificationCode)) {
+                errorMsg = ("验证码错误");
+            }
+        }
+
+        if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums.setErrorMsg(errorMsg);
+
+            bean.failure(errorCodeEnums);
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+    }
 
     @RequestMapping(value = "/user/register")
     @ResponseBody

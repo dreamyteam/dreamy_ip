@@ -34,8 +34,6 @@ public class RegisterServiceImpl implements RegisterService {
             errorMsg = ("手机号码不能为空！");
         } else if (StringUtils.isEmpty(param.getPassword())) {
             errorMsg = ("密码不能为空！");
-        } else if (StringUtils.isEmpty(param.getCheckCode())) {
-            errorMsg = ("验证码不能为空！");
         }
 
         if (StringUtils.isEmpty(errorMsg)) {
@@ -44,11 +42,6 @@ public class RegisterServiceImpl implements RegisterService {
 
             if (!matcher.matches()) {
                 errorMsg = ("手机号码格式不正确！");
-            } else {
-                String verificationCode = verificationCodeService.getCodeFromCache(param.getMobile());
-                if (!param.getCheckCode().equals(verificationCode)) {
-                    errorMsg = ("验证码错误");
-                }
             }
         }
 
