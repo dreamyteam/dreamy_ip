@@ -39,6 +39,7 @@ public class RankServiceImpl implements RankService {
             commonParams.put("operation", action);
         }
 
+
         return commonParams;
     }
 }

@@ -42,6 +42,7 @@
     <rabbit:queue name="${queue_keyword_baidu_sougou}"/>
     <rabbit:queue name="${queue_news_sougou}"/>
     <rabbit:queue name="${queue_crawler_over}"/>
+    <rabbit:queue name="${queue_crawler_netbook_over}"/>
     <rabbit:queue name="${queue_crawler_qidian}"/>
     <rabbit:queue name="${queue_crawler_zongheng}"/>
     <rabbit:queue name="${queue_crawler_huayu}"/>
@@ -66,6 +67,7 @@
             <rabbit:binding queue="${queue_keyword_baidu_sougou}"/>
             <rabbit:binding queue="${queue_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_over}"/>
+            <rabbit:binding queue="${queue_crawler_netbook_over}"/>
             <rabbit:binding queue="${queue_crawler_qidian}"/>
             <rabbit:binding queue="${queue_crawler_zongheng}"/>
             <rabbit:binding queue="${queue_crawler_huayu}"/>
@@ -90,6 +92,18 @@
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
         <rabbit:listener ref="crawlerFinishQueueHandler" method="onMessage" queues="${queue_crawler_over}"/>
+    </rabbit:listener-container>
+
+    <bean id="crawlerNetBookFinishQueueHandler" class="com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler"/>
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="5"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="crawlerNetBookFinishQueueHandler" method="onMessage" queues="${queue_crawler_netbook_over}"/>
     </rabbit:listener-container>
 
 

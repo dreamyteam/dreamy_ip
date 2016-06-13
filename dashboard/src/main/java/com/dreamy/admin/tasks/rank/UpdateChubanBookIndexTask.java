@@ -36,8 +36,8 @@ import java.util.Map;
  * Time: 上午11:08
  */
 @Component
-public class UpdateIndexTask {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateIndexTask.class);
+public class UpdateChubanBookIndexTask {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateChubanBookIndexTask.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -92,12 +92,6 @@ public class UpdateIndexTask {
     @Scheduled(cron = "0 10 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
-
-        redisClientService.del(BookRankEnums.composite.getCacheKey());
-        redisClientService.del(BookRankEnums.develop.getCacheKey());
-        redisClientService.del(BookRankEnums.propagation.getCacheKey());
-        redisClientService.del(BookRankEnums.hot.getCacheKey());
-
         int currentPage = 1;
         Page page = new Page();
         page.setPageSize(100);

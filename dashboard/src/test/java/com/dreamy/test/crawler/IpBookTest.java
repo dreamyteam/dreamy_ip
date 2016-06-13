@@ -2,7 +2,8 @@ package com.dreamy.test.crawler;
 
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
-import com.dreamy.admin.tasks.rank.UpdateIndexTask;
+import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
+import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
@@ -35,7 +36,7 @@ public class IpBookTest extends BaseJunitTest {
     private BookScoreService bookScoreService;
 
     @Autowired
-    private UpdateIndexTask updateIndexTask;
+    private UpdateChubanBookIndexTask updateChubanBookIndexTask;
 
     @Autowired
     private QueueService queueService;
@@ -45,6 +46,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
+
+    @Autowired
+    private UpdateNetBookIndexTask updateNetBookIndexTask;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -124,35 +128,7 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void developIndex() {
-//        BookView bookView = bookViewService.getByBookId(4769);
-//        String index = bookScoreService.getPropagateIndexByBookId(4769);
-//
-//        System.err.println(index);
-
-        int currentPage = 1;
-        Page page = new Page();
-        page.setPageSize(100);
-        Boolean isLoop = true;
-
-        while (isLoop) {
-            page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
-            if (CollectionUtils.isNotEmpty(bookViewList)) {
-                for (BookView bookView : bookViewList) {
-//                    Map<String, String> params = new HashMap<>();
-//                    params.put("bookId", "" + bookView.getBookId());
-//                    queueService.push(BookOverQueue, params);
-                    crawlerFinishQueueHandler.updateRank(bookView);
-                }
-                currentPage++;
-            } else {
-                isLoop = false;
-            }
-        }
-
-//        flushBookRankToDb.run();
-
-
+        updateNetBookIndexTask.run();
     }
 
 }

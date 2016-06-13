@@ -7,14 +7,15 @@ import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
-import com.dreamy.service.iface.ipcool.*;
+import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
+import com.dreamy.service.iface.ipcool.BookScoreService;
+import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -27,8 +28,8 @@ import java.util.List;
  * Time: 上午10:48
  */
 @Component
-public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
-    private static final Logger Log = LoggerFactory.getLogger(CrawlerFinishQueueHandler.class);
+public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
+    private static final Logger Log = LoggerFactory.getLogger(CrawlerNetbookFinishQueueHandler.class);
 
     @Autowired
     private BookInfoService bookInfoService;
@@ -64,56 +65,12 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
     public void update(Integer bookId) {
         BookView bookView = bookViewService.getByBookId(bookId);
-
-        if (bookView != null) {
-            if (bookView.getType().equals(IpTypeEnums.chuban.getType())) {
-                updateChuban(bookId, bookView);
-            } else {
-                updateNet(bookId, bookView);
-            }
-        }
-    }
-
-    /**
-     * 出版文学更新
-     *
-     * @param bookId
-     * @param bookView
-     */
-    private void updateChuban(Integer bookId, BookView bookView) {
-        List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-        if (CollectionUtils.isNotEmpty(bookInfoList)) {
-
-            //计算指数
-            Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer reputationIndex = getNewReputationIndex(bookView);
-
-
-            bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.reputationIndex(reputationIndex);
-
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
-
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
-
-
-            //更新指数
-            bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
-
-            //指数写入到redis用于排名
-//            updateRank(bookView);
-
-        }
+        updateNet(bookId, bookView);
     }
 
 
     /**
-     * 出版文学更新
+     * 网络文学更新
      *
      * @param bookId
      * @param bookView
@@ -138,13 +95,12 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             Integer compositeIndex = getNewCompositeIndex(bookView);
             bookView.compositeIndex(compositeIndex);
 
-
             //更新指数
             bookViewService.update(bookView);
             updateHistoryIndex(bookView);
 
             //指数写入到redis用于排名
-            updateRank(bookView);
+//            updateRank(bookView);
 
         }
     }
