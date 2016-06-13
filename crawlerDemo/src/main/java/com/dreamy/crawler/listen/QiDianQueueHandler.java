@@ -32,7 +32,7 @@ public class QiDianQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             NetBookInfo netBookInfo = qiDianHandler.crawler(bookId, url, operation);
-            crawlerService.operationNetBook(operation,key, netBookInfo, bookId);
+            crawlerService.operationNetBook(operation,key, netBookInfo, bookId,CrawlerSourceEnums.qidian.getType());
 
         } catch (Exception e) {
             log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " url:" + url);

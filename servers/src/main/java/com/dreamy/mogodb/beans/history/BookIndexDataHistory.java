@@ -1,4 +1,4 @@
-package com.dreamy.mogodb.beans;
+package com.dreamy.mogodb.beans.history;
 
 import org.springframework.data.annotation.Id;
 

@@ -1,4 +1,4 @@
-package com.dreamy.mogodb.beans.tieba;
+package com.dreamy.mogodb.beans.history;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;

@@ -1,6 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.BookIndexDataHistory;
+import com.dreamy.mogodb.beans.history.BookIndexDataHistory;
 
 import java.util.List;
 

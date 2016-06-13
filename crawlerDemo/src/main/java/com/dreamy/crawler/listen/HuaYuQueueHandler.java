@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.info.netbook.hy.HuaYuHandler;
 import com.dreamy.crawler.handler.info.netbook.zh.ZongHengHandler;
 import com.dreamy.crawler.service.CrawlerService;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class HuaYuQueueHandler extends AbstractQueueHandler {
 
         try {
             NetBookInfo netBookInfo = huaYuHandler.crawler(bookId, url, operation);
-            crawlerService.operationNetBook(operation, key, netBookInfo, bookId);
+            crawlerService.operationNetBook(operation, key, netBookInfo, bookId, CrawlerSourceEnums.huayu.getType());
         } catch (Exception e) {
             log.warn("HuaYuQueueHandler  failed: bookId:" + bookId + " url:" + url);
         } finally {

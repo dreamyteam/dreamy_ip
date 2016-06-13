@@ -4,12 +4,18 @@ import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.BookCrawlerInfoDao;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookCrawlerInfoConditions;
+import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +27,20 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
 
+    @Autowired
+    private QueueService queueService;
+    @Value("${queue_jd_crawler}")
+    private String queueNameJd;
+
+    @Value("${queue_amazon_crawler}")
+    private String queueNameAmazon;
+
+    @Value("${queue_dangdang_crawler}")
+    private String queueNameDangDang;
+
+    @Value("${queue_douban_comment}")
+    private String commentQueueName;
+
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
         BookCrawlerInfo entity = new BookCrawlerInfo();
@@ -31,6 +51,18 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
             bookCrawlerInfoDao.save(info);
         }
         return info;
+    }
+
+    private void push(String isbn,Integer bookId,String url) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("isbn", isbn);
+        map.put("url", url);
+        map.put("operation", OperationEnums.crawler.getCode());
+        queueService.push(queueNameJd, map);
+        queueService.push(queueNameAmazon, map);
+        queueService.push(queueNameDangDang, map);
+        queueService.push(commentQueueName, map);
+
     }
 
     @Override

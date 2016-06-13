@@ -1,6 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.NewsMediaHistory;
+import com.dreamy.mogodb.beans.history.NewsMediaHistory;
 
 import java.util.List;
 

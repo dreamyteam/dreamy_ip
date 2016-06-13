@@ -1,11 +1,11 @@
-package com.dreamy.mogodb.beans;
+package com.dreamy.mogodb.beans.history;
 
 import org.springframework.data.annotation.Id;
 
 /**
  * Created by wangyongxing on 16/6/13.
  */
-public class NewsMediaHistory {
+public class KeyWordHistory {
     @Id
     private String id;
 
@@ -17,14 +17,6 @@ public class NewsMediaHistory {
 
     private Integer source;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Integer getSource() {
         return source;
     }
@@ -33,12 +25,12 @@ public class NewsMediaHistory {
         this.source = source;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
     public Integer getNum() {
@@ -49,11 +41,19 @@ public class NewsMediaHistory {
         this.num = num;
     }
 
-    public Integer getBookId() {
-        return bookId;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

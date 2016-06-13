@@ -1,6 +1,6 @@
 package com.dreamy.mogodb.dao;
 
-import com.dreamy.mogodb.beans.KeyWordHistory;
+import com.dreamy.mogodb.beans.history.KeyWordHistory;
 import com.dreamy.utils.BeanUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

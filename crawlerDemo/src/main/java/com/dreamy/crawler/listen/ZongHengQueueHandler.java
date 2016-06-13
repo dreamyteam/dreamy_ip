@@ -3,6 +3,7 @@ package com.dreamy.crawler.listen;
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.info.netbook.zh.ZongHengHandler;
 import com.dreamy.crawler.service.CrawlerService;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class ZongHengQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             NetBookInfo netBookInfo = zongHengHandler.crawler(bookId, url, operation);
-            crawlerService.operationNetBook(operation,key, netBookInfo, bookId);
+            crawlerService.operationNetBook(operation,key, netBookInfo, bookId, CrawlerSourceEnums.zongheng.getType());
         } catch (Exception e) {
             log.warn("ZongHengQueueHandler  failed: bookId:" + bookId + " url:" + url);
         } finally {

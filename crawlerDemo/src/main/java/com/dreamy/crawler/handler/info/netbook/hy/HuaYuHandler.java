@@ -173,6 +173,9 @@ public class HuaYuHandler {
             if(ticket!=null){
                 info.setTicketNum(ticket.getTicketNum());
             }
+            else{
+                info.setTicketNum(0);
+            }
 
 //            Elements elements = document.getElementsByClass("booknumber");
 //            if (elements != null && elements.size() > 0) {

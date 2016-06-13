@@ -1,7 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.tieba.TieBa;
-import com.dreamy.mogodb.beans.tieba.TieBaHistory;
+import com.dreamy.mogodb.beans.history.TieBaHistory;
 
 import java.util.List;
 
@@ -23,5 +22,5 @@ public interface TieBaHistoryService {
     void saveByRecord(TieBaHistory tieBaHistory);
 
 
-    public List<TieBaHistory> getByBookId(Integer id) ;
+    public List<TieBaHistory> getByBookId(Integer bookId) ;
 }

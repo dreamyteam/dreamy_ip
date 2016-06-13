@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
-import com.dreamy.mogodb.beans.NewsMediaHistory;
+import com.dreamy.mogodb.beans.history.NewsMediaHistory;
 import com.dreamy.mogodb.dao.NewsMediaHistoryDao;
 import com.dreamy.service.iface.mongo.NewsMediaHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;

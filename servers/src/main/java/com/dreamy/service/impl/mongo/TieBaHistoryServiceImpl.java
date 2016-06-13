@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
-import com.dreamy.mogodb.beans.tieba.TieBaHistory;
+import com.dreamy.mogodb.beans.history.TieBaHistory;
 import com.dreamy.mogodb.dao.TieBaHistoryDao;
 import com.dreamy.service.iface.mongo.TieBaHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
-import com.dreamy.mogodb.beans.BookIndexDataHistory;
+import com.dreamy.mogodb.beans.history.BookIndexDataHistory;
 import com.dreamy.mogodb.dao.BookIndexDataHistoryDao;
 import com.dreamy.service.iface.mongo.BookIndexDataHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.dreamy.service.impl.mongo;
 
-import com.dreamy.mogodb.beans.KeyWordHistory;
+import com.dreamy.mogodb.beans.history.KeyWordHistory;
 import com.dreamy.mogodb.dao.KeyWordHistoryDao;
 import com.dreamy.service.iface.mongo.KeyWordHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;

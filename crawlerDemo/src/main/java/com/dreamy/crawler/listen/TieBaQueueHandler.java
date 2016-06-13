@@ -34,11 +34,12 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
             TieBa tieBa = tieBaHandler.crawler(word, bookId);
             if (tieBa != null) {
                 tieBaService.updateInser(tieBa);
+                crawlerService.saveTieBaHistory(tieBa);
             }
         } catch (Exception e) {
             log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " word:" + word);
         } finally {
-
+            crawlerService.check(key, bookId);
         }
 
 

@@ -3,13 +3,17 @@ package com.dreamy.crawler.service;
 import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.OperationEnums;
-import com.dreamy.mogodb.beans.*;
+import com.dreamy.mogodb.beans.BookIndexData;
+import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.mogodb.beans.OverviewJson;
+import com.dreamy.mogodb.beans.history.*;
+import com.dreamy.mogodb.beans.tieba.TieBa;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.*;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
@@ -35,19 +39,6 @@ public class CrawlerServiceImpl implements CrawlerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrawlerServiceImpl.class);
     @Autowired
     private QueueService queueService;
-//    @Value("${crawler_book_isbn_jd}")
-//    private String queueNameJd;
-//
-//    @Value("${crawler_book_isbn_amazon}")
-//    private String queueNameAmazon;
-//
-//    @Value("${crawler_book_isbn_dangdang}")
-//    private String queueNameDangDang;
-//
-//    @Value("${queue_crawler_comment}")
-//    private String commentQueueName;
-
-
     @Autowired
     private RedisClientService redisClientService;
 
@@ -80,22 +71,18 @@ public class CrawlerServiceImpl implements CrawlerService {
     NewsMediaHistoryService newsMediaHistoryService;
     @Resource
     BookIndexDataHistoryService bookIndexDataHistoryService;
+    @Resource
+    NetBookDataHistoryService netBookDataHistoryService;
+
+    @Autowired
+    TieBaHistoryService tieBaHistoryService;
+
+    @Autowired
+    BookScoreHistoryService bookScoreHistoryService;
+
 
     @Override
-    public void pushAll(String isbn, String url, Integer bookId) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("isbn", isbn);
-        map.put("url", url);
-        map.put("bookId", bookId);
-//        queueService.push(queueNameJd, map);
-//        queueService.push(queueNameAmazon, map);
-//        queueService.push(queueNameDangDang, map);
-//        queueService.push(commentQueueName, map);
-
-    }
-
-    @Override
-    public void Operation(String operation, String key, final BookInfo bookInfo, String title, Integer bookId, String url, String isbn, final Integer type) {
+    public void operation(String operation, String key, final BookInfo bookInfo, String title, Integer bookId, String url, String isbn, final Integer type) {
         try {
             if (bookInfo != null) {
                 if (operation.equals(OperationEnums.crawler.getCode())) {
@@ -117,9 +104,6 @@ public class CrawlerServiceImpl implements CrawlerService {
                         bookCrawlerInfo.url(url);
                     }
                     bookCrawlerInfoService.save(bookCrawlerInfo);
-                    if (StringUtils.isNotEmpty(bookInfo.getISBN())) {
-                        pushAll(bookInfo.getISBN(), url, ipBook.getId());
-                    }
                     bookInfo.setId(bookInfo.getISBN() + "_" + type);
                 } else {
                     bookInfo.setId(isbn + "_" + type);
@@ -181,11 +165,13 @@ public class CrawlerServiceImpl implements CrawlerService {
         }
     }
 
+
     @Override
-    public void operationNetBook(String operation, String key, NetBookInfo bookInfo, Integer bookId) {
+    public void operationNetBook(String operation, String key, NetBookInfo bookInfo, Integer bookId, Integer type) {
         try {
             if (bookInfo != null) {
                 netBookInfoService.updateInser(bookInfo);
+                saveNetBookDataHistory(bookInfo, type);
                 if (operation.equals(OperationEnums.crawler.getCode())) {
                     createTag(bookId, bookInfo.getLabel());
                 }
@@ -193,7 +179,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         } catch (Exception e) {
             LOGGER.error("operationNetBook is error bookId is " + bookId, e);
         } finally {
-            //check(key, bookId);
+            check(key, bookId);
         }
     }
 
@@ -273,6 +259,45 @@ public class CrawlerServiceImpl implements CrawlerService {
         });
     }
 
+    @Override
+    public void saveNetBookDataHistory(final NetBookInfo netBookInfo, final Integer type) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                NetBookDataHistory history = new NetBookDataHistory();
+                history.setType(type);
+                history.setBookId(netBookInfo.getBookId());
+                history.setClickNum(netBookInfo.getClickNum());
+                history.setCommentNum(netBookInfo.getCommentNum());
+                history.setRecommendNum(netBookInfo.getRecommendNum());
+                history.setMonthSort(netBookInfo.getMonthSort());
+                history.setScore(netBookInfo.getScore());
+                history.setCreateDate(TimeUtils.toString(null, new Date()));
+                history.setId(netBookInfo.getBookId() + "-" + type + "-" + TimeUtils.toString(null, new Date()));
+                netBookDataHistoryService.updateInser(history);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public void saveTieBaHistory(final TieBa tieBa) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                TieBaHistory tieBaHistory = new TieBaHistory();
+                tieBaHistory.setPopularitySort(tieBa.getPopularitySort());
+                tieBaHistory.setFollowNum(tieBa.getFollowNum());
+                tieBaHistory.setPostNum(tieBa.getPostNum());
+                tieBaHistory.setDate(TimeUtils.toString(null, new Date()));
+                tieBaHistory.setBookId(tieBa.getBookId());
+                tieBaHistory.setId(tieBa.getBookId() + "-" + TimeUtils.toString(null, new Date()));
+                tieBaHistoryService.updateInser(tieBaHistory);
+                return null;
+            }
+        });
+    }
+
 
     private void createTag(final Integer bookId, final String tags) {
 
@@ -338,6 +363,13 @@ public class CrawlerServiceImpl implements CrawlerService {
                     bookScore.score(bookInfo.getScore() != null ? bookInfo.getScore() * 10.0 : 0.0);
                 }
                 bookScoreService.saveUpdate(bookScore);
+                BookScoreHistory history = new BookScoreHistory();
+                history.setBookId(bookId);
+                history.setSource(type);
+                history.setCommentNum(bookScore.getCommentNum());
+                history.setSaleSort(bookScore.getSaleSort());
+                history.setScore(bookScore.getScore());
+                bookScoreHistoryService.updateInser(history);
                 return null;
             }
         });

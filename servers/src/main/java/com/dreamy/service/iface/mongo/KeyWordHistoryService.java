@@ -1,7 +1,6 @@
 package com.dreamy.service.iface.mongo;
 
-import com.dreamy.mogodb.beans.KeyWordHistory;
-import com.dreamy.mogodb.beans.tieba.TieBaHistory;
+import com.dreamy.mogodb.beans.history.KeyWordHistory;
 
 import java.util.List;
 
