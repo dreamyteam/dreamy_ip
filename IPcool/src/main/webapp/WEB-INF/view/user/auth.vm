@@ -1,0 +1,9 @@
+#set($cssName = "sidebar.css")
+#set($jsName = "user.js")
+<div class="container clearfix">
+    <!-- 用户中心 左侧导航 -->
+    #parse("user/user_center_left.vm")
+    <div class="sidebar_content">
+        <h1 class="title">认证信息</h1>
+    </div>
+</div>
