@@ -11,6 +11,7 @@ import com.dreamy.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,12 @@ public class BookViewServiceImpl implements BookViewService {
     @Override
     public Integer getTotalCountByType(Integer type) {
         BookViewConditions conditions = new BookViewConditions();
-        conditions.createCriteria().andIdGreaterThan(0);
+        BookViewConditions.Criteria criteria = conditions.createCriteria();
+        criteria.andIdGreaterThan(0);
+        if (type != null) {
+            criteria.andTypeEqualTo(type);
+        }
+
         return bookViewDao.countByExample(conditions);
     }
 
@@ -102,6 +108,21 @@ public class BookViewServiceImpl implements BookViewService {
             return bookViews.get(0);
         }
 
+        return null;
+    }
+
+
+    @Override
+    public Map<Integer, BookView> getListMapByBookIds(List<Integer> ids) {
+        List<BookView> bookViewList = getListByBookIds(ids);
+        if (CollectionUtils.isNotEmpty(bookViewList)) {
+            Map<Integer, BookView> map = new HashMap<>();
+            for (BookView bookView : bookViewList) {
+                map.put(bookView.getBookId(), bookView);
+            }
+
+            return map;
+        }
         return null;
     }
 }

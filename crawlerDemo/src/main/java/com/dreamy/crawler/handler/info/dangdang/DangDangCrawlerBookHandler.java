@@ -1,5 +1,6 @@
 package com.dreamy.crawler.handler.info.dangdang;
 
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.utils.*;
 import org.jsoup.Jsoup;
@@ -54,7 +55,7 @@ public class DangDangCrawlerBookHandler {
             Document document = Jsoup.parse(html);
             if (document != null) {
                 bean = new BookInfo();
-                if (operation.equals("crawler")) {
+                if (operation.equals(OperationEnums.crawler.getCode())) {
                     bean.setUrl(url);
                     getTitle(bean, document);
                     info(bean, document);

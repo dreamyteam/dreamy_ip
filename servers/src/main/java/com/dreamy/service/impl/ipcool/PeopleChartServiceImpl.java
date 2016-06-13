@@ -6,6 +6,7 @@ import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.domain.ipcool.PeopleChartConditions;
 import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.utils.BeanUtils;
+import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,19 @@ public class PeopleChartServiceImpl implements PeopleChartService {
         PeopleChartConditions conditions=new PeopleChartConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId);
         return peopleChartDao.selectByExample(conditions);
+    }
+
+    @Override
+    public void saveOrUpdate(PeopleChart peopleChart) {
+        List<PeopleChart> list=getListByBookId(peopleChart.getBookId());
+        if(CollectionUtils.isNotEmpty(list)){
+            PeopleChart old=list.get(0);
+            peopleChart.id(old.getId());
+            peopleChartDao.update(peopleChart);
+        }
+        else{
+            save(peopleChart);
+        }
     }
 
 

@@ -45,7 +45,7 @@
         <span class="main_title"></span>
         <form class="search_bar_container" action="/search.html">
             <div class="serarch_bar_content">
-                <input type="text" class="search" name="content" value="$!{content}" placeholder="搜索 书、影视作品、人物、机构" />
+                <input type="text" class="search" name="content" value="$!{content}" autocomplete="off" placeholder="搜索 书、影视作品、人物、机构" />
                 <input type="submit" class="submit" value="" />
             </div>
         </form>

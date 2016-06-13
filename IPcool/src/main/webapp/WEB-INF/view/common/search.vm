@@ -2,7 +2,7 @@
     <form class="search_bar_container" action="/search.html">
         <div class="form_search">
 
-            <input type="text" name="content" value="$!{content}" class="search" placeholder="试试搜索美人鱼">
+            <input type="text" name="content" autocomplete="off" value="$!{content}" class="search" placeholder="试试搜索美人鱼">
             <input class="submit" type="submit" value="">
 
         </div>

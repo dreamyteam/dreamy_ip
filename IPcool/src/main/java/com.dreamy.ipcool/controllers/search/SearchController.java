@@ -1,10 +1,11 @@
 package com.dreamy.ipcool.controllers.search;
 
 import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
-import com.dreamy.service.iface.CommonService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.SearchService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -40,30 +42,33 @@ public class SearchController extends IpcoolController {
 
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
-        BookView bookView = new BookView().name(content);
-//        List<BookView> list = bookViewService.getList(bookView, page, "composite_index desc");
         String searchRes = searchService.getBookViewByName(content, page);
-//        if (CollectionUtils.isNotEmpty(list)) {
-//            List<Integer> bookIds = new LinkedList<Integer>();
-//            for (BookView view : list) {
-//                bookIds.add(view.getBookId());
-//            }
-//            Map<Integer, Integer> rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
-//            if (rankMap != null) {
-//                model.put("rankMap", rankMap);
-//            }
-//
-//        } else {
-//            list = null;
-//        }
+        List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
 
-//        model.put("typeEnums", IpTypeEnums.values());
-//        model.put("list", list);
-//        model.put("page", page);
-//        model.put("content", content);
+        if (CollectionUtils.isNotEmpty(bookRankList)) {
+            page.setTotalNum(bookViewService.getTotalCountByType(IpTypeEnums.chuban.getType()));
+            List<Integer> bookIds = new LinkedList<Integer>();
+            Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
+            for (BookRank bookRank : bookRankList) {
+                bookIds.add(bookRank.getBookId());
+                rankMap.put(bookRank.getBookId(), bookRank.getRank());
+            }
 
+            Map<Integer, BookView> bookViewMap = bookViewService.getListMapByBookIds(bookIds);
+            List<BookView> bookViewList = new LinkedList<BookView>();
+            for (Integer bookId : bookIds) {
+                if (bookViewMap.containsKey(bookId)) {
+                    bookViewList.add(bookViewMap.get(bookId));
+                }
+            }
+
+            model.put("list", bookViewList);
+            model.put("rankMap", rankMap);
+        }
+
+        model.put("typeEnums", IpTypeEnums.values());
+        model.put("page", page);
+        model.put("content", content);
         return "/search/result";
     }
-
-
 }

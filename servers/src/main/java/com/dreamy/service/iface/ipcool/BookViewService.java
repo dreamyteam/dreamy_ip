@@ -4,6 +4,7 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/26.
@@ -49,6 +50,12 @@ public interface BookViewService {
      * @return
      */
     public List<BookView> getListByBookIds(List<Integer> ids);
+
+    /**
+     * @param ids
+     * @return
+     */
+    public Map<Integer,BookView> getListMapByBookIds(List<Integer> ids);
 
     /**
      * @param page
