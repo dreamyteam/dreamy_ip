@@ -24,12 +24,15 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public String getBookViewByName(String name, Page page) {
-        String url = commonService.getSearchDomain() + "/ipbook/select?q=" + name + "~";
+        String url = commonService.getSearchDomain() + "/ipbook/select/";
         Map<String, String> params = new HashMap<>();
 
-        params.put("sort", "compositeIndex+desc");
+        params.put("q", "name:" + name + "~");
         params.put("wt", "json");
+        params.put("sort", "compositeIndex desc");
         params.put("indent", "true");
+        params.put("start", (page.getCurrentPage() - 1) * page.getPageSize() + "");
+        params.put("rows", page.getPageSize() + "");
 
         String res = HttpUtils.post(url, params);
 
