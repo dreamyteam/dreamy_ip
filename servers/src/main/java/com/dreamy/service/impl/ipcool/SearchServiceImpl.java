@@ -62,7 +62,7 @@ public class SearchServiceImpl implements SearchService {
                 if (numFound > 0) {
                     ArrayList<LinkedHashMap> docs = (ArrayList<LinkedHashMap>) response.get("docs");
                     for (LinkedHashMap doc : docs) {
-                        bookViewIds.add((Integer) doc.get("id"));
+                        bookViewIds.add((Integer) doc.get("bookid"));
                     }
                 }
 
