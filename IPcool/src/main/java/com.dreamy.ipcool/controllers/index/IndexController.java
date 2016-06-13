@@ -231,6 +231,12 @@ public class IndexController extends IpcoolController {
         model.put("typeEnums", IpTypeEnums.values());
 
         List<BookRank> list = bookRankService.getBookRankByBookId(bookId);
+
+        model.put("crank", 0);
+        model.put("drank", 0);
+        model.put("prank", 0);
+        model.put("hrank", 0);
+
         if (CollectionUtils.isNotEmpty(list)) {
             for (BookRank rank : list) {
                 Integer rankIndex = rank.getRank();
@@ -238,20 +244,15 @@ public class IndexController extends IpcoolController {
                     model.put("crank", rankIndex);
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.develop.getType())) {
-                    model.put("drank", rankIndex);//开发潜力指数排名
+                    model.put("drank", rankIndex);
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.propagate.getType())) {
-                    model.put("prank", rankIndex);//传播指数排名
+                    model.put("prank", rankIndex);
                 }
                 if (rank.getType().equals(BookIndexTypeEnums.hot.getType())) {
-                    model.put("hrank", rankIndex);//热度指数排名
+                    model.put("hrank", rankIndex);
                 }
             }
-        } else {
-            model.put("crank", 0);
-            model.put("drank", 0);//开发潜力指数排名
-            model.put("prank", 0);//传播指数排名
-            model.put("hrank", 0);//热度指数排名
         }
     }
 
