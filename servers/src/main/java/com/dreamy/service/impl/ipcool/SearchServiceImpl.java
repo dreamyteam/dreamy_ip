@@ -3,12 +3,16 @@ package com.dreamy.service.impl.ipcool;
 import com.dreamy.beans.Page;
 import com.dreamy.service.iface.CommonService;
 import com.dreamy.service.iface.ipcool.SearchService;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
+import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,11 +23,15 @@ import java.util.Map;
 @Service
 public class SearchServiceImpl implements SearchService {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(SearchServiceImpl.class);
+
     @Autowired
     private CommonService commonService;
 
     @Override
-    public String getBookViewByName(String name, Page page) {
+    public List<Integer> getBookIdsFromSolrByName(String name, Page page) {
+        List<Integer> bookViewIds = new LinkedList<>();
+
         String url = commonService.getSearchDomain() + "/ipbook/select/";
         Map<String, String> params = new HashMap<>();
 
@@ -34,10 +42,36 @@ public class SearchServiceImpl implements SearchService {
         params.put("start", (page.getCurrentPage() - 1) * page.getPageSize() + "");
         params.put("rows", page.getPageSize() + "");
 
-        String res = HttpUtils.post(url, params);
 
-        return res;
+        try {
+            String res = HttpUtils.post(url, params);
+            if (StringUtils.isEmpty(res)) {
+                return bookViewIds;
+            }
+
+            LinkedHashMap resMap = (LinkedHashMap) JsonUtils.toMap(res);
+            if (CollectionUtils.isEmpty(resMap)) {
+                return bookViewIds;
+            }
+
+            LinkedHashMap responseHeader = (LinkedHashMap) resMap.get("responseHeader");
+            Integer status = (Integer) responseHeader.get("status");
+            if (status == 0) {
+                LinkedHashMap response = (LinkedHashMap) resMap.get("response");
+                Integer numFound = (Integer) response.get("numFound");
+                if (numFound > 0) {
+                    ArrayList<LinkedHashMap> docs = (ArrayList<LinkedHashMap>) response.get("docs");
+                    for (LinkedHashMap doc : docs) {
+                        bookViewIds.add((Integer) doc.get("id"));
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            LOGGER.error("search from solr failed search word is : " + name, e);
+        }
+
+        return bookViewIds;
     }
-
 
 }

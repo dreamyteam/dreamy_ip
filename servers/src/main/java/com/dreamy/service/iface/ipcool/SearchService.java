@@ -2,6 +2,8 @@ package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yujianfu (yujianfu@duotin.com)
@@ -16,5 +18,5 @@ public interface SearchService {
      * @param page
      * @return
      */
-    String getBookViewByName(String name,Page page);
+    List<Integer> getBookIdsFromSolrByName(String name, Page page);
 }
