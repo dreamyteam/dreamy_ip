@@ -1,5 +1,6 @@
 <div class="popup_box sign" id="popup_sign">
     <button class="close"></button>
+    <span class="btn_back"></span>
     <ul class="sign_content">
         <li class="active nav_login">
             <h3 class="title">登录IP库</h3>
@@ -41,7 +42,7 @@
                     <div class="verify_container">
                         <div class="input_content">
                             <span class="err_msg">异常错误信息</span>
-                            <input type="text" required name="userName" autocomplete="off"  data-required="请输入昵称" placeholder="昵称" name="">
+                            <input type="text" required name="userName" autocomplete="off" data-required="请输入昵称" placeholder="昵称" name="">
                         </div>
                         <div class="input_content get_verify_code_content">
                             <span class="err_msg">异常错误信息</span>
