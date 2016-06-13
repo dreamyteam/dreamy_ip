@@ -9,6 +9,7 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,29 +39,46 @@ public class SearchController extends IpcoolController {
 
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
-        List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
 
-        if (CollectionUtils.isNotEmpty(bookRankList)) {
+        List<BookView> bookViewList = new LinkedList<BookView>();
+        Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
+
+        if (StringUtils.isNotEmpty(content)) {
+            BookView bookView = new BookView().name(content).type(BookTypeEnums.chuban.getType());
+            bookViewList = bookViewService.getList(bookView, page, "composite_index desc");
+
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                List<Integer> bookIds = new LinkedList<Integer>();
+                for (BookView view : bookViewList) {
+                    bookIds.add(view.getBookId());
+                }
+                rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
+            }
+
+        } else {
+
+            List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
             page.setTotalNum(bookViewService.getTotalCountByType(BookTypeEnums.chuban.getType()));
             List<Integer> bookIds = new LinkedList<Integer>();
-            Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
+
             for (BookRank bookRank : bookRankList) {
                 bookIds.add(bookRank.getBookId());
                 rankMap.put(bookRank.getBookId(), bookRank.getRank());
             }
 
             Map<Integer, BookView> bookViewMap = bookViewService.getListMapByBookIds(bookIds);
-            List<BookView> bookViewList = new LinkedList<BookView>();
+
             for (Integer bookId : bookIds) {
                 if (bookViewMap.containsKey(bookId)) {
                     bookViewList.add(bookViewMap.get(bookId));
                 }
             }
 
-            model.put("list", bookViewList);
-            model.put("rankMap", rankMap);
+
         }
 
+        model.put("list", bookViewList);
+        model.put("rankMap", rankMap);
         model.put("typeEnums", BookTypeEnums.values());
         model.put("page", page);
         model.put("content", content);
