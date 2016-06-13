@@ -54,10 +54,10 @@ public class RegisterController extends IpcoolController {
         if (StringUtils.isEmpty(mobile)) {
             bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
         } else {
-            User user = userService.getUserByMobile(param.getMobile());
-            if (user.getId() != null) {
-            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
-            } else {
+//            User user = userService.getUserByMobile(param.getMobile());
+//            if (user.getId() != null) {
+//            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
+//            } else {
                 AsynchronousService.submit(new ObjectCallable(mobile) {
                     @Override
                     public Object run() throws Exception {
@@ -70,7 +70,7 @@ public class RegisterController extends IpcoolController {
                         return null;
                     }
                 });
-            }
+//            }
         }
 
 

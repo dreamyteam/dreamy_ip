@@ -138,39 +138,10 @@ public class UserController extends IpcoolController {
         return redirect("/");
     }
 
-    @RequestMapping(value = "/getpwd/verificationCode")
-    @ResponseBody
-    public void getVerificationCode(User param, HttpServletResponse response) {
-        InterfaceBean bean = new InterfaceBean().success();
-        String mobile = param.getPhone();
-        if (StringUtils.isEmpty(mobile)) {
-            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
-        } else {
-            User user = userService.getUserByMobile(mobile);
-            if (user.getId() == null) {
-                bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码不存在");
-            } else {
-                AsynchronousService.submit(new ObjectCallable(mobile) {
-                    @Override
-                    public Object run() throws Exception {
-                        String code = verificationCodeService.createVerificationCode(4);
-                        if (StringUtils.isNotEmpty(code)) {
-                            verificationCodeService.saveCodeToCache(name, code);
-                            shortMessageService.send(name, "【IP库】您的验证码是" + code);
-                        }
-                        return null;
-                    }
-                });
-            }
-        }
-
-        interfaceReturn(response, JsonUtils.toString(bean), "");
-    }
-
     @RequestMapping("/getpwd/checkPhoneCode")
     public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
-        String mobile = (String) request.getAttribute("phone");
+        String mobile = (String) request.getAttribute("mobile");
         String code = (String) request.getAttribute("checkCode");
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
@@ -181,6 +152,11 @@ public class UserController extends IpcoolController {
             errorMsg = ("手机号码不能为空！");
         } else if (StringUtils.isEmpty(code)) {
             errorMsg = ("验证码不能为空！");
+        }
+
+        User user = userService.getUserByMobile(mobile);
+        if(user.getId() == null) {
+            errorMsg = ("手机号码不存在！");
         }
 
         if (StringUtils.isEmpty(errorMsg)) {
@@ -202,7 +178,7 @@ public class UserController extends IpcoolController {
     @RequestMapping("/getpwd/doPwd")
     public void doPwd(HttpServletRequest request, HttpServletResponse response, ModifyPasswordParams passwordParams) {
         InterfaceBean bean = new InterfaceBean().success();
-        String mobile = (String) request.getAttribute("phone");
+        String mobile = (String) request.getAttribute("mobile");
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
@@ -210,7 +186,7 @@ public class UserController extends IpcoolController {
             errorMsg = ("手机号码不能为空！");
         }
         User user = userService.getUserByMobile(mobile);
-        if(user == null) {
+        if(user.getId() == null) {
             errorMsg = ("手机号码不存在！");
         }
 
