@@ -36,7 +36,7 @@ public class SearchController extends IpcoolController {
     @RequestMapping(value = "")
     public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
         BookView bookView = new BookView().name(content).type(BookTypeEnums.chuban.getType());
-        List<BookView> list = bookViewService.getList(bookView, page,"composite_index desc");
+        List<BookView> list = bookViewService.getList(bookView, page,"hot_index desc");
 
         if (CollectionUtils.isNotEmpty(list)) {
             List<Integer> bookIds = new LinkedList<Integer>();
