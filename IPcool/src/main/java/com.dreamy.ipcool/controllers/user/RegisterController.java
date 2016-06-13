@@ -81,8 +81,8 @@ public class RegisterController extends IpcoolController {
     @ResponseBody
     public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
-        String mobile = (String) request.getAttribute("mobile");
-        String code = (String) request.getAttribute("checkCode");
+        String mobile = (String) request.getParameter("mobile");
+        String code = (String) request.getParameter("checkCode");
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";

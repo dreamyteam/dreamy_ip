@@ -141,7 +141,7 @@ public class UserController extends IpcoolController {
     @RequestMapping("/getpwd/doCheckPhone")
     public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
-        String mobile = (String) request.getAttribute("mobile");
+        String mobile = request.getParameter("mobile");
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
@@ -176,7 +176,7 @@ public class UserController extends IpcoolController {
     @RequestMapping("/getpwd/doPwd")
     public void doPwd(HttpServletRequest request, HttpServletResponse response, ModifyPasswordParams passwordParams) {
         InterfaceBean bean = new InterfaceBean().success();
-        Integer userId = (Integer) request.getAttribute("userId");
+        Integer userId = Integer.parseInt(request.getParameter("userId"));
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
