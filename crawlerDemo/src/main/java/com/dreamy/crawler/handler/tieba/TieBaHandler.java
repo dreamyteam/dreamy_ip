@@ -82,7 +82,6 @@ public class TieBaHandler {
 
         Elements elements = document.getElementsByClass("card_infoNum");
         Element element = elements.first();
-        System.out.println(element.text());
         String num = element.text().replace(",", "");
         tieBa.setPostNum(Integer.valueOf(num));
     }

@@ -34,6 +34,7 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
         try {
             TieBa tieBa = tieBaHandler.crawler(word, bookId);
             if (tieBa != null) {
+                tieBa.setName(word);
                 tieBaService.updateInser(tieBa);
                 crawlerService.saveTieBaHistory(tieBa);
             }
