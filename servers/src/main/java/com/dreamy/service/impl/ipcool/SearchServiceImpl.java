@@ -40,8 +40,7 @@ public class SearchServiceImpl implements SearchService {
             for (Integer type : types)
                 fqString += "type:" + type + " OR ";
 
-            fqString += fqString.substring(0, -3) + ")";
-            params.put("fq", fqString);
+            params.put("fq",  fqString.substring(0, fqString.length() - 3) + ")");
         }
 
         params.put("q", "name:" + name + "~");

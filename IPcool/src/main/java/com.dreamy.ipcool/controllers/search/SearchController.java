@@ -43,7 +43,7 @@ public class SearchController extends IpcoolController {
     @RequestMapping(value = "")
     public String result(Page page, ModelMap model,
                          @RequestParam(value = "content", required = false, defaultValue = "") String content,
-                         @RequestParam(value = "type", required = false) List<Integer> types
+                         @RequestParam(value = "type[]", required = false) List<Integer> types
     ) {
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
