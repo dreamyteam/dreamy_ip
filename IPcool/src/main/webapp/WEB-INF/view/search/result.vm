@@ -15,17 +15,17 @@
         <p class="summary">收录文学，影视，人物，机构以及音乐等IP</p>
     </div>
 
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">全部</a></li>
-                <li><a href="">文学</a></li>
-                <li><a href="">影视</a></li>
-                <li><a href="">人物</a></li>
-                <li><a href="">机构</a></li>
-            </ul>
-        </div>
-    </section>
+##    <section class="program_nav" id="program_nav">
+##        <div class="inner clearfix">
+##            <ul>
+##                <li class="active"><a href="">全部</a></li>
+##                <li><a href="">文学</a></li>
+##                <li><a href="">影视</a></li>
+##                <li><a href="">人物</a></li>
+##                <li><a href="">机构</a></li>
+##            </ul>
+##        </div>
+##    </section>
 
     <section class="search_sizer" id="sizer_search">
         <div class="main_sizer_container">
@@ -33,18 +33,26 @@
 
             <div class="type_check_container">
                 <div class="input_content">
-                    <input type="checkbox" name="type" value="1">
+                    <input type="checkbox"
+                        #if($!types.contains(1))
+                           checked
+                        #end
+                           name="type" value="1">
                     <label>出版文学</label>
                 </div>
                 <div class="input_content">
-                    <input type="checkbox" name="type" value="2">
+                    <input type="checkbox" name="type"
+                        #if($!types.contains(2))
+                           checked
+                        #end
+                           value="2">
                     <label>网络文学</label>
                 </div>
             </div>
         </div>
-##      细节筛选
+    ##      细节筛选
         <div class="sub_sizer_container">
-##            <h6 class="type_title">文学类型</h6>
+        ##            <h6 class="type_title">文学类型</h6>
 ##
 ##            <div class="type_check_container">
 ##                <div class="input_content">
@@ -131,7 +139,7 @@
         <!--分页器 -->
         <div class="paging" id="paging"
              data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
-             data-page-params='{"content":"$!content"}'>
+             data-page-params='{"content":"$!content","type":"$!typestr"}'>
         </div>
         <!--分页器-->
     </section>
