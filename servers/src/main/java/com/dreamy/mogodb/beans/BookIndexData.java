@@ -18,11 +18,11 @@ public class BookIndexData {
     /**
      * 搜索指数
      */
-    private String index[];
+    private Integer index;
     /**
      * 媒体关注
      */
-    private String media[];
+    private Integer media;
     /**
      * 地域分布
      */
@@ -74,19 +74,19 @@ public class BookIndexData {
         this.source = source;
     }
 
-    public String[] getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(String[] index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
-    public String[] getMedia() {
+    public Integer getMedia() {
         return media;
     }
 
-    public void setMedia(String[] media) {
+    public void setMedia(Integer media) {
         this.media = media;
     }
 

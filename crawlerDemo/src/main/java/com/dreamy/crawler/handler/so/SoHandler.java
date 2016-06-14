@@ -102,7 +102,10 @@ public class SoHandler {
                 // Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
                 String str = (String) map2.get(name);
                 String arr[] = str.split("\\|");
-                data.setMedia(arr);
+                int length = arr.length;
+                String mediaNum = arr[length - 1];
+                data.setMedia(Integer.valueOf(mediaNum));
+                // data.setMedia(arr);
             }
         } catch (Exception e) {
             log.error("book " + name + "360 指数抓取失败  媒体关注度", e);
@@ -122,7 +125,10 @@ public class SoHandler {
             Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
             String str = (String) map2.get(name);
             String arr[] = str.split("\\|");
-            data.setIndex(arr);
+            int length = arr.length;
+            String index = arr[length - 1];
+            data.setIndex(Integer.valueOf(index));
+            //data.setIndex(arr);
             data.setLastDate(map3.get("to") + "");
         } catch (Exception e) {
             log.error("book " + name + "360 指数抓取失败  soIndexJson", e);
