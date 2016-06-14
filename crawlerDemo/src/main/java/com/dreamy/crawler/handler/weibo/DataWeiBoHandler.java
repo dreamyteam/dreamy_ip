@@ -78,11 +78,24 @@ public class DataWeiBoHandler {
 
     }
 
+    public static void chartDataJson(BookIndexData bookIndexData, String cookie) {
+        String url = "http://data.weibo.com/index/ajax/getchartdata?month=default&__rnd=" + System.currentTimeMillis();
+        String json = HttpUtils.getHtmlGetChangeCookie(url, cookie);
+        if (StringUtils.isNotEmpty(json)) {
+            Map<String, Object> map = JsonUtils.toMap(json);
+            System.out.println(json);
+        }
+
+
+    }
+
+
     public static void main(String[] args) {
 
-        String value = "DATA=usrmdinst_12;PHPSESSID=vfi7479rcq14bbj616tmtsq1e1;";
+        String value = "PHPSESSID=dht3u8vtfpk1revoiv33ibcel1;WEB3_PHP-FPM_GD=99b485668fec0156ac6854bef933c8cf;";
         BookIndexData bookIndexData = new BookIndexData();
-        getAge(bookIndexData, value);
-        drawAreaJson(bookIndexData, value);
+//        getAge(bookIndexData, value);
+//        drawAreaJson(bookIndexData, value);
+        chartDataJson(bookIndexData, value);
     }
 }

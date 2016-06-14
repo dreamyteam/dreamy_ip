@@ -5,6 +5,7 @@ import com.dreamy.service.mq.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
 /**
  * Created by wangyongxing on 16/6/13.
  */
+@Component
 public class HuaYuTicketTask {
 
 
@@ -23,28 +25,22 @@ public class HuaYuTicketTask {
 
     @Scheduled(cron = "0 10 16 * * ?")
     public void run() {
-        Map<String, Integer> map = new HashMap<>();
-        Page page=new Page();
-        page.setPageSize(10);
-        page.setTotalNum(156);
-        int current=1;
-        while (true) {
-            page.setCurrentPage(current);
-            map.put("start",page.getStartIndex());
-            map.put("end",page.getStartIndex()+page.getEndIndex());
+        for (int i = 1; i < 156; i++) {
+            Map<String, Integer> map = new HashMap<>();
+            map.put("page", i);
             queueService.push(queueName, map);
         }
     }
 
     public static void main(String[] args) {
-        Page page=new Page();
+        Page page = new Page();
         page.setPageSize(10);
-        int current=1;
+        int current = 1;
         while (true) {
             page.setCurrentPage(current);
             page.setTotalNum(156);
-            System.out.println(page.getStartIndex()+"-");
-            if(!page.isHasNextPage()){
+            System.out.println(page.getStartIndex() + "-");
+            if (!page.isHasNextPage()) {
                 break;
             }
             current++;

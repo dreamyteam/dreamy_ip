@@ -7,6 +7,7 @@ import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
@@ -59,6 +60,10 @@ public class CawlerTest extends BaseJunitTest {
 
     @Value("${queue_crawler_qidian_fans}")
     private String queueFanName;
+
+    @Value("${queue_crawler_tieba}")
+    private String queueTieBa;
+
 
     @Test
     public void test() {
@@ -128,6 +133,8 @@ public class CawlerTest extends BaseJunitTest {
     @Test
     public void isbn() {
         IpBook entity = new IpBook();
+        entity.setType(IpTypeEnums.chuban.getType());
+        entity.setStatus(3);
         Page page = new Page();
         page.setPageSize(200);
         int current = 1;

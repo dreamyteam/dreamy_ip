@@ -38,7 +38,7 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
                 crawlerService.saveTieBaHistory(tieBa);
             }
         } catch (Exception e) {
-            log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " word:" + word);
+            log.warn("TieBaQueueHandler  failed: bookId:" + bookId + " word:" + word);
         } finally {
             crawlerService.check(key, bookId, ipType);
         }
