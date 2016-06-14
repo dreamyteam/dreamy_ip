@@ -69,4 +69,9 @@ public class UserServiceImpl implements UserService {
 
         return null;
     }
+
+    @Override
+    public Integer update(User user) {
+        return userDao.update(user);
+    }
 }

@@ -192,8 +192,8 @@ public class UserController extends IpcoolController {
 
         if (StringUtils.isEmpty(errorMsg)) {
             if (passwordParams.getNewPassword().equals(passwordParams.getNewPasswordConfirm()) && StringUtils.isNotEmpty(passwordParams.getNewPassword())) {
-                user.setPassword(PasswordUtils.createPassword(passwordParams.getCurrentPassword()));
-                userService.save(user);
+                user.setPassword(PasswordUtils.createPassword(passwordParams.getNewPassword()));
+                userService.update(user);
             }else {
                 errorMsg = ("两次密码不一致！");
             }
