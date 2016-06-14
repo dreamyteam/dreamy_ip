@@ -32,9 +32,9 @@ public class UserAuthController extends IpcoolController {
         if (userSession != null && userSession.getUserId() > 0) {
 
             UserAuth userAuth = userAuthService.getUserAuthByUserId(userSession.getUserId());
-            // 个人角色列表
+
             List<UserPart> personalPart = userPartService.getUserPartByType(1);
-            // 企业角色列表
+
             List<UserPart> businessPart = userPartService.getUserPartByType(2);
 
             map.put("personalPart", personalPart);

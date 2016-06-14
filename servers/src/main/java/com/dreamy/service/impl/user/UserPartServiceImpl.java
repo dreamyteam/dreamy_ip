@@ -2,10 +2,12 @@ package com.dreamy.service.impl.user;
 
 import com.dreamy.dao.iface.user.UserPartDao;
 import com.dreamy.domain.user.UserPart;
+import com.dreamy.domain.user.UserPartConditions;
 import com.dreamy.service.iface.user.UserPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,10 @@ public class UserPartServiceImpl implements UserPartService {
 
     @Override
     public List<UserPart> getUserPartByType(Integer type) {
-        return null;
+        UserPartConditions conditions = new UserPartConditions();
+        conditions.createCriteria().andTypeEqualTo(type).andStatusEqualTo(1);
+
+        List<UserPart> list = userPartDao.selectByExample(conditions);
+        return list;
     }
 }
