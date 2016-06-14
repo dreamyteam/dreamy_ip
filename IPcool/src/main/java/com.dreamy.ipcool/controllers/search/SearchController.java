@@ -9,7 +9,6 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.SearchService;
-import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,14 +41,17 @@ public class SearchController extends IpcoolController {
     private SearchService searchService;
 
     @RequestMapping(value = "")
-    public String result(@RequestParam(value = "content", required = false, defaultValue = "") String content, Page page, ModelMap model) {
-
+    public String result(Page page, ModelMap model,
+                         @RequestParam(value = "content", required = false, defaultValue = "") String content,
+                         @RequestParam(value = "type", required = false) Integer type
+    ) {
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
         List<Integer> bookIds = new LinkedList<Integer>();
 
         if (StringUtils.isNotEmpty(content)) {
-            bookIds = searchService.getBookIdsFromSolrByName(content, page);
+
+            bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, type);
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
             List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);

@@ -29,13 +29,17 @@ public class SearchServiceImpl implements SearchService {
     private CommonService commonService;
 
     @Override
-    public List<Integer> getBookIdsFromSolrByName(String name, Page page) {
+    public List<Integer> getBookIdsFromSolrByNameAndType(String name, Page page, Integer type) {
         List<Integer> bookViewIds = new LinkedList<>();
 
         String url = commonService.getSearchDomain() + "/ipbook/select/";
         Map<String, String> params = new HashMap<>();
 
         params.put("q", "name:" + name + "~");
+        if (type != null) {
+            params.put("fq", "type:" + type);
+        }
+
         params.put("wt", "json");
         params.put("sort", "compositeIndex desc");
         params.put("indent", "true");
@@ -64,7 +68,10 @@ public class SearchServiceImpl implements SearchService {
                     for (LinkedHashMap doc : docs) {
                         bookViewIds.add((Integer) doc.get("bookid"));
                     }
+
+                    page.setTotalNum(numFound);
                 }
+
 
             }
         } catch (Exception e) {
