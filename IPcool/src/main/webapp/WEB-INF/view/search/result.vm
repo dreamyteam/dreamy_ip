@@ -63,7 +63,12 @@
                         </ul>
                     </div>
                     <div class="overall">
-                        <h6>文学排名</h6>
+                        <h6>
+                            #foreach($bookType in $typeEnums)
+                                #if($bookType.getType() == $view.getType())
+                                    $bookType.getDescription()排名
+                                #end
+                            #end</h6>
                         <span>$!rankMap.get($view.getBookId())</span>
                     </div>
                 </div>
