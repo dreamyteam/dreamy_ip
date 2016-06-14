@@ -6,15 +6,60 @@
 <div class="container">
     <!--搜索框-->
     #parse("/common/search.vm")
-    <!--搜索框 end-->
-    <section class="search_count">
-        #if ($!{content.length()} > 0)
-            <p>找到<span class="count">$!{page.totalNum}</span>个与[<span class="name">$!{content}</span>]相关的内容</p>
-        #else
-            <p>找到<span class="count">$!{page.totalNum}</span>个结果</p>
-        #end
 
+    <div class="out_side_title">
+        <span class="out_side_title_icon icon_rank"></span>
+
+        <h1 class="title">搜索结果</h1>
+
+        <p class="summary">收录文学，影视，人物，机构以及音乐等IP</p>
+    </div>
+
+    <section class="program_nav" id="program_nav">
+        <div class="inner clearfix">
+            <ul>
+                <li class="active"><a href="">全部</a></li>
+                <li><a href="">文学</a></li>
+                <li><a href="">影视</a></li>
+                <li><a href="">人物</a></li>
+                <li><a href="">机构</a></li>
+            </ul>
+        </div>
     </section>
+
+    <section class="search_sizer" id="sizer_search">
+        <div class="main_sizer_container">
+            <h6 class="type_title">文学类型</h6>
+
+            <div class="type_check_container">
+                <div class="input_content">
+                    <input type="checkbox" name="type" value="1">
+                    <label>出版文学</label>
+                </div>
+                <div class="input_content">
+                    <input type="checkbox" name="type" value="2">
+                    <label>网络文学</label>
+                </div>
+            </div>
+        </div>
+##      细节筛选
+        <div class="sub_sizer_container">
+##            <h6 class="type_title">文学类型</h6>
+##
+##            <div class="type_check_container">
+##                <div class="input_content">
+##                    <input type="checkbox" name="">
+##                    <label>网络文学</label>
+##                </div>
+##            </div>
+        </div>
+        <div class="infos_container clearfix">
+            <h6 class="search_count">为您展示$!{page.totalNum}条结果</h6>
+            <button class="toggle_sub_sizer"><span class="arrow"></span></button>
+        </div>
+    </section>
+
+
     <section class="search_result">
 
         <div class="hidden" id="search-attach">
@@ -83,12 +128,14 @@
 
             </div>
         #end
+        <!--分页器 -->
+        <div class="paging" id="paging"
+             data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
+             data-page-params='{"content":"$!content"}'>
+        </div>
+        <!--分页器-->
     </section>
-    <!--分页器 -->
-    <div class="paging" id="paging"
-         data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize,"content":"$!content"}'>
-    </div>
-    <!--分页器-->
+
 </div>
 
 
