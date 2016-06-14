@@ -52,6 +52,7 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
                 bookIndexData.setSource(IndexSourceEnums.weibo.getType());
                 bookIndexData.setUpdatedAt(new Date());
                 bookIndexDataDao.updateInser(bookIndexData);
+                crawlerService.saveBookIndexDataHistory(bookIndexData);
             }
         } catch (Exception e) {
             log.error("DataWeiBoIndexQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
