@@ -33,7 +33,7 @@ public class DoubanBookQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             BookInfo bookInfo = douBanCrawlerBookHandler.crawler(url, operation);
-            crawlerService.Operation(operation, key, bookInfo, title, bookId, url,isbn, CrawlerSourceEnums.douban.getType());
+            crawlerService.operation(operation, key, bookInfo, title, bookId, url,isbn, CrawlerSourceEnums.douban.getType());
             Thread.sleep(NumberUtils.randomInt(1000, 3000));
         } catch (Exception e) {
             log.error("DoubanBookQueueHandler event exception" + title + ",url:" + url, e);

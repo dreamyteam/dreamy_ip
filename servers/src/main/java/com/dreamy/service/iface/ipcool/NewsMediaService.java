@@ -35,5 +35,7 @@ public interface NewsMediaService {
      *
      * @return
      */
-    public List<NewsMedia> getDefaultList();
+    public List<NewsMedia> getByBookIdAndSource(Integer bookId,Integer source);
+
+    public void saveOrUpdate(NewsMedia newsMedia);
 }

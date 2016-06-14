@@ -1,6 +1,6 @@
 package com.dreamy.mogodb.dao;
 
-import com.dreamy.mogodb.beans.tieba.TieBaHistory;
+import com.dreamy.mogodb.beans.history.TieBaHistory;
 import com.dreamy.utils.BeanUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

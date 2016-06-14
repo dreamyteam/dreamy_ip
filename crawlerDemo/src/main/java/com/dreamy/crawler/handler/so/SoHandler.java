@@ -89,7 +89,7 @@ public class SoHandler {
      * @param q
      * @param area
      */
-    public static void soMediaJson(BookIndexData data, String name, String q, String area) {
+    private void soMediaJson(BookIndexData data, String name, String q, String area) {
         try {
             String url = "http://index.so.com/index.php?a=soMediaJson&q=" + q;
             String json = HttpUtils.getHtmlGet(url);
@@ -99,7 +99,7 @@ public class SoHandler {
             if (status == 0) {
                 Map<String, Object> map1 = (Map<String, Object>) map.get("data");
                 Map<String, Object> map2 = (Map<String, Object>) map1.get("media");
-                Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
+                // Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
                 String str = (String) map2.get(name);
                 String arr[] = str.split("\\|");
                 data.setMedia(arr);
@@ -111,7 +111,7 @@ public class SoHandler {
     }
 
 
-    public static void soIndexJson(BookIndexData data, String name, String q, String area) {
+    private void soIndexJson(BookIndexData data, String name, String q, String area) {
         try {
             String url = "http://index.so.com/index.php?a=soIndexJson&q=" + q + "&area" + area;
             String json = HttpUtils.getHtmlGet(url);
@@ -120,10 +120,10 @@ public class SoHandler {
             Map<String, Object> map1 = (Map<String, Object>) map.get("data");
             Map<String, Object> map2 = (Map<String, Object>) map1.get("index");
             Map<String, Object> map3 = (Map<String, Object>) map1.get("period");
-            data.setLastDate(map3.get("to") + "");
             String str = (String) map2.get(name);
             String arr[] = str.split("\\|");
             data.setIndex(arr);
+            data.setLastDate(map3.get("to") + "");
         } catch (Exception e) {
             log.error("book " + name + "360 指数抓取失败  soIndexJson", e);
         }
@@ -131,7 +131,7 @@ public class SoHandler {
 
     }
 
-    public static void portrayalJson(BookIndexData data, String word) {
+    private void portrayalJson(BookIndexData data, String word) {
         try {
             String url = "http://index.so.com/index.php?a=portrayalJson&t=30&q=" + word;
             String json = HttpUtils.getHtmlGet(url);
@@ -139,8 +139,8 @@ public class SoHandler {
             if (StringUtils.isNotEmpty(json)) {
                 So so = JsonUtils.toObject(So.class, json);
                 if (so != null) {
-                    data.setTags(so.getData().getTags());
                     data.setAge(so.getData().getAge().split(","));
+                    data.setTags(so.getData().getTags());
                     data.setMale(so.getData().getMale());
                     data.setFemale(so.getData().getFemale());
                 }
@@ -151,7 +151,7 @@ public class SoHandler {
 
     }
 
-    public static void overviewJson(BookIndexData data, String q, String area) {
+    private void overviewJson(BookIndexData data, String q, String area) {
         try {
             String url = "http://index.so.com/index.php?a=overviewJson&q=" + q + "&area" + area;
             String json = HttpUtils.getHtmlGet(url);

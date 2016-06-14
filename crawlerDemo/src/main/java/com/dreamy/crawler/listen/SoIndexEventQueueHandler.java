@@ -43,12 +43,13 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
 
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
-            if (bookIndexData!=null) {
-                bookIndexData.setId(bookId+"_"+ IndexSourceEnums.s360.getType());
+            if (bookIndexData != null) {
+                bookIndexData.setId(bookId + "_" + IndexSourceEnums.s360.getType());
                 bookIndexData.setBookId(bookId);
                 bookIndexData.setSource(IndexSourceEnums.s360.getType());
                 bookIndexData.setUpdatedAt(new Date());
                 bookIndexDataDao.updateInser(bookIndexData);
+                crawlerService.saveBookIndexDataHistory(bookIndexData);
             }
         } catch (Exception e) {
             log.error("SoIndexEventQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
