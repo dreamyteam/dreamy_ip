@@ -1,6 +1,5 @@
 package com.dreamy.mogodb.dao;
 
-import com.dreamy.mogodb.beans.tieba.TieBa;
 import com.dreamy.mogodb.beans.tieba.TieBaHistory;
 import com.dreamy.utils.BeanUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -31,11 +30,20 @@ public class TieBaHistoryDao extends MongoGenDao<TieBaHistory> {
         this.updateInser(Query.query(Criteria.where("_id").is(tieBaHistory.getId())), update);
     }
 
-    public List<TieBaHistory> queryByBookId(Integer bookId){
+    public List<TieBaHistory> queryByBookId(Integer bookId) {
 
         Query query = new Query();
         Criteria criteria = Criteria.where("bookId").is(bookId);
         query.addCriteria(criteria);
-        return  this.queryList(query);
+        return this.queryList(query);
     }
+
+    public TieBaHistory queryById(String id) {
+        Query query = new Query();
+        Criteria criteria = Criteria.where("_id").is(id);
+        query.addCriteria(criteria);
+        return this.queryOne(query);
+    }
+
+
 }

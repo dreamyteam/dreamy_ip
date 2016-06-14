@@ -4,13 +4,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.mogodb.beans.tieba.TieBa;
+import com.dreamy.mogodb.beans.tieba.TieBaHistory;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.mongo.BookInfoService;
+import com.dreamy.service.iface.mongo.NetBookInfoService;
+import com.dreamy.service.iface.mongo.TieBaHistoryService;
+import com.dreamy.service.iface.mongo.TieBaService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
@@ -47,6 +54,15 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
 
+    @Autowired
+    private NetBookInfoService netBookInfoService;
+
+    @Autowired
+    private TieBaService tieBaService;
+
+    @Autowired
+    private TieBaHistoryService tieBaHistoryService;
+
 
     @Override
     public void consume(JSONObject jsonObject) {
@@ -80,24 +96,24 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
             //计算指数
-            Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer reputationIndex = getNewReputationIndex(bookView);
-
-
-            bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.reputationIndex(reputationIndex);
-
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
-
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
-
-            //更新指数
-            bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
+//            Integer hotIndex = getNewHotIndex(bookView);
+//            Integer propagationIndex = getNewPropogationIndex(bookView);
+//            Integer activeIndex = getNewActiveIndex(bookView);
+//
+//
+//            bookView.hotIndex(hotIndex);
+//            bookView.propagateIndex(propagationIndex);
+//            bookView.activityIndex(activeIndex);
+//
+//            Integer developIndex = getNewDevelopIndex(bookView);
+//            bookView.developIndex(developIndex);
+//
+//            Integer compositeIndex = getNewCompositeIndex(bookView);
+//            bookView.compositeIndex(compositeIndex);
+//
+//            //更新指数
+//            bookViewService.update(bookView);
+//            updateHistoryIndex(bookView);
 
             //指数写入到redis用于排名
 //            updateRank(bookView);
@@ -112,16 +128,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewHotIndex(BookView bookView) {
-        try {
-            String hotIndexStr = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-            Integer hotIndex = Integer.parseInt(hotIndexStr);
-            if (hotIndex > 0) {
-                return hotIndex;
-            }
-        } catch (Exception e) {
-            Log.error("update hot index failed :" + bookView.getId(), e);
+        Integer hotIndex = bookView.getHotIndex();
+
+        NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
+        if (netBookInfo != null) {
+            Double percent = CrawlerSourceEnums.qidian.getPercent();
+            Integer totalClick = netBookInfo.getClickNum();
+            Integer totalRecommendNum = netBookInfo.getRecommendNum();
+            Integer ticketNum = netBookInfo.getTicketNum();
+
+            Double searchIndex = bookScoreService.getSearchIndexByBookId(bookView.getBookId());
+            Double temp = percent * (((Math.log10(totalClick) * Math.log10(totalRecommendNum)) + ticketNum)) * Math.log10(searchIndex);
+            hotIndex = temp.intValue();
         }
-        return bookView.getHotIndex();
+
+        return hotIndex;
     }
 
     /**
@@ -130,7 +151,6 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewPropogationIndex(BookView bookView) {
-
         try {
             String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
             Integer index = Integer.parseInt(propagateIndex);
@@ -144,22 +164,17 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     }
 
     /**
-     * 获取新的口碑指数
+     * 活跃指数
      *
      * @param bookView
+     * @return
      */
-    private Integer getNewReputationIndex(BookView bookView) {
-        try {
-            String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-            Integer index = Integer.parseInt(reputationIndex);
-            if (index > 0) {
-                return index;
-            }
-        } catch (Exception e) {
-            Log.error("update reputation failed :" + bookView.getId(), e);
-        }
+    private Integer getNewActiveIndex(BookView bookView) {
+        TieBa tieBa = tieBaService.getById(bookView.getBookId());
+        TieBaHistory tieBaHistory = tieBaHistoryService.getLatestHistoryByBookId(bookView.getBookId());
 
-        return bookView.getReputationIndex();
+        Integer temp = (1 + tieBa.getPostNum() / tieBa.getFollowNum() - tieBaHistory.getPostNum() / tieBaHistory.getFollowNum());
+        return (tieBa.getFollowNum() + tieBa.getFollowNum() / tieBa.getPopularitySort()) * temp * temp;
     }
 
     /**
@@ -168,17 +183,13 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewDevelopIndex(BookView bookView) {
-        try {
-            String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-            Integer index = Integer.parseInt(developIndex);
-            if (index > 0) {
-                return index;
-            }
-        } catch (Exception e) {
-            Log.error("update develop index failed :" + bookView.getId(), e);
-        }
+        Integer index = bookView.getDevelopIndex();
+        Integer hotIndex = bookView.getHotIndex();
+        Integer propagationIndex = bookView.getPropagateIndex();
 
-        return bookView.getDevelopIndex();
+
+
+        return index;
     }
 
 

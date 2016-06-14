@@ -20,5 +20,10 @@ public interface NetBookInfoService {
      */
     void saveByRecord(NetBookInfo netBookInfo);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
     NetBookInfo getById(Integer bookId);
 }

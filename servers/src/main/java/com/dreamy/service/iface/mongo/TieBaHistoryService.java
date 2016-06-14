@@ -11,6 +11,7 @@ import java.util.List;
 public interface TieBaHistoryService {
     /**
      * 查找更新,如果没有找到符合的记录,则将更新的记录插入库中
+     *
      * @param tieBaHistory
      */
     public void updateInser(TieBaHistory tieBaHistory);
@@ -23,5 +24,15 @@ public interface TieBaHistoryService {
     void saveByRecord(TieBaHistory tieBaHistory);
 
 
-    public List<TieBaHistory> getByBookId(Integer id) ;
+    /**
+     * @param id
+     * @return
+     */
+    public List<TieBaHistory> getByBookId(Integer id);
+
+    /**
+     * @param bookId
+     * @return
+     */
+    TieBaHistory getLatestHistoryByBookId(Integer bookId);
 }

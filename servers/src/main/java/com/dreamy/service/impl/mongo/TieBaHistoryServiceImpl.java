@@ -3,9 +3,11 @@ package com.dreamy.service.impl.mongo;
 import com.dreamy.mogodb.beans.tieba.TieBaHistory;
 import com.dreamy.mogodb.dao.TieBaHistoryDao;
 import com.dreamy.service.iface.mongo.TieBaHistoryService;
+import com.dreamy.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,5 +32,12 @@ public class TieBaHistoryServiceImpl implements TieBaHistoryService {
     @Override
     public List<TieBaHistory> getByBookId(Integer bookId) {
         return tieBaHistoryDao.queryByBookId(bookId);
+    }
+
+    @Override
+    public TieBaHistory getLatestHistoryByBookId(Integer bookId) {
+        Date date = new Date();
+        String bookIdStr = bookId + "-" + TimeUtils.toString("yyyy-MM-dd", date);
+        return tieBaHistoryDao.queryById(bookIdStr);
     }
 }

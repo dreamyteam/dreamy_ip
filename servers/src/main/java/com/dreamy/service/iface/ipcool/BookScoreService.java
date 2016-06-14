@@ -54,6 +54,13 @@ public interface BookScoreService {
      */
     public String getReputationIndexByBookId(Integer bookId);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    Double getSearchIndexByBookId(Integer bookId);
+
 
 
 }

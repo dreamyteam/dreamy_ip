@@ -121,11 +121,7 @@ public class BookScoreServiceImpl implements BookScoreService {
         List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
         if (CollectionUtils.isNotEmpty(keyWords)) {
             for (KeyWord word : keyWords) {
-//                Integer source = word.getSource();
-//                Integer type = KeyWordEnums.weibo.getType();
-//                if (source != type) {
-                    propagateIndex += map.get(word.getSource()) * word.getIndexNum();
-//                }
+                propagateIndex += map.get(word.getSource()) * word.getIndexNum();
             }
 
             propagateIndex = Math.log10(propagateIndex) * 1000;
@@ -199,7 +195,7 @@ public class BookScoreServiceImpl implements BookScoreService {
         return percentMap;
     }
 
-
+    @Override
     public Double getSearchIndexByBookId(Integer bookId) {
         Double res = 10.0;
         List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookId);
