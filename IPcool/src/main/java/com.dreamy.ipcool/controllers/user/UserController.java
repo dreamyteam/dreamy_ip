@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -151,14 +153,14 @@ public class UserController extends IpcoolController {
             errorMsg = ("手机号码不能为空！");
         }
 
-        Integer userId = 0;
+        Map map = new HashMap<String, Integer>();
 
         if (StringUtils.isEmpty(errorMsg)) {
             User user = userService.getUserByMobile(mobile);
             if(user.getId() == null) {
                 errorMsg = ("手机号码不存在！");
             }else {
-                userId = user.getId();
+                map.put("userId", user.getId());
             }
         }
 
@@ -167,7 +169,7 @@ public class UserController extends IpcoolController {
             errorCodeEnums.setErrorMsg(errorMsg);
             bean.failure(errorCodeEnums);
         }else {
-            bean.data("{userId:"+ userId +"}");
+            bean.data(map);
         }
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
