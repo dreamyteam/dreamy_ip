@@ -28,9 +28,9 @@ public class HotWordTest extends BaseJunitTest {
 
     @Test
     public void createChubanHotWord() {
-        int current = 1;
+        int current = 80;
         IpBook entity = new IpBook();
-        entity.setType(IpTypeEnums.chuban.getType());
+        entity.setType(IpTypeEnums.net.getType());
         while (true) {
             Page page = new Page();
             page.setPageSize(200);
@@ -42,18 +42,22 @@ public class HotWordTest extends BaseJunitTest {
                 String html = HttpUtils.getHtmlGet(url);
                 String str = HttpUtils.decodeUnicode(html);
                 System.out.println(str);
-                Map<String, Object> map = JsonUtils.toMap(str);
-                if (map != null) {
-                    String code = map.get("code").toString();
-                    if (code.equals("100000")) {
-                        List<Map<String, String>> list = (List<Map<String, String>>) map.get("data");
-                        HotWord hotWord = new HotWord();
-                        hotWord.setId(book.getId());
-                        hotWord.setWid(list.get(0).get("wid"));
-                        hotWord.setWname(list.get(0).get("wname"));
-                        hotWord.setTitle(book.getTitle());
-                        hotWordDao.updateInser(hotWord);
+                try {
+                    Map<String, Object> map = JsonUtils.toMap(str);
+                    if (map != null) {
+                        String code = map.get("code").toString();
+                        if (code.equals("100000")) {
+                            List<Map<String, String>> list = (List<Map<String, String>>) map.get("data");
+                            HotWord hotWord = new HotWord();
+                            hotWord.setId(book.getId());
+                            hotWord.setWid(list.get(0).get("wid"));
+                            hotWord.setWname(list.get(0).get("wname"));
+                            hotWord.setTitle(book.getTitle());
+                            hotWordDao.updateInser(hotWord);
+                        }
                     }
+                }catch (Exception E){
+                    continue;
                 }
             }
             if (!page.isHasNextPage()) {
