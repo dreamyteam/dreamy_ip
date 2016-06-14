@@ -9,6 +9,7 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.SearchService;
+import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,15 @@ public class SearchController extends IpcoolController {
     @RequestMapping(value = "")
     public String result(Page page, ModelMap model,
                          @RequestParam(value = "content", required = false, defaultValue = "") String content,
-                         @RequestParam(value = "type[]", required = false) List<Integer> types
+                         @RequestParam(value = "type", required = false) String typesStr
     ) {
+
+        List<Integer> types = null;
+        if (StringUtils.isNotEmpty(typesStr)) {
+            types = JsonUtils.toList(Integer.class, typesStr);
+        }
+
+
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
         List<Integer> bookIds = new LinkedList<Integer>();
