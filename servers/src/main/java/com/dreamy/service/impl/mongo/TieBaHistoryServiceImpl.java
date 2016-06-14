@@ -37,7 +37,7 @@ public class TieBaHistoryServiceImpl implements TieBaHistoryService {
     @Override
     public TieBaHistory getLatestHistoryByBookId(Integer bookId) {
         Date date = new Date();
-        String bookIdStr = bookId + "-" + TimeUtils.toString("yyyy-MM-dd", date);
+        String bookIdStr = bookId + "-" + TimeUtils.toString("yyyy/MM/dd", date);
         return tieBaHistoryDao.queryById(bookIdStr);
     }
 }
