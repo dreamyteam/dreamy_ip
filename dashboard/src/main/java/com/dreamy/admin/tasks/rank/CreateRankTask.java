@@ -5,16 +5,20 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,9 +36,13 @@ public class CreateRankTask {
     @Autowired
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
 
+    @Autowired
+    private QueueService queueService;
 
-//    @Scheduled(cron = "0 30 00 * * ?")
-//    @Scheduled(fixedDelay = 100000)
+    @Value("${queue_crawler_netbook_over}")
+    private String queueNetbookBookName;
+
+    @Scheduled(cron = "0 30 04 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
@@ -46,10 +54,15 @@ public class CreateRankTask {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                        crawlerFinishQueueHandler.updateRank(bookView);
+
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("bookId", bookView.getBookId());
+
+                        queueService.push(queueNetbookBookName, map);
+
                     }
                     currentPage++;
                 } else {
