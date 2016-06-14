@@ -23,8 +23,8 @@ public class HuaYuTicketQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        Integer start = jsonObject.getInteger("start");
+        Integer page = jsonObject.getInteger("page");
         Integer end = jsonObject.getInteger("end");
-        huaYuTicketHandler.crawler(start, end);
+        huaYuTicketHandler.crawler(page);
     }
 }

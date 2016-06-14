@@ -1,5 +1,7 @@
 package com.dreamy.test.ipcool;
 
+import com.dreamy.admin.tasks.HuaYuTicketTask;
+import com.dreamy.admin.tasks.rank.UpdateIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.PeopleChart;
@@ -26,36 +28,40 @@ public class PeopleChartTest extends BaseJunitTest {
     BookViewService bookViewService;
     @Autowired
     PeopleChartService peopleChartService;
-
+    @Autowired
+    UpdateIndexTask updateIndexTask;
+    @Autowired
+    HuaYuTicketTask huaYuTicketTask;
     @Test
     public void save() {
-        Page page = new Page();
-        page.setPageSize(7000);
-        page.setCurrentPage(1);
-        List<BookView> views = bookViewService.getList(new BookView().type(1), page, null);
-
-        for (BookView bookView : views) {
-            List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
-            double female = 0.0;
-            double male = 0.0;
-            int i = 1;
-            for (BookIndexData data : list) {
-                i = list.size();
-                if (StringUtils.isNotEmpty(data.getFemale())) {
-                    female += Double.valueOf(data.getFemale());
-                }
-                if (StringUtils.isNotEmpty(data.getMale())) {
-                    male += Double.valueOf(data.getMale());
-                }
-
-            }
-            PeopleChart peopleChart = new PeopleChart();
-            peopleChart.setBookId(bookView.getBookId());
-            peopleChart.setMale(male / i);
-            peopleChart.setFemale(female / i);
-            age(i, list, peopleChart);
-
-        }
+        huaYuTicketTask.run();
+//        Page page = new Page();
+//        page.setPageSize(7000);
+//        page.setCurrentPage(1);
+//        List<BookView> views = bookViewService.getList(new BookView().type(1), page, null);
+//
+//        for (BookView bookView : views) {
+//            List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
+//            double female = 0.0;
+//            double male = 0.0;
+//            int i = 1;
+//            for (BookIndexData data : list) {
+//                i = list.size();
+//                if (StringUtils.isNotEmpty(data.getFemale())) {
+//                    female += Double.valueOf(data.getFemale());
+//                }
+//                if (StringUtils.isNotEmpty(data.getMale())) {
+//                    male += Double.valueOf(data.getMale());
+//                }
+//
+//            }
+//            PeopleChart peopleChart = new PeopleChart();
+//            peopleChart.setBookId(bookView.getBookId());
+//            peopleChart.setMale(male / i);
+//            peopleChart.setFemale(female / i);
+//            age(i, list, peopleChart);
+//
+//        }
 
 
     }
@@ -92,7 +98,7 @@ public class PeopleChartTest extends BaseJunitTest {
         peopleChart.setAgeThird(a3 / num);
         peopleChart.setAgeFourth(a4 / num);
         peopleChart.setAgeFifth(a5 / num);
-        peopleChartService.save(peopleChart);
+        peopleChartService.saveOrUpdate(peopleChart);
 
 
     }
