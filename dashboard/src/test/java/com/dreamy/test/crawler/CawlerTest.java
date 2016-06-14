@@ -1,7 +1,6 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.admin.service.SinaLoginService;
-import com.dreamy.admin.tasks.KeyWorkTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
@@ -9,7 +8,6 @@ import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
-import com.dreamy.enums.QueueRoutingKeyEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.NetBookInfoService;
@@ -20,7 +18,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +31,6 @@ public class CawlerTest extends BaseJunitTest {
     private BookCrawlerInfoService bookCrawlerInfoService;
     @Autowired
     QueueService queueService;
-    @Autowired
-    KeyWorkTask keyWorkTask;
 
     @Autowired
     private SinaLoginService sinaLoginService;
@@ -119,7 +114,6 @@ public class CawlerTest extends BaseJunitTest {
     @Test
     public void crawlerWeiXin() {
         sinaLoginService.init();
-        keyWorkTask.crawlerWeiBo();
     }
 
 

@@ -1,8 +1,6 @@
 package com.dreamy.test.ipcool;
 
-import com.dreamy.admin.tasks.BookScoreTask;
 import com.dreamy.domain.ipcool.BookScore;
-import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.BookInfo;
@@ -10,7 +8,6 @@ import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.test.BaseJunitTest;
-import com.dreamy.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,14 +27,6 @@ public class BookScoreTest extends BaseJunitTest {
     private BookInfoService bookInfoService;
     @Resource
     IpBookService ipBookService;
-    @Autowired
-    BookScoreTask bookScoreTask;
-
-
-    @Test
-    public void score() {
-        bookScoreTask.crawler();
-    }
 
 
     @Test
@@ -81,7 +70,6 @@ public class BookScoreTest extends BaseJunitTest {
 
 
     }
-
 
 
 }

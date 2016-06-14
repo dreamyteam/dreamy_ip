@@ -6,8 +6,6 @@ import com.dreamy.admin.tasks.*;
 //import com.dreamy.admin.tasks.index.*;
 //import com.dreamy.admin.tasks.rank.BookRankCreateTask;
 import com.dreamy.admin.thread.ExtractBookViewService;
-import com.dreamy.admin.thread.ExtractThread;
-import com.dreamy.admin.thread.ExtractThreadManager;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.domain.sys.SysOption;
@@ -18,7 +16,6 @@ import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
 import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,18 +32,6 @@ public class ToolsController extends DashboardController {
     @Autowired
     private SinaLoginService sinaLoginService;
 
-    @Autowired
-    KeyWorkTask keyWorkTask;
-
-    @Autowired
-    SoIndexTask soIndexTask;
-    @Autowired
-    IpBookCrawlerTask ipBookCrawlerTask;
-
-    @Autowired
-    NewsMediaTask newsMediaTask;
-    @Autowired
-    BookScoreTask bookScoreTask;
 
 //    @Autowired
 //    CompositeIndexexCreateTask compositeIndexexCreateTask;
@@ -123,7 +108,7 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/all")
     public String crawlingAll() {
-        ipBookCrawlerTask.crawler();
+
         return redirect("/system/call.html");
     }
 
@@ -134,7 +119,7 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/keyword")
     public String crawlingKeyWord() {
-        keyWorkTask.crawler();
+
         return redirect("/system/call.html");
     }
 
@@ -145,7 +130,7 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/keyword_weibo")
     public String crawlingKeyWordWeiBo() {
-        keyWorkTask.crawlerWeiBo();
+
         return redirect("/system/call.html");
     }
 
@@ -156,7 +141,6 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/keyword_weixin")
     public String crawlingKeyWordWeiXin() {
-        keyWorkTask.crawlerWeiXin();
         return redirect("/system/call.html");
     }
 
@@ -167,7 +151,6 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/soindex")
     public String soindex() {
-        soIndexTask.crawler();
         return redirect("/system/call.html");
     }
 
@@ -189,7 +172,7 @@ public class ToolsController extends DashboardController {
      */
     @RequestMapping(value = "/crawler/score")
     public String score() {
-        bookScoreTask.crawler();
+
         return redirect("/system/call.html");
     }
 

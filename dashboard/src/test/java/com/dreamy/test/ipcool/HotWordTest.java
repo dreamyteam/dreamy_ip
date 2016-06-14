@@ -68,7 +68,7 @@ public class HotWordTest extends BaseJunitTest {
 
     @Test
     public void createNetBookHotWord() {
-        int current = 40;
+        int current = 1;
         IpBook entity = new IpBook();
         entity.setType(IpTypeEnums.net.getType());
         while (true) {

@@ -1,23 +1,18 @@
 package com.dreamy.test.crawler;
 
-import com.dreamy.admin.tasks.BookViewCreateTask;
 import com.dreamy.admin.thread.ExtractBookViewService;
 import com.dreamy.admin.thread.ExtractThread;
 import com.dreamy.admin.thread.ExtractThreadManager;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
-import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.beans.HotWord;
 import com.dreamy.mogodb.dao.BookInfoDao;
 import com.dreamy.mogodb.dao.HotWordDao;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
-import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.JsonUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +30,6 @@ import java.util.Map;
  */
 @Component
 public class BookViewCreateTaskTest extends BaseJunitTest {
-    @Autowired
-    BookViewCreateTask bookViewCreateTask;
 
     @Autowired
     private IpBookService ipBookService;
