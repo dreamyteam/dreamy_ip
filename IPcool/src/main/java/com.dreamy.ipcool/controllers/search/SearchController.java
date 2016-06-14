@@ -71,7 +71,7 @@ public class SearchController extends IpcoolController {
             }
         }
 
-
+        model.put("types", types);
         model.put("list", bookViewList);
         model.put("rankMap", rankMap);
         model.put("typeEnums", IpTypeEnums.values());
