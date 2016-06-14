@@ -132,6 +132,7 @@ public class UpdateNetBookIndexTask {
 
         BookCrawlerInfo crawlerInfo = bookCrawlerInfoList.get(0);
         Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        commonParams.put("type", IpTypeEnums.net.getType().toString());
         commonParams.put("url", crawlerInfo.getUrl());
 
 

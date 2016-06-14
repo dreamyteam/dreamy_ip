@@ -137,6 +137,7 @@ public class UpdateChubanBookIndexTask {
         }
 
         Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        commonParams.put("type",IpTypeEnums.chuban.getType().toString());
         if (CollectionUtils.isEmpty(commonParams)) {
             return;
         }
