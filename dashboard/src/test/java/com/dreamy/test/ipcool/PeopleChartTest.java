@@ -25,9 +25,8 @@ public class PeopleChartTest extends BaseJunitTest {
     @Autowired
     PeopleChartService peopleChartService;
     @Autowired
-    UpdateIndexTask updateIndexTask;
-    @Autowired
     HuaYuTicketTask huaYuTicketTask;
+
     @Test
     public void save() {
         huaYuTicketTask.run();
