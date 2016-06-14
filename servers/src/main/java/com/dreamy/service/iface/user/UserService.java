@@ -40,18 +40,4 @@ public interface UserService {
      * @return
      */
     Integer updateByRecord(User user);
-
-    /**
-     *
-     * @param response
-     * @param user
-     */
-    Cookie rememerPwd(User user);
-
-    /**
-     * 修改用户信息
-     * @param user
-     * @return
-     */
-    Integer update(User user);
 }

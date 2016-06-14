@@ -19,6 +19,7 @@ import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,10 +55,6 @@ public class RegisterController extends IpcoolController {
         if (StringUtils.isEmpty(mobile)) {
             bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
         } else {
-//            user user = userService.getUserByMobile(param.getMobile());
-//            if (user.getId() != null) {
-//            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
-//            } else {
                 AsynchronousService.submit(new ObjectCallable(mobile) {
                     @Override
                     public Object run() throws Exception {
@@ -70,7 +67,6 @@ public class RegisterController extends IpcoolController {
                         return null;
                     }
                 });
-//            }
         }
 
 
@@ -81,13 +77,12 @@ public class RegisterController extends IpcoolController {
     @ResponseBody
     public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
         InterfaceBean bean = new InterfaceBean().success();
-        String mobile = (String) request.getParameter("mobile");
-        String code = (String) request.getParameter("checkCode");
+        String mobile =  request.getParameter("mobile");
+        String code =  request.getParameter("checkCode");
 
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
-
-        //空值判断
+ 
         if (StringUtils.isEmpty(mobile)) {
             errorMsg = ("手机号码不能为空！");
         } else if (StringUtils.isEmpty(code)) {
@@ -96,7 +91,6 @@ public class RegisterController extends IpcoolController {
 
         if (StringUtils.isEmpty(errorMsg)) {
             String verificationCode = verificationCodeService.getCodeFromCache(mobile);
-            verificationCode = "9999"; // 测试用
             if (!code.equals(verificationCode)) {
                 errorMsg = ("验证码错误");
             }

@@ -57,21 +57,4 @@ public class UserServiceImpl implements UserService {
         return userDao.update(user);
     }
 
-    @Override
-    public Cookie rememerPwd(User user) {
-//        long validTime = (60 * 60 * 24 * 7 * 1000);
-//        String cookieValueWithMd5 = HashUtils.md5(user.getUserName() + ":" + user.getPassword() + ":" + validTime + ":" + "jeff1989");
-//        String cookieValue = user.getUserName() + ":" + validTime + ":" + cookieValueWithMd5;
-//        String cookieValueBase64 = Base64.encode(cookieValue.getBytes());
-//        Cookie cookie = new Cookie("zmcom", cookieValueBase64);
-//        cookie.setMaxAge(60 * 60 * 24 * 365 * 2);
-//        cookie.setPath("/");
-
-        return null;
-    }
-
-    @Override
-    public Integer update(User user) {
-        return userDao.update(user);
-    }
 }

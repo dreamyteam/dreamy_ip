@@ -16,13 +16,10 @@ import com.dreamy.service.iface.user.UserService;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.PasswordUtils;
 import com.dreamy.utils.StringUtils;
-import com.dreamy.utils.asynchronous.AsynchronousService;
-import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -148,13 +145,11 @@ public class UserController extends IpcoolController {
         ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
         String errorMsg = "";
 
-        //空值判断
         if (StringUtils.isEmpty(mobile)) {
             errorMsg = ("手机号码不能为空！");
         }
 
         Map map = new HashMap<String, Integer>();
-
         if (StringUtils.isEmpty(errorMsg)) {
             User user = userService.getUserByMobile(mobile);
             if(user.getId() == null) {
@@ -165,7 +160,7 @@ public class UserController extends IpcoolController {
         }
 
         if (StringUtils.isNotEmpty(errorMsg)) {
-            errorCodeEnums = ErrorCodeEnums.check_phone;
+            errorCodeEnums = ErrorCodeEnums.check_phone_failed;
             errorCodeEnums.setErrorMsg(errorMsg);
             bean.failure(errorCodeEnums);
         }else {
@@ -193,14 +188,14 @@ public class UserController extends IpcoolController {
         if (StringUtils.isEmpty(errorMsg)) {
             if (passwordParams.getNewPassword().equals(passwordParams.getNewPasswordConfirm()) && StringUtils.isNotEmpty(passwordParams.getNewPassword())) {
                 user.setPassword(PasswordUtils.createPassword(passwordParams.getNewPassword()));
-                userService.update(user);
+                userService.updateByRecord(user);
             }else {
                 errorMsg = ("两次密码不一致！");
             }
         }
 
         if (StringUtils.isNotEmpty(errorMsg)) {
-            errorCodeEnums = ErrorCodeEnums.check_phone;
+            errorCodeEnums = ErrorCodeEnums.check_phone_failed;
             errorCodeEnums.setErrorMsg(errorMsg);
             bean.failure(errorCodeEnums);
         }
