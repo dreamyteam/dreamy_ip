@@ -1,9 +1,6 @@
 package com.dreamy.test.ipcool;
 
 import com.dreamy.admin.tasks.HuaYuTicketTask;
-import com.dreamy.admin.tasks.rank.UpdateIndexTask;
-import com.dreamy.beans.Page;
-import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
@@ -11,7 +8,6 @@ import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.test.BaseJunitTest;
-import com.dreamy.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
