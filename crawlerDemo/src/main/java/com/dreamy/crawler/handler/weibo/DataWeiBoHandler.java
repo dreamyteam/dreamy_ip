@@ -83,7 +83,11 @@ public class DataWeiBoHandler {
         String json = HttpUtils.getHtmlGetChangeCookie(url, cookie);
         if (StringUtils.isNotEmpty(json)) {
             Map<String, Object> map = JsonUtils.toMap(json);
-            System.out.println(json);
+            List<Map<String, Object>> list=(List<Map<String, Object>> )map.get("data");
+            Map<String, Object> m=list.get(0);
+            List<Map<String, Object>> list1=(List<Map<String, Object>>)m.get("yd");
+            System.out.println(m.get("yd"));
+            System.out.println(map.get("data"));
         }
 
 
