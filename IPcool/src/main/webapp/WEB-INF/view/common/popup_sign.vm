@@ -1,15 +1,15 @@
 <div class="popup_box sign" id="popup_sign">
     <button class="close"></button>
     <span class="btn_back"></span>
+    <ul class="nav">
+        <li class="login">登录</li>
+        <li class="reg">注册</li>
+    </ul>
     <ul class="sign_content">
         <li class="active nav_login">
             <h3 class="title">登录IP库</h3>
             <p class="content">开始您的大数据之旅</p>
-            <div class="nav">
-                <span class="login active">登录</span>
-                <span class="reg">注册</span>
-            </div>
-            <div class="form">
+            <div class="form sign_form">
                 <div class="input_container">
                     <div class="input_content err_from_server">
                         <span class="err_msg">异常错误信息</span>
@@ -33,60 +33,63 @@
         <li class="nav_reg">
             <h3 class="title">加入IP库</h3>
             <p class="content">开始您的大数据之旅</p>
-            <div class="nav">
-                <span class="login">登录</span>
-                <span class="reg active">注册</span>
+            <div class="form sign_form">
+                <div class="input_container">
+                    <div class="input_content">
+                        <span class="err_msg">异常错误信息</span>
+                        <input type="text" required name="userName" autocomplete="off" data-required="请输入昵称" placeholder="昵称">
+                    </div>
+                    <div class="verify_container">
+                        <div class="input_content get_verify_code_content">
+                            <span class="err_msg">异常错误信息</span>
+                            <input type="text" required class="input_phone" autocomplete="off" name="phone_number" maxlength="11" placeholder="手机号码">
+                            <span class="get_verify_code">获取验证码</span>
+                        </div>
+                    </div>
+                    <div class="input_content err_from_server">
+                        <span class="err_msg">异常错误信息</span>
+                        <input type="text" required name="verify_code" autocomplete="off" data-required="请输入验证码" placeholder="验证码">
+                    </div>
+                    <div class="input_content verify_code_content">
+                        <span class="err_msg">异常错误信息</span>
+                        <input type="password" required name="password" autocomplete="off" maxlength="16" placeholder="设置密码">
+                    </div>
+                </div>
+                <button class="submit">注册</button>
             </div>
+        </li>
+        <li class="nav_find_pwd">
+            <h3 class="title">找回密码</h3>
+            <p class="content">验证您的手机号码</p>
             <div class="form">
                 <div class="input_container">
                     <div class="verify_container">
-                        <div class="input_content">
-                            <span class="err_msg">异常错误信息</span>
-                            <input type="text" required name="userName" autocomplete="off" data-required="请输入昵称" placeholder="昵称" name="">
-                        </div>
                         <div class="input_content get_verify_code_content">
                             <span class="err_msg">异常错误信息</span>
                             <input type="text" required class="input_phone" autocomplete="off" name="phone_number" maxlength="11" placeholder="手机号码" name="">
                             <span class="get_verify_code">获取验证码</span>
                         </div>
                     </div>
-                    <div class="input_content err_from_server">
+                    <div class="input_content verify_code_content">
                         <span class="err_msg">异常错误信息</span>
                         <input type="text" required name="verify_code" autocomplete="off" data-required="请输入验证码" placeholder="验证码" name="">
-                    </div>
-                    <div class="input_content">
-                        <span class="err_msg">异常错误信息</span>
-                        <input type="password" required name="password" autocomplete="off" maxlength="16" placeholder="设置密码" name="">
-                    </div>
-                </div>
-                <button class="submit">注册</button>
-            </div>
-        </li>
-        <li>
-            <h3 class="title">找回密码</h3>
-            <p class="content">验证您的手机号码</p>
-            <div class="form">
-                <div class="input_container">
-                    <div class="input_content">
-                        <input type="text" placeholder="手机号码" name="">
-                    </div>
-                    <div class="input_content">
-                        <input type="password" placeholder="验证码" name="">
                     </div>
                 </div>
                 <button class="submit go_find_pwd">验证手机号</button>
             </div>
         </li>
-        <li>
+        <li class="nav_reset_pwd">
             <h3 class="title">设置新密码</h3>
             <p class="content">设置您新的IP库密码</p>
             <div class="form">
                 <div class="input_container">
                     <div class="input_content">
-                        <input type="password" placeholder="新密码" name="">
+                        <span class="err_msg">异常错误信息</span>
+                        <input type="password" placeholder="新密码" name="newPassword" autocomplete="off" maxlength="16">
                     </div>
-                    <div class="input_content">
-                        <input type="password" placeholder="重复新密码" name="">
+                    <div class="input_content err_from_server">
+                        <span class="err_msg">异常错误信息</span>
+                        <input type="password" placeholder="重复新密码" name="newPasswordConfirm" autocomplete="off" maxlength="16">
                     </div>
                 </div>
                 <button class="submit">更新密码</button>

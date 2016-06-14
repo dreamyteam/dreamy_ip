@@ -40,11 +40,4 @@ public interface UserService {
      * @return
      */
     Integer updateByRecord(User user);
-
-    /**
-     *
-     * @param response
-     * @param user
-     */
-    Cookie rememerPwd(User user);
 }

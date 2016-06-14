@@ -10,7 +10,7 @@
     </li>
     <li><a href="/about/empty">我关注的</a></li>
     <li #if($pageName=="bio") class="active" #end><a href="/user/bio?pageName=bio&userKey=$!thisUser.userKey">基本信息</a></li>
-    <li><a href="/about/empty">认证信息</a></li>
+    <li #if($pageName=="auth") class="active" #end><a href="/user/auth?pageName=auth">认证信息</a></li>
     <li #if($pageName=="password") class="active" #end><a href="/user/modify/password?pageName=password&userKey=$!thisUser.userKey">修改密码</a></li>
 </ul>
 

@@ -11,6 +11,7 @@ public class RegisterParams {
     private String password;
     private String checkCode;
     private String ip;
+    private String userName;
 
     public String getIp() {
         return ip;
@@ -42,5 +43,13 @@ public class RegisterParams {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

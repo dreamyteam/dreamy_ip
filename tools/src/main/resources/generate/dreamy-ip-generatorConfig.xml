@@ -118,7 +118,13 @@
         <!--<table tableName="ip_user_intention_vote" domainObjectName="user.IntentionVote">-->
         <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
-        <table tableName="ip_people_chart" domainObjectName="ipcool.PeopleChart">
+        <!--<table tableName="ip_people_chart" domainObjectName="ipcool.PeopleChart">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="ip_user_auth" domainObjectName="user.UserAuth">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
+        <table tableName="ip_user_role" domainObjectName="user.UserRole">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

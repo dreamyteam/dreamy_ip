@@ -19,6 +19,7 @@ import com.dreamy.utils.asynchronous.ObjectCallable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
- * User: yujianfu (yujianfu@duotin.com)
+ * user: yujianfu (yujianfu@duotin.com)
  * Date: 16/5/9
  * Time: 下午2:42
  */
@@ -54,10 +55,6 @@ public class RegisterController extends IpcoolController {
         if (StringUtils.isEmpty(mobile)) {
             bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(), "手机号码不能为空");
         } else {
-            User user = userService.getUserByMobile(param.getMobile());
-            if (user.getId() != null) {
-            bean.failure(ErrorCodeEnums.get_verification_code_failed.getErrorCode(),"手机号码已经存在");
-            } else {
                 AsynchronousService.submit(new ObjectCallable(mobile) {
                     @Override
                     public Object run() throws Exception {
@@ -70,13 +67,43 @@ public class RegisterController extends IpcoolController {
                         return null;
                     }
                 });
-            }
         }
 
 
         interfaceReturn(response, JsonUtils.toString(bean), "");
     }
 
+    @RequestMapping(value = "/user/register/checkPhoneCode")
+    @ResponseBody
+    public void checkPhoneCode(HttpServletRequest request, HttpServletResponse response) {
+        InterfaceBean bean = new InterfaceBean().success();
+        String mobile =  request.getParameter("mobile");
+        String code =  request.getParameter("checkCode");
+
+        ErrorCodeEnums errorCodeEnums = ErrorCodeEnums.success;
+        String errorMsg = "";
+ 
+        if (StringUtils.isEmpty(mobile)) {
+            errorMsg = ("手机号码不能为空！");
+        } else if (StringUtils.isEmpty(code)) {
+            errorMsg = ("验证码不能为空！");
+        }
+
+        if (StringUtils.isEmpty(errorMsg)) {
+            String verificationCode = verificationCodeService.getCodeFromCache(mobile);
+            if (!code.equals(verificationCode)) {
+                errorMsg = ("验证码错误");
+            }
+        }
+
+        if (StringUtils.isNotEmpty(errorMsg)) {
+            errorCodeEnums = ErrorCodeEnums.get_verification_code_failed;
+            errorCodeEnums.setErrorMsg(errorMsg);
+            bean.failure(errorCodeEnums);
+        }
+
+        interfaceReturn(response, JsonUtils.toString(bean), "");
+    }
 
     @RequestMapping(value = "/user/register")
     @ResponseBody
@@ -89,7 +116,7 @@ public class RegisterController extends IpcoolController {
             User user = userService.getUserByMobile(param.getMobile());
             if (user.getId() == null) {
                 user.phone(param.getMobile());
-                user.userName(param.getMobile());
+                user.userName(param.getUserName());
                 user.password(PasswordUtils.createPassword(param.getPassword()));
                 user.userKey(registerService.createUserKey(param));
 
