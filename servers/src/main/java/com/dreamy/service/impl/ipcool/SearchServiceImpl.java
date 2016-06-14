@@ -29,17 +29,22 @@ public class SearchServiceImpl implements SearchService {
     private CommonService commonService;
 
     @Override
-    public List<Integer> getBookIdsFromSolrByNameAndType(String name, Page page, Integer type) {
+    public List<Integer> getBookIdsFromSolrByNameAndType(String name, Page page, List<Integer> types) {
         List<Integer> bookViewIds = new LinkedList<>();
 
         String url = commonService.getSearchDomain() + "/ipbook/select/";
         Map<String, String> params = new HashMap<>();
 
-        params.put("q", "name:" + name + "~");
-        if (type != null) {
-            params.put("fq", "type:" + type);
+        if (CollectionUtils.isNotEmpty(types)) {
+            String fqString = "(";
+            for (Integer type : types)
+                fqString += "type:" + type + " OR ";
+
+            fqString += fqString.substring(0, -3) + ")";
+            params.put("fq", fqString);
         }
 
+        params.put("q", "name:" + name + "~");
         params.put("wt", "json");
         params.put("sort", "compositeIndex desc");
         params.put("indent", "true");
