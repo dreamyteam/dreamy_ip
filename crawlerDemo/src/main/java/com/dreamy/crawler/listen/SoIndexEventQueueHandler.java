@@ -37,11 +37,10 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
     public void consume(JSONObject jsonObject) {
         //获取类型
         String title = jsonObject.getString("name");
-        String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
-        String isbn = jsonObject.getString("isbn");
-        String operation = jsonObject.getString("operation");
         String key = jsonObject.getString("key");
+        Integer ipType = Integer.parseInt(jsonObject.getString("type"));
+
         try {
             BookIndexData bookIndexData = soHandler.getByUrl(title, "全国");
             if (bookIndexData!=null) {
@@ -54,7 +53,7 @@ public class SoIndexEventQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             log.error("SoIndexEventQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
         } finally {
-            crawlerService.check(key, bookId);
+            crawlerService.check(key, bookId,ipType);
             try {
                 Thread.sleep(NumberUtils.randomInt(1000, 3000));
             } catch (InterruptedException e) {

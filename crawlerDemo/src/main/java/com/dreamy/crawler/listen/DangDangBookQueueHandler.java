@@ -32,7 +32,6 @@ public class DangDangBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         String isbn = jsonObject.getString("isbn");
         Integer bookId = jsonObject.getInteger("bookId");

@@ -27,7 +27,6 @@ public class QiDianMmQueueHandler extends AbstractQueueHandler {
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String operation = jsonObject.getString("operation");
-        String isbn = jsonObject.getString("isbn");
         String key = jsonObject.getString("key");
         try {
             NetBookInfo netBookInfo = qiDianMmHandler.crawler(bookId, url, operation);

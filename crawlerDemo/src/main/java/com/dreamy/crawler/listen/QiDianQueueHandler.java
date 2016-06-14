@@ -2,9 +2,7 @@ package com.dreamy.crawler.listen;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.info.netbook.qd.QiDianHandler;
-import com.dreamy.crawler.handler.sougou.NewsSougouHandler;
 import com.dreamy.crawler.service.CrawlerService;
-import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,6 @@ public class QiDianQueueHandler extends AbstractQueueHandler {
 
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
-        String isbn = jsonObject.getString("isbn");
         String operation = jsonObject.getString("operation");
         String key = jsonObject.getString("key");
         try {

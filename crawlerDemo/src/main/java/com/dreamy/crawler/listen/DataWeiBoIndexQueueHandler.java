@@ -5,6 +5,7 @@ import com.dreamy.crawler.handler.so.SoHandler;
 import com.dreamy.crawler.handler.weibo.DataWeiBoHandler;
 import com.dreamy.crawler.service.CrawlerService;
 import com.dreamy.enums.IndexSourceEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.dao.BookIndexDataDao;
 import com.dreamy.utils.NumberUtils;
@@ -38,12 +39,11 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
     public void consume(JSONObject jsonObject) {
         //获取类型
         String title = jsonObject.getString("name");
-        String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
-        String isbn = jsonObject.getString("isbn");
-        String operation = jsonObject.getString("operation");
         String key = jsonObject.getString("key");
         String cookie = jsonObject.getString("cookie");
+        Integer ipType = Integer.parseInt(jsonObject.getString("type"));
+
         try {
             BookIndexData bookIndexData = dataWeiBoHandler.crawler(cookie);
             if (StringUtils.isNotEmpty(bookIndexData.getMale())) {
@@ -56,7 +56,7 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             log.error("DataWeiBoIndexQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
         } finally {
-            crawlerService.check(key, bookId);
+            crawlerService.check(key, bookId,ipType);
             try {
                 Thread.sleep(NumberUtils.randomInt(1000, 3000));
             } catch (InterruptedException e) {

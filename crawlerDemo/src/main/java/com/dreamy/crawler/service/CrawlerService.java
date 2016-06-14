@@ -19,7 +19,7 @@ public interface CrawlerService {
 
     public void operationBook(String operation,String key,BookInfo bookInfo,Integer bookId,String url,String isbn,Integer type);
 
-    public void check(String key, int bookId);
+    public void check(String key, int bookId,Integer ipType);
 
 
     public void operationNetBook(String operation,String key, NetBookInfo bookInfo, Integer bookId);

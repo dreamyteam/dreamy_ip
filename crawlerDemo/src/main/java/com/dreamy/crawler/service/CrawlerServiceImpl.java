@@ -2,6 +2,7 @@ package com.dreamy.crawler.service;
 
 import com.dreamy.domain.ipcool.*;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
@@ -124,7 +125,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         } catch (Exception e) {
             LOGGER.error("Operation is error bookid is " + bookId, e);
         } finally {
-            check(key, bookId);
+            check(key, bookId, IpTypeEnums.chuban.getType());
         }
 
     }
@@ -156,13 +157,13 @@ public class CrawlerServiceImpl implements CrawlerService {
         } catch (Exception e) {
             LOGGER.error("operationBook is error bookid is " + bookId, e);
         } finally {
-            check(key, bookId);
+            check(key, bookId, IpTypeEnums.chuban.getType());
         }
 
     }
 
     @Override
-    public void check(String key, int bookId) {
+    public void check(String key, int bookId, Integer ipType) {
         long num = redisClientService.incrBy(key, -1L);
         if (num < 1) {
             redisClientService.del(key);
@@ -184,7 +185,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         } catch (Exception e) {
             LOGGER.error("operationNetBook is error bookId is " + bookId, e);
         } finally {
-            //check(key, bookId);
+            check(key, bookId,IpTypeEnums.net.getType());
         }
     }
 

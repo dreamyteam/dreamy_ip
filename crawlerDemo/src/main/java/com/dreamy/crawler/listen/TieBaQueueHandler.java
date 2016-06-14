@@ -28,8 +28,6 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
 
         String word = jsonObject.getString("name");
         Integer bookId = jsonObject.getInteger("bookId");
-        String operation = jsonObject.getString("operation");
-        String key = jsonObject.getString("key");
         try {
             TieBa tieBa = tieBaHandler.crawler(word, bookId);
             if (tieBa != null) {

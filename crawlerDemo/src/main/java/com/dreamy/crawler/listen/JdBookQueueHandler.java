@@ -37,7 +37,6 @@ public class JdBookQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("name");
         String url = jsonObject.getString("url");
         Integer bookId = jsonObject.getInteger("bookId");
         String isbn = jsonObject.getString("isbn");
