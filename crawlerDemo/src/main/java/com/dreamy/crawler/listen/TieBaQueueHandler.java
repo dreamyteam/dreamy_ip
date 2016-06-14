@@ -28,6 +28,9 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
 
         String word = jsonObject.getString("name");
         Integer bookId = jsonObject.getInteger("bookId");
+        String key = jsonObject.getString("key");
+        Integer ipType = Integer.parseInt(jsonObject.getString("type"));
+
         try {
             TieBa tieBa = tieBaHandler.crawler(word, bookId);
             if (tieBa != null) {
@@ -37,7 +40,7 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " word:" + word);
         } finally {
-            crawlerService.check(key, bookId);
+            crawlerService.check(key, bookId, ipType);
         }
 
 

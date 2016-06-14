@@ -3,6 +3,7 @@ package com.dreamy.crawler.listen;
 import com.alibaba.fastjson.JSONObject;
 import com.dreamy.crawler.handler.info.netbook.qd.QiDianHandler;
 import com.dreamy.crawler.service.CrawlerService;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class QiDianQueueHandler extends AbstractQueueHandler {
         String key = jsonObject.getString("key");
         try {
             NetBookInfo netBookInfo = qiDianHandler.crawler(bookId, url, operation);
-            crawlerService.operationNetBook(operation,key, netBookInfo, bookId,CrawlerSourceEnums.qidian.getType());
+            crawlerService.operationNetBook(operation,key, netBookInfo, bookId, CrawlerSourceEnums.qidian.getType());
 
         } catch (Exception e) {
             log.warn("QiDianQueueHandler  failed: bookId:" + bookId + " url:" + url);

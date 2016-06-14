@@ -45,8 +45,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 
 
     @Value("${queue_crawler_over}")
-    private String queueName;
+    private String queueChuBanBookName;
 
+    @Value("${queue_crawler_netbook_over}")
+    private String queueNetbookBookName;
 
     @Autowired
     private IpBookService ipBookService;
@@ -162,7 +164,12 @@ public class CrawlerServiceImpl implements CrawlerService {
             redisClientService.del(key);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("bookId", bookId);
-            queueService.push(queueName, map);
+
+            if (IpTypeEnums.chuban.getType().equals(ipType)) {
+                queueService.push(queueChuBanBookName, map);
+            } else {
+                queueService.push(queueNetbookBookName, map);
+            }
         }
     }
 
@@ -180,7 +187,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         } catch (Exception e) {
             LOGGER.error("operationNetBook is error bookId is " + bookId, e);
         } finally {
-            check(key, bookId,IpTypeEnums.net.getType());
+            check(key, bookId, IpTypeEnums.net.getType());
         }
     }
 

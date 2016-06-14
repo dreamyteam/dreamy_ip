@@ -21,7 +21,7 @@ public interface TieBaHistoryService {
      * @param tieBaHistory
      */
     void saveByRecord(TieBaHistory tieBaHistory);
- 
+
     /**
      * @param id
      * @return
