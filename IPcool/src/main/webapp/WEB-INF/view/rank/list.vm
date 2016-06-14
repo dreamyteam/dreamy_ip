@@ -18,7 +18,11 @@
                 #foreach($view in $clist)
                     <tr class="top_three">
                         <td class="rank_num">$!{view.rank}</td>
-                        <td class="content">$!{view.name}</td>
+                        <td class="content">
+                            <a href="#">
+                                $!{view.name}
+                            </a>
+                        </td>
                         <td>$!{view.rankIndex}</td>
                     </tr>
                 #end
@@ -38,7 +42,11 @@
                 #foreach($view in $dlist)
                     <tr class="top_three">
                         <td class="rank_num">$!{view.rank}</td>
-                        <td class="content">$!{view.name}</td>
+                        <td class="content">
+                            <a href="#">
+                                $!{view.name}
+                            </a>
+                        </td>
                         <td>$!{view.rankIndex}</td>
                     </tr>
                 #end
@@ -56,7 +64,11 @@
                 #foreach($view in $hlist)
                     <tr class="top_three">
                         <td class="rank_num">$!{view.rank}</td>
-                        <td class="content">$!{view.name}</td>
+                        <td class="content">
+                            <a href="#">
+                                $!{view.name}
+                            </a>
+                        </td>
                         <td>$!{view.rankIndex}</td>
                     </tr>
                 #end
@@ -74,7 +86,11 @@
                 #foreach($view in $plist)
                     <tr class="top_three">
                         <td class="rank_num">$!{view.rank}</td>
-                        <td class="content">$!{view.name}</td>
+                        <td class="content">
+                            <a href="#">
+                                $!{view.name}
+                            </a>
+                        </td>
                         <td>$!{view.rankIndex}</td>
                     </tr>
                 #end
