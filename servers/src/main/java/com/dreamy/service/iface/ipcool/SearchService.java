@@ -18,5 +18,5 @@ public interface SearchService {
      * @param page
      * @return
      */
-    List<Integer> getBookIdsFromSolrByNameAndType(String name, Page page,Integer type);
+    List<Integer> getBookIdsFromSolrByNameAndType(String name, Page page,List<Integer> type);
 }

@@ -43,7 +43,7 @@ public class SearchController extends IpcoolController {
     @RequestMapping(value = "")
     public String result(Page page, ModelMap model,
                          @RequestParam(value = "content", required = false, defaultValue = "") String content,
-                         @RequestParam(value = "type", required = false) Integer type
+                         @RequestParam(value = "type[]", required = false) List<Integer> types
     ) {
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
@@ -51,7 +51,7 @@ public class SearchController extends IpcoolController {
 
         if (StringUtils.isNotEmpty(content)) {
 
-            bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, type);
+            bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
             List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
@@ -71,7 +71,7 @@ public class SearchController extends IpcoolController {
             }
         }
 
-
+        model.put("types", types);
         model.put("list", bookViewList);
         model.put("rankMap", rankMap);
         model.put("typeEnums", IpTypeEnums.values());
