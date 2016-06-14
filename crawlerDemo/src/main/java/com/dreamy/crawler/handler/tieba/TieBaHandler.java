@@ -20,7 +20,7 @@ import java.util.Map;
 public class TieBaHandler {
 
     public TieBa crawler(String word, Integer bookId) {
-        TieBa tieBa=null;
+        TieBa tieBa = null;
         word = HttpUtils.encodeUrl(word);
         String url = "http://tieba.baidu.com/f?ie=utf-8&fr=search&kw=" + word;
         String html = HttpUtils.getHtmlGet(url);
@@ -33,14 +33,13 @@ public class TieBaHandler {
             html = html.replace("<!--", "").replace("-->", "");
             Document document = Jsoup.parse(html);
             title(tieBa, document);
-            category(tieBa,document);
+            category(tieBa, document);
             followNum(tieBa, document);
             postNum(tieBa, document);
         }
         return tieBa;
 
     }
-
 
 
     public static void sort(TieBa tieBa, String code) {
@@ -51,7 +50,7 @@ public class TieBaHandler {
         List<Map<String, Object>> list = (List<Map<String, Object>>) map1.get("rank_list");
         if (list.size() > 2) {
             Map<String, Object> map2 = list.get(2);
-            int sort=(Integer) map2.get("ranking");
+            int sort = (Integer) map2.get("ranking");
             tieBa.setPopularitySort(sort);
         }
     }
@@ -60,7 +59,6 @@ public class TieBaHandler {
 
         Elements elements = document.getElementsByClass("card_title_fname");
         Element element = elements.first();
-        System.out.println(element.text());
         tieBa.setTitle(element.text());
 
     }
@@ -69,7 +67,6 @@ public class TieBaHandler {
 
         Elements elements = document.select("ul.forum_dir_info>li>a");
         Element element = elements.first();
-        System.out.println(element.text());
         tieBa.setCategory(element.text());
 
     }
@@ -77,7 +74,6 @@ public class TieBaHandler {
     public static void followNum(TieBa tieBa, Document document) {
         Elements elements = document.getElementsByClass("card_menNum");
         Element element = elements.first();
-        System.out.println(element.text());
         String num = element.text().replace(",", "");
         tieBa.setFollowNum(Integer.valueOf(num));
     }
@@ -104,7 +100,7 @@ public class TieBaHandler {
             html = html.replace("<!--", "").replace("-->", "");
             Document document = Jsoup.parse(html);
             title(tieBa, document);
-            category(tieBa,document);
+            category(tieBa, document);
             followNum(tieBa, document);
             postNum(tieBa, document);
 
