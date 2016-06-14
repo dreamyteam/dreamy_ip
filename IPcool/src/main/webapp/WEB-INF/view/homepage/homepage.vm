@@ -19,7 +19,7 @@
                 <ul class="home_page_nav_right">
                     #if($!thisUser.userKey)
                         <li><a href="/about/empty">认证</a></li>
-                        <li>$!thisUser.username</li>
+                        <li id="currentUserTrigger">$!thisUser.username</li>
                         <li id="currentUser">
                             <img src="$!thisUser.imageUrl">
                             <div class="user_menu" id="user_menu">
