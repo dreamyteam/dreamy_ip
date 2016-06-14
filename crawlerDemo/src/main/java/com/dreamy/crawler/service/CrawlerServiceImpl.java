@@ -244,22 +244,10 @@ public class CrawlerServiceImpl implements CrawlerService {
                     history.setWeekChainRatio(overviewJson.getWeekChainRatio());
                     history.setWeekYearRatio(overviewJson.getWeekYearRatio());
                 }
-                if (bookIndexData.getMedia() != null) {
-                    String str[] = bookIndexData.getMedia();
-                    int length = str.length;
-                    String mediaNum = str[length - 1];
-                    history.setMediaNum(Integer.valueOf(mediaNum));
 
+                history.setMediaNum(bookIndexData.getMedia());
+                history.setSearchNum(bookIndexData.getIndex());
 
-                }
-                if (bookIndexData.getIndex() != null) {
-                    String index[] = bookIndexData.getIndex();
-                    int length = index.length;
-                    String searchNum = index[length - 1];
-                    history.setSearchNum(Integer.valueOf(searchNum));
-
-
-                }
                 history.setId(bookIndexData.getBookId() + "-" + bookIndexData.getSource() + "-" + TimeUtils.toString(null, new Date()));
                 bookIndexDataHistoryService.updateInser(history);
                 return null;

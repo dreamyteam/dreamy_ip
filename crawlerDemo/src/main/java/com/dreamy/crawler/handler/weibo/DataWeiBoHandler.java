@@ -2,6 +2,7 @@ package com.dreamy.crawler.handler.weibo;
 
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.beans.SoArea;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
@@ -22,6 +23,7 @@ public class DataWeiBoHandler {
         BookIndexData bookIndexData = new BookIndexData();
         getAge(bookIndexData, cookie);
         drawAreaJson(bookIndexData, cookie);
+        chartDataJson(bookIndexData, cookie);
         return bookIndexData;
     }
 
@@ -57,22 +59,26 @@ public class DataWeiBoHandler {
         String url = "http://data.weibo.com/index/ajax/keywordzone?type=default&__rnd=" + System.currentTimeMillis();
         String json = HttpUtils.getHtmlGetChangeCookie(url, cookie);
         if (StringUtils.isNotEmpty(json)) {
-            Map<String, Object> map = JsonUtils.toMap(json);
-            Map<String, Object> map1 = (Map<String, Object>) map.get("zone");
-            List<SoArea> list = new ArrayList<SoArea>();
-            for (Map.Entry<String, Object> entry : map1.entrySet()) {
-                Map<String, Object> map2 = (Map<String, Object>) entry.getValue();
-                SoArea soArea = new SoArea();
-                soArea.setRank(Integer.valueOf(map2.get("index").toString()));
-                soArea.setProvince(entry.getKey());
-                String value = (String) map2.get("value");
-                if (StringUtils.isNotEmpty(value)) {
-                    value = value.replace("%", "");
-                    soArea.setPerctent(Double.valueOf(value));
+            try {
+                Map<String, Object> map = JsonUtils.toMap(json);
+                Map<String, Object> map1 = (Map<String, Object>) map.get("zone");
+                List<SoArea> list = new ArrayList<SoArea>();
+                for (Map.Entry<String, Object> entry : map1.entrySet()) {
+                    Map<String, Object> map2 = (Map<String, Object>) entry.getValue();
+                    SoArea soArea = new SoArea();
+                    soArea.setRank(Integer.valueOf(map2.get("index").toString()));
+                    soArea.setProvince(entry.getKey());
+                    String value = (String) map2.get("value");
+                    if (StringUtils.isNotEmpty(value)) {
+                        value = value.replace("%", "");
+                        soArea.setPerctent(Double.valueOf(value));
+                    }
+                    list.add(soArea);
                 }
-                list.add(soArea);
+                bookIndexData.setAreaList(list);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            bookIndexData.setAreaList(list);
         }
 
 
@@ -82,12 +88,23 @@ public class DataWeiBoHandler {
         String url = "http://data.weibo.com/index/ajax/getchartdata?month=default&__rnd=" + System.currentTimeMillis();
         String json = HttpUtils.getHtmlGetChangeCookie(url, cookie);
         if (StringUtils.isNotEmpty(json)) {
-            Map<String, Object> map = JsonUtils.toMap(json);
-            List<Map<String, Object>> list=(List<Map<String, Object>> )map.get("data");
-            Map<String, Object> m=list.get(0);
-            List<Map<String, Object>> list1=(List<Map<String, Object>>)m.get("yd");
-            System.out.println(m.get("yd"));
-            System.out.println(map.get("data"));
+            try {
+
+
+                Map<String, Object> map = JsonUtils.toMap(json);
+                List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("data");
+                Map<String, Object> map1 = list.get(0);
+                List<Map<String, Object>> zts = (List<Map<String, Object>>) map1.get("zt");
+                if (CollectionUtils.isNotEmpty(zts)) {
+                    int size = zts.size();
+                    Map<String, Object> map2 = zts.get(size - 1);
+                    bookIndexData.setLastDate((String) map2.get("day_key"));
+                    bookIndexData.setIndex(Integer.valueOf((String) map2.get("value")));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -96,7 +113,7 @@ public class DataWeiBoHandler {
 
     public static void main(String[] args) {
 
-        String value = "PHPSESSID=dht3u8vtfpk1revoiv33ibcel1;WEB3_PHP-FPM_GD=99b485668fec0156ac6854bef933c8cf;";
+        String value = "PHPSESSID=34ns85itgibgrkboeleqa78pf6;WEB3_PHP-FPM_GD=d5718273f2cd3941cc185e7986ba22c9;";
         BookIndexData bookIndexData = new BookIndexData();
 //        getAge(bookIndexData, value);
 //        drawAreaJson(bookIndexData, value);
