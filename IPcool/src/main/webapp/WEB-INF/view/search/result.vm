@@ -15,17 +15,17 @@
         <p class="summary">收录文学，影视，人物，机构以及音乐等IP</p>
     </div>
 
-    <section class="program_nav" id="program_nav">
-        <div class="inner clearfix">
-            <ul>
-                <li class="active"><a href="">全部</a></li>
-                <li><a href="">文学</a></li>
-                <li><a href="">影视</a></li>
-                <li><a href="">人物</a></li>
-                <li><a href="">机构</a></li>
-            </ul>
-        </div>
-    </section>
+##    <section class="program_nav" id="program_nav">
+##        <div class="inner clearfix">
+##            <ul>
+##                <li class="active"><a href="">全部</a></li>
+##                <li><a href="">文学</a></li>
+##                <li><a href="">影视</a></li>
+##                <li><a href="">人物</a></li>
+##                <li><a href="">机构</a></li>
+##            </ul>
+##        </div>
+##    </section>
 
     <section class="search_sizer" id="sizer_search">
         <div class="main_sizer_container">
