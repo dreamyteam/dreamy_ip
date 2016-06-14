@@ -87,7 +87,7 @@
                         <span class="err_msg">异常错误信息</span>
                         <input type="password" placeholder="新密码" name="newPassword" autocomplete="off" maxlength="16">
                     </div>
-                    <div class="input_content">
+                    <div class="input_content err_from_server">
                         <span class="err_msg">异常错误信息</span>
                         <input type="password" placeholder="重复新密码" name="newPasswordConfirm" autocomplete="off" maxlength="16">
                     </div>
