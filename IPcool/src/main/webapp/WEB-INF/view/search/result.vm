@@ -33,18 +33,26 @@
 
             <div class="type_check_container">
                 <div class="input_content">
-                    <input type="checkbox" name="type" value="1">
+                    <input type="checkbox"
+                        #if($!types.contains(1))
+                           checked
+                        #end
+                           name="type" value="1">
                     <label>出版文学</label>
                 </div>
                 <div class="input_content">
-                    <input type="checkbox" name="type" value="2">
+                    <input type="checkbox" name="type"
+                        #if($!types.contains(2))
+                           checked
+                        #end
+                           value="2">
                     <label>网络文学</label>
                 </div>
             </div>
         </div>
-##      细节筛选
+    ##      细节筛选
         <div class="sub_sizer_container">
-##            <h6 class="type_title">文学类型</h6>
+        ##            <h6 class="type_title">文学类型</h6>
 ##
 ##            <div class="type_check_container">
 ##                <div class="input_content">
