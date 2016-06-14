@@ -94,7 +94,7 @@ public class UpdateNetBookIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 15 16 * * ?")
+    @Scheduled(cron = "0 55 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
@@ -132,6 +132,10 @@ public class UpdateNetBookIndexTask {
 
         BookCrawlerInfo crawlerInfo = bookCrawlerInfoList.get(0);
         Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        if (CollectionUtils.isEmpty(commonParams)) {
+            return;
+        }
+
         commonParams.put("type", IpTypeEnums.net.getType().toString());
         commonParams.put("url", crawlerInfo.getUrl());
 
