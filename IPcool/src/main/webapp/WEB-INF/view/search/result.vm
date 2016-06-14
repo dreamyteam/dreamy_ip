@@ -139,7 +139,7 @@
         <!--分页器 -->
         <div class="paging" id="paging"
              data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
-             data-page-params='{"content":"$!content"}'>
+             data-page-params='{"content":"$!content","type":"$!typestr"}'>
         </div>
         <!--分页器-->
     </section>
