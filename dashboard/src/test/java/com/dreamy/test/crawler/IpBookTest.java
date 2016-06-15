@@ -144,7 +144,7 @@ public class IpBookTest extends BaseJunitTest {
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                       crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                        crawlerNetbookFinishQueueHandler.updateNet(bookView);
                     }
                     currentPage++;
                 } else {
@@ -155,6 +155,35 @@ public class IpBookTest extends BaseJunitTest {
                 break;
             }
         }
+    }
+
+    @Test
+    public void lnTest() {
+        String a = "877771";
+        String b = "877769";
+        String c = "877772";
+
+        String A = getLnValue(a);
+        String B = getLnValue(b);
+        String C = getLnValue(c);
+
+
+        System.err.println("111");
+
+
+    }
+
+    public String getLnValue(String value) {
+        Double temp = 1.0;
+        Integer length = value.length();
+        Integer i = 0;
+        for (; i < length - 1; i++) {
+            String subStr = value.substring(i);
+            temp += 10 * Math.log10(Double.valueOf(subStr));
+        }
+        temp += Math.log10(10 * Double.valueOf(value.substring(length - 1)));
+        temp =  Math.log10(Double.parseDouble(value));
+        return temp.toString();
     }
 
 }

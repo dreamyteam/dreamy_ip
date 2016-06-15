@@ -29,6 +29,14 @@ public interface BookScoreService {
     public List<BookScore> getByBookId(Integer bookId);
 
     /**
+     *
+     * @param bookId
+     * @param type
+     * @return
+     */
+    public BookScore getByBookIdAndSource(Integer bookId, Integer type);
+
+    /**
      * @param bookId
      * @param options
      * @return

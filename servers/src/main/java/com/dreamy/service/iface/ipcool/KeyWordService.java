@@ -4,6 +4,7 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.KeyWord;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/29.
@@ -30,7 +31,19 @@ public interface KeyWordService {
      */
     public void saveOrUpdate(KeyWord keyWord);
 
+    /**
+     *
+     * @param bookId
+     * @return
+     */
     public List<KeyWord> getByBookId(Integer bookId);
+
+
+    /**
+     *
+     * @return
+     */
+    Map<Integer, Double>  getKeyWordSourceMap();
 
 
 }

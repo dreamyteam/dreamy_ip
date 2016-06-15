@@ -85,6 +85,18 @@ public class BookScoreServiceImpl implements BookScoreService {
         return bookScoreDao.selectByExample(conditions);
     }
 
+    @Override
+    public BookScore getByBookIdAndSource(Integer bookId, Integer source) {
+        BookScoreConditions conditions = new BookScoreConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andSourceEqualTo(source);
+
+        List<BookScore> bookScoreList = bookScoreDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookScoreList)) {
+            return bookScoreList.get(0);
+        }
+
+        return null;
+    }
 
     @Override
     public String getBookHotIndexByBookId(Integer bookId) {
@@ -108,15 +120,12 @@ public class BookScoreServiceImpl implements BookScoreService {
     public String getPropagateIndexByBookId(Integer bookId) {
         Double propagateIndex = 10.0;
 
+        Map<Integer, Double> map = keyWordService.getKeyWordSourceMap();
+
         KeyWord keyWord = new KeyWord();
         keyWord.bookId(bookId);
         Page page = new Page();
         page.setPageSize(10);
-
-        Map<Integer, Double> map = new HashMap<>();
-        for (KeyWordEnums enums : KeyWordEnums.values()) {
-            map.put(enums.getType(), enums.getPercent());
-        }
 
         List<KeyWord> keyWords = keyWordService.getList(keyWord, page);
         if (CollectionUtils.isNotEmpty(keyWords)) {
