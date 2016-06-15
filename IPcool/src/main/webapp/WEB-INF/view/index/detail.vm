@@ -261,7 +261,7 @@
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名</h2>
                 <h5 class="number">$!{hrank}</h5>
             </div>
         </div>
@@ -300,7 +300,7 @@
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名</h2>
                 <h5 class="number">$!{prank}</h5>
             </div>
         </div>
@@ -355,7 +355,7 @@
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名 </h2>
                 <h5 class="number">$!{arank}</h5>
             </div>
         </div>
