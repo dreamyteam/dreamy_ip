@@ -178,6 +178,7 @@ public class CrawlerServiceImpl implements CrawlerService {
     public void operationNetBook(String operation, String key, NetBookInfo bookInfo, Integer bookId, Integer type) {
         try {
             if (bookInfo != null) {
+                bookInfo.setUpdatedAt(new Date());
                 netBookInfoService.updateInser(bookInfo);
                 saveNetBookDataHistory(bookInfo, type);
                 if (operation.equals(OperationEnums.crawler.getCode())) {

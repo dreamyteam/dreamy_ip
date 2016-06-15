@@ -36,10 +36,9 @@ public class BookIndexData {
 
     private String age[];
 
-    private  OverviewJson overviewJson;
+    private OverviewJson overviewJson;
 
     private String lastDate;
-
     private Date updatedAt;
 
     public String[] getAge() {
