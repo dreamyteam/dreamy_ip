@@ -139,16 +139,18 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewPropogationIndex(BookView bookView) {
-
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
         try {
-            String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-            Integer index = Integer.parseInt(propagateIndex);
-            if (index > 0) {
-                return index;
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                index += chubanBookSourceHandler.getPropagationIndex(bookView);
             }
+
+            return index;
         } catch (Exception e) {
-            Log.error("update  propatation index failed :" + bookView.getId(), e);
+            Log.error("update propagation index failed :" + bookView.getId(), e);
         }
+
         return bookView.getPropagateIndex();
     }
 

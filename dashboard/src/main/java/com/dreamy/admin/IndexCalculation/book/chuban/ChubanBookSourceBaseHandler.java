@@ -36,27 +36,27 @@ public abstract class ChubanBookSourceBaseHandler implements BookSourceBaseHandl
 
     @Override
     public Integer getHotIndex(BookView bookView) {
-        return 1;
+        return 0;
     }
 
     @Override
     public Integer getPropagationIndex(BookView bookView) {
-        return 1;
+        return 0;
     }
 
     @Override
     public Integer getActiveIndex(BookView bookView) {
-        return null;
+        return 0;
     }
 
     @Override
     public Integer getReputationIndex(BookView bookView) {
-        return 1;
+        return 0;
     }
 
     @Override
     public Integer getDevelopIndex(BookView bookView) {
-        return 1;
+        return 0;
     }
 
 

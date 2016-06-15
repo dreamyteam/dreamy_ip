@@ -66,6 +66,18 @@ public class KeyWordServiceImpl implements KeyWordService {
         return keyWordDao.selectByExample(conditions);
     }
 
+    @Override
+    public KeyWord getByBookIdAndSource(Integer bookId, Integer source) {
+
+        KeyWordConditions conditions = new KeyWordConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andSourceEqualTo(source);
+        List<KeyWord> keyWordList = keyWordDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(keyWordList)) {
+            return keyWordList.get(0);
+        }
+
+        return null;
+    }
 
     @Override
     public Map<Integer, Double> getKeyWordSourceMap() {

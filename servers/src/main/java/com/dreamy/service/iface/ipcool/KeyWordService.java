@@ -12,38 +12,40 @@ import java.util.Map;
 public interface KeyWordService {
 
     /**
-     *
      * @param keyWord
      */
     void save(KeyWord keyWord);
 
     /**
-     *
      * @param keyWord
      * @param page
      * @return
      */
-    List<KeyWord> getList(KeyWord keyWord,Page page);
+    List<KeyWord> getList(KeyWord keyWord, Page page);
 
     /**
-     *
      * @param keyWord
      */
     public void saveOrUpdate(KeyWord keyWord);
 
     /**
-     *
      * @param bookId
      * @return
      */
     public List<KeyWord> getByBookId(Integer bookId);
 
-
     /**
-     *
+     * @param bookId
+     * @param type
      * @return
      */
-    Map<Integer, Double>  getKeyWordSourceMap();
+    KeyWord getByBookIdAndSource(Integer bookId, Integer source);
+
+
+    /**
+     * @return
+     */
+    Map<Integer, Double> getKeyWordSourceMap();
 
 
 }
