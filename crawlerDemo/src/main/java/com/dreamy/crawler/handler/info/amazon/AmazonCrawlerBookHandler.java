@@ -3,7 +3,6 @@ package com.dreamy.crawler.handler.info.amazon;
 
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.PatternUtils;
 import com.dreamy.utils.StringUtils;
@@ -14,11 +13,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.model.OOSpider;
-import us.codecraft.webmagic.model.annotation.ComboExtract;
-
-import java.util.List;
 
 @Component
 public class AmazonCrawlerBookHandler {
@@ -26,25 +20,38 @@ public class AmazonCrawlerBookHandler {
 
     public BookInfo getByISBN(String isbn, String operation) {
 
-        //String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&sort=review-rank";
-        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
-        try {
-            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
-            AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
-            ooSpider.close();
-            String crawlerUrl = "";
-            if (amazonBean != null) {
-                List<String> list = amazonBean.getUrls();
-                if (CollectionUtils.isNotEmpty(list)) {
-                    crawlerUrl = list.get(0);
-                }
-                BookInfo bookInfo = crawler(crawlerUrl, operation);
-                return bookInfo;
-            }
-        } catch (Exception e) {
-            log.error("AmazonCrawlerBookHandler getByISBN url:" + url, e);
+        //String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
+        String url = "https://www.amazon.cn/s/ref=sr_st_review-rank?keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171&qid=1465986426&__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&sort=review-rank&ajr=2";
+        String html = HttpUtils.getHtmlGet(url);
+        Document document = Jsoup.parse(html);
+        Elements elements = document.select("div.a-fixed-left-grid-inner>div>div>a");
+        if (elements != null && elements.size() >= 1) {
+            Element element = elements.first();
+            String crawlerUrl = element.attr("href");
+            BookInfo bookInfo = crawler(crawlerUrl, operation);
+            return bookInfo;
+
         }
+
         return null;
+
+//        try {
+//            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
+//            AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
+//            ooSpider.close();
+//            String crawlerUrl = "";
+//            if (amazonBean != null) {
+//                List<String> list = amazonBean.getUrls();
+//                if (CollectionUtils.isNotEmpty(list)) {
+//                    crawlerUrl = list.get(0);
+//                }
+//                BookInfo bookInfo = crawler(crawlerUrl, operation);
+//                return bookInfo;
+//            }
+//        } catch (Exception e) {
+//            log.error("AmazonCrawlerBookHandler getByISBN url:" + url, e);
+//        }
+//        return null;
 
     }
 
@@ -321,29 +328,29 @@ public class AmazonCrawlerBookHandler {
         String authorDescription = "";
         try {
             Element element = document.getElementById("detail_bullets_id");
-            if (element != null) {
-                String asin = "";
-                Elements elements = element.select("div>ul>li");
-                for (Element e : elements) {
-                    if (e.text().contains("ASIN: ")) {
-                        asin = e.text().substring(6);
-                        String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin);
-                        if (StringUtils.isNotEmpty(html)) {
-                            Document userInfoDocument = Jsoup.parse(html);
-                            Elements es = userInfoDocument.getElementsByClass("s-content");
-                            for (Element one : es) {
-                                String text = one.text();
-                                if (text.contains("作者简介")) {
-                                    authorDescription = one.child(1).text();
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-
-            }
+//            if (element != null) {
+//                String asin = "";
+//                Elements elements = element.select("div>ul>li");
+//                for (Element e : elements) {
+//                    if (e.text().contains("ASIN: ")) {
+//                        asin = e.text().substring(6);
+//                        String html = HttpUtils.getHtmlGet("https://www.amazon.cn/gp/product-description/ajaxGetProuductDescription.html?ref_=dp_apl_pc_loaddesc&merchantId=A1AJ19PSB66TGU&deviceType=web&asin=" + asin);
+//                        if (StringUtils.isNotEmpty(html)) {
+//                            Document userInfoDocument = Jsoup.parse(html);
+//                            Elements es = userInfoDocument.getElementsByClass("s-content");
+//                            for (Element one : es) {
+//                                String text = one.text();
+//                                if (text.contains("作者简介")) {
+//                                    authorDescription = one.child(1).text();
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                        break;
+//                    }
+//                }
+//
+//            }
 
         } catch (Exception e) {
             log.error("解析 amazon 作者描述 异常", e);
@@ -354,22 +361,16 @@ public class AmazonCrawlerBookHandler {
 
     public static void main(String[] args) {
         String isbn = "9787535438171";
-        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
-        try {
-            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
-            AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
-            ooSpider.close();
-            String crawlerUrl = "";
-            if (amazonBean != null) {
-                List<String> list = amazonBean.getUrls();
-                if (CollectionUtils.isNotEmpty(list)) {
-                    crawlerUrl = list.get(0);
-                    System.out.println(crawlerUrl);
-                }
-
-            }
-        } catch (Exception e) {
-            log.error("AmazonCrawlerBookHandler getByISBN url:" + url, e);
+        String url = "https://www.amazon.cn/s/ref=sr_st_review-rank?keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171&qid=1465986426&__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&sort=review-rank&ajr=2";
+        String html = HttpUtils.getHtmlGet(url);
+        Document document = Jsoup.parse(html);
+        Elements elements = document.select("div.a-fixed-left-grid-inner>div>div>a");
+        if (elements != null && elements.size() > 0) {
+            Element element = elements.first();
+            System.out.println(element.attr("href"));
         }
+
+
+        System.out.println(111);
     }
 }
