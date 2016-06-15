@@ -3,7 +3,6 @@ package com.dreamy.admin.tasks.rank;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
@@ -137,7 +136,7 @@ public class UpdateChubanBookIndexTask {
         }
 
         Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
-        commonParams.put("type",IpTypeEnums.chuban.getType().toString());
+        commonParams.put("type", IpTypeEnums.chuban.getType().toString());
         if (CollectionUtils.isEmpty(commonParams)) {
             return;
         }
