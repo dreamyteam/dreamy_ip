@@ -35,24 +35,24 @@
                                            placeholder="" value="$!title">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail2">爬取状态</label>
-                                    <select class="form-control" name="status">
-                                        <option value="-1">选择..</option>
-##                                        <option #if($!status ==0 )
-##                                                selected #end value="0">新建
-##                                        </option>
-##                                        <option #if($!status ==1 )
-##                                                selected #end value="1">爬取中
-##                                        </option>
-##                                        <option #if($!status ==2 )
-##                                                selected #end value="2">完成
-##                                        </option>
-##                                        <option #if($!status ==3 )
-##                                                selected #end value="3">失败
-##                                        </option>
-                                    </select>
-                                </div>
+##                                <div class="form-group">
+##                                    <label for="exampleInputEmail2">爬取状态</label>
+##                                    <select class="form-control" name="status">
+##                                        <option value="-1">选择..</option>
+####                                        <option #if($!status ==0 )
+####                                                selected #end value="0">新建
+####                                        </option>
+####                                        <option #if($!status ==1 )
+####                                                selected #end value="1">爬取中
+####                                        </option>
+####                                        <option #if($!status ==2 )
+####                                                selected #end value="2">完成
+####                                        </option>
+####                                        <option #if($!status ==3 )
+####                                                selected #end value="3">失败
+####                                        </option>
+##                                    </select>
+##                                </div>
 
                                 <button type="submit" class="btn btn-default dt-btn-submit">搜索</button>
                             </div>

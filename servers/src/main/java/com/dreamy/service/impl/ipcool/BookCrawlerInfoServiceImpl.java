@@ -50,6 +50,11 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
         if (CollectionUtils.isEmpty(list)) {
             bookCrawlerInfoDao.save(info);
         }
+        else{
+            BookCrawlerInfo old=list.get(0);
+            info.setId(old.getId());
+            bookCrawlerInfoDao.update(info);
+        }
         return info;
     }
 

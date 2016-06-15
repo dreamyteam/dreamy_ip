@@ -26,7 +26,8 @@ public class AmazonCrawlerBookHandler {
 
     public BookInfo getByISBN(String isbn, String operation) {
 
-        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn;
+        //String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&sort=review-rank";
+        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
         try {
             OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
             AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
@@ -352,7 +353,23 @@ public class AmazonCrawlerBookHandler {
     }
 
     public static void main(String[] args) {
-            String url="https://www.amazon.cn/%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0-%E7%8E%8B%E5%B0%8F%E6%B3%A2/dp/B019PP1WC0/ref=sr_1_3?s=books&ie=UTF8&qid=1461738238&sr=1-3&keywords=%E6%B2%89%E9%BB%98%E7%9A%84%E5%A4%A7%E5%A4%9A%E6%95%B0";
-        System.out.println(HttpUtils.getHtmlGet(url));
+        String isbn = "9787535438171";
+        String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
+        try {
+            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), AmazonBean.class);
+            AmazonBean amazonBean = ooSpider.<AmazonBean>get(url);
+            ooSpider.close();
+            String crawlerUrl = "";
+            if (amazonBean != null) {
+                List<String> list = amazonBean.getUrls();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    crawlerUrl = list.get(0);
+                    System.out.println(crawlerUrl);
+                }
+
+            }
+        } catch (Exception e) {
+            log.error("AmazonCrawlerBookHandler getByISBN url:" + url, e);
+        }
     }
 }

@@ -26,7 +26,7 @@ public class DangDangCrawlerBookHandler {
 
 
     public BookInfo getByISBN(String isbn, String operation) {
-        String url = "http://search.dangdang.com/?act=input&key=" + isbn;
+        String url = "http://search.dangdang.com/?act=input&key=" + isbn + "&category_path=01.00.00.00.00.00&type=01.00.00.00.00.00&sort_type=sort_score_desc#J_tab";
         try {
             OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), DangdangBean.class);
             DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
@@ -36,7 +36,6 @@ public class DangDangCrawlerBookHandler {
                 if (CollectionUtils.isNotEmpty(list)) {
                     String crawlerUrl = list.get(0);
                     BookInfo bookInfo = crawler(crawlerUrl, operation);
-
                     return bookInfo;
                 }
             }
@@ -255,7 +254,7 @@ public class DangDangCrawlerBookHandler {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
                         if (CollectionUtils.isNotEmpty(map1)) {
                             String str = (String) map2.get("good_rate");
-                            core=Double.valueOf(str);
+                            core = Double.valueOf(str);
                             bookInfo.setScore(core);
                         }
                     }
