@@ -128,6 +128,14 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
             Integer totalRecommendNum = netBookInfo.getRecommendNum();
             Integer ticketNum = netBookInfo.getTicketNum();
 
+            if (totalClick == null || totalClick < 0) {
+                totalClick = 10;
+            }
+
+            if (totalRecommendNum == null || totalRecommendNum < 0) {
+                totalRecommendNum = 0;
+            }
+
             Double searchIndex = bookScoreService.getSearchIndexByBookId(bookView.getBookId());
             Double temp = percent * (((Math.log10(totalClick) * Math.log10(totalRecommendNum)) * 1000 + ticketNum)) * Math.log10(searchIndex);
             hotIndex = temp.intValue();
