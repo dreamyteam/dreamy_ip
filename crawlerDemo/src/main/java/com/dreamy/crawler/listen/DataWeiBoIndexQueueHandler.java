@@ -42,7 +42,7 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         String cookie = jsonObject.getString("cookie");
-        Integer ipType = Integer.parseInt(jsonObject.getString("type"));
+        Integer type = Integer.parseInt(jsonObject.getString("type"));
 
         try {
             BookIndexData bookIndexData = dataWeiBoHandler.crawler(cookie);
@@ -57,9 +57,9 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             log.error("DataWeiBoIndexQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
         } finally {
-            crawlerService.check(key, bookId,ipType);
+            crawlerService.check(key, bookId,type);
             try {
-                Thread.sleep(NumberUtils.randomInt(1000, 3000));
+                Thread.sleep(NumberUtils.randomInt(500, 2000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -253,7 +253,7 @@ public class DangDangCrawlerBookHandler {
                     if (CollectionUtils.isNotEmpty(map1)) {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
                         if (CollectionUtils.isNotEmpty(map1)) {
-                            String str = (String) map2.get("good_rate");
+                            String str =map2.get("good_rate")+"";
                             core = Double.valueOf(str);
                             bookInfo.setScore(core);
                         }

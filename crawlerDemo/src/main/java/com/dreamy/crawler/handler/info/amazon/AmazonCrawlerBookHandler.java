@@ -187,9 +187,10 @@ public class AmazonCrawlerBookHandler {
         String saleSort = "";
         try {
             Element sort = document.getElementById("SalesRank");
-            String[] saleRank = sort.childNode(2).toString().split("第");
-            saleSort = saleRank[1].substring(0, saleRank[1].length() - 3);
-
+            if (sort != null) {
+                String[] saleRank = sort.childNode(2).toString().split("第");
+                saleSort = saleRank[1].substring(0, saleRank[1].length() - 3);
+            }
         } catch (Exception e) {
             log.error("解析 amazon 图书销售排名 异常", e);
         } finally {
@@ -226,7 +227,6 @@ public class AmazonCrawlerBookHandler {
     private void getIpDescription(BookInfo bean, Document document) {
         String description = "";
         Elements noscripts = document.getElementsByTag("noscript");
-
         try {
             if (noscripts != null && noscripts.size() > 2) {
                 description = noscripts.get(1).text();
