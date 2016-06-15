@@ -6,7 +6,7 @@ import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
- 
+
 
 /**
  * Created with IntelliJ IDEA.
