@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IP库 | IPCool</title>
+    <title>IPcool | IP库 - 专业的文创IP大数据平台 | 让IP有序 让文创有依 - IPcool.me</title>
+    <meta name="keywords" content="IPcool,IP库,IP,大数据,数据分析,IP大数据,IP分析,IP数据库,小说数据,IP产业链,影视大数据,电影大数据,娱乐大数据,粉丝经济,明星大数据,网络小说分析">
+    <meta name="description" content="IP库是一个专注于服务文创IP产业链的大数据平台。为IP创作、开发、投资、宣发等文创从业者提供小说漫画、影视剧集、人物机构类IP的热度、传播、潜力、粉丝活跃等数据的监控查询和预测服务。" />
 
     $!assetsUtils.getCssByKey("all.css")
     $!assetsUtils.getCssByKey("index.css")
