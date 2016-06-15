@@ -1,6 +1,7 @@
 package com.dreamy.test.crawler;
 
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
+import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
 import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
@@ -46,6 +47,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
+
+    @Autowired
+    private CrawlerNetbookFinishQueueHandler crawlerNetbookFinishQueueHandler;
 
     @Autowired
     private UpdateNetBookIndexTask updateNetBookIndexTask;
@@ -128,7 +132,29 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void developIndex() {
-        updateNetBookIndexTask.run();
+
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
+            try {
+                page.setCurrentPage(currentPage);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
+                if (CollectionUtils.isNotEmpty(bookViewList)) {
+                    for (BookView bookView : bookViewList) {
+                       crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                    }
+                    currentPage++;
+                } else {
+                    isLoop = false;
+                }
+
+            } catch (Exception e) {
+                break;
+            }
+        }
     }
 
 }

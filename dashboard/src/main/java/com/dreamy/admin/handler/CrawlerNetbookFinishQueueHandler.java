@@ -71,17 +71,13 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         if (StringUtils.isNotEmpty(bookIdStr)) {
             Integer bookId = Integer.parseInt(bookIdStr);
             try {
-                update(bookId);
+                BookView bookView = bookViewService.getByBookId(bookId);
+                updateNet(bookView);
             } catch (Exception e) {
                 Log.error("update rank failed :" + bookIdStr, e);
             }
         }
 
-    }
-
-    public void update(Integer bookId) {
-        BookView bookView = bookViewService.getByBookId(bookId);
-        updateNet(bookId, bookView);
     }
 
 
@@ -91,33 +87,29 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookId
      * @param bookView
      */
-    private void updateNet(Integer bookId, BookView bookView) {
-        List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-        if (CollectionUtils.isNotEmpty(bookInfoList)) {
-
-            Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer activeIndex = getNewActiveIndex(bookView);
+    public void updateNet(BookView bookView) {
+        Integer hotIndex = getNewHotIndex(bookView);
+        Integer propagationIndex = getNewPropogationIndex(bookView);
+        Integer activeIndex = getNewActiveIndex(bookView);
 
 
-            bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.activityIndex(activeIndex);
+        bookView.hotIndex(hotIndex);
+        bookView.propagateIndex(propagationIndex);
+        bookView.activityIndex(activeIndex);
 
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
+        Integer developIndex = getNewDevelopIndex(bookView);
+        bookView.developIndex(developIndex);
 
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
+        Integer compositeIndex = getNewCompositeIndex(bookView);
+        bookView.compositeIndex(compositeIndex);
 
-            //更新指数
-            bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
+        //更新指数
+        bookViewService.update(bookView);
+//        updateHistoryIndex(bookView);
 
-            //指数写入到redis用于排名
+        //指数写入到redis用于排名
 //            updateRank(bookView);
 
-        }
     }
 
 
@@ -173,10 +165,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         TieBa tieBa = tieBaService.getById(bookView.getBookId());
         if (tieBa != null) {
             TieBaHistory tieBaHistory = tieBaHistoryService.getLatestHistoryByBookId(bookView.getBookId());
-
-            Integer temp = (1 + tieBa.getPostNum() / tieBa.getFollowNum() - tieBaHistory.getPostNum() / tieBaHistory.getFollowNum());
-            index = (tieBa.getFollowNum() + tieBa.getFollowNum() / tieBa.getPopularitySort()) * temp * temp;
+            if (tieBaHistory != null) {
+                Integer lastFollowNum = tieBaHistory.getFollowNum();
+                Integer currentFollowNum = tieBa.getFollowNum();
+                if ((lastFollowNum != null && lastFollowNum > 0) && (currentFollowNum != null && currentFollowNum > 0)) {
+                    Integer temp = (1 + tieBa.getPostNum() / currentFollowNum - tieBaHistory.getPostNum() / lastFollowNum);
+                    Integer rankNum = tieBa.getPopularitySort();
+                    if (rankNum != null && rankNum > 0) {
+                        index = (tieBa.getFollowNum() + tieBa.getFollowNum() / rankNum) * temp * temp;
+                    }
+                }
+            } else {
+                index = tieBa.getFollowNum();
+            }
         }
+
         return index;
     }
 
@@ -209,10 +212,10 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         try {
             Integer hotIndex = bookView.getHotIndex();
             Integer propagationIndex = bookView.getPropagateIndex();
-            Integer reputationIndex = bookView.getReputationIndex();
+            Integer activeIndex = bookView.getActivityIndex();
             Integer developIndex = bookView.getDevelopIndex();
 
-            Double compositeIndex = 0.1 * (3 * (hotIndex + propagationIndex) + 2 * (reputationIndex + developIndex));
+            Double compositeIndex = 0.1 * (3 * (hotIndex + propagationIndex) + 2 * (activeIndex + developIndex));
 
             Integer index = compositeIndex.intValue();
             if (index > 0) {
