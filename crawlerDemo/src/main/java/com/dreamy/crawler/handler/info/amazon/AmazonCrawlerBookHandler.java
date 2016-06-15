@@ -23,14 +23,21 @@ public class AmazonCrawlerBookHandler {
         //String url = "https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171";
         String url = "https://www.amazon.cn/s/ref=sr_st_review-rank?keywords=" + isbn + "&rh=n%3A658390051%2Ck%3A9787535438171&qid=1465986426&__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&sort=review-rank&ajr=2";
         String html = HttpUtils.getHtmlGet(url);
-        Document document = Jsoup.parse(html);
-        Elements elements = document.select("div.a-fixed-left-grid-inner>div>div>a");
-        if (elements != null && elements.size() >= 1) {
-            Element element = elements.first();
-            String crawlerUrl = element.attr("href");
-            BookInfo bookInfo = crawler(crawlerUrl, operation);
-            return bookInfo;
+        if (StringUtils.isNotEmpty(html)&&!html.equals("503")) {
+            Document document = Jsoup.parse(html);
+            if (document != null) {
+                Elements elements = document.select("div.a-fixed-left-grid-inner>div>div>a");
+                if (elements != null && elements.size() >= 1) {
+                    Element element = elements.first();
+                    String crawlerUrl = element.attr("href");
+                    BookInfo bookInfo = crawler(crawlerUrl, operation);
+                    return bookInfo;
 
+                }
+            }
+        }
+        else if(html.equals("503")){
+            System.out.println(503);
         }
 
         return null;
