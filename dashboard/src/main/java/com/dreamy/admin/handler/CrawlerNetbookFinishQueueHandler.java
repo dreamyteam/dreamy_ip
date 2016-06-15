@@ -95,25 +95,24 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
         if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
-            //计算指数
-//            Integer hotIndex = getNewHotIndex(bookView);
-//            Integer propagationIndex = getNewPropogationIndex(bookView);
-//            Integer activeIndex = getNewActiveIndex(bookView);
-//
-//
-//            bookView.hotIndex(hotIndex);
-//            bookView.propagateIndex(propagationIndex);
-//            bookView.activityIndex(activeIndex);
-//
-//            Integer developIndex = getNewDevelopIndex(bookView);
-//            bookView.developIndex(developIndex);
-//
-//            Integer compositeIndex = getNewCompositeIndex(bookView);
-//            bookView.compositeIndex(compositeIndex);
-//
-//            //更新指数
-//            bookViewService.update(bookView);
-//            updateHistoryIndex(bookView);
+            Integer hotIndex = getNewHotIndex(bookView);
+            Integer propagationIndex = getNewPropogationIndex(bookView);
+            Integer activeIndex = getNewActiveIndex(bookView);
+
+
+            bookView.hotIndex(hotIndex);
+            bookView.propagateIndex(propagationIndex);
+            bookView.activityIndex(activeIndex);
+
+            Integer developIndex = getNewDevelopIndex(bookView);
+            bookView.developIndex(developIndex);
+
+            Integer compositeIndex = getNewCompositeIndex(bookView);
+            bookView.compositeIndex(compositeIndex);
+
+            //更新指数
+            bookViewService.update(bookView);
+            updateHistoryIndex(bookView);
 
             //指数写入到redis用于排名
 //            updateRank(bookView);
@@ -138,7 +137,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
             Integer ticketNum = netBookInfo.getTicketNum();
 
             Double searchIndex = bookScoreService.getSearchIndexByBookId(bookView.getBookId());
-            Double temp = percent * (((Math.log10(totalClick) * Math.log10(totalRecommendNum)) + ticketNum)) * Math.log10(searchIndex);
+            Double temp = percent * (((Math.log10(totalClick) * Math.log10(totalRecommendNum)) * 1000 + ticketNum)) * Math.log10(searchIndex);
             hotIndex = temp.intValue();
         }
 
@@ -170,11 +169,15 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @return
      */
     private Integer getNewActiveIndex(BookView bookView) {
+        Integer index = 10;
         TieBa tieBa = tieBaService.getById(bookView.getBookId());
-        TieBaHistory tieBaHistory = tieBaHistoryService.getLatestHistoryByBookId(bookView.getBookId());
+        if (tieBa != null) {
+            TieBaHistory tieBaHistory = tieBaHistoryService.getLatestHistoryByBookId(bookView.getBookId());
 
-        Integer temp = (1 + tieBa.getPostNum() / tieBa.getFollowNum() - tieBaHistory.getPostNum() / tieBaHistory.getFollowNum());
-        return (tieBa.getFollowNum() + tieBa.getFollowNum() / tieBa.getPopularitySort()) * temp * temp;
+            Integer temp = (1 + tieBa.getPostNum() / tieBa.getFollowNum() - tieBaHistory.getPostNum() / tieBaHistory.getFollowNum());
+            index = (tieBa.getFollowNum() + tieBa.getFollowNum() / tieBa.getPopularitySort()) * temp * temp;
+        }
+        return index;
     }
 
     /**
@@ -183,13 +186,17 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewDevelopIndex(BookView bookView) {
-        Integer index = bookView.getDevelopIndex();
-        Integer hotIndex = bookView.getHotIndex();
-        Integer propagationIndex = bookView.getPropagateIndex();
+        try {
+            String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
+            Integer index = Integer.parseInt(developIndex);
+            if (index > 0) {
+                return index;
+            }
+        } catch (Exception e) {
+            Log.error("update develop index failed :" + bookView.getId(), e);
+        }
 
-
-
-        return index;
+        return bookView.getDevelopIndex();
     }
 
 
