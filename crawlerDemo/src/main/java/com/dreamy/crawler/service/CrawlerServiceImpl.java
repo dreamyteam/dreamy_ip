@@ -366,7 +366,9 @@ public class CrawlerServiceImpl implements CrawlerService {
                 history.setCommentNum(bookScore.getCommentNum());
                 history.setSaleSort(bookScore.getSaleSort());
                 history.setScore(bookScore.getScore());
+                history.setId(bookId + "-" + type + "-" + TimeUtils.toString(null, new Date()));
                 bookScoreHistoryService.updateInser(history);
+
                 return null;
             }
         });
