@@ -1,7 +1,6 @@
 package com.dreamy.admin.IndexCalculation.book.net;
 
-import com.dreamy.admin.IndexCalculation.book.BookSourceHandler;
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
+import com.dreamy.admin.IndexCalculation.book.BookSourceBaseHandler;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
@@ -20,7 +19,7 @@ import java.util.Map;
  * Time: 下午1:45
  */
 @Component
-public abstract class NetBookSourceHandler implements BookSourceHandler {
+public abstract class NetBookSourceBaseHandler implements BookSourceBaseHandler {
 
     @Autowired
     NetManage netManage;

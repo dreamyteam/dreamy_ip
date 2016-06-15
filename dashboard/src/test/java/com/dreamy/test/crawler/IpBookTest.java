@@ -1,6 +1,6 @@
 package com.dreamy.test.crawler;
 
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
@@ -164,7 +164,7 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        Map<Integer, ChubanBookSourceHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
 
 
         int currentPage = 1;
@@ -178,7 +178,7 @@ public class IpBookTest extends BaseJunitTest {
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                        for (ChubanBookSourceHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                        for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
                             Integer index = chubanBookSourceHandler.getHotIndex(bookView);
                             System.err.println("hello");
                         }

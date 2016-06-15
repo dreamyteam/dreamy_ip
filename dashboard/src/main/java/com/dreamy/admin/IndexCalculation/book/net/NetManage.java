@@ -1,6 +1,5 @@
 package com.dreamy.admin.IndexCalculation.book.net;
 
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,16 +13,16 @@ import java.util.Map;
  */
 @Component
 public class NetManage {
-    private Map<Integer, NetBookSourceHandler> handlers = new HashMap<Integer, NetBookSourceHandler>();
+    private Map<Integer, NetBookSourceBaseHandler> handlers = new HashMap<Integer, NetBookSourceBaseHandler>();
 
-    public synchronized void register(NetBookSourceHandler handler) {
+    public synchronized void register(NetBookSourceBaseHandler handler) {
         if (handler != null && handler.getHandlerId() > 0) {
             handlers.put(handler.getHandlerId(), handler);
         }
     }
 
-    public NetBookSourceHandler getHandler(int source) {
-        NetBookSourceHandler handler = null;
+    public NetBookSourceBaseHandler getHandler(int source) {
+        NetBookSourceBaseHandler handler = null;
         if (source > 0) {
             handler = handlers.get(source);
         }
@@ -31,7 +30,7 @@ public class NetManage {
         return handler;
     }
 
-    public Map<Integer, NetBookSourceHandler> getHandlerMap() {
+    public Map<Integer, NetBookSourceBaseHandler> getHandlerMap() {
         return handlers;
     }
 }

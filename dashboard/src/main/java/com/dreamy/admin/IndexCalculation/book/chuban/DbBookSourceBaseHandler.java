@@ -2,6 +2,7 @@ package com.dreamy.admin.IndexCalculation.book.chuban;
 
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.enums.ChubanBookDataSourceEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,18 @@ import org.springframework.stereotype.Component;
  * Date: 16/6/15
  * Time: 下午1:47
  */
-
 @Component
-public class AmazonBookSourceHandler extends ChubanBookSourceHandler {
+public class DbBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
     @Autowired
     private BookScoreService bookScoreService;
 
-    private CrawlerSourceEnums crawlerSourceEnums = CrawlerSourceEnums.amazon;
+    private CrawlerSourceEnums crawlerSourceEnums = CrawlerSourceEnums.douban;
+
 
     @Override
     public Integer getHandlerId() {
-        return crawlerSourceEnums.getType();
+        return ChubanBookDataSourceEnums.douban.getSource();
     }
 
     @Override

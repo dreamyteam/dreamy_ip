@@ -8,7 +8,7 @@ import com.dreamy.domain.ipcool.BookView;
  * Date: 16/6/15
  * Time: 下午1:38
  */
-public interface BookSourceHandler {
+public interface BookSourceBaseHandler {
 
     /**
      *

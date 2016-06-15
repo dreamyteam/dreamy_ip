@@ -1,7 +1,7 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
@@ -71,11 +71,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         BookView bookView = bookViewService.getByBookId(bookId);
 
         if (bookView != null) {
-            if (bookView.getType().equals(IpTypeEnums.chuban.getType())) {
-                updateChuban(bookId, bookView);
-            } else {
-                updateNet(bookId, bookView);
-            }
+            updateChuban(bookId, bookView);
         }
     }
 
@@ -118,58 +114,19 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
 
     /**
-     * 出版文学更新
-     *
-     * @param bookId
-     * @param bookView
-     */
-    private void updateNet(Integer bookId, BookView bookView) {
-        List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-        if (CollectionUtils.isNotEmpty(bookInfoList)) {
-
-            //计算指数
-            Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer reputationIndex = getNewReputationIndex(bookView);
-
-
-            bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.reputationIndex(reputationIndex);
-
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
-
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
-
-
-            //更新指数
-            bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
-
-            //指数写入到redis用于排名
-            updateRank(bookView);
-
-        }
-    }
-
-
-    /**
      * 获取新的火热指数
      *
      * @param bookView
      */
     private Integer getNewHotIndex(BookView bookView) {
-        Map<Integer, ChubanBookSourceHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
         try {
-            Integer hotScore = 10;
-            for (ChubanBookSourceHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
-                hotScore += chubanBookSourceHandler.getHotIndex(bookView);
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                index += chubanBookSourceHandler.getHotIndex(bookView);
             }
 
-            Double temp = Math.log10(hotScore + (hotScore * bookScoreService.getSearchIndexByBookId(bookView.getBookId()) / 300)) * 1000;
-            return temp.intValue();
+            return index;
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }

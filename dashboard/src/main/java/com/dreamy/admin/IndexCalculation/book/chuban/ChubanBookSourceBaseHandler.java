@@ -1,19 +1,13 @@
 package com.dreamy.admin.IndexCalculation.book.chuban;
 
-import com.dreamy.admin.IndexCalculation.book.BookSourceHandler;
-import com.dreamy.beans.Page;
+import com.dreamy.admin.IndexCalculation.book.BookSourceBaseHandler;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.service.iface.ipcool.BookScoreService;
-import com.dreamy.service.iface.ipcool.KeyWordService;
-import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +19,7 @@ import java.util.Map;
  * Time: 下午1:45
  */
 @Component
-public abstract class ChubanBookSourceHandler implements BookSourceHandler {
+public abstract class ChubanBookSourceBaseHandler implements BookSourceBaseHandler {
 
     @Autowired
     ChubanManage chubanManage;

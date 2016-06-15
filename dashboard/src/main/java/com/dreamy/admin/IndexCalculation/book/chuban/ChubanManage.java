@@ -13,16 +13,16 @@ import java.util.Map;
  */
 @Component
 public class ChubanManage {
-    private Map<Integer, ChubanBookSourceHandler> handlers = new HashMap<Integer, ChubanBookSourceHandler>();
+    private Map<Integer, ChubanBookSourceBaseHandler> handlers = new HashMap<Integer, ChubanBookSourceBaseHandler>();
 
-    public synchronized void register(ChubanBookSourceHandler handler) {
+    public synchronized void register(ChubanBookSourceBaseHandler handler) {
         if (handler != null && handler.getHandlerId() > 0) {
             handlers.put(handler.getHandlerId(), handler);
         }
     }
 
-    public ChubanBookSourceHandler getHandler(int source) {
-        ChubanBookSourceHandler handler = null;
+    public ChubanBookSourceBaseHandler getHandler(int source) {
+        ChubanBookSourceBaseHandler handler = null;
         if (source > 0) {
             handler = handlers.get(source);
         }
@@ -30,7 +30,7 @@ public class ChubanManage {
         return handler;
     }
 
-    public Map<Integer, ChubanBookSourceHandler> getHandlerMap() {
+    public Map<Integer, ChubanBookSourceBaseHandler> getHandlerMap() {
         return handlers;
     }
 }
