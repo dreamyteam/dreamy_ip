@@ -30,7 +30,7 @@
                 </div>
                 <div class="input_content introduce">
                     <h3 class="personal_information_label">一句话介绍自己</h3>
-                    <textarea type="text" name="info" value="$!user.info"></textarea>
+                    <input type="text" name="info" value="$!user.info" />
                 </div>
                 <input type="submit" value="保存"/>
 
