@@ -11,6 +11,12 @@ import com.dreamy.domain.ipcool.BookView;
 public interface BookSourceHandler {
 
     /**
+     *
+     * @return
+     */
+    Integer getHandlerId();
+
+    /**
      * 获取火热
      *
      * @param bookView

@@ -1,6 +1,8 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,9 +45,11 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private RedisClientService redisClientService;
 
-
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
+
+    @Autowired
+    private ChubanManage chubanManage;
 
 
     @Override
@@ -156,12 +161,15 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewHotIndex(BookView bookView) {
+        Map<Integer, ChubanBookSourceHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
         try {
-            String hotIndexStr = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-            Integer hotIndex = Integer.parseInt(hotIndexStr);
-            if (hotIndex > 0) {
-                return hotIndex;
+            Integer hotScore = 10;
+            for (ChubanBookSourceHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                hotScore += chubanBookSourceHandler.getHotIndex(bookView);
             }
+
+            Double temp = Math.log10(hotScore + (hotScore * bookScoreService.getSearchIndexByBookId(bookView.getBookId()) / 300)) * 1000;
+            return temp.intValue();
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }

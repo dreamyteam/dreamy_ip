@@ -5,8 +5,8 @@ import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.Resource;
+import org.springframework.stereotype.Component;
+ 
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,16 +14,18 @@ import javax.annotation.Resource;
  * Date: 16/6/15
  * Time: 下午1:47
  */
-@Resource
+@Component
 public class DdBookSourceHandler extends ChubanBookSourceHandler {
 
     @Autowired
     private BookScoreService bookScoreService;
 
-    private CrawlerSourceEnums crawlerSourceEnums;
+    private CrawlerSourceEnums crawlerSourceEnums=CrawlerSourceEnums.dangdang;
 
-    public DdBookSourceHandler() {
-        this.crawlerSourceEnums = CrawlerSourceEnums.dangdang;
+
+    @Override
+    public Integer getHandlerId() {
+        return crawlerSourceEnums.getType();
     }
 
     @Override

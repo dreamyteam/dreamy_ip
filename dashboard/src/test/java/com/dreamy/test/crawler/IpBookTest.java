@@ -1,5 +1,7 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
@@ -53,6 +55,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private UpdateNetBookIndexTask updateNetBookIndexTask;
+
+    @Autowired
+    private ChubanManage chubanManage;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
@@ -159,31 +164,36 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        String a = "877771";
-        String b = "877769";
-        String c = "877772";
-
-        String A = getLnValue(a);
-        String B = getLnValue(b);
-        String C = getLnValue(c);
+        Map<Integer, ChubanBookSourceHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
 
 
-        System.err.println("111");
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
 
+        while (isLoop) {
+            try {
+                page.setCurrentPage(currentPage);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+                if (CollectionUtils.isNotEmpty(bookViewList)) {
+                    for (BookView bookView : bookViewList) {
+                        for (ChubanBookSourceHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                            Integer index = chubanBookSourceHandler.getHotIndex(bookView);
+                            System.err.println("hello");
+                        }
+                    }
+                    currentPage++;
+                } else {
+                    isLoop = false;
+                }
 
-    }
-
-    public String getLnValue(String value) {
-        Double temp = 1.0;
-        Integer length = value.length();
-        Integer i = 0;
-        for (; i < length - 1; i++) {
-            String subStr = value.substring(i);
-            temp += 10 * Math.log10(Double.valueOf(subStr));
+            } catch (Exception e) {
+                break;
+            }
         }
-        temp += Math.log10(10 * Double.valueOf(value.substring(length - 1)));
-        temp =  Math.log10(Double.parseDouble(value));
-        return temp.toString();
+
+
     }
 
 }
