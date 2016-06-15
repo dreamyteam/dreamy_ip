@@ -44,11 +44,15 @@ public class DataWeiBoHandler {
             Map<String, Object> age = (Map<String, Object>) data.get("age");
             Map<String, Object> ageKeys2 = (Map<String, Object>) age.get("key2");
             Map<String, String> ages = (Map<String, String>) ageKeys2.get("0");
-            Collection<String> list = ages.values();
-            String[] array = (String[]) list.toArray(new String[list.size()]);
-            bookIndexData.setAge(array);
-            bookIndexData.setMale(keys2.get("man").toString());
-            bookIndexData.setFemale(keys2.get("woman").toString());
+            if (ages != null) {
+                Collection<String> list = ages.values();
+                String[] array = (String[]) list.toArray(new String[list.size()]);
+                bookIndexData.setAge(array);
+            }
+            if (keys2 != null) {
+                bookIndexData.setMale(keys2.get("man").toString());
+                bookIndexData.setFemale(keys2.get("woman").toString());
+            }
 
         }
 
