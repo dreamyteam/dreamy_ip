@@ -80,10 +80,37 @@
                 <div class="state_identify_container">
                     <h3>尚未认证</h3>
                     <p>认证后可完善从业经历，大大提高行业知名度</p>
-                    <a class="start_identify" href="/authPersonal?pageName=auth">开始认证</a>
+                    <a class="start_identify" href="">开始认证</a>
                 </div>
                 <!-- 尚未认证 -->
             #end
+            <div class="start_identify_container">
+                <div class="start_identify_content">
+                    <a href="user/authPersonal" class="go_identify">个人信息认证</a>
+                    <div class="inner">
+                        <span class="info">请提前做好如下资料准备</span>
+                        <ul>
+                            <li>有效身份证件</li>
+                            <li>相关作品文件</li>
+                            <li>个人授权协议</li>
+                        </ul>
+                        <button class="download">个人认证请下载授权模板</button>
+                    </div>
+                </div>
+                <div class="start_identify_content">
+                    <a href="user/authBusiness" class="go_identify">企业信息认证</a>
+                    <div class="inner">
+                        <span class="info">请提前做好如下资料准备</span>
+                        <ul>
+                            <li>有效企业证件</li>
+                            <li>企业对公银行账户</li>
+                            <li>企业授权协议</li>
+                        </ul>
+                        <button class="download">企业认证请下载授权模板</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>
