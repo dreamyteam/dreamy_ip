@@ -21,7 +21,7 @@ import java.util.Map;
 public class DouBanBookService {
 
 
-    @Value("${queue_crawler_douban_book}")
+    @Value("${queue_douban_crawler}")
     private String queueName;
     @Autowired
     QueueService queueService;
