@@ -36,39 +36,4 @@ public interface BookScoreService {
      */
     public BookScore getByBookIdAndSource(Integer bookId, Integer type);
 
-    /**
-     * @param bookId
-     * @param options
-     * @return
-     */
-    public String getBookHotIndexByBookId(Integer bookId);
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getPropagateIndexByBookId(Integer bookId);
-
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getDevelopIndexByRecord(BookView bookView);
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getReputationIndexByBookId(Integer bookId);
-
-    /**
-     *
-     * @param bookId
-     * @return
-     */
-    Double getSearchIndexByBookId(Integer bookId);
-
-
-
 }

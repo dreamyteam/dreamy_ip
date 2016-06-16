@@ -120,7 +120,7 @@ public class CawlerTest extends BaseJunitTest {
     @Test
     public void tt() {
         BookView bookView = bookViewService.getByBookId(516);
-        String tt = bookScoreService.getDevelopIndexByRecord(bookView);
+//        String tt = bookScoreService.getDevelopIndexByRecord(bookView);
         System.err.println("111");
     }
 

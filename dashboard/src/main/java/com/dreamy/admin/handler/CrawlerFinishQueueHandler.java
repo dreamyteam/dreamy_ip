@@ -5,6 +5,7 @@ import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
@@ -41,6 +42,9 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     private BookScoreService bookScoreService;
+
+    @Autowired
+    private PeopleChartService peopleChartService;
 
     @Autowired
     private RedisClientService redisClientService;
@@ -183,11 +187,26 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      */
     private Integer getNewDevelopIndex(BookView bookView) {
         try {
-            String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-            Integer index = Integer.parseInt(developIndex);
-            if (index > 0) {
-                return index;
+            Double developScore = 10.0;
+            Integer hotIndex = bookView.getHotIndex();
+            Integer propagationIndex = bookView.getPropagateIndex();
+
+            developScore += (hotIndex + propagationIndex) * 0.5;
+
+            List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
+            if (CollectionUtils.isNotEmpty(peopleChartList)) {
+                int i = 0;
+                Double sexScore = 0.0;
+                for (PeopleChart peopleChart : peopleChartList) {
+                    sexScore += 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                    i++;
+                }
+
+                developScore *= (sexScore / i) / (20.512);
             }
+
+            return developScore.intValue();
+
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
