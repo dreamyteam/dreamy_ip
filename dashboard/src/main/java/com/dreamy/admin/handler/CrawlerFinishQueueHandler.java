@@ -92,24 +92,24 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
             //计算指数
             Integer hotIndex = getNewHotIndex(bookView);
-//            Integer propagationIndex = getNewPropogationIndex(bookView);
-//            Integer reputationIndex = getNewReputationIndex(bookView);
+            Integer propagationIndex = getNewPropogationIndex(bookView);
+            Integer reputationIndex = getNewReputationIndex(bookView);
 
 
             bookView.hotIndex(hotIndex);
-//            bookView.propagateIndex(propagationIndex);
-//            bookView.reputationIndex(reputationIndex);
-//
-//            Integer developIndex = getNewDevelopIndex(bookView);
-//            bookView.developIndex(developIndex);
-//
-//            Integer compositeIndex = getNewCompositeIndex(bookView);
-//            bookView.compositeIndex(compositeIndex);
+            bookView.propagateIndex(propagationIndex);
+            bookView.reputationIndex(reputationIndex);
+
+            Integer developIndex = getNewDevelopIndex(bookView);
+            bookView.developIndex(developIndex);
+
+            Integer compositeIndex = getNewCompositeIndex(bookView);
+            bookView.compositeIndex(compositeIndex);
 
 
             //更新指数
             bookViewService.update(bookView);
-//            updateHistoryIndex(bookView);
+            updateHistoryIndex(bookView);
 
             //指数写入到redis用于排名
 //            updateRank(bookView);
@@ -191,19 +191,13 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             Double developScore = 10.0;
             Integer hotIndex = bookView.getHotIndex();
             Integer propagationIndex = bookView.getPropagateIndex();
-
             developScore += (hotIndex + propagationIndex) * 0.5;
 
             List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
             if (CollectionUtils.isNotEmpty(peopleChartList)) {
-                int i = 0;
-                Double sexScore = 0.0;
-                for (PeopleChart peopleChart : peopleChartList) {
-                    sexScore += 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
-                    i++;
-                }
-
-                developScore *= (sexScore / i) / (20.512);
+                PeopleChart peopleChart = peopleChartList.get(0);
+                Double sexScore = 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                developScore *= sexScore / (20.512);
             }
 
             return developScore.intValue();
