@@ -2,6 +2,8 @@ package com.dreamy.mogodb.beans.tieba;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
+
 /**
  * Created by wangyongxing on 16/6/12.
  */
@@ -32,6 +34,8 @@ public class TieBa {
      * 目录
      */
     private String category;
+
+    private Date updatedAt;
 
 
     public Integer getBookId() {
@@ -96,5 +100,13 @@ public class TieBa {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
