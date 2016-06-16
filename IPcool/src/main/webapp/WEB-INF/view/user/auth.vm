@@ -99,7 +99,7 @@
                     <div class="start_identify_container">
 
                         <div class="start_identify_content">
-                            <a href="/user/authPersonal" class="go_identify">个人信息认证</a>
+                            <a href="/user/authPersonal?pageName=auth" class="go_identify">个人信息认证</a>
                             <div class="inner">
                                 <span class="info">请提前做好如下资料准备</span>
                                 <ul>
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="start_identify_content">
-                            <a href="/user/authBusiness" class="go_identify">企业信息认证</a>
+                            <a href="/user/authBusiness?pageName=auth" class="go_identify">企业信息认证</a>
 
                             <div class="inner">
                                 <span class="info">请提前做好如下资料准备</span>
