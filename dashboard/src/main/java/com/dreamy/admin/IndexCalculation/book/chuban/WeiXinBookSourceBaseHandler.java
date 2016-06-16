@@ -30,7 +30,7 @@ public class WeiXinBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.weixin.getType());
         if (keyWord != null) {
-            Double propagateIndex = Math.log10(KeyWordEnums.weixin.getPercent() * keyWord.getIndexNum()) * 1000;
+            Double propagateIndex = KeyWordEnums.weixin.getPercent() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 

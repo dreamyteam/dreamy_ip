@@ -68,7 +68,7 @@ public class S360BookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.so.getType());
         if (keyWord != null) {
-            Double propagateIndex = Math.log10(KeyWordEnums.so.getPercent() * keyWord.getIndexNum()) * 1000;
+            Double propagateIndex = KeyWordEnums.so.getPercent() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 

@@ -67,7 +67,7 @@ public class WeiboBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.weibo.getType());
         if (keyWord != null) {
-            Double propagateIndex = Math.log10(KeyWordEnums.weibo.getPercent() * keyWord.getIndexNum()) * 1000;
+            Double propagateIndex = KeyWordEnums.weibo.getPercent() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 

@@ -32,7 +32,7 @@ public class BaiduBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.baidu.getType());
         if (keyWord != null) {
-            Double propagateIndex = Math.log10(KeyWordEnums.baidu.getPercent() * keyWord.getIndexNum()) * 1000;
+            Double propagateIndex = KeyWordEnums.baidu.getPercent() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 
