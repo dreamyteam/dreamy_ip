@@ -37,8 +37,8 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        //获取类型
-        String title = jsonObject.getString("name");
+
+        String word = jsonObject.getString("index_keyword");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         String cookie = jsonObject.getString("cookie");
@@ -55,7 +55,7 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
                 crawlerService.saveBookIndexDataHistory(bookIndexData);
             }
         } catch (Exception e) {
-            log.error("DataWeiBoIndexQueueHandler  failed: bookId:" + bookId + " word:" + title, e);
+            log.error("DataWeiBoIndexQueueHandler  failed: bookId:" + bookId + " word:" + word, e);
         } finally {
             crawlerService.check(key, bookId,type);
             try {

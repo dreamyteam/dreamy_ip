@@ -136,7 +136,7 @@ public class UpdateChubanBookIndexTask {
             return;
         }
 
-        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
         if (CollectionUtils.isEmpty(commonParams)) {
             return;
@@ -184,23 +184,23 @@ public class UpdateChubanBookIndexTask {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
 
-                Map<String, String> params = commonParams;
 
-                params.put("name", "《" + bookView.getName() + "》 " + bookView.getAuthor());
-                pushToQueue(newsSougouQueue, params);
-                pushToQueue(s360IndexQueue, params);
+                pushToQueue(newsSougouQueue, commonParams);
+                pushToQueue(s360IndexQueue, commonParams);
+
+                pushToQueue(bsKeyWordQueue, commonParams);
+                pushToQueue(wbKeyWordQueue, commonParams);
+                pushToQueue(wxKeyWordQueue, commonParams);
 
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {
-                    params.put("cookie", hotWord.getCookie());
-                    pushToQueue(wbIndexQueue, params);
+                    commonParams.put("cookie", hotWord.getCookie());
+                    pushToQueue(wbIndexQueue, commonParams);
                 } else {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
 
-                pushToQueue(bsKeyWordQueue, params);
-                pushToQueue(wbKeyWordQueue, params);
-                pushToQueue(wxKeyWordQueue, params);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

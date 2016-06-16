@@ -128,18 +128,15 @@ public class UpdateNetBookIndexTask {
         if (CollectionUtils.isEmpty(bookCrawlerInfoList)) {
             return;
         }
-
-
+        
         BookCrawlerInfo crawlerInfo = bookCrawlerInfoList.get(0);
-        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
         if (CollectionUtils.isEmpty(commonParams)) {
             return;
         }
 
         commonParams.put("type", IpTypeEnums.net.getType().toString());
         commonParams.put("url", crawlerInfo.getUrl());
-
-
         String cacheKey = commonParams.get("key");
         Long count = redisClientService.getNumber(cacheKey);
         if (count == null || count == 0) {
@@ -156,15 +153,12 @@ public class UpdateNetBookIndexTask {
                 redisClientService.incrBy(cacheKey, -1L);
             }
 
-            if (StringUtils.isNotEmpty(bookView.getName())) {
-                commonParams.put("name", bookView.getName());
-                pushToQueue(tbQueue, commonParams);
-            } else {
-                redisClientService.incrBy(cacheKey, -1L);
-            }
-
+            pushToQueue(tbQueue, commonParams);
             pushToQueue(newsSougouQueue, commonParams);
             pushToQueue(s360IndexQueue, commonParams);
+            pushToQueue(bsKeyWordQueue, commonParams);
+            pushToQueue(wbKeyWordQueue, commonParams);
+            pushToQueue(wxKeyWordQueue, commonParams);
 
             HotWord hotWord = hotWordService.getById(bookView.getBookId());
             if (hotWord != null) {
@@ -173,9 +167,7 @@ public class UpdateNetBookIndexTask {
             } else {
                 redisClientService.incrBy(cacheKey, -1L);
             }
-            pushToQueue(bsKeyWordQueue, commonParams);
-            pushToQueue(wbKeyWordQueue, commonParams);
-            pushToQueue(wxKeyWordQueue, commonParams);
+
 
         }
     }
