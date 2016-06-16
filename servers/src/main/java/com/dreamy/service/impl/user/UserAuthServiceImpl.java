@@ -34,24 +34,24 @@ public class UserAuthServiceImpl implements UserAuthService {
         UserAuthConditions conditions = new UserAuthConditions();
         conditions.createCriteria().andUserIdEqualTo(userId);
         List<UserAuth> list = userAuthDao.selectByExample(conditions);
-        if(CollectionUtils.isNotEmpty(list)) {
-            userAuth = list.get(0);
-            if(userAuth != null && userAuth.getId() > 0) {
-                List<Integer> l = new ArrayList<Integer>();
-                String[] str = userAuth.getPart().split(",");
-                for(int i=0; i<str.length; i++) {
-                    l.add(Integer.parseInt(str[i]));
-                }
-                UserPartConditions userPartConditions = new UserPartConditions();
-                userPartConditions.createCriteria().andIdIn(l);
-                List<UserPart> partList = userPartDao.selectByExample(userPartConditions);
-                StringBuffer parts = new StringBuffer();
-                for(UserPart up : partList) {
-                    parts.append(up.getName()+"  ");
-                }
-                userAuth.setPart(parts.toString());
-            }
-        }
+//        if(CollectionUtils.isNotEmpty(list)) {
+//            userAuth = list.get(0);
+//            if(userAuth != null && userAuth.getId() > 0) {
+//                List<Integer> l = new ArrayList<Integer>();
+//                String[] str = userAuth.getPart().split(",");
+//                for(int i=0; i<str.length; i++) {
+//                    l.add(Integer.parseInt(str[i]));
+//                }
+//                UserPartConditions userPartConditions = new UserPartConditions();
+//                userPartConditions.createCriteria().andIdIn(l);
+//                List<UserPart> partList = userPartDao.selectByExample(userPartConditions);
+//                StringBuffer parts = new StringBuffer();
+//                for(UserPart up : partList) {
+//                    parts.append(up.getName()+"  ");
+//                }
+//                userAuth.setPart(parts.toString());
+//            }
+//        }
         return userAuth;
     }
 

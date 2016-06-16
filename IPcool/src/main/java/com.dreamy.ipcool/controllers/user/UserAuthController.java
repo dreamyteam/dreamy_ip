@@ -5,7 +5,6 @@ import com.dreamy.beans.UserSession;
 import com.dreamy.domain.user.UserAuth;
 import com.dreamy.domain.user.UserPart;
 import com.dreamy.enums.ErrorCodeEnums;
-import com.dreamy.enums.UserAuthEnums;
 import com.dreamy.enums.UserPartEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.user.UserAuthService;
@@ -61,7 +60,7 @@ public class UserAuthController extends IpcoolController {
             List<UserPart> personalPart = userPartService.getUserPartByType(UserPartEnums.type_personal.getValue());
             map.put("personalPart", personalPart);
             map.put("pageName", request.getParameter("pageName"));
-            return "/user/auth_personal";
+            return "/user/auth_person";
         }
         return redirect("/");
     }
