@@ -2,10 +2,14 @@ package com.dreamy.crawler.service;
 
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.domain.ipcool.NewsMedia;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.mogodb.beans.tieba.TieBa;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/6.
@@ -35,6 +39,9 @@ public interface CrawlerService {
     public void saveNetBookDataHistory(NetBookInfo netBookInfo,Integer type);
 
     public void saveTieBaHistory(TieBa tieBa);
+
+
+    public void push(String isbn,Integer bookId,String url);
 
 
 }

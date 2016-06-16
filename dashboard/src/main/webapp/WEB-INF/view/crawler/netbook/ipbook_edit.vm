@@ -25,7 +25,7 @@
                         <input type="hidden" name="id" value="$!book.id">
 
                         <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">标题</label>
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">标题(搜索用)</label>
 
                             <div class="col-lg-10">
                                 <input type="text" class="required validate[required] form-control" value="$!book.title"

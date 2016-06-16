@@ -50,6 +50,18 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Value("${queue_crawler_netbook_over}")
     private String queueNetbookBookName;
 
+    @Value("${queue_jd_crawler}")
+    private String queueNameJd;
+
+    @Value("${queue_amazon_crawler}")
+    private String queueNameAmazon;
+
+    @Value("${queue_dangdang_crawler}")
+    private String queueNameDangDang;
+
+    @Value("${queue_douban_comment}")
+    private String commentQueueName;
+
     @Autowired
     private IpBookService ipBookService;
 
@@ -102,12 +114,13 @@ public class CrawlerServiceImpl implements CrawlerService {
                     bookCrawlerInfo.bookId(ipBook.getId());
                     bookCrawlerInfo.setSource(type);
                     if (StringUtils.isEmpty(url)) {
-                        bookCrawlerInfo.url(bookInfo.getUrl());
-                    } else {
-                        bookCrawlerInfo.url(url);
+                        url = bookInfo.getUrl();
                     }
+                    bookCrawlerInfo.setUrl(url);
                     bookCrawlerInfoService.save(bookCrawlerInfo);
                     bookInfo.setId(bookInfo.getISBN() + "_" + type);
+                    push(ipBook.getCode(), bookId, url);
+
                 } else {
                     bookInfo.setId(isbn + "_" + type);
                 }
@@ -159,16 +172,17 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId, Integer ipType) {
-        long num = redisClientService.incrBy(key, -1L);
-        if (num < 1) {
-            redisClientService.del(key);
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("bookId", bookId);
-
-            if (IpTypeEnums.chuban.getType().equals(ipType)) {
-                queueService.push(queueChuBanBookName, map);
-            } else {
-                queueService.push(queueNetbookBookName, map);
+        if (StringUtils.isNotEmpty(key)) {
+            long num = redisClientService.incrBy(key, -1L);
+            if (num < 1) {
+                redisClientService.del(key);
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("bookId", bookId);
+                if (IpTypeEnums.chuban.getType().equals(ipType)) {
+                    queueService.push(queueChuBanBookName, map);
+                } else {
+                    queueService.push(queueNetbookBookName, map);
+                }
             }
         }
     }
@@ -293,6 +307,18 @@ public class CrawlerServiceImpl implements CrawlerService {
                 return null;
             }
         });
+    }
+
+    @Override
+    public void push(String isbn, Integer bookId, String url) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("isbn", isbn);
+        map.put("url", url);
+        map.put("operation", OperationEnums.crawler.getCode());
+        queueService.push(queueNameJd, map);
+        queueService.push(queueNameAmazon, map);
+        queueService.push(queueNameDangDang, map);
+        queueService.push(commentQueueName, map);
     }
 
 

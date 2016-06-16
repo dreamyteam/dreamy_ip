@@ -27,19 +27,7 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     @Resource
     private BookCrawlerInfoDao bookCrawlerInfoDao;
 
-    @Autowired
-    private QueueService queueService;
-    @Value("${queue_jd_crawler}")
-    private String queueNameJd;
 
-    @Value("${queue_amazon_crawler}")
-    private String queueNameAmazon;
-
-    @Value("${queue_dangdang_crawler}")
-    private String queueNameDangDang;
-
-    @Value("${queue_douban_comment}")
-    private String commentQueueName;
 
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
@@ -58,17 +46,7 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
         return info;
     }
 
-    private void push(String isbn,Integer bookId,String url) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("isbn", isbn);
-        map.put("url", url);
-        map.put("operation", OperationEnums.crawler.getCode());
-        queueService.push(queueNameJd, map);
-        queueService.push(queueNameAmazon, map);
-        queueService.push(queueNameDangDang, map);
-        queueService.push(commentQueueName, map);
 
-    }
 
     @Override
     public List<BookCrawlerInfo> getByRecord(BookCrawlerInfo bookCrawlerInfo) {
