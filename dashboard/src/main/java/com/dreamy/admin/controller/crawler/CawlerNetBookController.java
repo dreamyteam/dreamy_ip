@@ -5,7 +5,9 @@ import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.IpBook;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IpBookStatusEnums;
+import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -73,6 +76,16 @@ public class CawlerNetBookController extends DashboardController {
         }
         return redirect("/crawler/netbook.html");
     }
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String view(HttpServletRequest request, @RequestParam(value = "id", required = true) Integer id, ModelMap model) {
 
+        IpBook ipBook = ipBookService.getById(id);
+        BookCrawlerInfo entity = new BookCrawlerInfo().bookId(ipBook.getId());
+        List<BookCrawlerInfo> list = bookCrawlerInfoService.getByRecord(entity);
+        model.put("book", ipBook);
+        model.put("currentSource", request.getParameter("source"));
+        model.put("sources", CrawlerSourceEnums.values());
+        return "/crawler/ipbook_view";
+    }
 
 }

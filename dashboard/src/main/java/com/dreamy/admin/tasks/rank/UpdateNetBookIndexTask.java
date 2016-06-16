@@ -94,26 +94,26 @@ public class UpdateNetBookIndexTask {
     private String newsSougouQueue;
 
 
-//    @Scheduled(cron = "0 55 16 * * ?")
+    //    @Scheduled(cron = "0 55 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
         Page page = new Page();
         page.setPageSize(500);
-        Boolean isLoop = true;
 
-        while (isLoop) {
+        while (true) {
             try {
                 page.setCurrentPage(currentPage);
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
-                if (CollectionUtils.isNotEmpty(bookViewList)) {
-                    for (BookView bookView : bookViewList) {
-                        updateByBookView(bookView);
-                    }
-                    currentPage++;
-                } else {
-                    isLoop = false;
+
+                for (BookView bookView : bookViewList) {
+                    updateByBookView(bookView);
                 }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+
 
             } catch (Exception e) {
                 LOGGER.error("update index jod error ", e);
@@ -173,7 +173,6 @@ public class UpdateNetBookIndexTask {
             } else {
                 redisClientService.incrBy(cacheKey, -1L);
             }
-
             pushToQueue(bsKeyWordQueue, commonParams);
             pushToQueue(wbKeyWordQueue, commonParams);
             pushToQueue(wxKeyWordQueue, commonParams);
