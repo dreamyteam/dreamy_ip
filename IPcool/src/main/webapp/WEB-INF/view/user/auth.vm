@@ -66,10 +66,12 @@
                                         <h3 class="info_title">手机</h3>
                                         <h4 class="info_value">$!userAuth.phone</h4>
                                     </div>
+                                    <!--
                                     <div class="info_content">
                                         <h3 class="info_title">签约公司</h3>
                                         <h4 class="info_value">$!userAuth.part</h4>
                                     </div>
+                                    -->
                                 </div>
                             </div>
                             <button class="submit">修改信息</button>
