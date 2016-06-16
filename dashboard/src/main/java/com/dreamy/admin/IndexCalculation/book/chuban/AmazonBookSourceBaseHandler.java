@@ -8,6 +8,8 @@ import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,4 +47,17 @@ public class AmazonBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
         return score;
     }
 
+    @Override
+    public Integer getReputationIndex(BookView bookView) {
+        BookScore bookScore = bookScoreService.getByBookIdAndSource(bookView.getBookId(), crawlerSourceEnums.getType());
+        if (bookScore != null) {
+            Double score = bookScore.getScore();
+            if (score != null && score > 0.0) {
+                Double tmp = crawlerSourceEnums.getPercent() * score;
+                return tmp.intValue();
+            }
+        }
+
+        return super.getReputationIndex(bookView);
+    }
 }

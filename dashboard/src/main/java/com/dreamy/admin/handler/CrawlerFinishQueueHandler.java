@@ -160,12 +160,15 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewReputationIndex(BookView bookView) {
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
+
         try {
-            String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-            Integer index = Integer.parseInt(reputationIndex);
-            if (index > 0) {
-                return index;
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                index += chubanBookSourceHandler.getReputationIndex(bookView);
             }
+
+            return index;
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
