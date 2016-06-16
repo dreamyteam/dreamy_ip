@@ -101,7 +101,7 @@ public class DataWeiBoHandler {
                 List<Map<String, Object>> zts = (List<Map<String, Object>>) map1.get("zt");
                 if (CollectionUtils.isNotEmpty(zts)) {
                     int size = zts.size();
-                    Map<String, Object> map2 = zts.get(size - 1);
+                    Map<String, Object> map2 = zts.get(size - 2);
                     bookIndexData.setLastDate((String) map2.get("day_key"));
                     bookIndexData.setIndex(Integer.valueOf((String) map2.get("value")));
                 }

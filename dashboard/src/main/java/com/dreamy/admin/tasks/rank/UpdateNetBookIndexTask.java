@@ -128,7 +128,7 @@ public class UpdateNetBookIndexTask {
         if (CollectionUtils.isEmpty(bookCrawlerInfoList)) {
             return;
         }
-        
+
         BookCrawlerInfo crawlerInfo = bookCrawlerInfoList.get(0);
         Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
         if (CollectionUtils.isEmpty(commonParams)) {

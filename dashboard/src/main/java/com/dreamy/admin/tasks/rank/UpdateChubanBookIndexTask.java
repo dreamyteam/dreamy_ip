@@ -94,7 +94,7 @@ public class UpdateChubanBookIndexTask {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
         Page page = new Page();
-        page.setPageSize(100);
+        page.setPageSize(200);
         Boolean isLoop = true;
 
         while (isLoop) {
