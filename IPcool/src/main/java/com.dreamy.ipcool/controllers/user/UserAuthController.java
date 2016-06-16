@@ -9,6 +9,7 @@ import com.dreamy.enums.UserPartEnums;
 import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.user.UserAuthService;
 import com.dreamy.service.iface.user.UserPartService;
+import com.dreamy.service.iface.user.UserService;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class UserAuthController extends IpcoolController {
     private UserAuthService userAuthService;
     @Autowired
     private UserPartService userPartService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/auth")
     public String auth(ModelMap map, HttpServletRequest request)  {
@@ -39,12 +42,7 @@ public class UserAuthController extends IpcoolController {
 
             UserAuth userAuth = userAuthService.getUserAuthByUserId(userSession.getUserId());
 
-            List<UserPart> personalPart = userPartService.getUserPartByType(UserPartEnums.type_personal.getValue());
-
-            List<UserPart> businessPart = userPartService.getUserPartByType(UserPartEnums.type_business.getValue());
-
-            map.put("personalPart", personalPart);
-            map.put("businessPart", businessPart);
+            map.put("user", userService.getUserById(userSession.getUserId()));
             map.put("userAuth", userAuth);
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth";
@@ -59,6 +57,7 @@ public class UserAuthController extends IpcoolController {
         if (userSession != null && userSession.getUserId() > 0) {
             List<UserPart> personalPart = userPartService.getUserPartByType(UserPartEnums.type_personal.getValue());
             map.put("personalPart", personalPart);
+            map.put("user", userService.getUserById(userSession.getUserId()));
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth_person";
         }
@@ -71,6 +70,7 @@ public class UserAuthController extends IpcoolController {
         if (userSession != null && userSession.getUserId() > 0) {
             List<UserPart> businessPart = userPartService.getUserPartByType(UserPartEnums.type_business.getValue());
             map.put("businessPart", businessPart);
+            map.put("user", userService.getUserById(userSession.getUserId()));
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth_business";
         }

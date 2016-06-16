@@ -15,35 +15,12 @@
                     <div class="character_choose_form clearfix" id="personal_choose_form">
                         <h3 class="character_choose_subtitle">个人 <span class="sub_info">（最多可选5个角色）<span></h3>
                         <span class="err_msg"></span>
-
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_1" name="characterP" value="1">
-                            <label for="p_check_1">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_2" name="characterP" value="2">
-                            <label for="p_check_2">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_3" name="characterP" value="3">
-                            <label for="p_check_3">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_4" name="characterP" value="4">
-                            <label for="p_check_4">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_5" name="characterP" value="5">
-                            <label for="p_check_5">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_6" name="characterP" value="6">
-                            <label for="p_check_6">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="p_check_7" name="characterP" value="7">
-                            <label for="p_check_7">唱作人</label>
-                        </div>
+                        #foreach($view in $personalPart)
+                            <div class="character_checkbox_container">
+                                <input type="checkbox" id="p_check_${velocityCount}" name="characterP" value="$!{view.id}">
+                                <label for="p_check_${velocityCount}">$!{view.name}</label>
+                            </div>
+                        #end
                         <button class="submit">下一步</button>
                     </div>
                 </div>
