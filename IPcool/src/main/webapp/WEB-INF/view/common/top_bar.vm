@@ -11,7 +11,7 @@
         <ul class="home_page_nav_right">
 ##            <li><a href="#">动态</a></li>
             #if($!thisUser.userKey)
-                <li><a href="/about/empty">认证</a></li>
+                <li><a href="/user/auth?pageName=auth">认证</a></li>
                 <li>$!thisUser.username</li>
                 <li id="currentUser">
                     <img src="$!thisUser.imageUrl">
