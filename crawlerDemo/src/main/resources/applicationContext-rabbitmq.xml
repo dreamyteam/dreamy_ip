@@ -110,7 +110,7 @@
 
     <!--360指数-->
 
-    <bean id="soIndexEventQueueHandler" class="com.dreamy.crawler.listen.SoIndexEventQueueHandler"/>
+    <bean id="soIndexEventQueueHandler" class="com.dreamy.crawler.listen.SoIndexQueueHandler"/>
 
     <!--微博指数-->
     <bean id="dataWeiBoIndexQueueHandler" class="com.dreamy.crawler.listen.DataWeiBoIndexQueueHandler"/>
