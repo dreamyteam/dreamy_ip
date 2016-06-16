@@ -231,6 +231,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 NewsMediaHistory history = new NewsMediaHistory();
                 history.setSource(newsMedia.getSource());
                 history.setNum(newsMedia.getNum());
+                history.setBookId(newsMedia.getBookId());
                 history.setCreateDate(TimeUtils.toString(null, new Date()));
                 history.setId(newsMedia.getBookId() + "-" + newsMedia.getSource() + "-" + TimeUtils.toString(null, new Date()));
                 newsMediaHistoryService.updateInser(history);
