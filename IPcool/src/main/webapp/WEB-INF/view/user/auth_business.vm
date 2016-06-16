@@ -4,35 +4,146 @@
     <!-- 用户中心 左侧导航 -->
     #parse("user/user_center_left.vm")
     <!-- 用户中心 右侧部分 -->
-    <div class="sidebar_content">
-        <h1 class="title">认证情况</h1>
-        <div class="user_identify_container">
-            <div class="start_identify_container">
-                <div class="start_identify_content">
-                    <a href="identify/personal/personal_choose_charactor.html" class="go_identify">个人信息认证</a>
-                    <div class="inner">
-                        <span class="info">请提前做好如下资料准备</span>
-                        <ul>
-                            <li>有效身份证件</li>
-                            <li>相关作品文件</li>
-                            <li>个人授权协议</li>
-                        </ul>
-                        <button class="download">个人认证请下载授权模板</button>
+    <div class="sidebar_content" id="company_identify_container">
+        <ul class="user_identify_container">
+            <li class=" active">
+                <h1 class="title">身份选择</h1>
+                <div class="character_choose_container">
+                    <h2 class="character_choose_title">请选择角色</h2>
+                    <div class="character_choose_form" id="company_choose_form">
+                        <h3 class="character_choose_subtitle">机构 <span class="sub_info">（最多可选3个角色）<span></h3>
+                        <span class="err_msg"></span>
+                        <div class="character_checkbox_container">
+                            <input type="checkbox" id="c_check_1" name="characterC" value="唱作人">
+                            <label for="c_check_1">唱作人</label>
+                        </div>
+                        <div class="character_checkbox_container">
+                            <input type="checkbox" id="c_check_2" name="characterC" value="唱作人">
+                            <label for="c_check_2">唱作人</label>
+                        </div>
+                        <div class="character_checkbox_container">
+                            <input type="checkbox" id="c_check_3" name="characterC" value="唱作人">
+                            <label for="c_check_3">唱作人</label>
+                        </div>
+                        <div class="character_checkbox_container">
+                            <input type="checkbox" id="c_check_4" name="characterC" value="唱作人">
+                            <label for="c_check_4">唱作人</label>
+                        </div>
+                        <button class="submit">下一步</button>
                     </div>
                 </div>
-                <div class="start_identify_content">
-                    <a href="identify/company/company_choose_charactor.html" class="go_identify">个人信息认证</a>
-                    <div class="inner">
-                        <span class="info">请提前做好如下资料准备</span>
-                        <ul>
-                            <li>有效企业证件</li>
-                            <li>企业对公银行账户</li>
-                            <li>企业授权协议</li>
-                        </ul>
-                        <button class="download">企业认证请下载授权模板</button>
+            </li>
+            <li>
+                <h1 class="title">企业信息认证</h1>
+                <div class="user_identify_container">
+                    <div class="user_identify_info_container clearfix" id="c_indentify_form">
+                        <h6 class="sub_title">申请人信息</h6>
+                        <div class="input_content">
+                            <h3 class="info_label">姓名<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <input type="text" name="realName" required placeholder="请填写您的真实姓名">
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label">身份证号码<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <input type="text" name="cardNo" class="input_id_card" required placeholder="请填写您的身份证号码">
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label">E-mail<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <input type="email" name="email" required placeholder="请填写您的邮箱">
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label">手机<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <input type="text" name="phone" class="input_phone" required placeholder="请填写您的手机号码">
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label">身份证照片<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <div class="img_upload_container">
+                                <img class="preview_image card_front" src="">
+                                <label for="id_card_front" class="img_upload">添加正面</label>
+                                <input type="file" required id="id_card_front" name="">
+                            </div>
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label"> </h3>
+                            <span class="err_msg"></span>
+                            <div class="img_upload_container">
+                                <img class="preview_image card_back" src="">
+                                <label for="id_card_back" class="img_upload">添加背面</label>
+                                <input type="file" required id="id_card_back" name="">
+                            </div>
+                        </div>
+                        <h6 class="sub_title">职业信息</h6>
+                        <div>
+                            <div class="input_content">
+                                <h3 class="info_label">公司/机构名称<i>*</i></h3>
+                                <span class="err_msg"></span>
+                                <input type="text" required name="companyName" required placeholder="请填写您所在公司或机构的名称">
+                            </div>
+                        </div>
+                        <div class="input_content ">
+                            <h3 class="info_label">企业执照<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <div class="img_upload_container">
+                                <img class="preview_image business_license" src="">
+                                <label for="enterprise_licensing" class="img_upload">企业执照</label>
+                                <input type="file" required id="enterprise_licensing" name="">
+                            </div>
+                        </div>
+                        <div class="input_content">
+                            <h3 class="info_label">授权协议<i>*</i></h3>
+                            <span class="err_msg"></span>
+                            <div class="img_upload_container">
+                                <img class="preview_image license_agreement" src="">
+                                <label for="pic_license" class="img_upload">授权协议</label>
+                                <input type="file" required id="pic_license" name="">
+                            </div>
+                        </div>
+                        <button class="submit">下一步</button>
+                        <button class="go_prev">上一步</button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </li>
+            <li>
+                <h1 class="title">企业银行账户确认</h1>
+                <div class="user_identify_container">
+                    <div class="c_bank_info_container" id="c_bank_info">
+                        <h6 class="sub_title">银行账户信息</h6>
+                        <div class="bank_form">
+                            <div class="input_content">
+                                <h3 class="info_label">收款银行账号</h3>
+                                <span class="err_msg"></span>
+                                <input type="text" name="bankNo" class="input_bankNo" required data-required="请填写收款银行账号">
+                            </div>
+                            <div class="input_content">
+                                <h3 class="info_label">开户行</h3>
+                                <span class="err_msg"></span>
+                                <input type="text" name="bankName" required data-required="请填写开户行名称">
+                            </div>
+                            <div class="input_content">
+                                <h3 class="info_label">收款银行卡户名</h3>
+                                <span class="err_msg"></span>
+                                <input type="text" name="bankRealyName" required data-required="请填写银行卡户名">
+                            </div>
+                        </div>
+                        <div class="our_bank_info">
+                            <h3 class="title">官方打款账户</h3>
+                            <div class="our_bank_info_content">
+                                <h6>打款银行卡账号: 123456789123</h6>
+                                <h6>开户行: 平安银行 莲花支行</h6>
+                                <h6>打款银行卡开户户主名: 咖布</h6>
+                            </div>
+                        </div>
+                        <h6 class="sub_title">银行转账确认</h6>
+                        <p class="text">我们将向您完成一笔0.01元的转账付款，备注信息会收到最终验证码。</p>
+                        <button class="submit">完成</button>
+                        <button class="go_prev">上一步</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
