@@ -15,7 +15,7 @@ public enum ChubanBookDataSourceEnums {
     weixin(6, "微信"),
     s360(7, "360"),
     baidu(8, "baidu"),
-    sougou(9, "搜狗"),;
+    sougou(9, "搜狗");
 
     private Integer source;
 

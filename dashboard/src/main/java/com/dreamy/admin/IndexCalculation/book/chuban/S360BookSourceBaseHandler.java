@@ -3,6 +3,7 @@ package com.dreamy.admin.IndexCalculation.book.chuban;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.ChubanBookDataSourceEnums;
+import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
@@ -44,9 +45,9 @@ public class S360BookSourceBaseHandler extends ChubanBookSourceBaseHandler {
             for (BookIndexData bookIndexData : bookIndexDatas) {
                 if (bookIndexData.getSource().equals(IndexSourceEnums.s360.getType())) {
                     if (bookIndexData.getOverviewJson() != null) {
-                        String monthIndex = bookIndexData.getOverviewJson().getMonthIndex();
+                        Integer monthIndex = bookIndexData.getIndex();
                         if (!monthIndex.equals("-")) {
-                            res = Double.parseDouble(monthIndex);
+                            res = monthIndex * ChubanBookHotIndexExchangeEnums.s360.getNum();
                         }
                     }
                 }

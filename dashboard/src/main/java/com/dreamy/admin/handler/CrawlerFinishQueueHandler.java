@@ -75,7 +75,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         BookView bookView = bookViewService.getByBookId(bookId);
 
         if (bookView != null) {
-            updateChuban(bookId, bookView);
+            updateChuban(bookView);
         }
     }
 
@@ -85,30 +85,31 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookId
      * @param bookView
      */
-    private void updateChuban(Integer bookId, BookView bookView) {
+    public void updateChuban(BookView bookView) {
+        Integer bookId = bookView.getBookId();
         List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
         if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
             //计算指数
             Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer reputationIndex = getNewReputationIndex(bookView);
+//            Integer propagationIndex = getNewPropogationIndex(bookView);
+//            Integer reputationIndex = getNewReputationIndex(bookView);
 
 
             bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.reputationIndex(reputationIndex);
-
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
-
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
+//            bookView.propagateIndex(propagationIndex);
+//            bookView.reputationIndex(reputationIndex);
+//
+//            Integer developIndex = getNewDevelopIndex(bookView);
+//            bookView.developIndex(developIndex);
+//
+//            Integer compositeIndex = getNewCompositeIndex(bookView);
+//            bookView.compositeIndex(compositeIndex);
 
 
             //更新指数
             bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
+//            updateHistoryIndex(bookView);
 
             //指数写入到redis用于排名
 //            updateRank(bookView);

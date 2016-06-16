@@ -186,9 +186,9 @@ public class UpdateChubanBookIndexTask {
 
                 Map<String, String> params = commonParams;
 
-                params.put("name", "《" + bookView.getName() + "》 " + bookView.getAuthor());
-                pushToQueue(newsSougouQueue, params);
+                params.put("name", bookView.getName());
                 pushToQueue(s360IndexQueue, params);
+                pushToQueue(newsSougouQueue, params);
 
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {

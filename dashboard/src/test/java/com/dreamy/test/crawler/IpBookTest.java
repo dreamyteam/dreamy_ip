@@ -10,9 +10,12 @@ import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.RankService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
@@ -57,10 +60,19 @@ public class IpBookTest extends BaseJunitTest {
     private UpdateNetBookIndexTask updateNetBookIndexTask;
 
     @Autowired
+    private RedisClientService redisClientService;
+
+    @Autowired
     private ChubanManage chubanManage;
+
+    @Autowired
+    private RankService rankService;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
+
+    @Value("${queue_index_360}")
+    private String s360IndexQueue;
 
     @Test
     public void insert() {
@@ -164,9 +176,31 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
+//        int currentPage = 1;
+//        Page page = new Page();
+//        page.setPageSize(6400);
+//
+//        try {
+//            page.setCurrentPage(currentPage);
+//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+//            if (CollectionUtils.isNotEmpty(bookViewList)) {
+//                for (BookView bookView : bookViewList) {
+//                    crawlerFinishQueueHandler.updateChuban(bookView);
+//                }
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.err.println("errlr");
+//        }
+
+        BookView bookView = bookViewService.getById(6334);
+        crawlerFinishQueueHandler.updateChuban(bookView);
+    }
 
 
+    @Test
+    public void s360Index(){
         int currentPage = 1;
         Page page = new Page();
         page.setPageSize(100);
@@ -178,10 +212,13 @@ public class IpBookTest extends BaseJunitTest {
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                        for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
-                            Integer index = chubanBookSourceHandler.getHotIndex(bookView);
-                            System.err.println("hello");
-                        }
+
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        String cacheKey = commonParams.get("key");
+                        redisClientService.setNumber(cacheKey, 1L);
+                        commonParams.put("type", IpTypeEnums.chuban.getType().toString());
+                        commonParams.put("name", bookView.getName());
+                        queueService.push(s360IndexQueue,commonParams);
                     }
                     currentPage++;
                 } else {
@@ -192,8 +229,6 @@ public class IpBookTest extends BaseJunitTest {
                 break;
             }
         }
-
-
     }
 
 }

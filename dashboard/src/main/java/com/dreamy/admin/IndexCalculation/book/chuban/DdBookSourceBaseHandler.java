@@ -3,6 +3,7 @@ package com.dreamy.admin.IndexCalculation.book.chuban;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.ChubanBookDataSourceEnums;
+import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class DdBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
     @Autowired
     private BookScoreService bookScoreService;
 
-    private CrawlerSourceEnums crawlerSourceEnums=CrawlerSourceEnums.dangdang;
+    private CrawlerSourceEnums crawlerSourceEnums = CrawlerSourceEnums.dangdang;
 
 
     @Override
@@ -37,7 +38,7 @@ public class DdBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
         if (bookScore != null) {
             Integer commentNum = bookScore.getCommentNum();
             if (commentNum != null && commentNum > 0) {
-                Double tmp = commentNum * crawlerSourceEnums.getPercent();
+                Double tmp = commentNum * ChubanBookHotIndexExchangeEnums.dangdang.getNum();
                 score = tmp.intValue();
             }
         }
