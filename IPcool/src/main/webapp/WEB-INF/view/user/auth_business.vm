@@ -1,0 +1,38 @@
+#set($cssName = "sidebar.css")
+#set($jsName = "user.js")
+<div class="container clearfix">
+    <!-- 用户中心 左侧导航 -->
+    #parse("user/user_center_left.vm")
+    <!-- 用户中心 右侧部分 -->
+    <div class="sidebar_content">
+        <h1 class="title">认证情况</h1>
+        <div class="user_identify_container">
+            <div class="start_identify_container">
+                <div class="start_identify_content">
+                    <a href="identify/personal/personal_choose_charactor.html" class="go_identify">个人信息认证</a>
+                    <div class="inner">
+                        <span class="info">请提前做好如下资料准备</span>
+                        <ul>
+                            <li>有效身份证件</li>
+                            <li>相关作品文件</li>
+                            <li>个人授权协议</li>
+                        </ul>
+                        <button class="download">个人认证请下载授权模板</button>
+                    </div>
+                </div>
+                <div class="start_identify_content">
+                    <a href="identify/company/company_choose_charactor.html" class="go_identify">个人信息认证</a>
+                    <div class="inner">
+                        <span class="info">请提前做好如下资料准备</span>
+                        <ul>
+                            <li>有效企业证件</li>
+                            <li>企业对公银行账户</li>
+                            <li>企业授权协议</li>
+                        </ul>
+                        <button class="download">企业认证请下载授权模板</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

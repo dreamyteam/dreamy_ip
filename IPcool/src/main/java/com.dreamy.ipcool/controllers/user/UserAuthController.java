@@ -54,6 +54,30 @@ public class UserAuthController extends IpcoolController {
         return redirect("/");
     }
 
+    @RequestMapping("/authPersonal")
+    public String authPersonal(ModelMap map, HttpServletRequest request) {
+        UserSession userSession = getUserSession(request);
+        if (userSession != null && userSession.getUserId() > 0) {
+            List<UserPart> personalPart = userPartService.getUserPartByType(UserPartEnums.type_personal.getValue());
+            map.put("personalPart", personalPart);
+            map.put("pageName", request.getParameter("pageName"));
+            return "/user/auth_personal";
+        }
+        return redirect("/");
+    }
+
+    @RequestMapping("/authBusiness")
+    public String authBusiness(ModelMap map, HttpServletRequest request) {
+        UserSession userSession = getUserSession(request);
+        if (userSession != null && userSession.getUserId() > 0) {
+            List<UserPart> businessPart = userPartService.getUserPartByType(UserPartEnums.type_business.getValue());
+            map.put("businessPart", businessPart);
+            map.put("pageName", request.getParameter("pageName"));
+            return "/user/auth_business";
+        }
+        return redirect("/");
+    }
+
     @RequestMapping("/authApply")
     public void authApply(HttpServletRequest request, HttpServletResponse response, UserAuth userAuth) {
         InterfaceBean bean = new InterfaceBean().success();

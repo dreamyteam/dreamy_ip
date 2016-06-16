@@ -26,6 +26,7 @@ public class UserPartServiceImpl implements UserPartService {
         conditions.createCriteria().andTypeEqualTo(type).andStatusEqualTo(UserPartEnums.status_open.getValue());
 
         List<UserPart> list = userPartDao.selectByExample(conditions);
+
         return list;
     }
 }

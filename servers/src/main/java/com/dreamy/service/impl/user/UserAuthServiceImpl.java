@@ -1,8 +1,11 @@
 package com.dreamy.service.impl.user;
 
 import com.dreamy.dao.iface.user.UserAuthDao;
+import com.dreamy.dao.iface.user.UserPartDao;
 import com.dreamy.domain.user.UserAuth;
 import com.dreamy.domain.user.UserAuthConditions;
+import com.dreamy.domain.user.UserPart;
+import com.dreamy.domain.user.UserPartConditions;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.enums.UserAuthEnums;
 import com.dreamy.service.iface.user.UserAuthService;
@@ -11,6 +14,7 @@ import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +25,8 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Autowired
     private UserAuthDao userAuthDao;
+    @Autowired
+    private UserPartDao userPartDao;
 
     @Override
     public UserAuth getUserAuthByUserId(Integer userId) {
@@ -30,6 +36,21 @@ public class UserAuthServiceImpl implements UserAuthService {
         List<UserAuth> list = userAuthDao.selectByExample(conditions);
         if(CollectionUtils.isNotEmpty(list)) {
             userAuth = list.get(0);
+            if(userAuth != null && userAuth.getId() > 0) {
+                List<Integer> l = new ArrayList<Integer>();
+                String[] str = userAuth.getPart().split(",");
+                for(int i=0; i<str.length; i++) {
+                    l.add(Integer.parseInt(str[i]));
+                }
+                UserPartConditions userPartConditions = new UserPartConditions();
+                userPartConditions.createCriteria().andIdIn(l);
+                List<UserPart> partList = userPartDao.selectByExample(userPartConditions);
+                StringBuffer parts = new StringBuffer();
+                for(UserPart up : partList) {
+                    parts.append(up.getName()+"  ");
+                }
+                userAuth.setPart(parts.toString());
+            }
         }
         return userAuth;
     }

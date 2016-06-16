@@ -4,20 +4,85 @@
     <!-- 用户中心 左侧导航 -->
     #parse("user/user_center_left.vm")
     <div class="sidebar_content">
-        <h1 class="title">认证信息</h1>
-        <div>
+        <h1 class="title">认证情况</h1>
+        <div class="user_identify_container">
             #if($!userAuth.status == 1)
-                <span>
-                    申请中
-                </span>
+                #if($!userAuth.type == 1)
+                    <!-- 等待最终认证个人 -->
+                    <div class="state_identify_container">
+                        <h3>等待最终认证</h3>
+                        <p>3个工作日内将为您完成资料认证，<br>请耐心等待</p>
+                    </div>
+                    <!-- 等待最终认证个人-->
+                #else
+                    <!-- 等待最终认证 企业 -->
+                    <div class="state_identify_container">
+                        <h3>等待最终认证</h3>
+                        <p>
+                            3个工作日内将为您完成资料确认和发送确认码
+                            <br> 届时输入收到的确认码完成企业认证
+                        </p>
+                        <form action="/businessAuthCheckCode" class="identify_verify_code">
+                            <span class="err_msg">验证码错误</span>
+                            <input type="text" name="valideCode" class="identify_verify_input">
+                            <input type="submit" value="确认">
+                            <div class="hint">
+                                <p>还没收到?
+                                <span>
+                                1.若时间尚未达到3个工作日，请耐性等待<br>
+                                2.若已经超过3个工作日，请致电18768129443
+                                </span>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                #end
             #elseif($!userAuth.status == 2)
-                <span>
-                    申请通过
-                </span>
+                <!--认证信息 通用 -->
+                <div class="state_identify_container">
+                    <div class="identify_success_container">
+                        <h2 class="title">个人信息</h2>
+                        <div class="infos_container">
+                            <div class="info_content">
+                                <h3 class="info_title">认证人姓名</h3>
+                                <h4 class="info_value">$!userAuth.userName</h4>
+                            </div>
+                            <div class="info_content">
+                                <h3 class="info_title">身份证号码</h3>
+                                <h4 class="info_value">$!userAuth.cardNo</h4>
+                            </div>
+                            <div class="info_content">
+                                <h3 class="info_title">E-mail</h3>
+                                <h4 class="info_value">$!userAuth.email</h4>
+                            </div>
+                            <div class="info_content">
+                                <h3 class="info_title">手机</h3>
+                                <h4 class="info_value">$!userAuth.phone</h4>
+                            </div>
+                            <div class="info_content">
+                                <h3 class="info_title">签约公司</h3>
+                                <h4 class="info_value">影视公司 光线传媒 $!userAuth.part</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="submit">修改信息</button>
+                </div>
+            #elseif($!userAuth.status == 3)
+                <!-- 个人认证失败 -->
+                <div class="state_identify_container">
+                    <h3>认证失败</h3>
+                    <p>您提供的消息不满足审核条件，您可以重新提交</p>
+                    <a class="start_identify" href="identify_start.html">开始认证</a>
+                </div>
+                <!-- 个人认证失败-->
             #else
-                <span>
-                    开始认证
-                </span>
+                <!-- 尚未认证 -->
+                <div class="state_identify_container">
+                    <h3>尚未认证</h3>
+                    <p>认证后可完善从业经历，大大提高行业知名度</p>
+                    <a class="start_identify" href="/authPersonal?pageName=auth">开始认证</a>
+                </div>
+                <!-- 尚未认证 -->
             #end
         </div>
     </div>
