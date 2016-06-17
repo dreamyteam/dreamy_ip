@@ -23,6 +23,8 @@ public class QiDianFanQueueHandler extends AbstractQueueHandler {
     @Autowired
     private QiDianFanService qiDianFanService;
 
+
+
     @Override
     public void consume(JSONObject jsonObject) {
 

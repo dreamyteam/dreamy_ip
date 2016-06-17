@@ -9,12 +9,15 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.mogodb.beans.OverviewJson;
 import com.dreamy.mogodb.beans.history.*;
+import com.dreamy.mogodb.beans.qidian.FanInfo;
+import com.dreamy.mogodb.beans.qidian.QiDianFan;
 import com.dreamy.mogodb.beans.tieba.TieBa;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.*;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
@@ -64,7 +67,6 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Autowired
     private IpBookService ipBookService;
-
     @Autowired
     private BookInfoService bookInfoService;
     @Autowired
@@ -73,27 +75,24 @@ public class CrawlerServiceImpl implements CrawlerService {
     BookScoreService bookScoreService;
     @Autowired
     NetBookInfoService netBookInfoService;
-
     @Autowired
     private BookTagsService bookTagsService;
     @Autowired
     private BookViewService bookViewService;
-
     @Resource
     KeyWordHistoryService keyWordHistoryService;
-
     @Resource
     NewsMediaHistoryService newsMediaHistoryService;
     @Resource
     BookIndexDataHistoryService bookIndexDataHistoryService;
     @Resource
     NetBookDataHistoryService netBookDataHistoryService;
-
     @Autowired
     TieBaHistoryService tieBaHistoryService;
-
     @Autowired
     BookScoreHistoryService bookScoreHistoryService;
+    @Autowired
+    PeopleChartService peopleChartService;
 
 
     @Override
@@ -321,6 +320,38 @@ public class CrawlerServiceImpl implements CrawlerService {
         queueService.push(queueNameAmazon, map);
         queueService.push(queueNameDangDang, map);
         queueService.push(commentQueueName, map);
+    }
+
+    @Override
+    public void calculateQiDianSex(final QiDianFan qiDianFan) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                int i = 0;
+                double female = 0.0;
+                double male = 0.0;
+                double base = 1.0;
+                List<FanInfo> list = qiDianFan.getList();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    int size = list.size();
+                    for (FanInfo fanInfo : list) {
+                        if (fanInfo.getSex().equals("男")) {
+                            i++;
+                        }
+                    }
+                    male = NumberUtils.div(Double.valueOf(i), Double.valueOf(size), 4);
+                    female = base - male;
+                }
+                PeopleChart peopleChart = new PeopleChart();
+                peopleChart.bookId(qiDianFan.getBookId());
+                peopleChart.male(male);
+                peopleChart.female(female);
+                peopleChartService.saveOrUpdate(peopleChart);
+
+                return null;
+            }
+        });
+
     }
 
 
