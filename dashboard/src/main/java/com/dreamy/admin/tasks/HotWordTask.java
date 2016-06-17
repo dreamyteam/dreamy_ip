@@ -32,7 +32,7 @@ public class HotWordTask {
         IpBook entity = new IpBook();
         while (true) {
             Page page = new Page();
-            page.setPageSize(500);
+            page.setPageSize(200);
             page.setCurrentPage(current);
             List<IpBook> books = ipBookService.getIpBookList(entity, page);
             for (IpBook book : books) {

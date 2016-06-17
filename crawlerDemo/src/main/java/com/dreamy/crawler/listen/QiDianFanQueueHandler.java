@@ -22,6 +22,8 @@ public class QiDianFanQueueHandler extends AbstractQueueHandler {
     FansHanlder fansHanlder;
     @Autowired
     private QiDianFanService qiDianFanService;
+    @Autowired
+    private CrawlerService crawlerService;
 
 
 
@@ -34,6 +36,7 @@ public class QiDianFanQueueHandler extends AbstractQueueHandler {
             QiDianFan qiDianFan = fansHanlder.crawler(bookId, url);
             if (qiDianFan != null) {
                 qiDianFanService.updateInser(qiDianFan);
+                crawlerService.calculateQiDianSex(qiDianFan);
             }
 
         } catch (Exception e) {
