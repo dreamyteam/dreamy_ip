@@ -26,10 +26,10 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        String word = jsonObject.getString("name");
+        String word = jsonObject.getString("tieba_keyword");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
-        Integer ipType = Integer.parseInt(jsonObject.getString("type"));
+        Integer type = Integer.parseInt(jsonObject.getString("type"));
 
         try {
             TieBa tieBa = tieBaHandler.crawler(word, bookId);
@@ -41,7 +41,7 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             log.warn("TieBaQueueHandler  failed: bookId:" + bookId + " word:" + word);
         } finally {
-            crawlerService.check(key, bookId, ipType);
+            crawlerService.check(key, bookId, type);
         }
 
 

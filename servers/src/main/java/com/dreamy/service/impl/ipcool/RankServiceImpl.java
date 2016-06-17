@@ -1,7 +1,7 @@
 package com.dreamy.service.impl.ipcool;
 
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.IpBook;
-import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.ipcool.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +20,21 @@ import java.util.Map;
 public class RankServiceImpl implements RankService {
 
     @Autowired
-    private BookCrawlerInfoService bookCrawlerInfoService;
-
-    @Autowired
     private IpBookService ipBookService;
 
     @Override
-    public Map<String, String> getCommonParamsByBookIdAndAction(Integer bookId, String action) {
+    public Map<String, String> getCommonParamsByBookIdAndAction(BookView bookView, String action) {
         Map<String, String> commonParams = new HashMap<>();
-
-
-        IpBook ipBook = ipBookService.getById(bookId);
-
+        IpBook ipBook = ipBookService.getById(bookView.getBookId());
         if (ipBook != null) {
-            commonParams.put("bookId", "" + bookId);
-            commonParams.put("key", "book:update:" + bookId);
+            commonParams.put("bookId", "" + bookView.getBookId());
+            commonParams.put("key", "book:update:" + bookView.getBookId());
             commonParams.put("isbn", ipBook.getCode());
             commonParams.put("operation", action);
+            commonParams.put("tieba_keyword", ipBook.getTiebaKeyword());
+            commonParams.put("index_keyword", ipBook.getIndexKeyword());
+            commonParams.put("news_keyword", ipBook.getNewsKeyword());
+            commonParams.put("search_keyword", ipBook.getSearchKeyword());
         }
 
 

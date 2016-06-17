@@ -1,6 +1,8 @@
 package com.dreamy.service.iface.ipcool;
 
 
+import com.dreamy.domain.ipcool.BookView;
+
 import java.util.Map;
 
 /**
@@ -13,7 +15,9 @@ public interface RankService {
 
     /**
      *
-     * @param bookId
+     * @param bookView
+     * @param action
+     * @return
      */
-    Map<String, String> getCommonParamsByBookIdAndAction(Integer bookId,String action);
+    Map<String, String> getCommonParamsByBookIdAndAction(BookView bookView, String action);
 }

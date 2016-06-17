@@ -44,11 +44,15 @@ public class DataWeiBoHandler {
             Map<String, Object> age = (Map<String, Object>) data.get("age");
             Map<String, Object> ageKeys2 = (Map<String, Object>) age.get("key2");
             Map<String, String> ages = (Map<String, String>) ageKeys2.get("0");
-            Collection<String> list = ages.values();
-            String[] array = (String[]) list.toArray(new String[list.size()]);
-            bookIndexData.setAge(array);
-            bookIndexData.setMale(keys2.get("man").toString());
-            bookIndexData.setFemale(keys2.get("woman").toString());
+            if (ages != null) {
+                Collection<String> list = ages.values();
+                String[] array = (String[]) list.toArray(new String[list.size()]);
+                bookIndexData.setAge(array);
+            }
+            if (keys2 != null) {
+                bookIndexData.setMale(keys2.get("man").toString());
+                bookIndexData.setFemale(keys2.get("woman").toString());
+            }
 
         }
 
@@ -97,7 +101,7 @@ public class DataWeiBoHandler {
                 List<Map<String, Object>> zts = (List<Map<String, Object>>) map1.get("zt");
                 if (CollectionUtils.isNotEmpty(zts)) {
                     int size = zts.size();
-                    Map<String, Object> map2 = zts.get(size - 1);
+                    Map<String, Object> map2 = zts.get(size - 2);
                     bookIndexData.setLastDate((String) map2.get("day_key"));
                     bookIndexData.setIndex(Integer.valueOf((String) map2.get("value")));
                 }

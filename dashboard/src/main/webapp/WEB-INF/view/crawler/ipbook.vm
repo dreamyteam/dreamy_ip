@@ -98,10 +98,10 @@
                                 <th>id</th>
                                 <th>标题</th>
                                 <th>书名</th>
-                                <th>状态</th>
-                                <th>最近操作者</th>
+                                <th>指数关键词</th>
+                                <th>新闻媒体关键词</th>
+                                <th>搜索关键词</th>
                                 <th>修改时间</th>
-                                <th>创建时间</th>
                                 <th class="hidden-phone">操作</th>
                             </tr>
                             </thead>
@@ -114,24 +114,25 @@
                                     <td class="center">$!{book.id}</td>
                                     <td>$!{book.title}</td>
                                     <td class="center">  $!{book.name}</td>
-                                    <td class="center">
-                                        #foreach($st in $statuses)
-                                            #if($!{book.status} == $st.getStatus())
-                                                #if($!{book.status} == 4)
-                                                    <span style="color: #ff0000"> $st.getDescription()</span>
-                                                #else
-                                                    $st.getDescription()
-                                                #end
-
-                                            #end
-                                        #end
-                                    </td>
-                                    <td class="center">admin</td>
+                                    <td class="center">  $!{book.indexKeyword}</td>
+                                    <td class="center">  $!{book.newsKeyword}</td>
+                                    <td class="center">  $!{book.searchKeyword}</td>
+                                ##                                    <td class="center">
+                                ##                                        #foreach($st in $statuses)
+                                ##                                            #if($!{book.status} == $st.getStatus())
+                                ##                                                #if($!{book.status} == 4)
+                                ##                                                    <span style="color: #ff0000"> $st.getDescription()</span>
+                                ##                                                #else
+                                ##                                                    $st.getDescription()
+                                ##                                                #end
+                                ##
+                                ##                                            #end
+                                ##                                        #end
+                                ##                                    </td>
 
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$book.updatedAt)</td>
-                                    <td class="center">$!dateUtils.toString(
-                                        "yyyy-MM-dd HH:mm:ss",$book.createdAt)</td>
+
                                     <td class="center hidden-phone">
 
                                         <a href="/crawler/view?id=$!{book.id}" class="tablelink"><i
@@ -139,10 +140,10 @@
                                         <a href="/crawler/edit?id=$!{book.id}" class="tablelink"><i
                                                 class="fa fa-edit"></i></a> |
                                         <a href="/crawler/crawling?id=$!{book.id}" class="tablelink">爬取</a>
-                                        #if($book.status==1)
-                                            |<a href="javascript:doDelete('$!{book.id}')" class="tablelink"><i
-                                                class="fa fa-trash-o"></i></a>
-                                        #end
+                                    ##                                        #if($book.status==1)
+                                    ##                                            |<a href="javascript:doDelete('$!{book.id}')" class="tablelink"><i
+                                    ##                                                class="fa fa-trash-o"></i></a>
+                                    ##                                        #end
                                     </td>
                                 </tr>
                                 #end

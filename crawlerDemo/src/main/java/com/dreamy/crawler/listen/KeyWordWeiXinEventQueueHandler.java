@@ -25,17 +25,17 @@ public class KeyWordWeiXinEventQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-        String title = jsonObject.getString("name");
+        String word = jsonObject.getString("search_keyword");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         Integer ipType = Integer.parseInt(jsonObject.getString("type"));
 
         try {
-            keyWordWeiXinHandler.crawler(title, bookId);
+            keyWordWeiXinHandler.crawler(word, bookId);
         } catch (Exception e) {
             log.error("KeyWordWeiXinEventQueueHandler 处理异常JSON[" + jsonObject + "]", e);
         } finally {
-            crawlerService.check(key, bookId,ipType);
+            crawlerService.check(key, bookId, ipType);
         }
 
 

@@ -9,12 +9,15 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.mogodb.beans.OverviewJson;
 import com.dreamy.mogodb.beans.history.*;
+import com.dreamy.mogodb.beans.qidian.FanInfo;
+import com.dreamy.mogodb.beans.qidian.QiDianFan;
 import com.dreamy.mogodb.beans.tieba.TieBa;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.*;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
 import com.dreamy.utils.asynchronous.AsynchronousService;
@@ -50,9 +53,20 @@ public class CrawlerServiceImpl implements CrawlerService {
     @Value("${queue_crawler_netbook_over}")
     private String queueNetbookBookName;
 
+    @Value("${queue_jd_crawler}")
+    private String queueNameJd;
+
+    @Value("${queue_amazon_crawler}")
+    private String queueNameAmazon;
+
+    @Value("${queue_dangdang_crawler}")
+    private String queueNameDangDang;
+
+    @Value("${queue_douban_comment}")
+    private String commentQueueName;
+
     @Autowired
     private IpBookService ipBookService;
-
     @Autowired
     private BookInfoService bookInfoService;
     @Autowired
@@ -61,27 +75,24 @@ public class CrawlerServiceImpl implements CrawlerService {
     BookScoreService bookScoreService;
     @Autowired
     NetBookInfoService netBookInfoService;
-
     @Autowired
     private BookTagsService bookTagsService;
     @Autowired
     private BookViewService bookViewService;
-
     @Resource
     KeyWordHistoryService keyWordHistoryService;
-
     @Resource
     NewsMediaHistoryService newsMediaHistoryService;
     @Resource
     BookIndexDataHistoryService bookIndexDataHistoryService;
     @Resource
     NetBookDataHistoryService netBookDataHistoryService;
-
     @Autowired
     TieBaHistoryService tieBaHistoryService;
-
     @Autowired
     BookScoreHistoryService bookScoreHistoryService;
+    @Autowired
+    PeopleChartService peopleChartService;
 
 
     @Override
@@ -102,12 +113,13 @@ public class CrawlerServiceImpl implements CrawlerService {
                     bookCrawlerInfo.bookId(ipBook.getId());
                     bookCrawlerInfo.setSource(type);
                     if (StringUtils.isEmpty(url)) {
-                        bookCrawlerInfo.url(bookInfo.getUrl());
-                    } else {
-                        bookCrawlerInfo.url(url);
+                        url = bookInfo.getUrl();
                     }
+                    bookCrawlerInfo.setUrl(url);
                     bookCrawlerInfoService.save(bookCrawlerInfo);
                     bookInfo.setId(bookInfo.getISBN() + "_" + type);
+                    push(ipBook.getCode(), bookId, url);
+
                 } else {
                     bookInfo.setId(isbn + "_" + type);
                 }
@@ -159,16 +171,17 @@ public class CrawlerServiceImpl implements CrawlerService {
 
     @Override
     public void check(String key, int bookId, Integer ipType) {
-        long num = redisClientService.incrBy(key, -1L);
-        if (num < 1) {
-            redisClientService.del(key);
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("bookId", bookId);
-
-            if (IpTypeEnums.chuban.getType().equals(ipType)) {
-                queueService.push(queueChuBanBookName, map);
-            } else {
-                queueService.push(queueNetbookBookName, map);
+        if (StringUtils.isNotEmpty(key)) {
+            long num = redisClientService.incrBy(key, -1L);
+            if (num < 1) {
+                redisClientService.del(key);
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("bookId", bookId);
+                if (IpTypeEnums.chuban.getType().equals(ipType)) {
+                    queueService.push(queueChuBanBookName, map);
+                } else {
+                    queueService.push(queueNetbookBookName, map);
+                }
             }
         }
     }
@@ -217,6 +230,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 NewsMediaHistory history = new NewsMediaHistory();
                 history.setSource(newsMedia.getSource());
                 history.setNum(newsMedia.getNum());
+                history.setBookId(newsMedia.getBookId());
                 history.setCreateDate(TimeUtils.toString(null, new Date()));
                 history.setId(newsMedia.getBookId() + "-" + newsMedia.getSource() + "-" + TimeUtils.toString(null, new Date()));
                 newsMediaHistoryService.updateInser(history);
@@ -269,6 +283,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 history.setRecommendNum(netBookInfo.getRecommendNum());
                 history.setMonthSort(netBookInfo.getMonthSort());
                 history.setScore(netBookInfo.getScore());
+                history.setTicketNum(netBookInfo.getTicketNum());
                 history.setCreateDate(TimeUtils.toString(null, new Date()));
                 history.setId(netBookInfo.getBookId() + "-" + type + "-" + TimeUtils.toString(null, new Date()));
                 netBookDataHistoryService.updateInser(history);
@@ -293,6 +308,50 @@ public class CrawlerServiceImpl implements CrawlerService {
                 return null;
             }
         });
+    }
+
+    @Override
+    public void push(String isbn, Integer bookId, String url) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("isbn", isbn);
+        map.put("url", url);
+        map.put("operation", OperationEnums.crawler.getCode());
+        queueService.push(queueNameJd, map);
+        queueService.push(queueNameAmazon, map);
+        queueService.push(queueNameDangDang, map);
+        queueService.push(commentQueueName, map);
+    }
+
+    @Override
+    public void calculateQiDianSex(final QiDianFan qiDianFan) {
+        AsynchronousService.submit(new ObjectCallable() {
+            @Override
+            public Object run() throws Exception {
+                int i = 0;
+                double female = 0.0;
+                double male = 0.0;
+                double base = 1.0;
+                List<FanInfo> list = qiDianFan.getList();
+                if (CollectionUtils.isNotEmpty(list)) {
+                    int size = list.size();
+                    for (FanInfo fanInfo : list) {
+                        if (fanInfo.getSex().equals("男")) {
+                            i++;
+                        }
+                    }
+                    male = NumberUtils.div(Double.valueOf(i), Double.valueOf(size), 4);
+                    female = base - male;
+                }
+                PeopleChart peopleChart = new PeopleChart();
+                peopleChart.bookId(qiDianFan.getBookId());
+                peopleChart.male(male);
+                peopleChart.female(female);
+                peopleChartService.saveOrUpdate(peopleChart);
+
+                return null;
+            }
+        });
+
     }
 
 
@@ -366,7 +425,9 @@ public class CrawlerServiceImpl implements CrawlerService {
                 history.setCommentNum(bookScore.getCommentNum());
                 history.setSaleSort(bookScore.getSaleSort());
                 history.setScore(bookScore.getScore());
+                history.setId(bookId + "-" + type + "-" + TimeUtils.toString(null, new Date()));
                 bookScoreHistoryService.updateInser(history);
+
                 return null;
             }
         });

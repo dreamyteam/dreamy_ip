@@ -24,6 +24,7 @@ public class TieBaServiceImpl implements TieBaService {
 
     @Override
     public void updateInser(TieBa tieBa) {
+        tieBa.setUpdatedAt(new Date());
         tieBaDao.updateInser(tieBa);
 
 
@@ -31,6 +32,7 @@ public class TieBaServiceImpl implements TieBaService {
 
     @Override
     public void saveByRecord(TieBa tieBa) {
+        tieBa.setUpdatedAt(new Date());
         tieBaDao.save(tieBa);
     }
 

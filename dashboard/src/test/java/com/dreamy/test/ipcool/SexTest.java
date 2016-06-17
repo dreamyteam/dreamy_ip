@@ -12,9 +12,11 @@ import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.QiDianFanService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.NumberUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -46,11 +48,10 @@ public class SexTest extends BaseJunitTest {
             List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(entity, page);
             for (BookCrawlerInfo info : list) {
                 QiDianFan qiDianFan = qiDianFanService.getById(info.getBookId());
-                if(qiDianFan!=null) {
-                    aa(qiDianFan.getList(), info.getBookId());
-                }
-                else{
-                    aa(null, info.getBookId());
+                if (qiDianFan != null) {
+                    calculate(qiDianFan.getList(), info.getBookId());
+                } else {
+                    calculate(null, info.getBookId());
                 }
 
             }
@@ -61,7 +62,7 @@ public class SexTest extends BaseJunitTest {
         }
     }
 
-    private void aa(List<FanInfo> list, Integer bookId) {
+    private void calculate(List<FanInfo> list, Integer bookId) {
         int i = 0;
         double female = 0.0;
         double male = 0.0;
@@ -72,8 +73,8 @@ public class SexTest extends BaseJunitTest {
                     i++;
                 }
             }
-            male = i / size;
-            female = 1 - male;
+            male = NumberUtils.div(Double.valueOf(i), Double.valueOf(size), 4);
+            female = 1.0 - male;
         }
         PeopleChart peopleChart = new PeopleChart();
         peopleChart.bookId(bookId);
@@ -82,6 +83,7 @@ public class SexTest extends BaseJunitTest {
         peopleChartService.save(peopleChart);
 
 
-
     }
+
+
 }

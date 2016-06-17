@@ -10,6 +10,7 @@ import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
+import com.dreamy.utils.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class AmazonBookQueueHandler extends AbstractQueueHandler {
             bookInfo = amazonCrawlerBookHandler.crawler(url,operation);
         }
         crawlerService.operationBook(operation, key, bookInfo, bookId, url,isbn,CrawlerSourceEnums.amazon.getType());
+        try {
+            Thread.sleep(NumberUtils.randomInt(1000,3000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

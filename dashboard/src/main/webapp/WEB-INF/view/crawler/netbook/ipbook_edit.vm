@@ -25,7 +25,7 @@
                         <input type="hidden" name="id" value="$!book.id">
 
                         <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">标题</label>
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">标题(搜索用)</label>
 
                             <div class="col-lg-10">
                                 <input type="text" class="required validate[required] form-control" value="$!book.title"
@@ -42,12 +42,52 @@
                                        placeholder="书名">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">指数关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.indexKeyword"
+                                       name="indexKeyword"
+                                       placeholder="指数关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">贴吧关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.tiebaKeyword"
+                                       name="tiebaKeyword"
+                                       placeholder="贴吧关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">搜索关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.searchKeyword"
+                                       name="searchKeyword"
+                                       placeholder="搜索关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">五大新闻关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.newsKeyword"
+                                       name="newsKeyword"
+                                       placeholder="五大新闻关键词">
+                            </div>
+                        </div>
 
                         #foreach($item in $list)
-                            #if($item.source==1)
+                            #if($item.source==5)
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">起点文学</label>
-                                    <input type="hidden" name="infos[0].source" value="1"/>
+                                    <label class="col-sm-2 control-label">起点</label>
+                                    <input type="hidden" name="infos[0].source" value="5"/>
                                     <input type="hidden" name="infos[0].id" value="$!item.id">
 
                                     <div class="col-sm-10">
@@ -55,10 +95,10 @@
                                           required="required">$!item.url</textarea>
                                     </div>
                                 </div>
-                            #elseif($item.source==2)
+                            #elseif($item.source==6)
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">起点女生文学</label>
-                                    <input type="hidden" name="infos[1].source" value="2"/>
+                                    <label class="col-sm-2 control-label">纵横</label>
+                                    <input type="hidden" name="infos[1].source" value="6"/>
                                     <input type="hidden" name="infos[1].id" value="$!item.id">
                                     <div class="col-sm-10">
                                 <textarea rows="6" class="form-control textInput" name="infos[1].url"
@@ -66,10 +106,10 @@
                                     </div>
                                 </div>
 
-                            #elseif($item.source==3)
+                            #elseif($item.source==7)
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">纵横文学</label>
-                                    <input type="hidden" name="infos[2].source" value="3"/>
+                                    <label class="col-sm-2 control-label">花语</label>
+                                    <input type="hidden" name="infos[2].source" value="7"/>
                                     <input type="hidden" name="infos[2].id" value="$!item.id">
                                     <div class="col-sm-10">
                                 <textarea rows="6" class="form-control textInput" name="infos[2].url"
@@ -77,10 +117,10 @@
                                     </div>
                                 </div>
 
-                            #elseif($item.source==4)
+                            #elseif($item.source==8)
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">百度贴吧</label>
-                                    <input type="hidden" name="infos[3].source" value="4"/>
+                                    <label class="col-sm-2 control-label">起点MM</label>
+                                    <input type="hidden" name="infos[3].source" value="8"/>
                                     <input type="hidden" name="infos[3].id" value="$!item.id">
                                     <div class="col-sm-10">
                                 <textarea rows="6" class="form-control textInput" name="infos[3].url"
