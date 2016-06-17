@@ -215,7 +215,7 @@ public class IpBookTest extends BaseJunitTest {
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
 
-                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
                         String cacheKey = commonParams.get("key");
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
