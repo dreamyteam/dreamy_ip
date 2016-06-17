@@ -2,10 +2,7 @@ package com.dreamy.admin.IndexCalculation.book.chuban;
 
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
-import com.dreamy.enums.ChubanBookDataSourceEnums;
-import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
-import com.dreamy.enums.IndexSourceEnums;
-import com.dreamy.enums.KeyWordEnums;
+import com.dreamy.enums.*;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
@@ -68,7 +65,7 @@ public class S360BookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.so.getType());
         if (keyWord != null) {
-            Double propagateIndex = KeyWordEnums.so.getPercent() * keyWord.getIndexNum();
+            Double propagateIndex =  ChubanBookPropagationIndexExchangeEnums.s360.getNum() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 

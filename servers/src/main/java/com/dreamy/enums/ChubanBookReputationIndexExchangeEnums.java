@@ -6,17 +6,17 @@ package com.dreamy.enums;
  * Date: 16/6/16
  * Time: 上午11:21
  */
-public enum ChubanBookPropagationIndexExchangeEnums {
-    baidu(1, 0.01),
-    weixin(2, 10.0),
-    weibo(3, 1.0),
-    s360(4, 0.1);
+public enum ChubanBookReputationIndexExchangeEnums {
+    amazon(1, 0.4),
+    jd(2, 0.08),
+    dangdang(3, 0.02),
+    douban(4, 0.5);
 
     private Integer type;
 
     private Double num;
 
-    ChubanBookPropagationIndexExchangeEnums(Integer type, Double num) {
+    ChubanBookReputationIndexExchangeEnums(Integer type, Double num) {
         this.type = type;
         this.num = num;
     }

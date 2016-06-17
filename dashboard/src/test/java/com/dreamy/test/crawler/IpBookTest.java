@@ -20,6 +20,7 @@ import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.HttpUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -176,31 +177,32 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-//        int currentPage = 1;
-//        Page page = new Page();
-//        page.setPageSize(6400);
-//
-//        try {
-//            page.setCurrentPage(currentPage);
-//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
-//            if (CollectionUtils.isNotEmpty(bookViewList)) {
-//                for (BookView bookView : bookViewList) {
-//                    crawlerFinishQueueHandler.updateChuban(bookView);
-//                }
-//
-//            }
-//
-//        } catch (Exception e) {
-//            System.err.println("errlr");
-//        }
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(6400);
 
-        BookView bookView = bookViewService.getById(6334);
-        crawlerFinishQueueHandler.updateChuban(bookView);
+        try {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
+                    crawlerFinishQueueHandler.updateChuban(bookView);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("errlr");
+        }
+//        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
+//        System.err.println("111");
+//        BookView bookView = bookViewService.getById(2818);
+//        crawlerFinishQueueHandler.updateChuban(bookView);
     }
 
 
     @Test
-    public void s360Index(){
+    public void s360Index() {
         int currentPage = 1;
         Page page = new Page();
         page.setPageSize(100);
@@ -218,7 +220,7 @@ public class IpBookTest extends BaseJunitTest {
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
                         commonParams.put("name", bookView.getName());
-                        queueService.push(s360IndexQueue,commonParams);
+                        queueService.push(s360IndexQueue, commonParams);
                     }
                     currentPage++;
                 } else {
@@ -228,6 +230,28 @@ public class IpBookTest extends BaseJunitTest {
             } catch (Exception e) {
                 break;
             }
+        }
+    }
+
+    @Test
+    public void flushRank() {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(6400);
+
+        try {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
+//                    crawlerFinishQueueHandler.updateRank(bookView);
+                    flushBookRankToDb.updateRank(bookView);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("errlr");
         }
     }
 

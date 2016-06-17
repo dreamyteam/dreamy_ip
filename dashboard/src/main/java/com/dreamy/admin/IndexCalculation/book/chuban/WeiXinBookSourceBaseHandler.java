@@ -3,6 +3,7 @@ package com.dreamy.admin.IndexCalculation.book.chuban;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.ChubanBookDataSourceEnums;
+import com.dreamy.enums.ChubanBookPropagationIndexExchangeEnums;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class WeiXinBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.weixin.getType());
         if (keyWord != null) {
-            Double propagateIndex = KeyWordEnums.weixin.getPercent() * keyWord.getIndexNum();
+            Double propagateIndex = ChubanBookPropagationIndexExchangeEnums.weixin.getNum() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 

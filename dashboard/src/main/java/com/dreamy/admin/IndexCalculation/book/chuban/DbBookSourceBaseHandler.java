@@ -4,6 +4,7 @@ import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.ChubanBookDataSourceEnums;
 import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
+import com.dreamy.enums.ChubanBookReputationIndexExchangeEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,15 @@ public class DbBookSourceBaseHandler extends ChubanBookSourceBaseHandler {
 
         return score;
     }
+
     @Override
     public Integer getReputationIndex(BookView bookView) {
         BookScore bookScore = bookScoreService.getByBookIdAndSource(bookView.getBookId(), crawlerSourceEnums.getType());
         if (bookScore != null) {
             Double score = bookScore.getScore();
             if (score != null && score > 0.0) {
-                Double tmp = crawlerSourceEnums.getPercent() * score;
+                Double tmp = score * ChubanBookReputationIndexExchangeEnums.douban.getNum() * bookScore.getCommentNum();
+
                 return tmp.intValue();
             }
         }

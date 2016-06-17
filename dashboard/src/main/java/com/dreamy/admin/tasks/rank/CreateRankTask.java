@@ -42,7 +42,7 @@ public class CreateRankTask {
     @Value("${queue_crawler_netbook_over}")
     private String queueNetbookBookName;
 
-    @Scheduled(cron = "0 30 04 * * ?")
+//    @Scheduled(cron = "0 30 04 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
 
