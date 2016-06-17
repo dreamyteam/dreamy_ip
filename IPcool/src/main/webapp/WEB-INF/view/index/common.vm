@@ -58,3 +58,6 @@
         </div>
     </div>
 </section>
+
+##隐藏域
+<input id="getIpid" type="hidden" value="$!{view.bookId}">
