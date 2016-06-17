@@ -183,14 +183,14 @@ public class UpdateChubanBookIndexTask {
                 } else {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
-
-
+                
                 pushToQueue(newsSougouQueue, commonParams);
                 pushToQueue(s360IndexQueue, commonParams);
 
                 pushToQueue(bsKeyWordQueue, commonParams);
                 pushToQueue(wbKeyWordQueue, commonParams);
                 pushToQueue(wxKeyWordQueue, commonParams);
+
 
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {

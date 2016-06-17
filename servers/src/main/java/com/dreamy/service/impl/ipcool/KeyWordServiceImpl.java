@@ -4,12 +4,14 @@ import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.ipcool.KeyWordDao;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.domain.ipcool.KeyWordConditions;
+import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,5 +64,27 @@ public class KeyWordServiceImpl implements KeyWordService {
         KeyWordConditions conditions = new KeyWordConditions();
         conditions.createCriteria().andBookIdEqualTo(bookId);
         return keyWordDao.selectByExample(conditions);
+    }
+
+    @Override
+    public KeyWord getByBookIdAndSource(Integer bookId, Integer source) {
+
+        KeyWordConditions conditions = new KeyWordConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andSourceEqualTo(source);
+        List<KeyWord> keyWordList = keyWordDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(keyWordList)) {
+            return keyWordList.get(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Map<Integer, Double> getKeyWordSourceMap() {
+        Map<Integer, Double> map = new HashMap<>();
+        for (KeyWordEnums enums : KeyWordEnums.values()) {
+            map.put(enums.getType(), enums.getPercent());
+        }
+        return map;
     }
 }
