@@ -1,4 +1,3 @@
-
 #set($cssName = "program_detail_page.css")
 #set($jsName = "program_detail.js")
 
@@ -6,11 +5,30 @@
     #parse("/index/common.vm")
 
     <section class="introduction">
-        <h2 class="title">简介</h2>
+        <h1 class="title">基本介绍</h1>
 
-        <p>
+        <p class="summary">
             $!{view.introduction}
         </p>
+
+        <div class="introduction_details_container">
+            <div class="introduction_details_content">
+                <span class="title">作品</span>
+                <a href="#" class="content"> $!{view.name}</a>
+            </div>
+            <div class="introduction_details_content">
+                <span class="title">作者</span>
+                <a href="#" class="content">$!{view.author}</a>
+            </div>
+##            <div class="introduction_details_content">
+##                <span class="title">状态</span>
+##                <a href="#" class="content">正在连载</a>
+##            </div>
+##            <div class="introduction_details_content">
+##                <span class="title">版权所有</span>
+##                <a href="#" class="content">起点文学(出版社)</a>
+##            </div>
+        </div>
     </section>
 
 </div>
