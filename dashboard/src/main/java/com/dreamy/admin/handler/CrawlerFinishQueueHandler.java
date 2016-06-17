@@ -112,8 +112,8 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             bookViewService.update(bookView);
             updateHistoryIndex(bookView);
 //
-            //指数写入到redis用于排名
-            //updateRank(bookView);
+//            指数写入到redis用于排名
+            updateRank(bookView);
 
         }
     }

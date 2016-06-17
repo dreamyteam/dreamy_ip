@@ -177,16 +177,18 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 5;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1419);
 
         try {
             page.setCurrentPage(currentPage);
             List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    crawlerFinishQueueHandler.updateChuban(bookView);
+                    if (bookView.getId() > 430) {
+                        crawlerFinishQueueHandler.updateChuban(bookView);
+                    }
                 }
 
             }
@@ -196,7 +198,7 @@ public class IpBookTest extends BaseJunitTest {
         }
 //        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
 //        System.err.println("111");
-//        BookView bookView = bookViewService.getById(2818);
+//        BookView bookView = bookViewService.getById(3166);
 //        crawlerFinishQueueHandler.updateChuban(bookView);
     }
 
@@ -235,15 +237,16 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 1;
+        int currentPage = 3;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1000);
 
         try {
             page.setCurrentPage(currentPage);
             List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
+                    //1707
 //                    crawlerFinishQueueHandler.updateRank(bookView);
                     flushBookRankToDb.updateRank(bookView);
                 }
