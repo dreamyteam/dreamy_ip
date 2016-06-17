@@ -42,6 +42,46 @@
                                        placeholder="书名">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">指数关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.indexKeyword"
+                                       name="indexKeyword"
+                                       placeholder="指数关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">贴吧关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.tiebaKeyword"
+                                       name="tiebaKeyword"
+                                       placeholder="贴吧关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">搜索关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.searchKeyword"
+                                       name="searchKeyword"
+                                       placeholder="搜索关键词">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">五大新闻关键词</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="required validate[required] form-control"
+                                       value="$!book.newsKeyword"
+                                       name="newsKeyword"
+                                       placeholder="五大新闻关键词">
+                            </div>
+                        </div>
 
                         #foreach($item in $list)
                             #if($item.source==5)

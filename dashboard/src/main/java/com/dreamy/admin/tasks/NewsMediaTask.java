@@ -39,7 +39,7 @@ public class NewsMediaTask {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("source", book.getType());
                 map.put("bookId", book.getBookId());
-                map.put("word", book.getName());
+                map.put("news_keyword", book.getName());
                 queueService.push(queueName, map);
             }
             if (!page.isHasNextPage()) {
