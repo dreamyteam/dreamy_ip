@@ -13,22 +13,12 @@
                     <div class="character_choose_form" id="company_choose_form">
                         <h3 class="character_choose_subtitle">机构 <span class="sub_info">（最多可选3个角色）<span></h3>
                         <span class="err_msg"></span>
+                        #foreach($view in $businessPart)
                         <div class="character_checkbox_container">
-                            <input type="checkbox" id="c_check_1" name="characterC" value="唱作人">
-                            <label for="c_check_1">唱作人</label>
+                            <input type="checkbox" id="c_check_${velocityCount}" name="characterC" value="$!{view.id}">
+                            <label for="c_check_${velocityCount}">$!{view.name}</label>
                         </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="c_check_2" name="characterC" value="唱作人">
-                            <label for="c_check_2">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="c_check_3" name="characterC" value="唱作人">
-                            <label for="c_check_3">唱作人</label>
-                        </div>
-                        <div class="character_checkbox_container">
-                            <input type="checkbox" id="c_check_4" name="characterC" value="唱作人">
-                            <label for="c_check_4">唱作人</label>
-                        </div>
+                        #end
                         <button class="submit">下一步</button>
                     </div>
                 </div>
@@ -56,7 +46,7 @@
                         <div class="input_content">
                             <h3 class="info_label">手机<i>*</i></h3>
                             <span class="err_msg"></span>
-                            <input type="text" name="phone" class="input_phone" required placeholder="请填写您的手机号码">
+                            <input type="text" name="phone" class="input_phone" required maxlength="11" placeholder="请填写您的手机号码">
                         </div>
                         <div class="input_content">
                             <h3 class="info_label">身份证照片<i>*</i></h3>

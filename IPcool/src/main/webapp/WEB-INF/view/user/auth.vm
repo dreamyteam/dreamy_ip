@@ -27,17 +27,16 @@
                                     <br> 届时输入收到的确认码完成企业认证
                                 </p>
 
-                                <form action="/businessAuthCheckCode" class="identify_verify_code">
-                                    <span class="err_msg">验证码错误</span>
+                                <form action="/user/businessAuthCheckCode" class="identify_verify_code">
+                                    <span class="err_msg" #if($!wrongType != 1) style="display: none" #end>验证码错误</span>
                                     <input type="text" name="valideCode" class="identify_verify_input">
                                     <input type="submit" value="确认">
-
                                     <div class="hint">
                                         <p>还没收到?
-                                <span>
-                                1.若时间尚未达到3个工作日，请耐性等待<br>
-                                2.若已经超过3个工作日，请致电18768129443
-                                </span>
+                                        <span>
+                                        1.若时间尚未达到3个工作日，请耐性等待<br>
+                                        2.若已经超过3个工作日，请致电18768129443
+                                        </span>
                                         </p>
                                     </div>
                                 </form>

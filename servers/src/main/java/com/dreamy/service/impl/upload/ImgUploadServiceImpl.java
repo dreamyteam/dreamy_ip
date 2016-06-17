@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import com.dreamy.beans.InterfaceBean;
+import com.dreamy.beans.params.ImageUploadParams;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.service.iface.upload.ImgUploadService;
 import com.dreamy.utils.StringUtils;
@@ -14,10 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,11 +59,18 @@ public class ImgUploadServiceImpl implements ImgUploadService {
 
         OSSClient client = getOssClient();
 
-        String tmpFileName = UUID.randomUUID().toString() + upfile.getOriginalFilename();
-        String fileName = "/zm/uploads/temp/" + tmpFileName;
+        String tmpFileName = UUID.randomUUID().toString() + upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".")).toLowerCase();
+        String filePath = "Users/mac/dreamy_ip/uploads/temp/";
 
-        File tmp = new File(fileName);
+        File f = new File(filePath);
+        File tmp = new File(f, tmpFileName);
         try {
+            if(!f.exists()) {
+                f.mkdirs();
+            }
+            if(!tmp.exists()) {
+                tmp.createNewFile();
+            }
             IOUtils.copy(upfile.getInputStream(), new FileOutputStream(tmp));
             client.putObject(new PutObjectRequest(bucketName, tmpFileName, tmp));
         } catch (IOException e) {
@@ -65,6 +78,7 @@ public class ImgUploadServiceImpl implements ImgUploadService {
         } finally {
             client.shutdown();
             tmp.delete();
+            f.delete();
         }
 
         return bucketName + ".oss-cn-hangzhou.aliyuncs.com" + "/" + tmpFileName;

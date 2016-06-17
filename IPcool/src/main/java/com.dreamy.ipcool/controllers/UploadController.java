@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +43,7 @@ public class UploadController extends IpcoolController {
                             @RequestParam(required = false) Integer size) throws IOException {
 
         InterfaceBean bean = imgUploadService.propertyCheck(width, height, size, upfile);
+
         if (bean.getErrorCode() == 0) {
             Map<String, String> map = new HashMap<String, String>();
             String url = imgUploadService.uploadImage(upfile);

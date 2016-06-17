@@ -44,6 +44,7 @@ public class UserAuthController extends IpcoolController {
 
             map.put("user", userService.getUserById(userSession.getUserId()));
             map.put("userAuth", userAuth);
+            map.put("wrongType", request.getParameter("wrongType"));
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth";
         }
@@ -100,16 +101,21 @@ public class UserAuthController extends IpcoolController {
     }
 
     @RequestMapping("/businessAuthCheckCode")
-    public void businessAuthCheckCode(HttpServletRequest request, HttpServletResponse response) {
-        InterfaceBean bean = new InterfaceBean().success();
-        UserSession userSession = getUserSession(request);
-        String valideCode  = request.getParameter("valideCode");
+    public String businessAuthCheckCode(ModelMap map, HttpServletRequest request) {
+        String returnUrlPre = "/user/auth?pageName=auth";
 
-        ErrorCodeEnums errorCodeEnums = userAuthService.doBusinessAuthCheckCode(userSession.getUserId(), valideCode);
-        if(errorCodeEnums.getErrorCode() > 0) {
-            bean.failure(errorCodeEnums);
+        UserSession userSession = getUserSession(request);
+        if (userSession != null && userSession.getUserId() > 0) {
+            map.put("pageName", request.getParameter("pageName"));
+            String valideCode  = request.getParameter("valideCode");
+            ErrorCodeEnums errorCodeEnums = userAuthService.doBusinessAuthCheckCode(userSession.getUserId(), valideCode);
+            if(errorCodeEnums.getErrorCode() > 0) {
+                return redirect(returnUrlPre + "&wrongType=1");
+            }else {
+                return redirect(returnUrlPre);
+            }
         }
-        interfaceReturn(response, JsonUtils.toString(bean), "");
+        return redirect("/");
     }
 
 }

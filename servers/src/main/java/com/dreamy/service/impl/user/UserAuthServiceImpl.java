@@ -30,39 +30,34 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public UserAuth getUserAuthByUserId(Integer userId) {
-        UserAuth userAuth = new UserAuth();
-        UserAuthConditions conditions = new UserAuthConditions();
-        conditions.createCriteria().andUserIdEqualTo(userId);
-        List<UserAuth> list = userAuthDao.selectByExample(conditions);
-        if(CollectionUtils.isNotEmpty(list)) {
-            userAuth = list.get(0);
-            if(userAuth != null && userAuth.getId() > 0 && StringUtils.isNotEmpty(userAuth.getPart())) {
-                List<Integer> l = new ArrayList<Integer>();
-                String[] str = userAuth.getPart().split(",");
-                for(int i=0; i<str.length; i++) {
-                    l.add(Integer.parseInt(str[i]));
-                }
-                UserPartConditions userPartConditions = new UserPartConditions();
-                userPartConditions.createCriteria().andIdIn(l);
-                List<UserPart> partList = userPartDao.selectByExample(userPartConditions);
-                StringBuffer parts = new StringBuffer();
-                for(UserPart up : partList) {
-                    parts.append(up.getName()+"  ");
-                }
-                userAuth.setPart(parts.toString().trim());
+        UserAuth userAuth = userAuthDao.getUserAuthByUserId(userId);
+        if(userAuth != null && userAuth.getId() > 0 && StringUtils.isNotEmpty(userAuth.getPart())) {
+            List<Integer> l = new ArrayList<Integer>();
+            String[] str = userAuth.getPart().split(",");
+            for(int i=0; i<str.length; i++) {
+                l.add(Integer.parseInt(str[i]));
             }
+            UserPartConditions userPartConditions = new UserPartConditions();
+            userPartConditions.createCriteria().andIdIn(l);
+            List<UserPart> partList = userPartDao.selectByExample(userPartConditions);
+            StringBuffer parts = new StringBuffer();
+            for(UserPart up : partList) {
+                parts.append(up.getName()+"  ");
+            }
+            userAuth.setPart(parts.toString().trim());
         }
         return userAuth;
     }
 
     @Override
     public void doAuthApply(UserAuth userAuth) {
-        UserAuth ua =  getUserAuthByUserId(userAuth.getUserId());
+        UserAuth ua =  userAuthDao.getUserAuthByUserId(userAuth.getUserId());
         userAuth.setStatus(UserAuthEnums.status_applying.getValue());
         if(ua == null) {
             userAuthDao.save(userAuth);
         }else {
             userAuth.setId(ua.getId());
+            userAuth.setValideCode("");
             userAuthDao.update(userAuth);
         }
     }
@@ -76,7 +71,7 @@ public class UserAuthServiceImpl implements UserAuthService {
             errorMsg = "验证码不能为空!";
         }
 
-        UserAuth ua =  getUserAuthByUserId(userId);
+        UserAuth ua =  userAuthDao.getUserAuthByUserId(userId);
         if(ua != null && ua.getId() > 0) {
             if(UserAuthEnums.status_applying.getValue().equals(ua.getStatus()) && StringUtils.isNotEmpty(ua.getValideCode())) {
                 if(valideCode.equals(ua.getValideCode())) {
