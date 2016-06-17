@@ -1,5 +1,7 @@
 package com.dreamy.mogodb.beans.history;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Date;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Date;
  */
 public class BookScoreHistory {
 
+    @Id
     private String id;
 
     private Integer bookId;

@@ -120,7 +120,7 @@ public class CawlerTest extends BaseJunitTest {
     @Test
     public void tt() {
         BookView bookView = bookViewService.getByBookId(516);
-        String tt = bookScoreService.getDevelopIndexByRecord(bookView);
+//        String tt = bookScoreService.getDevelopIndexByRecord(bookView);
         System.err.println("111");
     }
 
@@ -128,7 +128,6 @@ public class CawlerTest extends BaseJunitTest {
     public void isbn() {
         IpBook entity = new IpBook();
         entity.setType(IpTypeEnums.chuban.getType());
-        entity.setStatus(3);
         Page page = new Page();
         page.setPageSize(200);
         int current = 1;
@@ -140,6 +139,7 @@ public class CawlerTest extends BaseJunitTest {
                 Map<String, Object> map = new HashMap<>();
                 map.put("bookId", info.getId());
                 map.put("isbn", info.getCode());
+                map.put("key", "testkey");
                 map.put("operation", OperationEnums.crawler.getCode());
                 queueService.push(queueName, map);
             }

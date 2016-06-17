@@ -447,6 +447,66 @@ public class IpBookConditions {
             return (Criteria) this;
         }
 
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedAtIsNull() {
             addCriterion("created_at is null");
             return (Criteria) this;
@@ -567,63 +627,283 @@ public class IpBookConditions {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andIndexKeywordIsNull() {
+            addCriterion("index_keyword is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andIndexKeywordIsNotNull() {
+            addCriterion("index_keyword is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Integer value) {
-            addCriterion("status =", value, "status");
+        public Criteria andIndexKeywordEqualTo(String value) {
+            addCriterion("index_keyword =", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Integer value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andIndexKeywordNotEqualTo(String value) {
+            addCriterion("index_keyword <>", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Integer value) {
-            addCriterion("status >", value, "status");
+        public Criteria andIndexKeywordGreaterThan(String value) {
+            addCriterion("index_keyword >", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andIndexKeywordGreaterThanOrEqualTo(String value) {
+            addCriterion("index_keyword >=", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Integer value) {
-            addCriterion("status <", value, "status");
+        public Criteria andIndexKeywordLessThan(String value) {
+            addCriterion("index_keyword <", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Integer value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andIndexKeywordLessThanOrEqualTo(String value) {
+            addCriterion("index_keyword <=", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Integer> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andIndexKeywordLike(String value) {
+            addCriterion("index_keyword like", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Integer> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andIndexKeywordNotLike(String value) {
+            addCriterion("index_keyword not like", value, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Integer value1, Integer value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andIndexKeywordIn(List<String> values) {
+            addCriterion("index_keyword in", values, "indexKeyword");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andIndexKeywordNotIn(List<String> values) {
+            addCriterion("index_keyword not in", values, "indexKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexKeywordBetween(String value1, String value2) {
+            addCriterion("index_keyword between", value1, value2, "indexKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexKeywordNotBetween(String value1, String value2) {
+            addCriterion("index_keyword not between", value1, value2, "indexKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordIsNull() {
+            addCriterion("tieba_keyword is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordIsNotNull() {
+            addCriterion("tieba_keyword is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordEqualTo(String value) {
+            addCriterion("tieba_keyword =", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordNotEqualTo(String value) {
+            addCriterion("tieba_keyword <>", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordGreaterThan(String value) {
+            addCriterion("tieba_keyword >", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordGreaterThanOrEqualTo(String value) {
+            addCriterion("tieba_keyword >=", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordLessThan(String value) {
+            addCriterion("tieba_keyword <", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordLessThanOrEqualTo(String value) {
+            addCriterion("tieba_keyword <=", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordLike(String value) {
+            addCriterion("tieba_keyword like", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordNotLike(String value) {
+            addCriterion("tieba_keyword not like", value, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordIn(List<String> values) {
+            addCriterion("tieba_keyword in", values, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordNotIn(List<String> values) {
+            addCriterion("tieba_keyword not in", values, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordBetween(String value1, String value2) {
+            addCriterion("tieba_keyword between", value1, value2, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordNotBetween(String value1, String value2) {
+            addCriterion("tieba_keyword not between", value1, value2, "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordIsNull() {
+            addCriterion("news_keyword is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordIsNotNull() {
+            addCriterion("news_keyword is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordEqualTo(String value) {
+            addCriterion("news_keyword =", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordNotEqualTo(String value) {
+            addCriterion("news_keyword <>", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordGreaterThan(String value) {
+            addCriterion("news_keyword >", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordGreaterThanOrEqualTo(String value) {
+            addCriterion("news_keyword >=", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordLessThan(String value) {
+            addCriterion("news_keyword <", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordLessThanOrEqualTo(String value) {
+            addCriterion("news_keyword <=", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordLike(String value) {
+            addCriterion("news_keyword like", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordNotLike(String value) {
+            addCriterion("news_keyword not like", value, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordIn(List<String> values) {
+            addCriterion("news_keyword in", values, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordNotIn(List<String> values) {
+            addCriterion("news_keyword not in", values, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordBetween(String value1, String value2) {
+            addCriterion("news_keyword between", value1, value2, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordNotBetween(String value1, String value2) {
+            addCriterion("news_keyword not between", value1, value2, "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordIsNull() {
+            addCriterion("search_keyword is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordIsNotNull() {
+            addCriterion("search_keyword is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordEqualTo(String value) {
+            addCriterion("search_keyword =", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordNotEqualTo(String value) {
+            addCriterion("search_keyword <>", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordGreaterThan(String value) {
+            addCriterion("search_keyword >", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordGreaterThanOrEqualTo(String value) {
+            addCriterion("search_keyword >=", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordLessThan(String value) {
+            addCriterion("search_keyword <", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordLessThanOrEqualTo(String value) {
+            addCriterion("search_keyword <=", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordLike(String value) {
+            addCriterion("search_keyword like", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordNotLike(String value) {
+            addCriterion("search_keyword not like", value, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordIn(List<String> values) {
+            addCriterion("search_keyword in", values, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordNotIn(List<String> values) {
+            addCriterion("search_keyword not in", values, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordBetween(String value1, String value2) {
+            addCriterion("search_keyword between", value1, value2, "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordNotBetween(String value1, String value2) {
+            addCriterion("search_keyword not between", value1, value2, "searchKeyword");
             return (Criteria) this;
         }
 
@@ -639,6 +919,26 @@ public class IpBookConditions {
 
         public Criteria andNameLikeInsensitive(String value) {
             addCriterion("upper(name) like", value.toUpperCase(), "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andIndexKeywordLikeInsensitive(String value) {
+            addCriterion("upper(index_keyword) like", value.toUpperCase(), "indexKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTiebaKeywordLikeInsensitive(String value) {
+            addCriterion("upper(tieba_keyword) like", value.toUpperCase(), "tiebaKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsKeywordLikeInsensitive(String value) {
+            addCriterion("upper(news_keyword) like", value.toUpperCase(), "newsKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchKeywordLikeInsensitive(String value) {
+            addCriterion("upper(search_keyword) like", value.toUpperCase(), "searchKeyword");
             return (Criteria) this;
         }
     }

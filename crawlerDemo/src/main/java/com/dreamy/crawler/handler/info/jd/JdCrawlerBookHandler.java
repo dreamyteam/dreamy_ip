@@ -29,7 +29,8 @@ public class JdCrawlerBookHandler {
 
     public BookInfo getByISBN(String isbn, String operation) {
         BookInfo bookInfo = null;
-        String url = "http://search.jd.com/Search?keyword=" + isbn + "&enc=utf-8&pvid=x00em9oi.5otj5i";
+        //String url = "http://search.jd.com/Search?keyword=" + isbn + "&enc=utf-8&pvid=x00em9oi.5otj5i";
+        String url = "http://search.jd.com/Search?keyword=" + isbn + "&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&psort=4&click=0";
         String html = HttpUtils.getHtmlGet(url);
         Document document = Jsoup.parse(html);
         Elements books = document.select("div.goods-list-v1>ul.gl-warp>li.gl-item>div.gl-i-wrap>div.p-img>a");
@@ -45,7 +46,7 @@ public class JdCrawlerBookHandler {
 
 
     public BookInfo crawler(String url, String operation) {
-        String html = HttpUtils.getHtmlGet(url);//seleniumDownloader(url);
+        String html = HttpUtils.getHtmlGet(url,"gbk");//seleniumDownloader(url);
         BookInfo bean = null;
         String code = PatternUtils.getNum(url);
         if (StringUtils.isNotEmpty(html)) {

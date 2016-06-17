@@ -94,26 +94,26 @@ public class UpdateNetBookIndexTask {
     private String newsSougouQueue;
 
 
-//    @Scheduled(cron = "0 55 16 * * ?")
+    //    @Scheduled(cron = "0 55 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
-        int currentPage = 1;
+        int currentPage =25;
         Page page = new Page();
-        page.setPageSize(100);
-        Boolean isLoop = true;
+        page.setPageSize(500);
 
-        while (isLoop) {
+        while (true) {
             try {
                 page.setCurrentPage(currentPage);
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
-                if (CollectionUtils.isNotEmpty(bookViewList)) {
-                    for (BookView bookView : bookViewList) {
-                        updateByBookView(bookView);
-                    }
-                    currentPage++;
-                } else {
-                    isLoop = false;
+
+                for (BookView bookView : bookViewList) {
+                    updateByBookView(bookView);
                 }
+                if (!page.isHasNextPage()) {
+                    break;
+                }
+                currentPage++;
+
 
             } catch (Exception e) {
                 LOGGER.error("update index jod error ", e);
@@ -129,17 +129,14 @@ public class UpdateNetBookIndexTask {
             return;
         }
 
-
         BookCrawlerInfo crawlerInfo = bookCrawlerInfoList.get(0);
-        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
         if (CollectionUtils.isEmpty(commonParams)) {
             return;
         }
 
         commonParams.put("type", IpTypeEnums.net.getType().toString());
         commonParams.put("url", crawlerInfo.getUrl());
-
-
         String cacheKey = commonParams.get("key");
         Long count = redisClientService.getNumber(cacheKey);
         if (count == null || count == 0) {
@@ -156,15 +153,12 @@ public class UpdateNetBookIndexTask {
                 redisClientService.incrBy(cacheKey, -1L);
             }
 
-            if (StringUtils.isNotEmpty(bookView.getName())) {
-                commonParams.put("name", bookView.getName());
-                pushToQueue(tbQueue, commonParams);
-            } else {
-                redisClientService.incrBy(cacheKey, -1L);
-            }
-
+            pushToQueue(tbQueue, commonParams);
             pushToQueue(newsSougouQueue, commonParams);
             pushToQueue(s360IndexQueue, commonParams);
+            pushToQueue(bsKeyWordQueue, commonParams);
+            pushToQueue(wbKeyWordQueue, commonParams);
+            pushToQueue(wxKeyWordQueue, commonParams);
 
             HotWord hotWord = hotWordService.getById(bookView.getBookId());
             if (hotWord != null) {
@@ -174,9 +168,6 @@ public class UpdateNetBookIndexTask {
                 redisClientService.incrBy(cacheKey, -1L);
             }
 
-            pushToQueue(bsKeyWordQueue, commonParams);
-            pushToQueue(wbKeyWordQueue, commonParams);
-            pushToQueue(wxKeyWordQueue, commonParams);
 
         }
     }

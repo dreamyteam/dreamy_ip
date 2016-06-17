@@ -1,19 +1,26 @@
 package com.dreamy.test.crawler;
 
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
+import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
 import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
+import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
+import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.RankService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.HttpUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,10 +55,25 @@ public class IpBookTest extends BaseJunitTest {
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
 
     @Autowired
+    private CrawlerNetbookFinishQueueHandler crawlerNetbookFinishQueueHandler;
+
+    @Autowired
     private UpdateNetBookIndexTask updateNetBookIndexTask;
+
+    @Autowired
+    private RedisClientService redisClientService;
+
+    @Autowired
+    private ChubanManage chubanManage;
+
+    @Autowired
+    private RankService rankService;
 
     @Value("${queue_crawler_over}")
     private String BookOverQueue;
+
+    @Value("${queue_index_360}")
+    private String s360IndexQueue;
 
     @Test
     public void insert() {
@@ -128,7 +150,109 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void developIndex() {
-        updateNetBookIndexTask.run();
+
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
+            try {
+                page.setCurrentPage(currentPage);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
+                if (CollectionUtils.isNotEmpty(bookViewList)) {
+                    for (BookView bookView : bookViewList) {
+                        crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                    }
+                    currentPage++;
+                } else {
+                    isLoop = false;
+                }
+
+            } catch (Exception e) {
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void lnTest() {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(6400);
+
+        try {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
+                    crawlerFinishQueueHandler.updateChuban(bookView);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("errlr");
+        }
+//        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
+//        System.err.println("111");
+//        BookView bookView = bookViewService.getById(2818);
+//        crawlerFinishQueueHandler.updateChuban(bookView);
+    }
+
+
+    @Test
+    public void s360Index() {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(100);
+        Boolean isLoop = true;
+
+        while (isLoop) {
+            try {
+                page.setCurrentPage(currentPage);
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+                if (CollectionUtils.isNotEmpty(bookViewList)) {
+                    for (BookView bookView : bookViewList) {
+
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        String cacheKey = commonParams.get("key");
+                        redisClientService.setNumber(cacheKey, 1L);
+                        commonParams.put("type", IpTypeEnums.chuban.getType().toString());
+                        commonParams.put("name", bookView.getName());
+                        queueService.push(s360IndexQueue, commonParams);
+                    }
+                    currentPage++;
+                } else {
+                    isLoop = false;
+                }
+
+            } catch (Exception e) {
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void flushRank() {
+        int currentPage = 1;
+        Page page = new Page();
+        page.setPageSize(6400);
+
+        try {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
+//                    crawlerFinishQueueHandler.updateRank(bookView);
+                    flushBookRankToDb.updateRank(bookView);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("errlr");
+        }
     }
 
 }

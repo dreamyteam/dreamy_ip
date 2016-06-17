@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -51,7 +53,7 @@ public class KeyWordHandler {
             KeyWord keyWord = new KeyWord();
             keyWord.bookId(bookId);
             keyWord.source(KeyWordEnums.baidu.getType());
-            Elements elements = document.getElementsByClass("nums");
+            Elements elements = document.select("div.head_nums_cont_inner>div.nums");
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
                 String result = element.text();
@@ -95,6 +97,13 @@ public class KeyWordHandler {
         }
     }
 
+    public static void main(String[] args) {
+        String word="菲利普•迪克作品集(全5册) (美)菲利普•迪克";
+        word=HttpUtils.encodeUrl(word);
+        String url ="http://www.baidu.com/s?wd="+word;
 
+        Map<String,String> MAP=new HashMap<String, String>();
+        System.out.println(HttpUtils.getHtmlGet(url));
+    }
 
 }

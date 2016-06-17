@@ -19,28 +19,27 @@ import java.util.Map;
 @Component
 public class NewsMediaTask {
 
+    @Value("${queue_news_sougou}")
+    private String queueName;
     @Resource
     private QueueService queueService;
     @Resource
     BookViewService bookViewService;
 
-    @Value("${queue_news_sougou}")
-    private String queueName;
 
     public void crawler() {
-
         BookView bookView = new BookView().type(1);
         int currentPage = 1;
         while (true) {
             Page page = new Page();
             page.setPageSize(50);
             page.setCurrentPage(currentPage);
-            List<BookView> list = bookViewService.getList(bookView, page,null);
+            List<BookView> list = bookViewService.getList(bookView, page, null);
             for (BookView book : list) {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("source", book.getType());
                 map.put("bookId", book.getBookId());
-                map.put("word", book.getName());
+                map.put("news_keyword", book.getName());
                 queueService.push(queueName, map);
             }
             if (!page.isHasNextPage()) {

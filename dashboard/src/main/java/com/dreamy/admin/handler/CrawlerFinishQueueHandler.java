@@ -1,9 +1,15 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanPropagationIndexRandEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanReputationIndexRandEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
@@ -19,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,11 +47,16 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
     private BookScoreService bookScoreService;
 
     @Autowired
-    private RedisClientService redisClientService;
+    private PeopleChartService peopleChartService;
 
+    @Autowired
+    private RedisClientService redisClientService;
 
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
+
+    @Autowired
+    private ChubanManage chubanManage;
 
 
     @Override
@@ -66,11 +78,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         BookView bookView = bookViewService.getByBookId(bookId);
 
         if (bookView != null) {
-            if (bookView.getType().equals(IpTypeEnums.chuban.getType())) {
-                updateChuban(bookId, bookView);
-            } else {
-                updateNet(bookId, bookView);
-            }
+            updateChuban(bookView);
         }
     }
 
@@ -80,7 +88,8 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookId
      * @param bookView
      */
-    private void updateChuban(Integer bookId, BookView bookView) {
+    public void updateChuban(BookView bookView) {
+        Integer bookId = bookView.getBookId();
         List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
         if (CollectionUtils.isNotEmpty(bookInfoList)) {
 
@@ -89,60 +98,20 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             Integer propagationIndex = getNewPropogationIndex(bookView);
             Integer reputationIndex = getNewReputationIndex(bookView);
 
-
             bookView.hotIndex(hotIndex);
             bookView.propagateIndex(propagationIndex);
             bookView.reputationIndex(reputationIndex);
 
             Integer developIndex = getNewDevelopIndex(bookView);
             bookView.developIndex(developIndex);
-
+//
             Integer compositeIndex = getNewCompositeIndex(bookView);
             bookView.compositeIndex(compositeIndex);
-
 
             //更新指数
             bookViewService.update(bookView);
             updateHistoryIndex(bookView);
-
-            //指数写入到redis用于排名
-//            updateRank(bookView);
-
-        }
-    }
-
-
-    /**
-     * 出版文学更新
-     *
-     * @param bookId
-     * @param bookView
-     */
-    private void updateNet(Integer bookId, BookView bookView) {
-        List<BookInfo> bookInfoList = bookInfoService.getListByIpId(bookId);
-        if (CollectionUtils.isNotEmpty(bookInfoList)) {
-
-            //计算指数
-            Integer hotIndex = getNewHotIndex(bookView);
-            Integer propagationIndex = getNewPropogationIndex(bookView);
-            Integer reputationIndex = getNewReputationIndex(bookView);
-
-
-            bookView.hotIndex(hotIndex);
-            bookView.propagateIndex(propagationIndex);
-            bookView.reputationIndex(reputationIndex);
-
-            Integer developIndex = getNewDevelopIndex(bookView);
-            bookView.developIndex(developIndex);
-
-            Integer compositeIndex = getNewCompositeIndex(bookView);
-            bookView.compositeIndex(compositeIndex);
-
-
-            //更新指数
-            bookViewService.update(bookView);
-            updateHistoryIndex(bookView);
-
+//
             //指数写入到redis用于排名
             updateRank(bookView);
 
@@ -156,12 +125,27 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewHotIndex(BookView bookView) {
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
         try {
-            String hotIndexStr = bookScoreService.getBookHotIndexByBookId(bookView.getBookId());
-            Integer hotIndex = Integer.parseInt(hotIndexStr);
-            if (hotIndex > 0) {
-                return hotIndex;
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                index += chubanBookSourceHandler.getHotIndex(bookView);
             }
+            ChubanHotIndexRandEnums[] chubanHotIndexRandEnumses = ChubanHotIndexRandEnums.values();
+            for (Integer i = 0, length = chubanHotIndexRandEnumses.length; i < length; i++) {
+                ChubanHotIndexRandEnums chubanHotIndexRandEnums = chubanHotIndexRandEnumses[i];
+                Integer start = chubanHotIndexRandEnums.getStart();
+                Integer end = chubanHotIndexRandEnums.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanHotIndexRandEnums nextChubanHotIndexRandEnums = chubanHotIndexRandEnumses[i + 1];
+                    Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - chubanHotIndexRandEnums.getScore()) * 1.0;
+
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = chubanHotIndexRandEnums.getScore() + temp.intValue();
+                    break;
+                }
+            }
+            return index;
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
@@ -174,16 +158,34 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewPropogationIndex(BookView bookView) {
-
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
         try {
-            String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-            Integer index = Integer.parseInt(propagateIndex);
-            if (index > 0) {
-                return index;
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                Integer temp = chubanBookSourceHandler.getPropagationIndex(bookView);
+                index += temp;
             }
+
+            ChubanPropagationIndexRandEnums[] indexRandEnumses = ChubanPropagationIndexRandEnums.values();
+            for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+                ChubanPropagationIndexRandEnums indexRankEnum = indexRandEnumses[i];
+                Integer start = indexRankEnum.getStart();
+                Integer end = indexRankEnum.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanPropagationIndexRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                    Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
+
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = indexRankEnum.getScore() + temp.intValue();
+                    break;
+                }
+            }
+
+            return index;
         } catch (Exception e) {
-            Log.error("update  propatation index failed :" + bookView.getId(), e);
+            Log.error("update propagation index failed :" + bookView.getId(), e);
         }
+
         return bookView.getPropagateIndex();
     }
 
@@ -193,12 +195,30 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewReputationIndex(BookView bookView) {
+        Map<Integer, ChubanBookSourceBaseHandler> chubanBookSourceHandlerMap = chubanManage.getHandlerMap();
+
         try {
-            String reputationIndex = bookScoreService.getReputationIndexByBookId(bookView.getBookId());
-            Integer index = Integer.parseInt(reputationIndex);
-            if (index > 0) {
-                return index;
+            Integer index = 0;
+            for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
+                Double temp = chubanBookSourceHandler.getReputationIndex(bookView) * 1.0 / 100;
+                index += temp.intValue();
             }
+
+            ChubanReputationIndexRandEnums[] indexRandEnumses = ChubanReputationIndexRandEnums.values();
+            for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+                ChubanReputationIndexRandEnums indexRankEnum = indexRandEnumses[i];
+                Integer start = indexRankEnum.getStart();
+                Integer end = indexRankEnum.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanReputationIndexRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                    Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
+
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = indexRankEnum.getScore() + temp.intValue();
+                    break;
+                }
+            }
+            return index;
         } catch (Exception e) {
             Log.error("update reputation failed :" + bookView.getId(), e);
         }
@@ -213,11 +233,22 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
      */
     private Integer getNewDevelopIndex(BookView bookView) {
         try {
-            String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-            Integer index = Integer.parseInt(developIndex);
-            if (index > 0) {
-                return index;
+            Double developScore = 10.0;
+            Integer hotIndex = bookView.getHotIndex();
+            Integer propagationIndex = bookView.getPropagateIndex();
+            developScore += (hotIndex + propagationIndex) * 0.5;
+
+            List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
+            if (CollectionUtils.isNotEmpty(peopleChartList)) {
+                PeopleChart peopleChart = peopleChartList.get(0);
+                Double sexScore = 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                if (sexScore > 0) {
+                    developScore *= sexScore / (20.512);
+                }
             }
+
+            return developScore.intValue();
+
         } catch (Exception e) {
             Log.error("update develop index failed :" + bookView.getId(), e);
         }
@@ -238,7 +269,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             Integer reputationIndex = bookView.getReputationIndex();
             Integer developIndex = bookView.getDevelopIndex();
 
-            Double compositeIndex = 0.1 * (3 * (hotIndex + propagationIndex) + 2 * (reputationIndex + developIndex));
+            Double compositeIndex = 0.3 * hotIndex + 0.25 * propagationIndex + 0.3 * reputationIndex + 0.15 * developIndex;
 
             Integer index = compositeIndex.intValue();
             if (index > 0) {
@@ -272,6 +303,18 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         redisClientService.zadd(BookRankEnums.develop.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.hot.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
+    }
+
+
+    private Double tailScore(Integer index, Integer start, Integer end, Double scoreGap) {
+        Double temp = (index - start) * (scoreGap / (end - start));
+        if (temp < 1.0) {
+            temp = Math.random() * 10;
+        } else {
+            temp = temp * 1.0012345;
+        }
+
+        return temp;
     }
 
 }

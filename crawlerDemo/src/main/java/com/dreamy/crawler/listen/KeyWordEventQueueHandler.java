@@ -29,15 +29,15 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        String title = jsonObject.getString("name");
+        String word = jsonObject.getString("search_keyword");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         Integer ipType = Integer.parseInt(jsonObject.getString("type"));
 
         try {
-            keyWordHandler.crawler(title, bookId);
+            keyWordHandler.crawler(word, bookId);
         } catch (Exception e) {
-            log.warn("keyWordHandler failed: bookId:" +bookId + " word:" + title);
+            log.warn("keyWordHandler failed: bookId:" +bookId + " word:" + word);
         }
         finally {
             crawlerService.check(key,bookId,ipType);

@@ -29,38 +29,11 @@ public interface BookScoreService {
     public List<BookScore> getByBookId(Integer bookId);
 
     /**
-     * @param bookId
-     * @param options
-     * @return
-     */
-    public String getBookHotIndexByBookId(Integer bookId);
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getPropagateIndexByBookId(Integer bookId);
-
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getDevelopIndexByRecord(BookView bookView);
-
-    /**
-     * @param bookId
-     * @return
-     */
-    public String getReputationIndexByBookId(Integer bookId);
-
-    /**
      *
      * @param bookId
+     * @param type
      * @return
      */
-    Double getSearchIndexByBookId(Integer bookId);
-
-
+    public BookScore getByBookIdAndSource(Integer bookId, Integer type);
 
 }

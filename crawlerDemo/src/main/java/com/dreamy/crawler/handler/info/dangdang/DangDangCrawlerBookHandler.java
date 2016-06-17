@@ -26,26 +26,37 @@ public class DangDangCrawlerBookHandler {
 
 
     public BookInfo getByISBN(String isbn, String operation) {
-        String url = "http://search.dangdang.com/?act=input&key=" + isbn;
-        try {
-            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), DangdangBean.class);
-            DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
-            ooSpider.close();
-            if (dangdangBean != null) {
-                List<String> list = dangdangBean.getUrls();
-                if (CollectionUtils.isNotEmpty(list)) {
-                    String crawlerUrl = list.get(0);
-                    BookInfo bookInfo = crawler(crawlerUrl, operation);
-
-                    return bookInfo;
-                }
+        String url = "http://search.dangdang.com/?act=input&key=" + isbn + "&category_path=01.00.00.00.00.00&type=01.00.00.00.00.00&sort_type=sort_score_desc#J_tab";
+        String html = HttpUtils.getHtmlGet(url,"gbk");
+        Document document = Jsoup.parse(html);
+        if (document != null) {
+            Elements elements = document.select("ul.bigimg>li>a");
+            if (elements != null && elements.size() > 0) {
+                Element element = elements.first();
+                String crawlerUrl = element.attr("href");
+                BookInfo bookInfo = crawler(crawlerUrl, operation);
+                return bookInfo;
             }
-        } catch (Exception e) {
-            log.error("DangDangCrawlerBookHandler getByISBN url:" + url, e);
+
         }
-
-
         return null;
+//        try {
+//            OOSpider ooSpider = OOSpider.create(Site.me().setTimeOut(10000), DangdangBean.class);
+//            DangdangBean dangdangBean = ooSpider.<DangdangBean>get(url);
+//            ooSpider.close();
+//            if (dangdangBean != null) {
+//                List<String> list = dangdangBean.getUrls();
+//                if (CollectionUtils.isNotEmpty(list)) {
+//                    String crawlerUrl = list.get(0);
+//                    BookInfo bookInfo = crawler(crawlerUrl, operation);
+//                    return bookInfo;
+//                }
+//            }
+//        } catch (Exception e) {
+//            log.error("DangDangCrawlerBookHandler getByISBN url:" + url, e);
+//        }
+
+
     }
 
     public BookInfo crawler(String url, String operation) {
@@ -254,8 +265,8 @@ public class DangDangCrawlerBookHandler {
                     if (CollectionUtils.isNotEmpty(map1)) {
                         Map<String, Object> map2 = (Map<String, Object>) map1.get("rateInfo");
                         if (CollectionUtils.isNotEmpty(map1)) {
-                            String str = (String) map2.get("good_rate");
-                            core=Double.valueOf(str);
+                            String str = map2.get("good_rate") + "";
+                            core = Double.valueOf(str);
                             bookInfo.setScore(core);
                         }
                     }
@@ -267,5 +278,17 @@ public class DangDangCrawlerBookHandler {
 
     }
 
+    public static void main(String[] args) {
+        String isbn = "9787208061644";
+        String url = "http://search.dangdang.com/?act=input&key=" + isbn + "&category_path=01.00.00.00.00.00&type=01.00.00.00.00.00&sort_type=sort_score_desc#J_tab";
+        String html = HttpUtils.getHtmlGet(url);
+        Document document = Jsoup.parse(html);
+        if (document != null) {
+            Elements elements = document.select("ul.bigimg>li>a");
+            for (Element element : elements) {
+                System.out.println(element.attr("href"));
+            }
+        }
+    }
 
 }

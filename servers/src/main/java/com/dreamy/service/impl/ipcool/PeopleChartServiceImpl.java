@@ -58,5 +58,11 @@ public class PeopleChartServiceImpl implements PeopleChartService {
         }
     }
 
-
+    @Override
+    public PeopleChart getByBookIdAndType(Integer bookId, Integer type) {
+        PeopleChartConditions conditions=new PeopleChartConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+        List<PeopleChart>  peopleChartList = peopleChartDao.selectByExample(conditions);
+        return null;
+    }
 }

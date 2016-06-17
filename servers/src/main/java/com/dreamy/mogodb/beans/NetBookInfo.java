@@ -2,6 +2,8 @@ package com.dreamy.mogodb.beans;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
+
 /**
  * Created by wangyongxing on 16/5/30.
  */
@@ -75,6 +77,8 @@ public class NetBookInfo {
     private Integer commentNum;
 
     private String authorUrl;
+
+    private Date updatedAt;
 
     public Integer getBookId() {
         return bookId;
@@ -211,5 +215,13 @@ public class NetBookInfo {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

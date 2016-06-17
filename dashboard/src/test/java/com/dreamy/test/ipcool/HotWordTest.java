@@ -28,7 +28,7 @@ public class HotWordTest extends BaseJunitTest {
 
     @Test
     public void createChubanHotWord() {
-        int current = 80;
+        int current = 1;
         IpBook entity = new IpBook();
         entity.setType(IpTypeEnums.net.getType());
         while (true) {
@@ -37,7 +37,7 @@ public class HotWordTest extends BaseJunitTest {
             page.setCurrentPage(current);
             List<IpBook> books = ipBookService.getIpBookList(entity, page);
             for (IpBook book : books) {
-                String title = HttpUtils.encodeUrl(book.getTitle());
+                String title = HttpUtils.encodeUrl(book.getIndexKeyword());
                 String url = "http://data.weibo.com/index/ajax/hotword?flag=like&word=" + title + "&_t=0&__rnd=" + System.currentTimeMillis();
                 String html = HttpUtils.getHtmlGet(url);
                 String str = HttpUtils.decodeUnicode(html);
@@ -56,7 +56,7 @@ public class HotWordTest extends BaseJunitTest {
                             hotWordDao.updateInser(hotWord);
                         }
                     }
-                }catch (Exception E){
+                } catch (Exception E) {
                     continue;
                 }
             }
@@ -81,7 +81,7 @@ public class HotWordTest extends BaseJunitTest {
             page.setCurrentPage(current);
             List<IpBook> books = ipBookService.getIpBookList(entity, page);
             for (IpBook book : books) {
-                String title = HttpUtils.encodeUrl(book.getTitle());
+                String title = HttpUtils.encodeUrl(book.getIndexKeyword());
                 String url = "http://data.weibo.com/index/ajax/hotword?flag=like&word=" + title + "&_t=0&__rnd=" + System.currentTimeMillis();
                 String html = HttpUtils.getHtmlGet(url);
                 String str = HttpUtils.decodeUnicode(html);
@@ -93,9 +93,9 @@ public class HotWordTest extends BaseJunitTest {
                             List<Map<String, String>> list = (List<Map<String, String>>) map.get("data");
                             HotWord hotWord = new HotWord();
                             hotWord.setId(book.getId());
-                            hotWord.setWname(list.get(0).get("wname"));
-                            hotWord.setWid(list.get(0).get("wid"));
                             hotWord.setTitle(book.getTitle());
+                            hotWord.setWid(list.get(0).get("wid"));
+                            hotWord.setWname(list.get(0).get("wname"));
                             hotWordDao.updateInser(hotWord);
                         }
                     }

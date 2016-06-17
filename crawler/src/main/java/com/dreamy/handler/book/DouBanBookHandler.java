@@ -99,8 +99,8 @@ public class DouBanBookHandler {
                     int size = elements.size();
                     for (int j = 0; j < size; j++) {
                         Element element = elements.get(j);
+                        Map<String, Object> map = new HashMap<String, Object>();
                         if (element != null) {
-                            Map<String, Object> map = new HashMap<String, Object>();
                             map.put("title", element.attr("title"));
                             map.put("url", element.attr("href"));
                             queueService.push(queueName, map);

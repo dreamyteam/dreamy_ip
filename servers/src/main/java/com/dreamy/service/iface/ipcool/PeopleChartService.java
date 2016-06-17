@@ -17,6 +17,11 @@ public interface PeopleChartService {
 
     /**
      * @param peopleChart
+     */
+    public void saveOrUpdate(PeopleChart peopleChart);
+
+    /**
+     * @param peopleChart
      * @param page
      * @return
      */
@@ -28,7 +33,12 @@ public interface PeopleChartService {
      */
     public List<PeopleChart> getListByBookId(Integer bookId);
 
-    public void saveOrUpdate(PeopleChart peopleChart);
+    /**
+     * @param bookId
+     * @param type
+     * @return
+     */
+    PeopleChart getByBookIdAndType(Integer bookId, Integer type);
 
 
 }

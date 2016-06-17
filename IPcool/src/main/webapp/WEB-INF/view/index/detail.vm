@@ -1,8 +1,7 @@
 #set($layout = "/layout/layout_chart.vm")
 #set($cssName = "program_detail_page.css")
-#set($jsName = "program_detail.js")
+#set($jsName = "program.js")
 
-<input id="getIpid" type="hidden" value="$!{view.bookId}">
 
 <div class="container">
     #parse("/index/common.vm")
@@ -88,8 +87,8 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value"></h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">----/--/--</span></h2>
+                <h5 class="number highest_histroy_value">-</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -209,8 +208,8 @@
             <!-- 历史最高 -->
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value"></h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">----/--/--</span></h2>
+                <h5 class="number highest_histroy_value">-</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
@@ -256,12 +255,12 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value"></h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">----/--/--</span></h2>
+                <h5 class="number highest_histroy_value">-</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名</h2>
                 <h5 class="number">$!{hrank}</h5>
             </div>
         </div>
@@ -295,12 +294,12 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">----/--/--</span></h2>
                 <h5 class="number highest_histroy_value"></h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名</h2>
                 <h5 class="number">$!{prank}</h5>
             </div>
         </div>
@@ -332,7 +331,7 @@
         </div>
     </section>
     <!--用户活跃-->
-    <section class="scroll_load hidden"  #if($view.getType() == 1)  #end>
+    <section class="hidden"  #if($view.getType() == 1)  #end>
         <h1 class="title">用户活跃</h1>
         <!-- 指数们 -->
         <div class="values_container scroll_load_history" data-type=4>
@@ -350,12 +349,12 @@
             </div>
             <!-- 历史最高 -->
             <div class="values_content">
-                <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
-                <h5 class="number highest_histroy_value"></h5>
+                <h2 class="program_title">历史最高 <span class="date highest_history_date">----/--/--</span></h2>
+                <h5 class="number highest_histroy_value">-</h5>
             </div>
             <!--同类排名 -->
             <div class="values_content">
-                <h2 class="program_title">当前排名 <span class="date">2015/03/24</span></h2>
+                <h2 class="program_title">当前排名 </h2>
                 <h5 class="number">$!{arank}</h5>
             </div>
         </div>
