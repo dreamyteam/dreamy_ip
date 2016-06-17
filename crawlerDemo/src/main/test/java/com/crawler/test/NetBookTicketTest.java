@@ -37,7 +37,7 @@ public class NetBookTicketTest extends BaseJunitTest {
                 netBookTicket = new NetBookTicket();
                 String code = PatternUtils.getNum(urls.get(i));
                 netBookTicket.setCode(Integer.valueOf(code));
-                netBookTicket.setTicketNum(Integer.valueOf(nums.get(i).replace(" ","")));
+                netBookTicket.setTicketNum(Integer.valueOf(nums.get(i).replace(" ", "")));
                 netBookTicketService.saveByRecord(netBookTicket);
 
             }

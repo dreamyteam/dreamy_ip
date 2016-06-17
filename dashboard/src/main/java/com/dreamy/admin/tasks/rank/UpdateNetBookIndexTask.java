@@ -97,7 +97,7 @@ public class UpdateNetBookIndexTask {
     //    @Scheduled(cron = "0 55 16 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
-        int currentPage = 1;
+        int currentPage =25;
         Page page = new Page();
         page.setPageSize(500);
 

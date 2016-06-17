@@ -1,6 +1,6 @@
 package com.dreamy.test.ipcool;
 
-import com.dreamy.admin.tasks.HuaYuTicketTask;
+import com.dreamy.admin.tasks.HuaYuTask;
 import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
@@ -25,7 +25,7 @@ public class PeopleChartTest extends BaseJunitTest {
     @Autowired
     PeopleChartService peopleChartService;
     @Autowired
-    HuaYuTicketTask huaYuTicketTask;
+    HuaYuTask huaYuTicketTask;
 
     @Test
     public void save() {
