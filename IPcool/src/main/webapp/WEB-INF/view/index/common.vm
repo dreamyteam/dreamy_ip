@@ -50,7 +50,7 @@
             <li #if($pageName == "reviews") class="active" #end><a
                     href="/index/user/reviews.html?ip=$!{view.id}&pageName=reviews">用户点评</a></li>
             <li #if($pageName == "intro") class="active" #end><a
-                    href="/index/introduction.html?ip=$!{view.id}&pageName=intro">简介</a></li>
+                    href="/index/introduction.html?ip=$!{view.id}&pageName=intro">相关简介</a></li>
         </ul>
         <div class="follow_download">
             <span class="follow">关注</span>
