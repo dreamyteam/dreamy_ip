@@ -284,6 +284,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                 history.setRecommendNum(netBookInfo.getRecommendNum());
                 history.setMonthSort(netBookInfo.getMonthSort());
                 history.setScore(netBookInfo.getScore());
+                history.setTicketNum(netBookInfo.getTicketNum());
                 history.setCreateDate(TimeUtils.toString(null, new Date()));
                 history.setId(netBookInfo.getBookId() + "-" + type + "-" + TimeUtils.toString(null, new Date()));
                 netBookDataHistoryService.updateInser(history);
