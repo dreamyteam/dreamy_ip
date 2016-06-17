@@ -31,9 +31,9 @@ public class RankServiceImpl implements RankService {
             commonParams.put("key", "book:update:" + bookView.getBookId());
             commonParams.put("isbn", ipBook.getCode());
             commonParams.put("operation", action);
-//            commonParams.put("tieba_keyword", ipBook.getTiebaKeyword());
-//            commonParams.put("index_keyword", ipBook.getIndexKeyword());
-//            commonParams.put("news_keyword", ipBook.getNewsKeyword());
+            commonParams.put("tieba_keyword", ipBook.getTiebaKeyword());
+            commonParams.put("index_keyword", ipBook.getIndexKeyword());
+            commonParams.put("news_keyword", ipBook.getNewsKeyword());
             commonParams.put("search_keyword", ipBook.getSearchKeyword());
         }
 

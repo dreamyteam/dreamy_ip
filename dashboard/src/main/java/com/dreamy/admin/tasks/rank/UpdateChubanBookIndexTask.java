@@ -183,7 +183,7 @@ public class UpdateChubanBookIndexTask {
                 } else {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
-                
+
                 pushToQueue(newsSougouQueue, commonParams);
                 pushToQueue(s360IndexQueue, commonParams);
 
