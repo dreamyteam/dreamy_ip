@@ -95,13 +95,13 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     public void updateNet(BookView bookView) {
-        Integer hotIndex = getNewHotIndex(bookView);
-//        Integer propagationIndex = getNewPropogationIndex(bookView);
+//        Integer hotIndex = getNewHotIndex(bookView);
+        Integer propagationIndex = getNewPropogationIndex(bookView);
 //        Integer activeIndex = getNewActiveIndex(bookView);
 
 
-        bookView.hotIndex(hotIndex);
-//        bookView.propagateIndex(propagationIndex);
+//        bookView.hotIndex(hotIndex);
+        bookView.propagateIndex(propagationIndex);
 //        bookView.activityIndex(activeIndex);
 //
 //        Integer developIndex = getNewDevelopIndex(bookView);
@@ -128,7 +128,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     private Integer getNewHotIndex(BookView bookView) {
         Map<Integer, NetBookSourceBaseHandler> netBookSourceBaseHandlerMap = netManage.getHandlerMap();
         try {
-            Integer index = bookView.getHotIndex();
+            Integer index = 0;
             for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
                 Integer temp = netBookSourceBaseHandler.getHotIndex(bookView);
                 index += temp;
@@ -165,15 +165,23 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewPropogationIndex(BookView bookView) {
-//        try {
-//            String propagateIndex = bookScoreService.getPropagateIndexByBookId(bookView.getBookId());
-//            Integer index = Integer.parseInt(propagateIndex);
-//            if (index > 0) {
-//                return index;
-//            }
-//        } catch (Exception e) {
-//            Log.error("update  propatation index failed :" + bookView.getId(), e);
-//        }
+        Map<Integer, NetBookSourceBaseHandler> netBookSourceBaseHandlerMap = netManage.getHandlerMap();
+        try {
+            Integer index = 0;
+            for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
+                Integer temp = netBookSourceBaseHandler.getPropagationIndex(bookView);
+                index += temp;
+            }
+
+            if (index == 0) {
+                Double temp = Math.random() * 10;
+                index = temp.intValue();
+            }
+
+            return index;
+        } catch (Exception e) {
+            Log.error("update  propatation index failed :" + bookView.getId(), e);
+        }
         return bookView.getPropagateIndex();
     }
 

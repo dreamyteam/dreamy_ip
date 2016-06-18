@@ -2,10 +2,10 @@ package com.dreamy.admin.IndexCalculation.book.net;
 
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
-import com.dreamy.enums.IndexSourceEnums;
-import com.dreamy.enums.NetBookDataSourceEnums;
+import com.dreamy.domain.ipcool.KeyWord;
+import com.dreamy.enums.*;
 import com.dreamy.mogodb.beans.BookIndexData;
+import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,9 @@ import java.util.Map;
 public class WeiboNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
     @Autowired
     private BookIndexDataService bookIndexDataService;
+
+    @Autowired
+    private KeyWordService keyWordService;
 
     @Override
     public Integer getHandlerId() {
@@ -57,6 +60,11 @@ public class WeiboNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
 
     @Override
     public Integer getPropagationIndex(BookView bookView) {
+        KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.weibo.getType());
+        if (keyWord != null) {
+            Double propagateIndex = NetBookPropagationIndexExchangeEnums.weibo.getNum() * keyWord.getIndexNum();
+            return propagateIndex.intValue();
+        }
         return super.getPropagationIndex(bookView);
     }
 

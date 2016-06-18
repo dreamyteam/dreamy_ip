@@ -1,14 +1,10 @@
 package com.dreamy.admin.IndexCalculation.book.net;
 
-import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.*;
-import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.service.iface.ipcool.KeyWordService;
-import com.dreamy.service.iface.mongo.BookIndexDataService;
-import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,49 +18,26 @@ import java.util.Map;
  * Time: 下午11:18
  */
 @Component
-public class S360NetBookSourceBaseHandler extends NetBookSourceBaseHandler {
-    @Autowired
-    private BookIndexDataService bookIndexDataService;
+public class BaiduNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
 
     @Autowired
     private KeyWordService keyWordService;
 
     @Override
     public Integer getHandlerId() {
-        return NetBookDataSourceEnums.s360.getSource();
+        return NetBookDataSourceEnums.baidu.getSource();
     }
 
     @Override
     public Integer getHotIndex(BookView bookView) {
-
-        Integer score = 0;
-        List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
-        if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
-            for (BookIndexData bookIndexData : bookIndexDatas) {
-                if (bookIndexData.getSource().equals(IndexSourceEnums.s360.getType())) {
-                    if (bookIndexData.getOverviewJson() != null) {
-                        Integer monthIndex = bookIndexData.getIndex();
-                        if (!monthIndex.equals("-")) {
-                            score = monthIndex;
-                        }
-                    }
-                }
-            }
-
-        }
-
-        if (score == 0) {
-            score = super.getHotIndex(bookView);
-        }
-
-        return score;
+        return super.getHotIndex(bookView);
     }
 
     @Override
     public Integer getPropagationIndex(BookView bookView) {
-        KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.so.getType());
+        KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.baidu.getType());
         if (keyWord != null) {
-            Double propagateIndex = NetBookPropagationIndexExchangeEnums.s360.getNum() * keyWord.getIndexNum();
+            Double propagateIndex = NetBookPropagationIndexExchangeEnums.baidu.getNum() * keyWord.getIndexNum();
             return propagateIndex.intValue();
         }
 
