@@ -88,7 +88,7 @@ public class UpdateChubanBookIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 43 13 * * ?")
+    @Scheduled(cron = "0 45 20 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
