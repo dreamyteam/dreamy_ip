@@ -38,7 +38,6 @@ public class QdNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
         if (netBookInfo != null) {
             Integer totalClick = netBookInfo.getClickNum();
             Integer totalRecommendNum = netBookInfo.getRecommendNum();
-            Integer ticketNum = netBookInfo.getTicketNum();
 
             if (totalClick == null || totalClick < 0) {
                 totalClick = 11;
@@ -48,8 +47,7 @@ public class QdNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
                 totalRecommendNum = 1;
             }
 
-
-            Double temp = totalClick * totalRecommendNum * ticketNum * 1.0;
+            Double temp = (totalClick / 2000 + totalRecommendNum / 200) * 1.0;
             return temp.intValue();
         }
         return super.getHotIndex(bookView);

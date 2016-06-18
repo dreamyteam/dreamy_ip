@@ -103,7 +103,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
 //        bookView.compositeIndex(compositeIndex);
 
         //更新指数
-        bookViewService.update(bookView);
+//        bookViewService.update(bookView);
 //        updateHistoryIndex(bookView);
 
         //指数写入到redis用于排名

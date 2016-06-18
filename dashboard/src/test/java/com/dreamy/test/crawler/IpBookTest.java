@@ -177,28 +177,26 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-//        int currentPage = 5;
-//        Page page = new Page();
-//        page.setPageSize(1419);
-//
-//        try {
-//            page.setCurrentPage(currentPage);
-//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
-//            if (CollectionUtils.isNotEmpty(bookViewList)) {
-//                for (BookView bookView : bookViewList) {
-//                    if (bookView.getId() > 430) {
-//                        crawlerFinishQueueHandler.updateChuban(bookView);
-//                    }
-//                }
-//
-//            }
-//
-//        } catch (Exception e) {
-//            System.err.println("errlr");
-//        }
+        int currentPage = 5;
+        Page page = new Page();
+        page.setPageSize(6400);
 
-        BookView bookView = bookViewService.getById(1428);
-        crawlerFinishQueueHandler.updateChuban(bookView);
+        try {
+            page.setCurrentPage(currentPage);
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
+            if (CollectionUtils.isNotEmpty(bookViewList)) {
+                for (BookView bookView : bookViewList) {
+                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("errlr");
+        }
+
+//        BookView bookView = bookViewService.getById(1428);
+//        crawlerNetbookFinishQueueHandler.updateNet(bookView);
     }
 
 
