@@ -33,6 +33,15 @@ public interface BookCrawlerInfoService {
 
 
     /**
+     *
+     * @param bookId
+     * @param type
+     * @return
+     */
+    BookCrawlerInfo getByBookIdAndType(Integer bookId,Integer type);
+
+
+    /**
      * @param id
      * @return
      */

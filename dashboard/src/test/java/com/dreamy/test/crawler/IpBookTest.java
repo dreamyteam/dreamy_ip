@@ -177,9 +177,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 5;
+        int currentPage = 6;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(10000);
 
         try {
             page.setCurrentPage(currentPage);
@@ -188,7 +188,6 @@ public class IpBookTest extends BaseJunitTest {
                 for (BookView bookView : bookViewList) {
                     crawlerNetbookFinishQueueHandler.updateNet(bookView);
                 }
-
             }
 
         } catch (Exception e) {

@@ -28,7 +28,6 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
     private BookCrawlerInfoDao bookCrawlerInfoDao;
 
 
-
     @Override
     public BookCrawlerInfo save(BookCrawlerInfo info) {
         BookCrawlerInfo entity = new BookCrawlerInfo();
@@ -37,15 +36,13 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
         List<BookCrawlerInfo> list = getByRecord(entity);
         if (CollectionUtils.isEmpty(list)) {
             bookCrawlerInfoDao.save(info);
-        }
-        else{
-            BookCrawlerInfo old=list.get(0);
+        } else {
+            BookCrawlerInfo old = list.get(0);
             info.setId(old.getId());
             bookCrawlerInfoDao.update(info);
         }
         return info;
     }
-
 
 
     @Override
@@ -68,6 +65,19 @@ public class BookCrawlerInfoServiceImpl implements BookCrawlerInfoService {
             conditions.setPage(page);
         }
         return bookCrawlerInfoDao.selectByExample(conditions);
+    }
+
+    @Override
+    public BookCrawlerInfo getByBookIdAndType(Integer bookId, Integer source) {
+        BookCrawlerInfoConditions conditions = new BookCrawlerInfoConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andSourceEqualTo(source);
+
+        List<BookCrawlerInfo> bookCrawlerInfoList = bookCrawlerInfoDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookCrawlerInfoList)) {
+            return bookCrawlerInfoList.get(0);
+        }
+
+        return null;
     }
 
     @Override

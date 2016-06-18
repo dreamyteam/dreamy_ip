@@ -1,10 +1,14 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
+import com.dreamy.admin.IndexCalculation.book.net.NetBookSourceBaseHandler;
+import com.dreamy.admin.IndexCalculation.book.net.NetManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
@@ -27,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,6 +67,9 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     private TieBaHistoryService tieBaHistoryService;
+
+    @Autowired
+    private NetManage netManage;
 
 
     @Override
@@ -103,7 +111,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
 //        bookView.compositeIndex(compositeIndex);
 
         //更新指数
-//        bookViewService.update(bookView);
+        bookViewService.update(bookView);
 //        updateHistoryIndex(bookView);
 
         //指数写入到redis用于排名
@@ -118,29 +126,37 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewHotIndex(BookView bookView) {
-        Integer hotIndex = bookView.getHotIndex();
+        Map<Integer, NetBookSourceBaseHandler> netBookSourceBaseHandlerMap = netManage.getHandlerMap();
+        try {
+            Integer index = 0;
+            for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
+                Integer temp = netBookSourceBaseHandler.getHotIndex(bookView);
+                index += temp;
+            }
 
-//        NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
-//        if (netBookInfo != null) {
-//            Double percent = CrawlerSourceEnums.qidian.getPercent();
-//            Integer totalClick = netBookInfo.getClickNum();
-//            Integer totalRecommendNum = netBookInfo.getRecommendNum();
-//            Integer ticketNum = netBookInfo.getTicketNum();
+            if (index == 0) {
+                Double temp = Math.random() * 10;
+                index = temp.intValue();
+            }
+//            ChubanHotIndexRandEnums[] chubanHotIndexRandEnumses = ChubanHotIndexRandEnums.values();
+//            for (Integer i = 0, length = chubanHotIndexRandEnumses.length; i < length; i++) {
+//                ChubanHotIndexRandEnums chubanHotIndexRandEnums = chubanHotIndexRandEnumses[i];
+//                Integer start = chubanHotIndexRandEnums.getStart();
+//                Integer end = chubanHotIndexRandEnums.getEnd();
+//                if (index >= start && index <= end) {
+//                    ChubanHotIndexRandEnums nextChubanHotIndexRandEnums = chubanHotIndexRandEnumses[i + 1];
+//                    Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - chubanHotIndexRandEnums.getScore()) * 1.0;
 //
-//            if (totalClick == null || totalClick < 0) {
-//                totalClick = 10;
+//                    Double temp = tailScore(index, start, end, scoreGap);
+//                    index = chubanHotIndexRandEnums.getScore() + temp.intValue();
+//                    break;
+//                }
 //            }
-//
-//            if (totalRecommendNum == null || totalRecommendNum < 0) {
-//                totalRecommendNum = 0;
-//            }
-//
-//            Double searchIndex = bookScoreService.getSearchIndexByBookId(bookView.getBookId());
-//            Double temp = percent * (((Math.log10(totalClick) * Math.log10(totalRecommendNum)) * 1000 + ticketNum)) * Math.log10(searchIndex);
-//            hotIndex = temp.intValue();
-//        }
-
-        return hotIndex;
+            return index;
+        } catch (Exception e) {
+            Log.error("update hot index failed :" + bookView.getId(), e);
+        }
+        return bookView.getHotIndex();
     }
 
     /**

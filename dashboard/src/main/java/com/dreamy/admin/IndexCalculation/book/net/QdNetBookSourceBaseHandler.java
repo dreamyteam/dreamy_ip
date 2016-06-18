@@ -1,15 +1,18 @@
 package com.dreamy.admin.IndexCalculation.book.net;
 
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.NetBookDataSourceEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
 import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.service.iface.mongo.NetBookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -20,12 +23,13 @@ import java.util.Map;
  * Date: 16/6/17
  * Time: 下午11:18
  */
+@Component
 public class QdNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
     @Autowired
     private NetBookInfoService netBookInfoService;
 
     @Autowired
-    private BookIndexDataService bookIndexDataService;
+    private BookCrawlerInfoService crawlerInfoService;
 
     @Override
     public Integer getHandlerId() {
@@ -34,20 +38,26 @@ public class QdNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
 
     @Override
     public Integer getHotIndex(BookView bookView) {
+
+        BookCrawlerInfo bookCrawlerInfo = crawlerInfoService.getByBookIdAndType(bookView.getBookId(), CrawlerSourceEnums.qidian.getType());
+        if (bookCrawlerInfo == null) {
+            return 0;
+        }
+
         NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
         if (netBookInfo != null) {
             Integer totalClick = netBookInfo.getClickNum();
             Integer totalRecommendNum = netBookInfo.getRecommendNum();
 
             if (totalClick == null || totalClick < 0) {
-                totalClick = 11;
+                totalClick = 1;
             }
 
             if (totalRecommendNum == null || totalRecommendNum < 0) {
                 totalRecommendNum = 1;
             }
 
-            Double temp = (totalClick / 2000 + totalRecommendNum / 200) * 1.0;
+            Double temp = (totalClick / 2000.0 + totalRecommendNum / 200.0) ;
             return temp.intValue();
         }
         return super.getHotIndex(bookView);
