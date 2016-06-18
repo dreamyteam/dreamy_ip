@@ -84,24 +84,23 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     /**
      * 网络文学更新
      *
-     * @param bookId
      * @param bookView
      */
     public void updateNet(BookView bookView) {
         Integer hotIndex = getNewHotIndex(bookView);
-        Integer propagationIndex = getNewPropogationIndex(bookView);
-        Integer activeIndex = getNewActiveIndex(bookView);
+//        Integer propagationIndex = getNewPropogationIndex(bookView);
+//        Integer activeIndex = getNewActiveIndex(bookView);
 
 
         bookView.hotIndex(hotIndex);
-        bookView.propagateIndex(propagationIndex);
-        bookView.activityIndex(activeIndex);
-
-        Integer developIndex = getNewDevelopIndex(bookView);
-        bookView.developIndex(developIndex);
-
-        Integer compositeIndex = getNewCompositeIndex(bookView);
-        bookView.compositeIndex(compositeIndex);
+//        bookView.propagateIndex(propagationIndex);
+//        bookView.activityIndex(activeIndex);
+//
+//        Integer developIndex = getNewDevelopIndex(bookView);
+//        bookView.developIndex(developIndex);
+//
+//        Integer compositeIndex = getNewCompositeIndex(bookView);
+//        bookView.compositeIndex(compositeIndex);
 
         //更新指数
         bookViewService.update(bookView);

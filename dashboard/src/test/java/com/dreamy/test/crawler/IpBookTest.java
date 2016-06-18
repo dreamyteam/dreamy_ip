@@ -177,29 +177,28 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 5;
-        Page page = new Page();
-        page.setPageSize(1419);
+//        int currentPage = 5;
+//        Page page = new Page();
+//        page.setPageSize(1419);
+//
+//        try {
+//            page.setCurrentPage(currentPage);
+//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+//            if (CollectionUtils.isNotEmpty(bookViewList)) {
+//                for (BookView bookView : bookViewList) {
+//                    if (bookView.getId() > 430) {
+//                        crawlerFinishQueueHandler.updateChuban(bookView);
+//                    }
+//                }
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.err.println("errlr");
+//        }
 
-        try {
-            page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
-            if (CollectionUtils.isNotEmpty(bookViewList)) {
-                for (BookView bookView : bookViewList) {
-                    if (bookView.getId() > 430) {
-                        crawlerFinishQueueHandler.updateChuban(bookView);
-                    }
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.err.println("errlr");
-        }
-//        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
-//        System.err.println("111");
-//        BookView bookView = bookViewService.getById(3166);
-//        crawlerFinishQueueHandler.updateChuban(bookView);
+        BookView bookView = bookViewService.getById(1428);
+        crawlerFinishQueueHandler.updateChuban(bookView);
     }
 
 
@@ -217,7 +216,7 @@ public class IpBookTest extends BaseJunitTest {
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
 
-                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
                         String cacheKey = commonParams.get("key");
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
