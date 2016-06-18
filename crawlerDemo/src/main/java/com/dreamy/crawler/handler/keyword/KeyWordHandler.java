@@ -75,7 +75,7 @@ public class KeyWordHandler {
      * @param word
      */
     public void getSo(String word, Integer bookId) {
-
+        word=HttpUtils.encodeUrl(word);
         String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + word;
         String html = HttpUtils.getSsl(url);
         Document document = Jsoup.parse(html);
@@ -100,10 +100,16 @@ public class KeyWordHandler {
     public static void main(String[] args) {
         String word="菲利普•迪克作品集(全5册) (美)菲利普•迪克";
         word=HttpUtils.encodeUrl(word);
-        String url ="http://www.baidu.com/s?wd="+word;
+//        String url ="http://www.baidu.com/s?wd="+word;
+//
+//
+//
+//        Map<String,String> MAP=new HashMap<String, String>();
+//        System.out.println(HttpUtils.getHtmlGet(url));
+        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + word;
+        String html = HttpUtils.getSsl(url);
 
-        Map<String,String> MAP=new HashMap<String, String>();
-        System.out.println(HttpUtils.getHtmlGet(url));
+        System.out.println(html);
     }
 
 }
