@@ -3,14 +3,12 @@ package com.dreamy.admin.IndexCalculation.book.net;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookScore;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.CrawlerSourceEnums;
+import com.dreamy.enums.ChubanBookHotIndexExchangeEnums;
+import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.enums.NetBookDataSourceEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
-import com.dreamy.mogodb.beans.NetBookInfo;
-import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
-import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
-import com.dreamy.service.iface.mongo.NetBookInfoService;
+import com.dreamy.utils.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,43 +22,39 @@ import java.util.Map;
  * Time: 下午11:18
  */
 @Component
-public class QdNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
+public class S360NetBookSourceBaseHandler extends NetBookSourceBaseHandler {
     @Autowired
-    private NetBookInfoService netBookInfoService;
-
-    @Autowired
-    private BookCrawlerInfoService crawlerInfoService;
+    private BookIndexDataService bookIndexDataService;
 
     @Override
     public Integer getHandlerId() {
-        return NetBookDataSourceEnums.qd.getSource();
+        return NetBookDataSourceEnums.s360.getSource();
     }
 
     @Override
     public Integer getHotIndex(BookView bookView) {
-    return 0;
-//        BookCrawlerInfo bookCrawlerInfo = crawlerInfoService.getByBookIdAndType(bookView.getBookId(), CrawlerSourceEnums.qidian.getType());
-//        if (bookCrawlerInfo == null) {
-//            return 0;
-//        }
-//
-//        NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
-//        if (netBookInfo != null) {
-//            Integer totalClick = netBookInfo.getClickNum();
-//            Integer totalRecommendNum = netBookInfo.getRecommendNum();
-//
-//            if (totalClick == null || totalClick < 0) {
-//                totalClick = 1;
-//            }
-//
-//            if (totalRecommendNum == null || totalRecommendNum < 0) {
-//                totalRecommendNum = 1;
-//            }
-//
-//            Double temp = (totalClick / 2000.0 + totalRecommendNum / 200.0) ;
-//            return temp.intValue();
-//        }
-//        return super.getHotIndex(bookView);
+
+        Integer score = 0;
+        List<BookIndexData> bookIndexDatas = bookIndexDataService.getByBookId(bookView.getBookId());
+        if (CollectionUtils.isNotEmpty(bookIndexDatas)) {
+            for (BookIndexData bookIndexData : bookIndexDatas) {
+                if (bookIndexData.getSource().equals(IndexSourceEnums.s360.getType())) {
+                    if (bookIndexData.getOverviewJson() != null) {
+                        Integer monthIndex = bookIndexData.getIndex();
+                        if (!monthIndex.equals("-")) {
+                            score = monthIndex;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if (score == 0) {
+            score = super.getHotIndex(bookView);
+        }
+
+        return score;
     }
 
     @Override

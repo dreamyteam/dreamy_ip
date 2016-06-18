@@ -128,7 +128,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     private Integer getNewHotIndex(BookView bookView) {
         Map<Integer, NetBookSourceBaseHandler> netBookSourceBaseHandlerMap = netManage.getHandlerMap();
         try {
-            Integer index = 0;
+            Integer index = bookView.getHotIndex();
             for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
                 Integer temp = netBookSourceBaseHandler.getHotIndex(bookView);
                 index += temp;

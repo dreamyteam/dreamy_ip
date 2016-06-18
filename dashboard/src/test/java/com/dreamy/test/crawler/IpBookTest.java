@@ -177,7 +177,7 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 6;
+        int currentPage = 5;
         Page page = new Page();
         page.setPageSize(10000);
 

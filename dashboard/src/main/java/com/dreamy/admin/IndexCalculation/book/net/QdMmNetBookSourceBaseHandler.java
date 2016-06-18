@@ -36,29 +36,30 @@ public class QdMmNetBookSourceBaseHandler extends NetBookSourceBaseHandler {
 
     @Override
     public Integer getHotIndex(BookView bookView) {
-        BookCrawlerInfo bookCrawlerInfo = crawlerInfoService.getByBookIdAndType(bookView.getBookId(), CrawlerSourceEnums.qidianmm.getType());
-        if (bookCrawlerInfo == null) {
-            return 0;
-        }
-
-        NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
-        if (netBookInfo != null) {
-            Integer totalClick = netBookInfo.getClickNum();
-            Integer totalRecommendNum = netBookInfo.getRecommendNum();
-
-            if (totalClick == null || totalClick < 0) {
-                totalClick = 1;
-            }
-
-            if (totalRecommendNum == null || totalRecommendNum < 0) {
-                totalRecommendNum = 1;
-            }
-
-            Double temp = (totalClick / 2000.0 + totalRecommendNum / 200.0) ;
-            return temp.intValue();
-        }
-
-        return super.getHotIndex(bookView);
+        return 0;
+//        BookCrawlerInfo bookCrawlerInfo = crawlerInfoService.getByBookIdAndType(bookView.getBookId(), CrawlerSourceEnums.qidianmm.getType());
+//        if (bookCrawlerInfo == null) {
+//            return 0;
+//        }
+//
+//        NetBookInfo netBookInfo = netBookInfoService.getById(bookView.getBookId());
+//        if (netBookInfo != null) {
+//            Integer totalClick = netBookInfo.getClickNum();
+//            Integer totalRecommendNum = netBookInfo.getRecommendNum();
+//
+//            if (totalClick == null || totalClick < 0) {
+//                totalClick = 1;
+//            }
+//
+//            if (totalRecommendNum == null || totalRecommendNum < 0) {
+//                totalRecommendNum = 1;
+//            }
+//
+//            Double temp = (totalClick / 2000.0 + totalRecommendNum / 200.0) ;
+//            return temp.intValue();
+//        }
+//
+//        return super.getHotIndex(bookView);
     }
 
     @Override
