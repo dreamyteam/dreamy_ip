@@ -45,5 +45,13 @@ public interface BookRankHistoryService {
      */
     Integer getTrendFlag(Integer currentIndex, Integer historyTopIndex);
 
+    /**
+     *
+     * @param bookId
+     * @param date
+     * @return
+     */
+    Integer delByBookIdAndDate(Integer bookId,Date date);
+
 
 }

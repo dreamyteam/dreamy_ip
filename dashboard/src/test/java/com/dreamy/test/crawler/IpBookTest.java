@@ -177,9 +177,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);
@@ -235,9 +235,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 1;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);
