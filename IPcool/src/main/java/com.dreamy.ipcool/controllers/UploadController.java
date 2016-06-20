@@ -45,7 +45,6 @@ public class UploadController extends IpcoolController {
                             @RequestParam(required = false) Integer size) throws IOException {
 
         InterfaceBean bean = imgUploadService.propertyCheck(width, height, size, upfile);
-
         if (bean.getErrorCode() == 0) {
             Map<String, String> map = new HashMap<String, String>();
             String url = imgUploadService.uploadImage(upfile, x, y, width, height);

@@ -84,9 +84,9 @@ public class ImgUploadServiceImpl implements ImgUploadService {
             }else {
                 String subImg = filePath + "subImg."+suffix;
                 BufferedImage bi = ImageIO.read(tmp);
-                ImageFilter cif = new CropImageFilter(10,10,120,120);
+                ImageFilter cif = new CropImageFilter(x,y,width,height);
                 Image img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(bi.getSource(), cif));
-                BufferedImage tag = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+                BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
                 Graphics g = tag.getGraphics();
                 g.drawImage(img, 0, 0, null);
