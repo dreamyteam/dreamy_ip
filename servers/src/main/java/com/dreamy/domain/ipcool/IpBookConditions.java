@@ -387,246 +387,6 @@ public class IpBookConditions {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("type =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(Integer value) {
-            addCriterion("type <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(Integer value) {
-            addCriterion("type >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("type >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(Integer value) {
-            addCriterion("type <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("type <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<Integer> values) {
-            addCriterion("type in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<Integer> values) {
-            addCriterion("type not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
-            addCriterion("type between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("type not between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusEqualTo(Integer value) {
-            addCriterion("status =", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotEqualTo(Integer value) {
-            addCriterion("status <>", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThan(Integer value) {
-            addCriterion("status >", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
-            addCriterion("status >=", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThan(Integer value) {
-            addCriterion("status <", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThanOrEqualTo(Integer value) {
-            addCriterion("status <=", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIn(List<Integer> values) {
-            addCriterion("status in", values, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotIn(List<Integer> values) {
-            addCriterion("status not in", values, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusBetween(Integer value1, Integer value2) {
-            addCriterion("status between", value1, value2, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
-            addCriterion("status not between", value1, value2, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtIsNull() {
-            addCriterion("created_at is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtIsNotNull() {
-            addCriterion("created_at is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtEqualTo(Date value) {
-            addCriterion("created_at =", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtNotEqualTo(Date value) {
-            addCriterion("created_at <>", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtGreaterThan(Date value) {
-            addCriterion("created_at >", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtGreaterThanOrEqualTo(Date value) {
-            addCriterion("created_at >=", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtLessThan(Date value) {
-            addCriterion("created_at <", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtLessThanOrEqualTo(Date value) {
-            addCriterion("created_at <=", value, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtIn(List<Date> values) {
-            addCriterion("created_at in", values, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtNotIn(List<Date> values) {
-            addCriterion("created_at not in", values, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtBetween(Date value1, Date value2) {
-            addCriterion("created_at between", value1, value2, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedAtNotBetween(Date value1, Date value2) {
-            addCriterion("created_at not between", value1, value2, "createdAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtIsNull() {
-            addCriterion("updated_at is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtIsNotNull() {
-            addCriterion("updated_at is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtEqualTo(Date value) {
-            addCriterion("updated_at =", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtNotEqualTo(Date value) {
-            addCriterion("updated_at <>", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtGreaterThan(Date value) {
-            addCriterion("updated_at >", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtGreaterThanOrEqualTo(Date value) {
-            addCriterion("updated_at >=", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtLessThan(Date value) {
-            addCriterion("updated_at <", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtLessThanOrEqualTo(Date value) {
-            addCriterion("updated_at <=", value, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtIn(List<Date> values) {
-            addCriterion("updated_at in", values, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtNotIn(List<Date> values) {
-            addCriterion("updated_at not in", values, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtBetween(Date value1, Date value2) {
-            addCriterion("updated_at between", value1, value2, "updatedAt");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedAtNotBetween(Date value1, Date value2) {
-            addCriterion("updated_at not between", value1, value2, "updatedAt");
-            return (Criteria) this;
-        }
-
         public Criteria andIndexKeywordIsNull() {
             addCriterion("index_keyword is null");
             return (Criteria) this;
@@ -907,6 +667,316 @@ public class IpBookConditions {
             return (Criteria) this;
         }
 
+        public Criteria andSoKeywordIsNull() {
+            addCriterion("so_keyword is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordIsNotNull() {
+            addCriterion("so_keyword is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordEqualTo(String value) {
+            addCriterion("so_keyword =", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordNotEqualTo(String value) {
+            addCriterion("so_keyword <>", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordGreaterThan(String value) {
+            addCriterion("so_keyword >", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordGreaterThanOrEqualTo(String value) {
+            addCriterion("so_keyword >=", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordLessThan(String value) {
+            addCriterion("so_keyword <", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordLessThanOrEqualTo(String value) {
+            addCriterion("so_keyword <=", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordLike(String value) {
+            addCriterion("so_keyword like", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordNotLike(String value) {
+            addCriterion("so_keyword not like", value, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordIn(List<String> values) {
+            addCriterion("so_keyword in", values, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordNotIn(List<String> values) {
+            addCriterion("so_keyword not in", values, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordBetween(String value1, String value2) {
+            addCriterion("so_keyword between", value1, value2, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordNotBetween(String value1, String value2) {
+            addCriterion("so_keyword not between", value1, value2, "soKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIsNull() {
+            addCriterion("updated_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIsNotNull() {
+            addCriterion("updated_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtEqualTo(Date value) {
+            addCriterion("updated_at =", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotEqualTo(Date value) {
+            addCriterion("updated_at <>", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtGreaterThan(Date value) {
+            addCriterion("updated_at >", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_at >=", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtLessThan(Date value) {
+            addCriterion("updated_at <", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtLessThanOrEqualTo(Date value) {
+            addCriterion("updated_at <=", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIn(List<Date> values) {
+            addCriterion("updated_at in", values, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotIn(List<Date> values) {
+            addCriterion("updated_at not in", values, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtBetween(Date value1, Date value2) {
+            addCriterion("updated_at between", value1, value2, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotBetween(Date value1, Date value2) {
+            addCriterion("updated_at not between", value1, value2, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNull() {
+            addCriterion("created_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNotNull() {
+            addCriterion("created_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtEqualTo(Date value) {
+            addCriterion("created_at =", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotEqualTo(Date value) {
+            addCriterion("created_at <>", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThan(Date value) {
+            addCriterion("created_at >", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_at >=", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThan(Date value) {
+            addCriterion("created_at <", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThanOrEqualTo(Date value) {
+            addCriterion("created_at <=", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIn(List<Date> values) {
+            addCriterion("created_at in", values, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotIn(List<Date> values) {
+            addCriterion("created_at not in", values, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtBetween(Date value1, Date value2) {
+            addCriterion("created_at between", value1, value2, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotBetween(Date value1, Date value2) {
+            addCriterion("created_at not between", value1, value2, "createdAt");
+            return (Criteria) this;
+        }
+
         public Criteria andCodeLikeInsensitive(String value) {
             addCriterion("upper(code) like", value.toUpperCase(), "code");
             return (Criteria) this;
@@ -939,6 +1009,11 @@ public class IpBookConditions {
 
         public Criteria andSearchKeywordLikeInsensitive(String value) {
             addCriterion("upper(search_keyword) like", value.toUpperCase(), "searchKeyword");
+            return (Criteria) this;
+        }
+
+        public Criteria andSoKeywordLikeInsensitive(String value) {
+            addCriterion("upper(so_keyword) like", value.toUpperCase(), "soKeyword");
             return (Criteria) this;
         }
     }
