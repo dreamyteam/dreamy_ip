@@ -13,14 +13,6 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
 
     private String name;
 
-    private Integer type;
-
-    private Integer status;
-
-    private Date createdAt;
-
-    private Date updatedAt;
-
     private String indexKeyword;
 
     private String tiebaKeyword;
@@ -28,6 +20,16 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
     private String newsKeyword;
 
     private String searchKeyword;
+
+    private String soKeyword;
+
+    private Integer type;
+
+    private Integer status;
+
+    private Date updatedAt;
+
+    private Date createdAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -63,38 +65,6 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         this.name = name;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public String getIndexKeyword() {
         return indexKeyword;
     }
@@ -127,6 +97,46 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         this.searchKeyword = searchKeyword;
     }
 
+    public String getSoKeyword() {
+        return soKeyword;
+    }
+
+    public void setSoKeyword(String soKeyword) {
+        this.soKeyword = soKeyword;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -143,14 +153,15 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
             && (this.getCode() == null ? other.getCode() == null : this.getCode().equals(other.getCode()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
             && (this.getIndexKeyword() == null ? other.getIndexKeyword() == null : this.getIndexKeyword().equals(other.getIndexKeyword()))
             && (this.getTiebaKeyword() == null ? other.getTiebaKeyword() == null : this.getTiebaKeyword().equals(other.getTiebaKeyword()))
             && (this.getNewsKeyword() == null ? other.getNewsKeyword() == null : this.getNewsKeyword().equals(other.getNewsKeyword()))
-            && (this.getSearchKeyword() == null ? other.getSearchKeyword() == null : this.getSearchKeyword().equals(other.getSearchKeyword()));
+            && (this.getSearchKeyword() == null ? other.getSearchKeyword() == null : this.getSearchKeyword().equals(other.getSearchKeyword()))
+            && (this.getSoKeyword() == null ? other.getSoKeyword() == null : this.getSoKeyword().equals(other.getSoKeyword()))
+            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
+            && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()));
     }
 
     @Override
@@ -161,14 +172,15 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         result = prime * result + ((getCode() == null) ? 0 : getCode().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
-        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
         result = prime * result + ((getIndexKeyword() == null) ? 0 : getIndexKeyword().hashCode());
         result = prime * result + ((getTiebaKeyword() == null) ? 0 : getTiebaKeyword().hashCode());
         result = prime * result + ((getNewsKeyword() == null) ? 0 : getNewsKeyword().hashCode());
         result = prime * result + ((getSearchKeyword() == null) ? 0 : getSearchKeyword().hashCode());
+        result = prime * result + ((getSoKeyword() == null) ? 0 : getSoKeyword().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
+        result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         return result;
     }
 
@@ -192,26 +204,6 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
         return this;
     }
 
-    public IpBook type(Integer value) {
-        this.type = value;
-        return this;
-    }
-
-    public IpBook status(Integer value) {
-        this.status = value;
-        return this;
-    }
-
-    public IpBook createdAt(Date value) {
-        this.createdAt = value;
-        return this;
-    }
-
-    public IpBook updatedAt(Date value) {
-        this.updatedAt = value;
-        return this;
-    }
-
     public IpBook indexKeyword(String value) {
         this.indexKeyword = value;
         return this;
@@ -229,6 +221,31 @@ public class IpBook extends BaseDomain<Integer> implements Serializable {
 
     public IpBook searchKeyword(String value) {
         this.searchKeyword = value;
+        return this;
+    }
+
+    public IpBook soKeyword(String value) {
+        this.soKeyword = value;
+        return this;
+    }
+
+    public IpBook type(Integer value) {
+        this.type = value;
+        return this;
+    }
+
+    public IpBook status(Integer value) {
+        this.status = value;
+        return this;
+    }
+
+    public IpBook updatedAt(Date value) {
+        this.updatedAt = value;
+        return this;
+    }
+
+    public IpBook createdAt(Date value) {
+        this.createdAt = value;
         return this;
     }
 }

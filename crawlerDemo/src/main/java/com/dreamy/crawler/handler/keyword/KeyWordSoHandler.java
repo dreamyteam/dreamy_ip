@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -26,54 +24,48 @@ import java.util.Map;
  * 关键词搜索
  */
 @Component
-public class KeyWordHandler {
+public class KeyWordSoHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(KeyWordHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(KeyWordSoHandler.class);
     @Resource
     KeyWordService keyWordService;
     @Resource
     CrawlerService crawlerService;
 
     /**
-     * 百度搜索结果
+     * 360 关键词搜索
      *
      * @param word
+     * @param bookId
      */
     public void crawler(String word, Integer bookId) {
         word = HttpUtils.encodeUrl(word);
-        String url = "https://www.baidu.com/s?wd=" + word;
-        String html = HttpUtils.getHtmlGet(url);
+        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + word;
+        String html = HttpUtils.getSsl(url);
         Document document = Jsoup.parse(html);
         if (document != null) {
+            Elements elements = document.getElementsByClass("nums");
             KeyWord keyWord = new KeyWord();
             keyWord.bookId(bookId);
-            keyWord.source(KeyWordEnums.baidu.getType());
-            Elements elements = document.select("div.head_nums_cont_inner>div.nums");
+            keyWord.source(KeyWordEnums.so.getType());
             if (elements != null && elements.size() > 0) {
                 Element element = elements.first();
                 String result = element.text();
                 String num = PatternUtils.getNum(result);
                 keyWord.indexNum(Integer.valueOf(num));
             } else {
-                keyWord.indexNum(NumberUtils.randomInt(1, 100));
+                keyWord.setIndexNum(NumberUtils.randomInt(1, 100));
             }
             keyWordService.saveOrUpdate(keyWord);
             crawlerService.saveKeyWordHistory(keyWord);
         }
-
     }
 
-
     public static void main(String[] args) {
-        String word = "[不是每个故事都有结局+王豖]";
+        String word = "不是每个故事都有结局+王豖";
         word = HttpUtils.encodeUrl(word);
-//        String url ="http://www.baidu.com/s?wd="+word;
-//
-//
-//
-//        Map<String,String> MAP=new HashMap<String, String>();
-//        System.out.println(HttpUtils.getHtmlGet(url));
-        String url = "https://www.baidu.com/s?wd=" + word;
+
+        String url = "https://www.so.com/s?ie=utf-8&shb=1&src=home_so.com&q=" + word;
         String html = HttpUtils.getHtmlGet(url);
 
         System.out.println(html);

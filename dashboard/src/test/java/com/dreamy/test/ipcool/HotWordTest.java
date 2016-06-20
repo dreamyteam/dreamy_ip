@@ -30,7 +30,7 @@ public class HotWordTest extends BaseJunitTest {
     public void createChubanHotWord() {
         int current = 1;
         IpBook entity = new IpBook();
-        entity.setType(IpTypeEnums.net.getType());
+        entity.setType(IpTypeEnums.chuban.getType());
         while (true) {
             Page page = new Page();
             page.setPageSize(200);

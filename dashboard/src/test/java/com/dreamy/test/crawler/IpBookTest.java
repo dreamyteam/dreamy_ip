@@ -7,16 +7,17 @@ import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
 import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
+import com.dreamy.admin.thread.ExtractThreadManager;
+import com.dreamy.admin.thread.IndexService;
+import com.dreamy.admin.thread.IndexThread;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
-import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.service.iface.ipcool.RankService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
@@ -28,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
-import java.awt.print.Book;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,12 +77,8 @@ public class IpBookTest extends BaseJunitTest {
 
     @Value("${queue_index_360}")
     private String s360IndexQueue;
-
-    @Value("${queue_keyword_baidu_sougou}")
-    private String bsKeyWordQueue;
-
     @Autowired
-    private IpBookService ipBookService;
+    IndexService indexService;
 
     @Test
     public void insert() {
@@ -186,16 +182,17 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 5;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(10000);
+        page.setPageSize(1419);
+
 
         try {
             page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                    crawlerFinishQueueHandler.updateChuban(bookView);
                 }
 
             }
@@ -207,6 +204,30 @@ public class IpBookTest extends BaseJunitTest {
 //        System.err.println("111");
 //        BookView bookView = bookViewService.getById(2818);
 //        crawlerFinishQueueHandler.updateChuban(bookView);
+    }
+
+
+    @Test
+    public void lnTest1() {
+        int currentPage = 3;
+        Page page = new Page();
+        page.setPageSize(500);
+        while (true) {
+            page.setCurrentPage(currentPage);
+            List<BookView> list = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            IndexThread indexThread = new IndexThread(indexService, list);
+            ExtractThreadManager.run(indexThread);
+            if (!page.isHasNextPage()) {
+                try {
+                    Thread.sleep(1000000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            currentPage++;
+        }
+
     }
 
 
@@ -228,10 +249,8 @@ public class IpBookTest extends BaseJunitTest {
                         String cacheKey = commonParams.get("key");
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
-
-                        IpBook book = ipBookService.getById(bookView.getBookId());
-                        commonParams.put("search_word", book.getSearchKeyword());
-                        queueService.push(bsKeyWordQueue, commonParams);
+                        commonParams.put("name", bookView.getName());
+                        queueService.push(s360IndexQueue, commonParams);
                     }
                     currentPage++;
                 } else {
@@ -245,33 +264,10 @@ public class IpBookTest extends BaseJunitTest {
     }
 
     @Test
-    public void keywordSearch() {
-        int currentPage = 4;
-        Page page = new Page();
-        page.setPageSize(2000);
-
-        page.setCurrentPage(currentPage);
-        List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
-        if (CollectionUtils.isNotEmpty(bookViewList)) {
-            for (BookView bookView : bookViewList) {
-
-                Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
-                String cacheKey = commonParams.get("key");
-                redisClientService.setNumber(cacheKey, 1L);
-                commonParams.put("type", IpTypeEnums.chuban.getType().toString());
-
-                IpBook book = ipBookService.getById(bookView.getBookId());
-                commonParams.put("search_word", book.getSearchKeyword());
-                queueService.push(bsKeyWordQueue, commonParams);
-            }
-        }
-    }
-
-    @Test
     public void flushRank() {
-        int currentPage = 4;
+        int currentPage = 7;
         Page page = new Page();
-        page.setPageSize(1600);
+        page.setPageSize(1000);
 
         try {
             page.setCurrentPage(currentPage);

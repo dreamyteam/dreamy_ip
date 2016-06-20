@@ -6,14 +6,15 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
-    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
     <result column="index_keyword" property="indexKeyword" jdbcType="VARCHAR" />
     <result column="tieba_keyword" property="tiebaKeyword" jdbcType="VARCHAR" />
     <result column="news_keyword" property="newsKeyword" jdbcType="VARCHAR" />
     <result column="search_keyword" property="searchKeyword" jdbcType="VARCHAR" />
+    <result column="so_keyword" property="soKeyword" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, title, name, type, status, created_at, updated_at, index_keyword, tieba_keyword, 
-    news_keyword, search_keyword
+    id, code, title, name, index_keyword, tieba_keyword, news_keyword, search_keyword, 
+    so_keyword, type, status, updated_at, created_at
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.IpBookConditions" >
     select
@@ -110,13 +111,15 @@
   </delete>
   <insert id="insert" parameterType="com.dreamy.domain.ipcool.IpBook" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book (code, title, name, 
-      type, status, created_at, 
-      updated_at, index_keyword, tieba_keyword, 
-      news_keyword, search_keyword)
+      index_keyword, tieba_keyword, news_keyword, 
+      search_keyword, so_keyword, type, 
+      status, updated_at, created_at
+      )
     values (#{code,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
-      #{updatedAt,jdbcType=TIMESTAMP}, #{indexKeyword,jdbcType=VARCHAR}, #{tiebaKeyword,jdbcType=VARCHAR}, 
-      #{newsKeyword,jdbcType=VARCHAR}, #{searchKeyword,jdbcType=VARCHAR})
+      #{indexKeyword,jdbcType=VARCHAR}, #{tiebaKeyword,jdbcType=VARCHAR}, #{newsKeyword,jdbcType=VARCHAR}, 
+      #{searchKeyword,jdbcType=VARCHAR}, #{soKeyword,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.IpBook" useGeneratedKeys="true" keyProperty="id" >
     insert into ip_book
@@ -130,18 +133,6 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="createdAt != null" >
-        created_at,
-      </if>
-      <if test="updatedAt != null" >
-        updated_at,
-      </if>
       <if test="indexKeyword != null" >
         index_keyword,
       </if>
@@ -154,6 +145,21 @@
       <if test="searchKeyword != null" >
         search_keyword,
       </if>
+      <if test="soKeyword != null" >
+        so_keyword,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -164,18 +170,6 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createdAt != null" >
-        #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null" >
-        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="indexKeyword != null" >
         #{indexKeyword,jdbcType=VARCHAR},
@@ -188,6 +182,21 @@
       </if>
       <if test="searchKeyword != null" >
         #{searchKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="soKeyword != null" >
+        #{soKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -212,18 +221,6 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=INTEGER},
-      </if>
-      <if test="record.createdAt != null" >
-        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updatedAt != null" >
-        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.indexKeyword != null" >
         index_keyword = #{record.indexKeyword,jdbcType=VARCHAR},
       </if>
@@ -236,6 +233,21 @@
       <if test="record.searchKeyword != null" >
         search_keyword = #{record.searchKeyword,jdbcType=VARCHAR},
       </if>
+      <if test="record.soKeyword != null" >
+        so_keyword = #{record.soKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -247,14 +259,15 @@
       code = #{record.code,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
-      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       index_keyword = #{record.indexKeyword,jdbcType=VARCHAR},
       tieba_keyword = #{record.tiebaKeyword,jdbcType=VARCHAR},
       news_keyword = #{record.newsKeyword,jdbcType=VARCHAR},
-      search_keyword = #{record.searchKeyword,jdbcType=VARCHAR}
+      search_keyword = #{record.searchKeyword,jdbcType=VARCHAR},
+      so_keyword = #{record.soKeyword,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -271,18 +284,6 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createdAt != null" >
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null" >
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
       <if test="indexKeyword != null" >
         index_keyword = #{indexKeyword,jdbcType=VARCHAR},
       </if>
@@ -295,6 +296,21 @@
       <if test="searchKeyword != null" >
         search_keyword = #{searchKeyword,jdbcType=VARCHAR},
       </if>
+      <if test="soKeyword != null" >
+        so_keyword = #{soKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -303,14 +319,15 @@
     set code = #{code,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       index_keyword = #{indexKeyword,jdbcType=VARCHAR},
       tieba_keyword = #{tiebaKeyword,jdbcType=VARCHAR},
       news_keyword = #{newsKeyword,jdbcType=VARCHAR},
-      search_keyword = #{searchKeyword,jdbcType=VARCHAR}
+      search_keyword = #{searchKeyword,jdbcType=VARCHAR},
+      so_keyword = #{soKeyword,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="paginationSql" >
