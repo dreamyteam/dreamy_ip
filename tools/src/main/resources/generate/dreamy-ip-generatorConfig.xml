@@ -124,7 +124,7 @@
         <table tableName="ip_user_auth" domainObjectName="user.UserAuth">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
-        <table tableName="ip_user_role" domainObjectName="user.UserRole">
+        <table tableName="ip_user_part" domainObjectName="user.UserPart">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

@@ -3,7 +3,129 @@
 <div class="container clearfix">
     <!-- 用户中心 左侧导航 -->
     #parse("user/user_center_left.vm")
-    <div class="sidebar_content">
-        <h1 class="title">认证信息</h1>
+    <div class="sidebar_content" id="user_state_container">
+        <div class="user_identify_container">
+            <ul class="user_state_content">
+                <li class="active">
+                    <h1 class="title">认证情况</h1>
+                    #if($!userAuth.status == 1)
+                        #if($!userAuth.type == 1)
+                            <!-- 等待最终认证个人 -->
+                            <div class="state_identify_container">
+                                <h3>等待最终认证</h3>
+
+                                <p>3个工作日内将为您完成资料认证，<br>请耐心等待</p>
+                            </div>
+                            <!-- 等待最终认证个人-->
+                        #else
+                            <!-- 等待最终认证 企业 -->
+                            <div class="state_identify_container">
+                                <h3>等待最终认证</h3>
+
+                                <p>
+                                    3个工作日内将为您完成资料确认和发送确认码
+                                    <br> 届时输入收到的确认码完成企业认证
+                                </p>
+
+                                <form action="/user/businessAuthCheckCode" class="identify_verify_code">
+                                    <span class="err_msg" #if($!wrongType != 1) style="display: none" #end>验证码错误</span>
+                                    <input type="text" name="valideCode" class="identify_verify_input">
+                                    <input type="submit" value="确认">
+                                    <div class="hint">
+                                        <p>还没收到?
+                                        <span>
+                                        1.若时间尚未达到3个工作日，请耐性等待<br>
+                                        2.若已经超过3个工作日，请致电18768129443
+                                        </span>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        #end
+                    #elseif($!userAuth.status == 2)
+                        <!--认证信息 通用 -->
+                        <div class="state_identify_container">
+                            <div class="identify_success_container">
+                                <h2 class="title">个人信息</h2>
+
+                                <div class="infos_container">
+                                    <div class="info_content">
+                                        <h3 class="info_title">认证人姓名</h3>
+                                        <h4 class="info_value">$!userAuth.userName</h4>
+                                    </div>
+                                    <div class="info_content">
+                                        <h3 class="info_title">身份证号码</h3>
+                                        <h4 class="info_value">$!userAuth.cardNo</h4>
+                                    </div>
+                                    <div class="info_content">
+                                        <h3 class="info_title">E-mail</h3>
+                                        <h4 class="info_value">$!userAuth.email</h4>
+                                    </div>
+                                    <div class="info_content">
+                                        <h3 class="info_title">手机</h3>
+                                        <h4 class="info_value">$!userAuth.phone</h4>
+                                    </div>
+                                    <div class="info_content">
+                                        <h3 class="info_title">角色</h3>
+                                        <h4 class="info_value">$!userAuth.part</h4>
+                                    </div>
+                                </div>
+                                <button class="submit">修改信息</button>
+                            </div>
+                        </div>
+                    #elseif($!userAuth.status == 3)
+                        <!-- 个人认证失败 -->
+                        <div class="state_identify_container">
+                            <h3>认证失败</h3>
+
+                            <p>您提供的消息不满足审核条件，您可以重新提交</p>
+                            <button class="start_identify">开始认证</button>
+                        </div>
+                        <!-- 个人认证失败-->
+                    #else
+                        <!-- 尚未认证 -->
+                        <div class="state_identify_container">
+                            <h3>尚未认证</h3>
+
+                            <p>认证后可完善从业经历，大大提高行业知名度</p>
+                            <button class="start_identify">开始认证</button>
+                        </div>
+                        <!-- 尚未认证 -->
+                    #end
+                </li>
+                <li>
+                    <h1 class="title">身份认证</h1>
+                    <div class="start_identify_container">
+
+                        <div class="start_identify_content">
+                            <a href="/user/authPersonal?pageName=auth" class="go_identify">个人信息认证</a>
+                            <div class="inner">
+                                <span class="info">请提前做好如下资料准备</span>
+                                <ul>
+                                    <li>有效身份证件</li>
+                                    <li>相关作品文件</li>
+                                    <li>个人授权协议</li>
+                                </ul>
+                                <button class="download">个人认证请下载授权模板</button>
+                            </div>
+                        </div>
+                        <div class="start_identify_content">
+                            <a href="/user/authBusiness?pageName=auth" class="go_identify">企业信息认证</a>
+
+                            <div class="inner">
+                                <span class="info">请提前做好如下资料准备</span>
+                                <ul>
+                                    <li>有效企业证件</li>
+                                    <li>企业对公银行账户</li>
+                                    <li>企业授权协议</li>
+                                </ul>
+                                <button class="download">企业认证请下载授权模板</button>
+                            </div>
+                        </div>
+                        <button class="go_prev">上一步</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

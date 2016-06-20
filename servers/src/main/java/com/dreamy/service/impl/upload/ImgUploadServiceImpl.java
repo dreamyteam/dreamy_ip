@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import com.dreamy.beans.InterfaceBean;
+import com.dreamy.beans.params.ImageUploadParams;
 import com.dreamy.enums.ErrorCodeEnums;
 import com.dreamy.service.iface.upload.ImgUploadService;
 import com.dreamy.utils.StringUtils;
@@ -14,10 +15,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -48,23 +57,51 @@ public class ImgUploadServiceImpl implements ImgUploadService {
     }
 
     @Override
-    public String uploadImage(MultipartFile upfile) {
+    public String uploadImage(MultipartFile upfile, int x, int y, int width, int height) {
         String bucketName = "ipcool";
 
         OSSClient client = getOssClient();
 
-        String tmpFileName = UUID.randomUUID().toString() + upfile.getOriginalFilename();
-        String fileName = "/zm/uploads/temp/" + tmpFileName;
+        String suffix = upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".")+1).toLowerCase();
+        String tmpFileName = UUID.randomUUID().toString() + "." + suffix;
+        String filePath = this.getClass().getClassLoader().getResource("../../").getPath() + "uploads/temp/";
 
-        File tmp = new File(fileName);
+        File f = new File(filePath);
+        File tmp = new File(f, tmpFileName);
+        File subTmp = null;
         try {
+            if(!f.exists()) {
+                f.mkdirs();
+            }
+            if(!tmp.exists()) {
+                tmp.createNewFile();
+            }
             IOUtils.copy(upfile.getInputStream(), new FileOutputStream(tmp));
-            client.putObject(new PutObjectRequest(bucketName, tmpFileName, tmp));
+
+            // 图片剪切
+            if(x==0&&y==0&&width==0&&height==0) {
+                subTmp = tmp;
+            }else {
+                String subImg = filePath + "subImg."+suffix;
+                BufferedImage bi = ImageIO.read(tmp);
+                ImageFilter cif = new CropImageFilter(x,y,width,height);
+                Image img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(bi.getSource(), cif));
+                BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+                Graphics g = tag.getGraphics();
+                g.drawImage(img, 0, 0, null);
+                g.dispose();
+                subTmp = new File(subImg);
+                ImageIO.write(tag, suffix, subTmp);
+            }
+
+            client.putObject(new PutObjectRequest(bucketName, tmpFileName, subTmp));
         } catch (IOException e) {
             LOG.error("upload image to oss failed", e);
         } finally {
             client.shutdown();
             tmp.delete();
+            subTmp.delete();
         }
 
         return bucketName + ".oss-cn-hangzhou.aliyuncs.com" + "/" + tmpFileName;

@@ -1,0 +1,92 @@
+#set($cssName = "sidebar.css")
+#set($jsName = "user.js")
+<div class="container clearfix">
+    <!-- 用户中心 左侧导航 -->
+    #parse("user/user_center_left.vm")
+    <!-- 用户中心 右侧部分 -->
+    <div class="sidebar_content" id="personal_identify_container">
+        <ul class="user_identify_container">
+            <li class=" active">
+                <h1 class="title">身份选择</h1>
+
+                <div class="character_choose_container">
+                    <h2 class="character_choose_title">请选择角色</h2>
+
+                    <div class="character_choose_form clearfix" id="personal_choose_form">
+                        <h3 class="character_choose_subtitle">个人 <span class="sub_info">（最多可选5个角色）<span></h3>
+                        <span class="err_msg"></span>
+                        #foreach($view in $personalPart)
+                            <div class="character_checkbox_container">
+                                <input type="checkbox" id="p_check_${velocityCount}" name="characterP" value="$!{view.id}">
+                                <label for="p_check_${velocityCount}">$!{view.name}</label>
+                            </div>
+                        #end
+                        <button class="submit">下一步</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h1 class="title">个人身份验证</h1>
+
+                <div class="user_identify_info_container clearfix" id="p_indentify_form">
+                    <h6 class="sub_title">基本信息</h6>
+
+                    <div class="input_content">
+                        <h3 class="info_label">认证人姓名<i>*</i></h3>
+                        <span class="err_msg"></span>
+                        <input type="text" name="realName" required placeholder="请填写您的真实姓名">
+                    </div>
+                    <div class="input_content">
+                        <h3 class="info_label">身份证号码<i>*</i></h3>
+                        <span class="err_msg"></span>
+                        <input type="text" name="cardNo" class="input_id_card" required placeholder="请填写您的身份证号码">
+                    </div>
+                    <div class="input_content">
+                        <h3 class="info_label">E-mail<i>*</i></h3>
+                        <span class="err_msg"></span>
+                        <input type="email" name="email" required placeholder="请填写您的邮箱">
+                    </div>
+                    <div class="input_content">
+                        <h3 class="info_label">手机<i>*</i></h3>
+                        <span class="err_msg"></span>
+                        <input type="text" name="phone" class="input_phone" maxlength="11" required placeholder="请填写您的手机号码">
+                    </div>
+                    <div class="input_content">
+                        <h3 class="info_label">身份证照片<i>*</i></h3>
+                        <span class="err_msg"></span>
+
+                        <div class="img_upload_container">
+                            <img class="preview_image card_front" src="">
+                            <label for="id_card_front" class="img_upload">添加正面</label>
+                            <input type="file" required id="id_card_front" name="">
+                        </div>
+                    </div>
+                    <div class="input_content">
+                        <h3 class="info_label">&nbsp;</h3>
+                        <span class="err_msg"></span>
+
+                        <div class="img_upload_container">
+                            <img class="preview_image card_back" src="">
+                            <label for="id_card_back" class="img_upload">添加背面</label>
+                            <input type="file" required id="id_card_back" name="">
+                        </div>
+                    </div>
+                    <h6 class="sub_title">职业信息</h6>
+
+                    <div class="input_content whole_line">
+                        <h3 class="info_label">职业身份证明<i>*</i></h3>
+                        <span class="err_msg"></span>
+
+                        <div class="img_upload_container">
+                            <img class="preview_image profession_info" src="">
+                            <label for="user_identification" class="img_upload">名片、工牌、邮箱截图均可</label>
+                            <input type="file" required id="user_identification" name="">
+                        </div>
+                    </div>
+                    <button class="submit">完成</button>
+                    <button class="go_prev">上一步</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

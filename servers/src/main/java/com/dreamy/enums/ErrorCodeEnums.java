@@ -22,7 +22,10 @@ public enum ErrorCodeEnums {
     vote_failed(10001, "投票失败"),
 
     // 找回密码
-    check_phone_failed(1001, "验证手机失败");
+    check_phone_failed(1001, "验证手机失败"),
+
+    // 认证相关
+    auth_apply_failed(3001, "认证申请失败");
 
 
     private Integer errorCode;

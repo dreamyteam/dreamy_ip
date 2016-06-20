@@ -52,14 +52,13 @@
         </div>
     ##      细节筛选
         <div class="sub_sizer_container">
-        ##            <h6 class="type_title">文学类型</h6>
-##
-##            <div class="type_check_container">
-##                <div class="input_content">
-##                    <input type="checkbox" name="">
-##                    <label>网络文学</label>
-##                </div>
-##            </div>
+            <h6 class="type_title">文学类型</h6>
+            <div class="type_check_container">
+                <div class="input_content">
+                    <input type="checkbox" name="">
+                    <label>暂未开放</label>
+                </div>
+            </div>
         </div>
         <div class="infos_container clearfix">
             <h6 class="search_count">为您展示$!{page.totalNum}条结果</h6>
