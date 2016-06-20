@@ -38,10 +38,10 @@ public class UploadController extends IpcoolController {
     @ResponseBody
     public void uploadImage(HttpServletResponse response,
                             @RequestParam(value = "file", required = false) MultipartFile upfile,
-                            @RequestParam(required = false) Integer x,
-                            @RequestParam(required = false) Integer y,
-                            @RequestParam(required = false) Integer width,
-                            @RequestParam(required = false) Integer height,
+                            @RequestParam(required = false) int x,
+                            @RequestParam(required = false) int y,
+                            @RequestParam(required = false) int width,
+                            @RequestParam(required = false) int height,
                             @RequestParam(required = false) Integer size) throws IOException {
 
         InterfaceBean bean = imgUploadService.propertyCheck(width, height, size, upfile);
