@@ -177,25 +177,27 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 5;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(10000);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                    crawlerFinishQueueHandler.updateChuban(bookView);
                 }
+
             }
 
         } catch (Exception e) {
             System.err.println("errlr");
         }
-
-//        BookView bookView = bookViewService.getById(1428);
-//        crawlerNetbookFinishQueueHandler.updateNet(bookView);
+//        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
+//        System.err.println("111");
+//        BookView bookView = bookViewService.getById(2818);
+//        crawlerFinishQueueHandler.updateChuban(bookView);
     }
 
 
@@ -233,16 +235,15 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 3;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(1000);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);
             List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    //1707
 //                    crawlerFinishQueueHandler.updateRank(bookView);
                     flushBookRankToDb.updateRank(bookView);
                 }
