@@ -95,12 +95,12 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     public void updateNet(BookView bookView) {
-//        Integer hotIndex = getNewHotIndex(bookView);
+        Integer hotIndex = getNewHotIndex(bookView);
         Integer propagationIndex = getNewPropogationIndex(bookView);
 //        Integer activeIndex = getNewActiveIndex(bookView);
 
 
-//        bookView.hotIndex(hotIndex);
+        bookView.hotIndex(hotIndex);
         bookView.propagateIndex(propagationIndex);
 //        bookView.activityIndex(activeIndex);
 //
