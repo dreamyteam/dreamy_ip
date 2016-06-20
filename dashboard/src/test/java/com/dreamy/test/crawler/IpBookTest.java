@@ -7,6 +7,9 @@ import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
 import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
+import com.dreamy.admin.thread.ExtractThreadManager;
+import com.dreamy.admin.thread.IndexService;
+import com.dreamy.admin.thread.IndexThread;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.enums.IpTypeEnums;
@@ -74,6 +77,8 @@ public class IpBookTest extends BaseJunitTest {
 
     @Value("${queue_index_360}")
     private String s360IndexQueue;
+    @Autowired
+    IndexService indexService;
 
     @Test
     public void insert() {
@@ -177,9 +182,10 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1419);
+
 
         try {
             page.setCurrentPage(currentPage);
@@ -202,6 +208,30 @@ public class IpBookTest extends BaseJunitTest {
 
 
     @Test
+    public void lnTest1() {
+        int currentPage = 3;
+        Page page = new Page();
+        page.setPageSize(500);
+        while (true) {
+            page.setCurrentPage(currentPage);
+            List<BookView> list = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            IndexThread indexThread = new IndexThread(indexService, list);
+            ExtractThreadManager.run(indexThread);
+            if (!page.isHasNextPage()) {
+                try {
+                    Thread.sleep(1000000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            currentPage++;
+        }
+
+    }
+
+
+    @Test
     public void s360Index() {
         int currentPage = 1;
         Page page = new Page();
@@ -215,7 +245,7 @@ public class IpBookTest extends BaseJunitTest {
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
 
-                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
                         String cacheKey = commonParams.get("key");
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
@@ -235,9 +265,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 1;
+        int currentPage = 7;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1000);
 
         try {
             page.setCurrentPage(currentPage);
