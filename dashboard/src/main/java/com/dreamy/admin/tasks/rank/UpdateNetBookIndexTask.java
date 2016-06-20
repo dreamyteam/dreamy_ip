@@ -87,8 +87,11 @@ public class UpdateNetBookIndexTask {
     @Value("${queue_keyword_wb}")
     private String wbKeyWordQueue;
 
-    @Value("${queue_keyword_baidu_sougou}")
-    private String bsKeyWordQueue;
+    @Value("${queue_keyword_baidu}")
+    private String baiduKeyWordQueue;
+
+    @Value("${queue_keyword_so}")
+    private String soKeyWordQueue;
 
     @Value("${queue_news_sougou}")
     private String newsSougouQueue;
@@ -156,7 +159,7 @@ public class UpdateNetBookIndexTask {
             pushToQueue(tbQueue, commonParams);
             pushToQueue(newsSougouQueue, commonParams);
             pushToQueue(s360IndexQueue, commonParams);
-            pushToQueue(bsKeyWordQueue, commonParams);
+            pushToQueue(soKeyWordQueue, commonParams);
             pushToQueue(wbKeyWordQueue, commonParams);
             pushToQueue(wxKeyWordQueue, commonParams);
 

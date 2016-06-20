@@ -1,17 +1,12 @@
 package com.dreamy.crawler.listen;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.Base64;
 import com.dreamy.crawler.handler.keyword.KeyWordHandler;
-import com.dreamy.crawler.handler.keyword.KeyWordSoHandler;
 import com.dreamy.crawler.service.CrawlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/4/28.
@@ -23,8 +18,6 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     KeyWordHandler keyWordHandler;
-    @Autowired
-    KeyWordSoHandler keyWordSoHandler;
 
     @Autowired
     private CrawlerService crawlerService;
@@ -32,8 +25,7 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        String word = jsonObject.getString("search_keyword");
-        String soword = jsonObject.getString("so_keyword");
+        String word = jsonObject.getString("word");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
 
@@ -43,10 +35,9 @@ public class KeyWordEventQueueHandler extends AbstractQueueHandler {
             keyWordHandler.crawler(word, bookId);
 
         } catch (Exception e) {
-            log.warn("keyWordHandler failed: bookId:" +bookId + " word:" + word);
-        }
-        finally {
-            crawlerService.check(key,bookId,ipType);
+            log.warn("keyWordHandler failed: bookId:" + bookId + " word:" + word);
+        } finally {
+            crawlerService.check(key, bookId, ipType);
         }
     }
 

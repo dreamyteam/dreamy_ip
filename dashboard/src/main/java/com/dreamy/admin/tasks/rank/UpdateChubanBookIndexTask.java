@@ -81,8 +81,11 @@ public class UpdateChubanBookIndexTask {
     @Value("${queue_keyword_wb}")
     private String wbKeyWordQueue;
 
-    @Value("${queue_keyword_baidu_sougou}")
-    private String bsKeyWordQueue;
+    @Value("${queue_keyword_baidu}")
+    private String baiduKeyWordQueue;
+
+    @Value("${queue_keyword_so}")
+    private String soKeyWordQueue;
 
     @Value("${queue_news_sougou}")
     private String newsSougouQueue;
@@ -149,7 +152,7 @@ public class UpdateChubanBookIndexTask {
             String cacheKey = commonParams.get("key");
             Long count = redisClientService.getNumber(cacheKey);
             if (count == null || count == 0) {
-                redisClientService.setNumber(cacheKey, 10L);
+                redisClientService.setNumber(cacheKey, 11L);
 
                 if (salePlatformUrls.containsKey(CrawlerSourceEnums.amazon.getType())) {
                     Map<String, String> params = commonParams;
@@ -182,17 +185,22 @@ public class UpdateChubanBookIndexTask {
                 } else {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
-
+                commonParams.put("word", commonParams.get("news_keyword"));
                 pushToQueue(newsSougouQueue, commonParams);
+                commonParams.put("word", commonParams.get("index_keyword"));
                 pushToQueue(s360IndexQueue, commonParams);
-
-                pushToQueue(bsKeyWordQueue, commonParams);
+                commonParams.put("word", commonParams.get("search_keyword"));
+                pushToQueue(baiduKeyWordQueue, commonParams);
+                commonParams.put("word", commonParams.get("so_keyword"));
+                pushToQueue(soKeyWordQueue, commonParams);
+                commonParams.put("word", commonParams.get("search_keyword"));
                 pushToQueue(wbKeyWordQueue, commonParams);
                 pushToQueue(wxKeyWordQueue, commonParams);
 
 
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {
+                    commonParams.put("word", commonParams.get("index_keyword"));
                     commonParams.put("cookie", hotWord.getCookie());
                     pushToQueue(wbIndexQueue, commonParams);
                 } else {

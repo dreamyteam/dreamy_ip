@@ -44,7 +44,8 @@
     <rabbit:queue name="${queue_index_wb}"/>
     <rabbit:queue name="${queue_keyword_wx}"/>
     <rabbit:queue name="${queue_keyword_wb}"/>
-    <rabbit:queue name="${queue_keyword_baidu_sougou}"/>
+    <rabbit:queue name="${queue_keyword_baidu}"/>
+    <rabbit:queue name="${queue_keyword_so}"/>
     <rabbit:queue name="${queue_news_sougou}"/>
     <rabbit:queue name="${queue_crawler_over}"/>
     <rabbit:queue name="${queue_crawler_netbook_over}"/>
@@ -70,7 +71,8 @@
             <rabbit:binding queue="${queue_index_wb}"/>
             <rabbit:binding queue="${queue_keyword_wx}"/>
             <rabbit:binding queue="${queue_keyword_wb}"/>
-            <rabbit:binding queue="${queue_keyword_baidu_sougou}"/>
+            <rabbit:binding queue="${queue_keyword_baidu}"/>
+            <rabbit:binding queue="${queue_keyword_so}"/>
             <rabbit:binding queue="${queue_news_sougou}"/>
             <rabbit:binding queue="${queue_crawler_over}"/>
             <rabbit:binding queue="${queue_crawler_netbook_over}"/>
@@ -103,6 +105,8 @@
     <!--关键词-->
 
     <bean id="keyWordEventQueueHandler" class="com.dreamy.crawler.listen.KeyWordEventQueueHandler"/>
+
+    <bean id="keyWordSoQueueHandler" class="com.dreamy.crawler.listen.KeyWordSoQueueHandler"/>
 
     <bean id="keyWordWeiXinEventQueueHandler" class="com.dreamy.crawler.listen.KeyWordWeiXinEventQueueHandler"/>
 
@@ -153,7 +157,17 @@
             concurrency="1"
             message-converter="simpleMessageConverter"
             error-handler="listenerErrorHandler">
-        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_keyword_baidu_sougou}"/>
+        <rabbit:listener ref="keyWordEventQueueHandler" method="onMessage" queues="${queue_keyword_baidu}"/>
+    </rabbit:listener-container>
+    <rabbit:listener-container
+            connection-factory="connectionFactory"
+            auto-startup="true"
+            acknowledge="auto"
+            prefetch="1"
+            concurrency="1"
+            message-converter="simpleMessageConverter"
+            error-handler="listenerErrorHandler">
+        <rabbit:listener ref="keyWordSoQueueHandler" method="onMessage" queues="${queue_keyword_so}"/>
     </rabbit:listener-container>
 
     <rabbit:listener-container

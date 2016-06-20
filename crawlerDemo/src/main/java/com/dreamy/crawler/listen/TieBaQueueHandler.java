@@ -26,7 +26,7 @@ public class TieBaQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        String word = jsonObject.getString("tieba_keyword");
+        String word = jsonObject.getString("word");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         Integer type = Integer.parseInt(jsonObject.getString("type"));

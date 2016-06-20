@@ -29,8 +29,11 @@ public class KeyWordTest extends BaseJunitTest {
     private String queueName1;
     @Value("${queue_keyword_wb}")
     private String queueName2;
-    @Value("${queue_keyword_baidu_sougou}")
+    @Value("${queue_keyword_baidu}")
     private String queueName3;
+
+    @Value("${queue_keyword_so}")
+    private String queueName4;
 
     @Test
     public void test() {

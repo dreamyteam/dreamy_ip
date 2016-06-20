@@ -38,7 +38,7 @@ public class DataWeiBoIndexQueueHandler extends AbstractQueueHandler {
     @Override
     public void consume(JSONObject jsonObject) {
 
-        String word = jsonObject.getString("index_keyword");
+        String word = jsonObject.getString("word");
         Integer bookId = jsonObject.getInteger("bookId");
         String key = jsonObject.getString("key");
         String cookie = jsonObject.getString("cookie");
