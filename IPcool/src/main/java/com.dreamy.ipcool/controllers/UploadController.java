@@ -38,6 +38,8 @@ public class UploadController extends IpcoolController {
     @ResponseBody
     public void uploadImage(HttpServletResponse response,
                             @RequestParam(value = "file", required = false) MultipartFile upfile,
+                            @RequestParam(required = false) Integer x,
+                            @RequestParam(required = false) Integer y,
                             @RequestParam(required = false) Integer width,
                             @RequestParam(required = false) Integer height,
                             @RequestParam(required = false) Integer size) throws IOException {
@@ -46,7 +48,7 @@ public class UploadController extends IpcoolController {
 
         if (bean.getErrorCode() == 0) {
             Map<String, String> map = new HashMap<String, String>();
-            String url = imgUploadService.uploadImage(upfile);
+            String url = imgUploadService.uploadImage(upfile, x, y, width, height);
             map.put("image_url", "http://"+url);
             map.put("url", "http://"+url);
             map.put("fileName", "temp.jpg");

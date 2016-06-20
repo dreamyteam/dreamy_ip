@@ -21,6 +21,9 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,16 +57,18 @@ public class ImgUploadServiceImpl implements ImgUploadService {
     }
 
     @Override
-    public String uploadImage(MultipartFile upfile) {
+    public String uploadImage(MultipartFile upfile, int x, int y, int width, int height) {
         String bucketName = "ipcool";
 
         OSSClient client = getOssClient();
 
-        String tmpFileName = UUID.randomUUID().toString() + upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".")).toLowerCase();
-        String filePath = "Users/mac/dreamy_ip/uploads/temp/";
+        String suffix = upfile.getOriginalFilename().substring(upfile.getOriginalFilename().lastIndexOf(".")+1).toLowerCase();
+        String tmpFileName = UUID.randomUUID().toString() + "." + suffix;
+        String filePath = this.getClass().getClassLoader().getResource("../../").getPath() + "uploads/temp/";
 
         File f = new File(filePath);
         File tmp = new File(f, tmpFileName);
+        File subTmp = null;
         try {
             if(!f.exists()) {
                 f.mkdirs();
@@ -72,13 +77,31 @@ public class ImgUploadServiceImpl implements ImgUploadService {
                 tmp.createNewFile();
             }
             IOUtils.copy(upfile.getInputStream(), new FileOutputStream(tmp));
-            client.putObject(new PutObjectRequest(bucketName, tmpFileName, tmp));
+
+            // 图片剪切
+            if(x==0&&y==0&&width==0&&height==0) {
+                subTmp = tmp;
+            }else {
+                String subImg = filePath + "subImg."+suffix;
+                BufferedImage bi = ImageIO.read(tmp);
+                ImageFilter cif = new CropImageFilter(10,10,120,120);
+                Image img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(bi.getSource(), cif));
+                BufferedImage tag = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+
+                Graphics g = tag.getGraphics();
+                g.drawImage(img, 0, 0, null);
+                g.dispose();
+                subTmp = new File(subImg);
+                ImageIO.write(tag, suffix, subTmp);
+            }
+
+            client.putObject(new PutObjectRequest(bucketName, tmpFileName, subTmp));
         } catch (IOException e) {
             LOG.error("upload image to oss failed", e);
         } finally {
             client.shutdown();
             tmp.delete();
-            f.delete();
+            subTmp.delete();
         }
 
         return bucketName + ".oss-cn-hangzhou.aliyuncs.com" + "/" + tmpFileName;

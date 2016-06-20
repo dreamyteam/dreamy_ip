@@ -27,7 +27,7 @@ public interface ImgUploadService {
      * @param file
      * @return
      */
-    String uploadImage(MultipartFile upfile);
+    String uploadImage(MultipartFile upfile, int x, int y, int width, int height);
 
 
     /**
