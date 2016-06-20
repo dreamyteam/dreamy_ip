@@ -177,9 +177,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);
@@ -215,7 +215,7 @@ public class IpBookTest extends BaseJunitTest {
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
 
-                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView.getBookId(), OperationEnums.update.getCode());
+                        Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
                         String cacheKey = commonParams.get("key");
                         redisClientService.setNumber(cacheKey, 1L);
                         commonParams.put("type", IpTypeEnums.chuban.getType().toString());
@@ -235,9 +235,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 1;
+        int currentPage = 4;
         Page page = new Page();
-        page.setPageSize(6400);
+        page.setPageSize(1600);
 
         try {
             page.setCurrentPage(currentPage);

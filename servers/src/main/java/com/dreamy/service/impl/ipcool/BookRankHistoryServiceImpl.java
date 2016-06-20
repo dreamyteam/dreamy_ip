@@ -8,9 +8,11 @@ import com.dreamy.enums.BookRankTrendEnums;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,5 +84,12 @@ public class BookRankHistoryServiceImpl implements BookRankHistoryService {
         }
 
         return res;
+    }
+
+    @Override
+    public Integer delByBookIdAndDate(Integer bookId, Date date) {
+        BookRankHistoryConditions conditions = new BookRankHistoryConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId).andCreatedAtEqualTo(TimeUtils.getDate(date));
+        return bookRankHistoryDao.deleteByExample(conditions);
     }
 }
