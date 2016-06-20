@@ -50,7 +50,6 @@ public class S360NetBookSourceBaseHandler extends NetBookSourceBaseHandler {
                     }
                 }
             }
-
         }
 
         if (score == 0) {
