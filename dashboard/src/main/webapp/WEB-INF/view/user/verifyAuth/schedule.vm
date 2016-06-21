@@ -14,13 +14,13 @@
         <div class="col-sm-12">
 
             <ul class="nav nav-tabs">
-                <li role="presentation" class="pjax-url #if ($type==1)active#end">
+                <li role="presentation" class="pjax-url">
                     <a class="pjax-url" href="/userAuth/verifyList?status=1&type=1">个人</a>
                 </li>
-                <li role="presentation" class="pjax-url #if ($type==2)active#end">
+                <li role="presentation" class="pjax-url">
                     <a class="pjax-url" href="/userAuth/verifyList?status=1&type=2">企业</a>
                 </li>
-                <li role="presentation" class="pjax-url">
+                <li role="presentation" class="pjax-url active">
                     <a class="pjax-url" href="/userAuth/businessAuthSchedule">企业认证进程</a>
                 </li>
             </ul>
@@ -49,9 +49,10 @@
                                 </th>
                                 <th>ID</th>
                                 <th>名称</th>
-                                <th>认证时间</th>
-                                <th>#if ($type==1) 职业 #else 公司类型 #end</th>
+                                <th>申请时间</th>
                                 <th>申请人手机</th>
+                                <th>确认码</th>
+                                <th>状态</th>
                                 <th class="hidden-phone">操作</th>
                             </tr>
                             </thead>
@@ -65,14 +66,25 @@
                                     <td class="center">$!{userAuth.userName}</td>
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$userAuth.updatedAt)</td>
-                                    <td class="center">$!{userAuth.part}</td>
                                     <td class="center">$!{userAuth.phone}</td>
+                                    <td class="center">$!{userAuth.valideCode}</td>
+                                    <td class="center">
+                                        #if($userAuth.status==2)
+                                            验证已通过
+                                        #elseif($userAuth.status==1 && $userAuth.valideCode!='')
+                                            等待被验证
+                                        #else
+                                            等待审核
+                                        #end
+                                    </td>
                                     <td class="center hidden-phone">
-                                        <a href="/userAuth/view?id=$!{userAuth.id}" class="tablelink">查看</a>
-                                        <a href="/userAuth/doVerify?id=$!{userAuth.id}&status=2" class="tablelink"
-                                           onclick="return confirm('确定审核通过吗？')">通过</a>
-                                        <a href="/userAuth/doVerify?id=$!{userAuth.id}&status=3" class="tablelink"
-                                           onclick="return confirm('确定审核不通过吗？')">不通过</a>
+                                        #if(($userAuth.status==1 && $userAuth.valideCode!='') || $userAuth.status==2)
+                                            <a href="/userAuth/view?id=$!{userAuth.id}" class="tablelink">查看</a>
+                                        #end
+                                        #if($userAuth.status==1 && $userAuth.valideCode!='')
+                                            <a href="/userAuth/doResend?id=$!{userAuth.id}" class="tablelink"
+                                               onclick="return confirm('确定重发吗？')">重发</a>
+                                        #end
                                     </td>
                                 </tr>
                                 #end

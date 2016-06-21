@@ -62,4 +62,12 @@ public interface UserAuthService {
      * @return
      */
     UserAuth doVerify(UserAuth userAuth);
+
+    /**
+     *
+     * @param userAuth
+     * @param page
+     * @return
+     */
+    List<UserAuth> getBusinessAuthList(UserAuth userAuth, Page page);
 }

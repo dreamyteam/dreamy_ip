@@ -13,6 +13,7 @@ import com.dreamy.service.iface.user.UserAuthService;
 import com.dreamy.utils.BeanUtils;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.BinaryClient;
@@ -51,11 +52,11 @@ public class UserAuthServiceImpl implements UserAuthService {
     public void doAuthApply(UserAuth userAuth) {
         UserAuth ua =  userAuthDao.getUserAuthByUserId(userAuth.getUserId());
         userAuth.setStatus(status_applying.getValue());
-        if(ua == null) {
+        userAuth.setValideCode("");
+        if(ua == null || ua.getId() == null) {
             userAuthDao.save(userAuth);
         }else {
             userAuth.setId(ua.getId());
-            userAuth.setValideCode("");
             userAuthDao.update(userAuth);
         }
     }
@@ -99,9 +100,10 @@ public class UserAuthServiceImpl implements UserAuthService {
     public List<UserAuth> getList(UserAuth userAuth, Page page) {
         Map<String,Object> params= BeanUtils.toQueryMap(userAuth);
         UserAuthConditions conditions = new UserAuthConditions();
-        conditions.createCriteria().addByMap(params);
         if(userAuth.getStatus() == UserAuthEnums.status_applying.getValue()) {
-            conditions.createCriteria().andValideCodeIsNull();
+            conditions.createCriteria().addByMap(params).andValideCodeEqualTo("");
+        }else {
+            conditions.createCriteria().addByMap(params);
         }
         if(page != null) {
             page.setTotalNum(userAuthDao.countByExample(conditions));
@@ -156,6 +158,23 @@ public class UserAuthServiceImpl implements UserAuthService {
             userAuthDao.update(auth);
         }
         return auth;
+    }
+
+    @Override
+    public List<UserAuth> getBusinessAuthList(UserAuth userAuth, Page page) {
+        UserAuthConditions conditions = new UserAuthConditions();
+        conditions.createCriteria().andTypeEqualTo(userAuth.getType()).andStatusNotEqualTo(UserAuthEnums.status_apply_not_pass.getValue());
+        if(page != null) {
+            page.setTotalNum(userAuthDao.countByExample(conditions));
+            conditions.setPage(page);
+        }
+        List<UserAuth> list = userAuthDao.selectByExample(conditions);
+        if(list != null && list.size() > 0) {
+            for (int i=0; i<list.size(); i++) {
+                UserAuth auth = getPartStr(list.get(i));
+            }
+        }
+        return list;
     }
 
     /**

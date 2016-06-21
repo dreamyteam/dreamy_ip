@@ -1,13 +1,16 @@
 package com.dreamy.admin.controller.user;
 
 import com.dreamy.admin.controller.DashboardBaseController;
+import com.dreamy.admin.controller.DashboardController;
 import com.dreamy.beans.Page;
 import com.dreamy.dao.iface.user.UserDao;
 import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserAuth;
 import com.dreamy.enums.UserAuthEnums;
+import com.dreamy.service.iface.ShortMessageService;
 import com.dreamy.service.iface.user.UserAuthService;
 import com.dreamy.service.iface.user.UserService;
+import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,12 +24,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/userAuth")
-public class ManageUserAuthController extends DashboardBaseController {
+public class ManageUserAuthController extends DashboardController {
 
     @Autowired
     private UserAuthService userAuthService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ShortMessageService shortMessageService;
 
     /**
      *
@@ -96,10 +101,27 @@ public class ManageUserAuthController extends DashboardBaseController {
     public String doVerify(@RequestParam(value = "id", required = true) Integer id, @RequestParam(value = "status", required = true) Integer status) {
         UserAuth userAuth = new UserAuth().id(id).status(status);
         userAuth = userAuthService.doVerify(userAuth);
-        return redirect("/userAuth/verifyAuth/list?type="+userAuth.getType());
+        return redirect("/userAuth/verifyList?type="+userAuth.getType());
     }
 
+    @RequestMapping("/businessAuthSchedule")
+    public String businessAuthSchedule(UserAuth userAuth, ModelMap map, Page page) {
+        userAuth.setType(UserAuthEnums.type_business.getValue());
+        List<UserAuth> authList = userAuthService.getBusinessAuthList(userAuth, page);
 
+        map.put("list", authList);
+        map.put("page",page);
+        return "/user/verifyAuth/schedule";
+    }
 
+    @RequestMapping(value = "/doResend")
+    public String doResend(@RequestParam(value = "id", required = true) Integer id) {
+        UserAuth userAuth = userAuthService.getUserAuthById(id);
+
+        if (StringUtils.isNotEmpty(userAuth.getValideCode())) {
+            shortMessageService.send(userAuth.getPhone(), "【IP库】您的验证码是" + userAuth.getValideCode());
+        }
+        return redirect("/userAuth/businessAuthSchedule");
+    }
 
 }
