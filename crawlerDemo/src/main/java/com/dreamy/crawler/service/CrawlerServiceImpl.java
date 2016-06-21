@@ -305,6 +305,8 @@ public class CrawlerServiceImpl implements CrawlerService {
                 tieBaHistory.setBookId(tieBa.getBookId());
                 tieBaHistory.setId(tieBa.getBookId() + "-" + TimeUtils.toString(null, new Date()));
                 tieBaHistoryService.updateInser(tieBaHistory);
+                IpBook ipBook = new IpBook().id(tieBa.getBookId()).tiebaKeyword(tieBa.getTitle());
+                ipBookService.updateByRecord(ipBook);
                 return null;
             }
         });
