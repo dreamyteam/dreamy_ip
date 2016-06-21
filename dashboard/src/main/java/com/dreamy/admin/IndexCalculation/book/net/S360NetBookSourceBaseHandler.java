@@ -61,11 +61,11 @@ public class S360NetBookSourceBaseHandler extends NetBookSourceBaseHandler {
 
     @Override
     public Integer getPropagationIndex(BookView bookView) {
-        KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.so.getType());
-        if (keyWord != null) {
-            Double propagateIndex = NetBookPropagationIndexExchangeEnums.s360.getNum() * keyWord.getIndexNum();
-            return propagateIndex.intValue();
-        }
+//        KeyWord keyWord = keyWordService.getByBookIdAndSource(bookView.getBookId(), KeyWordEnums.so.getType());
+//        if (keyWord != null) {
+//            Double propagateIndex = NetBookPropagationIndexExchangeEnums.s360.getNum() * keyWord.getIndexNum();
+//            return propagateIndex.intValue();
+//        }
 
         return super.getPropagationIndex(bookView);
     }
