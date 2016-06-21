@@ -91,7 +91,7 @@ public class UpdateChubanBookIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 30 00 * * ?")
+    @Scheduled(cron = "0 30 23 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
@@ -185,15 +185,14 @@ public class UpdateChubanBookIndexTask {
                 } else {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
-                commonParams.put("word", commonParams.get("news_keyword"));
-                pushToQueue(newsSougouQueue, commonParams);
+
                 commonParams.put("word", commonParams.get("index_keyword"));
                 pushToQueue(s360IndexQueue, commonParams);
-                commonParams.put("word", commonParams.get("search_keyword"));
+
+                commonParams.put("word", bookView.getName() + "AND" + bookView.getAuthor());
+                pushToQueue(newsSougouQueue, commonParams);
                 pushToQueue(baiduKeyWordQueue, commonParams);
-                commonParams.put("word", commonParams.get("so_keyword"));
                 pushToQueue(soKeyWordQueue, commonParams);
-                commonParams.put("word", commonParams.get("search_keyword"));
                 pushToQueue(wbKeyWordQueue, commonParams);
                 pushToQueue(wxKeyWordQueue, commonParams);
 

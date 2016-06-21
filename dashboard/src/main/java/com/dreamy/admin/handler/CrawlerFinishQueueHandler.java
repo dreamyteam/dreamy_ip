@@ -61,16 +61,16 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-//        String bookIdStr = jsonObject.getString("bookId");
-//        Log.info("starting book over : " + bookIdStr);
-//        if (StringUtils.isNotEmpty(bookIdStr)) {
-//            Integer bookId = Integer.parseInt(bookIdStr);
-//            try {
-//                update(bookId);
-//            } catch (Exception e) {
-//                Log.error("update rank failed :" + bookIdStr, e);
-//            }
-//        }
+        String bookIdStr = jsonObject.getString("bookId");
+        Log.info("starting book over : " + bookIdStr);
+        if (StringUtils.isNotEmpty(bookIdStr)) {
+            Integer bookId = Integer.parseInt(bookIdStr);
+            try {
+                update(bookId);
+            } catch (Exception e) {
+                Log.error("update rank failed :" + bookIdStr, e);
+            }
+        }
 
     }
 
