@@ -195,17 +195,16 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 4;
+        int currentPage = 1;
         Page page = new Page();
-        page.setPageSize(1419);
-
+        page.setPageSize(10000);
 
         try {
             page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    crawlerFinishQueueHandler.updateChuban(bookView);
+                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
                 }
 
             }
@@ -278,27 +277,26 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void keywordSearch() {
-        int currentPage = 4;
+        int currentPage = 5;
         Page page = new Page();
-        page.setPageSize(1600);
+        page.setPageSize(10000);
 
         page.setCurrentPage(currentPage);
-        List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+        List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
         if (CollectionUtils.isNotEmpty(bookViewList)) {
             for (BookView bookView : bookViewList) {
 
                 Map<String, String> commonParams = rankService.getCommonParamsByBookIdAndAction(bookView, OperationEnums.update.getCode());
                 String cacheKey = commonParams.get("key");
-                redisClientService.setNumber(cacheKey, 2L);
-                commonParams.put("type", IpTypeEnums.chuban.getType().toString());
+                redisClientService.setNumber(cacheKey, 1L);
+                commonParams.put("type", IpTypeEnums.net.getType().toString());
 
                 IpBook book = ipBookService.getById(bookView.getBookId());
-//                commonParams.put("word", book.getSearchKeyword());
-                commonParams.put("word", book.getName() + "AND" + bookView.getAuthor());
+                commonParams.put("word", "《" + book.getName() + " " + bookView.getAuthor() + "》");
                 queueService.push(baiduKeyWordQueue, commonParams);
 
 //                commonParams.put("word", book.getSoKeyword());
-                queueService.push(soKeyWordQueue, commonParams);
+//                queueService.push(soKeyWordQueue, commonParams);
 
 //                commonParams.put("word", book.getSoKeyword());
 //                queueService.push(wxKeyWordQueue, commonParams);

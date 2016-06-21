@@ -95,12 +95,12 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     public void updateNet(BookView bookView) {
-        Integer hotIndex = getNewHotIndex(bookView);
+//        Integer hotIndex = getNewHotIndex(bookView);
         Integer propagationIndex = getNewPropogationIndex(bookView);
 //        Integer activeIndex = getNewActiveIndex(bookView);
 
 
-        bookView.hotIndex(hotIndex);
+//        bookView.hotIndex(hotIndex);
         bookView.propagateIndex(propagationIndex);
 //        bookView.activityIndex(activeIndex);
 //
@@ -138,20 +138,8 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
                 Double temp = Math.random() * 10;
                 index = temp.intValue();
             }
-//            ChubanHotIndexRandEnums[] chubanHotIndexRandEnumses = ChubanHotIndexRandEnums.values();
-//            for (Integer i = 0, length = chubanHotIndexRandEnumses.length; i < length; i++) {
-//                ChubanHotIndexRandEnums chubanHotIndexRandEnums = chubanHotIndexRandEnumses[i];
-//                Integer start = chubanHotIndexRandEnums.getStart();
-//                Integer end = chubanHotIndexRandEnums.getEnd();
-//                if (index >= start && index <= end) {
-//                    ChubanHotIndexRandEnums nextChubanHotIndexRandEnums = chubanHotIndexRandEnumses[i + 1];
-//                    Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - chubanHotIndexRandEnums.getScore()) * 1.0;
-//
-//                    Double temp = tailScore(index, start, end, scoreGap);
-//                    index = chubanHotIndexRandEnums.getScore() + temp.intValue();
-//                    break;
-//                }
-//            }
+
+
             return index;
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
