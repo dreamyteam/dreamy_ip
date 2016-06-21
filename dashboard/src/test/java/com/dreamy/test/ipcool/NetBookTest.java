@@ -1,8 +1,8 @@
 package com.dreamy.test.ipcool;
 
 import com.dreamy.admin.tasks.QiDianTask;
-import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
-import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
+import com.dreamy.admin.tasks.rank.chuban.UpdateChubanBookIndexTask;
+import com.dreamy.admin.tasks.rank.net.UpdateNetBookIndexTask;
 import com.dreamy.test.BaseJunitTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

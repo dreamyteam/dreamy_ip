@@ -6,6 +6,8 @@ import com.dreamy.admin.IndexCalculation.book.net.NetBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.net.NetManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
+import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
@@ -18,6 +20,7 @@ import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
+import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.iface.mongo.NetBookInfoService;
 import com.dreamy.service.iface.mongo.TieBaHistoryService;
@@ -71,6 +74,9 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     @Autowired
     private NetManage netManage;
 
+    @Autowired
+    private PeopleChartService peopleChartService;
+
 
     @Override
     public void consume(JSONObject jsonObject) {
@@ -95,27 +101,35 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     public void updateNet(BookView bookView) {
-//        Integer hotIndex = getNewHotIndex(bookView);
+        Integer hotIndex = getNewHotIndex(bookView);
         Integer propagationIndex = getNewPropogationIndex(bookView);
-//        Integer activeIndex = getNewActiveIndex(bookView);
+        Integer activeIndex = getNewActiveIndex(bookView);
 
 
-//        bookView.hotIndex(hotIndex);
+        bookView.hotIndex(hotIndex);
         bookView.propagateIndex(propagationIndex);
-//        bookView.activityIndex(activeIndex);
-//
-//        Integer developIndex = getNewDevelopIndex(bookView);
-//        bookView.developIndex(developIndex);
-//
-//        Integer compositeIndex = getNewCompositeIndex(bookView);
-//        bookView.compositeIndex(compositeIndex);
+        bookView.activityIndex(activeIndex);
 
-        //更新指数
-        bookViewService.update(bookView);
-//        updateHistoryIndex(bookView);
+        Integer developIndex = getNewDevelopIndex(bookView);
+        bookView.developIndex(developIndex);
+
+        Integer compositeIndex = getNewCompositeIndex(bookView);
+        bookView.compositeIndex(compositeIndex);
+
+        //更新存取计算结果
+        BookViewCalculateResult result = new BookViewCalculateResult();
+        result.bookId(bookView.getBookId()).name(bookView.getName())
+                .type(bookView.getType())
+                .compositeIndex(compositeIndex)
+                .hotIndex(hotIndex)
+                .propagateIndex(propagationIndex)
+                .activityIndex(activeIndex)
+                .developIndex(developIndex);
+
+        bookViewService.saveCalculateRes(result);
 
         //指数写入到redis用于排名
-//            updateRank(bookView);
+        updateRank(bookView);
 
     }
 
@@ -196,6 +210,9 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
                 }
             } else {
                 index = tieBa.getFollowNum();
+                if (index == null || index == 0) {
+                    index = 10;
+                }
             }
         }
 
@@ -208,15 +225,26 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @param bookView
      */
     private Integer getNewDevelopIndex(BookView bookView) {
-//        try {
-//            String developIndex = bookScoreService.getDevelopIndexByRecord(bookView);
-//            Integer index = Integer.parseInt(developIndex);
-//            if (index > 0) {
-//                return index;
-//            }
-//        } catch (Exception e) {
-//            Log.error("update develop index failed :" + bookView.getId(), e);
-//        }
+        try {
+
+            Double developScore = 10.0;
+            Integer hotIndex = bookView.getHotIndex();
+            Integer propagationIndex = bookView.getPropagateIndex();
+            developScore += (hotIndex + propagationIndex) * 0.5;
+
+            List<PeopleChart> peopleChartList = peopleChartService.getListByBookId(bookView.getBookId());
+            if (CollectionUtils.isNotEmpty(peopleChartList)) {
+                PeopleChart peopleChart = peopleChartList.get(0);
+                Double sexScore = 15 * peopleChart.getAgeFirst() + 23 * peopleChart.getAgeScond() + 28 * peopleChart.getAgeThird() + 16 * peopleChart.getAgeFourth() + 8 * peopleChart.getAgeFifth();
+                if (sexScore > 0) {
+                    developScore *= sexScore / (20.512);
+                }
+            }
+
+            return developScore.intValue();
+        } catch (Exception e) {
+            Log.error("update develop index failed :" + bookView.getId(), e);
+        }
 
         return bookView.getDevelopIndex();
     }
@@ -264,10 +292,11 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     }
 
     public void updateRank(BookView bookView) {
-        redisClientService.zadd(BookRankEnums.composite.getCacheKey(), bookView.getCompositeIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.develop.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.propagation.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
-        redisClientService.zadd(BookRankEnums.hot.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.composite_net.getCacheKey(), bookView.getCompositeIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.develop_net.getCacheKey(), bookView.getDevelopIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.propagation_net.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.hot_net.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
+        redisClientService.zadd(BookRankEnums.activity_net.getCacheKey(), bookView.getActivityIndex(), bookView.getBookId().toString());
     }
 
 }

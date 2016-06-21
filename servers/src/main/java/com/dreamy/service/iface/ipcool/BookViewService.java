@@ -2,6 +2,7 @@ package com.dreamy.service.iface.ipcool;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,18 @@ public interface BookViewService {
      * @param bookView
      */
     public void save(BookView bookView);
+
+    /**
+     *
+     * @param result
+     */
+    public void saveCalculateRes(BookViewCalculateResult result);
+
+    /**
+     *
+     * @param result
+     */
+    public Integer updateCalculateRes(BookViewCalculateResult result);
 
     /**
      * 更新
@@ -44,6 +57,13 @@ public interface BookViewService {
      * @return
      */
     public BookView getById(Integer id);
+
+    /**
+     *
+     * @param bookId
+     * @return
+     */
+    BookViewCalculateResult getCalculateResByBookId(Integer bookId);
 
     /**
      * @param ids

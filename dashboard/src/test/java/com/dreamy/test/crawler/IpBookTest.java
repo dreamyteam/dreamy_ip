@@ -1,13 +1,11 @@
 package com.dreamy.test.crawler;
 
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
-import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
-import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
-import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
-import com.dreamy.admin.thread.ExtractThreadManager;
+import com.dreamy.admin.tasks.rank.chuban.FlushBookRankToDb;
+import com.dreamy.admin.tasks.rank.chuban.UpdateChubanBookIndexTask;
+import com.dreamy.admin.tasks.rank.net.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.IpBook;
@@ -23,7 +21,6 @@ import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.HttpUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -195,7 +192,7 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 5;
         Page page = new Page();
         page.setPageSize(10000);
 
@@ -212,36 +209,7 @@ public class IpBookTest extends BaseJunitTest {
         } catch (Exception e) {
             System.err.println("errlr");
         }
-//        String res = HttpUtils.getHtmlGet("https://www.baidu.com/s?wd=菲利普•迪克作品集");
-//        System.err.println("111");
-//        BookView bookView = bookViewService.getById(2818);
-//        crawlerFinishQueueHandler.updateChuban(bookView);
     }
-
-
-//    @Test
-//    public void lnTest1() {
-//        int currentPage = 3;
-//        Page page = new Page();
-//        page.setPageSize(500);
-//        while (true) {
-//            page.setCurrentPage(currentPage);
-//            List<BookView> list = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
-//            IndexThread indexThread = new IndexThread(indexService, list);
-//            ExtractThreadManager.run(indexThread);
-//            if (!page.isHasNextPage()) {
-//                try {
-//                    Thread.sleep(1000000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//            }
-//            currentPage++;
-//        }
-//
-//    }
-
 
     @Test
     public void s360Index() {

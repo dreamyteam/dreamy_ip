@@ -1,4 +1,4 @@
-package com.dreamy.admin.tasks.rank;
+package com.dreamy.admin.tasks.rank.chuban;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRank;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 /**
