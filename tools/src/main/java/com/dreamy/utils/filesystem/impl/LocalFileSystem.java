@@ -1,39 +1,28 @@
 package com.dreamy.utils.filesystem.impl;
 
+import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.filesystem.FileSystemService;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-import com.yaowang.util.filesystem.FileSystem;
-
 /**
  * 本地文件操作api
- * 
- * @author shenl
- * @version $Revision: 1.0 $, $Date: 2013-8-19 下午2:37:25 $
+ * <p>
+ * Created by wangyongxing on 16/6/21.
  */
-public class LocalFileSystem implements FileSystem {
+public class LocalFileSystem implements FileSystemService {
     private static String STORE_PATH = "";
     private static final String PIC_FORMAT_NAME = "JPG";
 
     /**
      * 初始化
-     * 
+     *
      * @param storePath
      */
     public static final void init(String storePath) {
@@ -95,9 +84,9 @@ public class LocalFileSystem implements FileSystem {
         toFile.getParentFile().mkdirs();
         if (src instanceof File) {
             // 文件
-        	if (!toFile.getParentFile().exists()) {
-        		toFile.getParentFile().mkdirs();
-			}
+            if (!toFile.getParentFile().exists()) {
+                toFile.getParentFile().mkdirs();
+            }
             FileUtils.copyFile((File) src, toFile);
             return true;
         } else if (src instanceof String) {
@@ -120,11 +109,11 @@ public class LocalFileSystem implements FileSystem {
                 IOUtils.closeQuietly(outputStream);
             }
             return true;
-        }else if (src instanceof BufferedImage) {
+        } else if (src instanceof BufferedImage) {
             // 保存图片
-            ImageIO.write((BufferedImage)src, PIC_FORMAT_NAME, toFile);
+            ImageIO.write((BufferedImage) src, PIC_FORMAT_NAME, toFile);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -216,8 +205,8 @@ public class LocalFileSystem implements FileSystem {
         File file = new File(STORE_PATH + dirPath);
         File[] files = file.listFiles();
         if (files == null) {
-			return new String[]{};
-		}
+            return new String[]{};
+        }
         String[] names = new String[files.length];
         for (int i = 0; i < files.length; i++) {
             File temp = files[i];
@@ -225,31 +214,31 @@ public class LocalFileSystem implements FileSystem {
         }
         return names;
     }
-    
+
     @Override
     public String getFileName(String filePath) {
-    	File file = new File(STORE_PATH + filePath);
-    	return file.getName();
+        File file = new File(STORE_PATH + filePath);
+        return file.getName();
     }
-    
+
     @Override
     public String getPatentFile(String filePath) {
-    	File file = new File(STORE_PATH + filePath);
-    	File dir = file.getParentFile();
-    	String path = dir.toString().substring(STORE_PATH.length()-1);
+        File file = new File(STORE_PATH + filePath);
+        File dir = file.getParentFile();
+        String path = dir.toString().substring(STORE_PATH.length() - 1);
         return format(path);
     }
-    
+
     @Override
     public File getFile(String filePath) {
-    	return new File(STORE_PATH + filePath);
+        return new File(STORE_PATH + filePath);
     }
-    
-    public String format(String path){
-    	if (File.separator.equals("\\")) {
-            return StringUtils.replace(path, "\\", "/");
-        }else {
-        	return path;
-		}
+
+    public String format(String path) {
+        if (File.separator.equals("\\")) {
+            return null;//StringUtils. (path, "\\", "/");
+        } else {
+            return path;
+        }
     }
 }
