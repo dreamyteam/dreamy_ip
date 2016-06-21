@@ -55,8 +55,8 @@
             <h6 class="type_title">文学类型</h6>
             <div class="type_check_container">
                 <div class="input_content">
-                    <input type="checkbox" name="">
-                    <label>暂未开放</label>
+##                    <input type="checkbox" name="">
+                    <label style="color:#9b9b9b">筛选条件收集中...</label>
                 </div>
             </div>
         </div>
