@@ -109,6 +109,8 @@ public class FlushNetBookRankToDb {
                     rank.type(rankType);
                     rank.rankIndex(index);
                     rank.name(bookView.getName());
+                    rank.source(bookView.getType());
+
                     bookRankService.save(rank);
                 }
 
@@ -117,6 +119,8 @@ public class FlushNetBookRankToDb {
                 rankHistory.rank(rankNum.intValue());
                 rankHistory.type(rankType);
                 rankHistory.rankIndex(index);
+                rankHistory.source(bookView.getType());
+                
                 bookRankHistoryService.save(rankHistory);
             }
 
