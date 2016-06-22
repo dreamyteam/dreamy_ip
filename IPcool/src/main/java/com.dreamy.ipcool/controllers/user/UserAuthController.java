@@ -59,6 +59,7 @@ public class UserAuthController extends IpcoolController {
             List<UserPart> personalPart = userPartService.getUserPartByType(UserPartEnums.type_personal.getValue());
             map.put("personalPart", personalPart);
             map.put("user", userService.getUserById(userSession.getUserId()));
+            map.put("authApplyToken", makeToken(request, "authApplyToken"));
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth_person";
         }
@@ -72,6 +73,7 @@ public class UserAuthController extends IpcoolController {
             List<UserPart> businessPart = userPartService.getUserPartByType(UserPartEnums.type_business.getValue());
             map.put("businessPart", businessPart);
             map.put("user", userService.getUserById(userSession.getUserId()));
+            map.put("authApplyToken", makeToken(request, "authApplyToken"));
             map.put("pageName", request.getParameter("pageName"));
             return "/user/auth_business";
         }
@@ -86,8 +88,12 @@ public class UserAuthController extends IpcoolController {
         UserSession userSession = getUserSession(request);
 
         if (userSession != null && userSession.getUserId() > 0) {
-            userAuth.setUserId(userSession.getUserId());
-            userAuthService.doAuthApply(userAuth);
+            if(checkToken(request,"authApplyToken")) {
+                errorMsg = "请勿重复提交!";
+            }else {
+                userAuth.setUserId(userSession.getUserId());
+                userAuthService.doAuthApply(userAuth);
+            }
         }else {
             errorMsg = "您未登录,不能进行此操作!";
         }

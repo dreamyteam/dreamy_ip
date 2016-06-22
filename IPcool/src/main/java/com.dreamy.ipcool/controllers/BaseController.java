@@ -3,9 +3,11 @@ package com.dreamy.ipcool.controllers;
 import com.dreamy.beans.UserSession;
 import com.dreamy.domain.admin.AdminUser;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TokenProccessor;
 import com.dreamy.utils.WebUtils;
 import org.springframework.ui.ModelMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
@@ -127,4 +129,41 @@ public class BaseController extends RootController<UserSession> {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 生成相应token
+     * @param request
+     * @param name
+     * @return
+     */
+    public String makeToken(HttpServletRequest request, String name) {
+        String token = TokenProccessor.getInstance().makeToken();
+        request.getSession().setAttribute(name, token);
+        return token;
+    }
+
+    /**
+     * 验证token
+     * @param request
+     * @param name
+     * @return
+     */
+    public boolean checkToken(HttpServletRequest request, String name) {
+        String token = request.getParameter(name);
+        if(StringUtils.isEmpty(token)) {
+            return true;
+        }
+
+        String sessionToken = (String) request.getSession().getAttribute(name);
+        if(StringUtils.isEmpty(sessionToken)) {
+            return true;
+        }
+
+        if(!token.equals(sessionToken)) {
+            return true;
+        }
+        request.getSession().removeAttribute(name);
+        return false;
+    }
+
 }
