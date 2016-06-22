@@ -2,12 +2,12 @@ package com.dreamy.mapper.ipcool;
 
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankConditions;
-import java.util.List;
-
 import com.dreamy.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
-public interface BookRankMapper extends BaseMapper<BookRank,Integer,BookRankConditions> {
+import java.util.List;
+
+public interface BookRankMapper extends BaseMapper<BookRank, Integer, BookRankConditions> {
     int countByExample(BookRankConditions example);
 
     int deleteByExample(BookRankConditions example);

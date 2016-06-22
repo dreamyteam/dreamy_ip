@@ -19,6 +19,8 @@ public class BookRankHistory extends BaseDomain<Integer> implements Serializable
 
     private Date updatedAt;
 
+    private Integer source;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -77,6 +79,14 @@ public class BookRankHistory extends BaseDomain<Integer> implements Serializable
         this.updatedAt = updatedAt;
     }
 
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -95,7 +105,8 @@ public class BookRankHistory extends BaseDomain<Integer> implements Serializable
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getRankIndex() == null ? other.getRankIndex() == null : this.getRankIndex().equals(other.getRankIndex()))
             && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
+            && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()))
+            && (this.getSource() == null ? other.getSource() == null : this.getSource().equals(other.getSource()));
     }
 
     @Override
@@ -109,6 +120,7 @@ public class BookRankHistory extends BaseDomain<Integer> implements Serializable
         result = prime * result + ((getRankIndex() == null) ? 0 : getRankIndex().hashCode());
         result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
         result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
+        result = prime * result + ((getSource() == null) ? 0 : getSource().hashCode());
         return result;
     }
 
@@ -144,6 +156,11 @@ public class BookRankHistory extends BaseDomain<Integer> implements Serializable
 
     public BookRankHistory updatedAt(Date value) {
         this.updatedAt = value;
+        return this;
+    }
+
+    public BookRankHistory source(Integer value) {
+        this.source = value;
         return this;
     }
 }
