@@ -142,8 +142,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">身份证照片</label>
                             <div class="col-sm-10">
-                                <img src="$!{userAuth.cardFront}" />
-                                <img src="$!{userAuth.cardBack}" />
+                                <img src="$!{userAuth.cardFront}" style="width:270px;height:120px;" />
+                                <img src="$!{userAuth.cardBack}" style="width:270px;height:120px;" />
                             </div>
                         </div>
 
@@ -151,20 +151,20 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">企业执照</label>
                                 <div class="col-sm-10">
-                                    <img src="$!{userAuth.businessLicense}" />
+                                    <img src="$!{userAuth.businessLicense}" style="width:270px;height:120px;" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">授权协议</label>
                                 <div class="col-sm-10">
-                                    <img src="$!{userAuth.licenseAgreement}" />
+                                    <img src="$!{userAuth.licenseAgreement}" style="width:270px;height:120px;" />
                                 </div>
                             </div>
                         #else
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">职业证明</label>
                                 <div class="col-sm-10">
-                                    <img src="$!{userAuth.professionInfo}" />
+                                    <img src="$!{userAuth.professionInfo}" style="width:270px;height:120px;" />
                                 </div>
                             </div>
                         #end
