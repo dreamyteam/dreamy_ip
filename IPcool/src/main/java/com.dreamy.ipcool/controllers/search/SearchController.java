@@ -48,7 +48,7 @@ public class SearchController extends IpcoolController {
                          @RequestParam(value = "type", required = false) String typesStr
     ) {
 
-        List<Integer> types = null;
+        List<Integer> types = new LinkedList<Integer>();
         if (StringUtils.isNotEmpty(typesStr)) {
             types = JsonUtils.toList(Integer.class, typesStr);
         }
@@ -59,9 +59,10 @@ public class SearchController extends IpcoolController {
 
         if (StringUtils.isNotEmpty(content)) {
             if (CollectionUtils.isNotEmpty(types) && types.contains(0)) {
-                types = null;
+                bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, null);
+            } else {
+                bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
             }
-            bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
             List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
@@ -76,6 +77,7 @@ public class SearchController extends IpcoolController {
             if (CollectionUtils.isNotEmpty(types)) {
                 type = types.get(0);
             }
+            types.add(type);
             model.put("type", type);
         }
 
