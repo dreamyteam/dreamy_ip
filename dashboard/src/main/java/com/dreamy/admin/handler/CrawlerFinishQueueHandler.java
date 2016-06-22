@@ -5,11 +5,11 @@ import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanPropagationIndexRandEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanReputationIndexRandEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
@@ -146,12 +146,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     ChubanHotIndexRandEnums nextChubanHotIndexRandEnums = chubanHotIndexRandEnumses[i + 1];
                     Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - chubanHotIndexRandEnums.getScore()) * 1.0;
 
-                    Double temp = (index - start) * (scoreGap / (end - start));
-                    if (temp < 1.0) {
-                        temp = Math.random() * 10;
-                    } else {
-                        temp = temp * 1.0012345;
-                    }
+                    Double temp = tailScore(index, start, end, scoreGap);
                     index = chubanHotIndexRandEnums.getScore() + temp.intValue();
                     break;
                 }
@@ -212,6 +207,21 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
                 Double temp = chubanBookSourceHandler.getReputationIndex(bookView) * 1.0 / 100;
                 index += temp.intValue();
+            }
+
+            ChubanReputationIndexRandEnums[] indexRandEnumses = ChubanReputationIndexRandEnums.values();
+            for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+                ChubanReputationIndexRandEnums indexRankEnum = indexRandEnumses[i];
+                Integer start = indexRankEnum.getStart();
+                Integer end = indexRankEnum.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanReputationIndexRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                    Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
+
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = indexRankEnum.getScore() + temp.intValue();
+                    break;
+                }
             }
             return index;
         } catch (Exception e) {

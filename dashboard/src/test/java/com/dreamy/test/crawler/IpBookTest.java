@@ -9,6 +9,7 @@ import com.dreamy.admin.tasks.rank.net.FlushNetBookRankToDb;
 import com.dreamy.admin.tasks.rank.net.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
@@ -198,14 +199,14 @@ public class IpBookTest extends BaseJunitTest {
     public void lnTest() {
         int currentPage = 5;
         Page page = new Page();
-        page.setPageSize(10000);
+        page.setPageSize(1100);
 
         try {
             page.setCurrentPage(currentPage);
             List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
+                    flushNetBookRankToDb.updateRank(bookView);
                 }
 
             }

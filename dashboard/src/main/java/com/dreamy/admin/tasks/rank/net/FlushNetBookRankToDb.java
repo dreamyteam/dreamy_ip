@@ -91,14 +91,6 @@ public class FlushNetBookRankToDb {
     private void updateRank(BookView bookView, String cacheKey, Integer rankType, Integer index) {
         try {
             Integer bookId = bookView.getBookId();
-
-            String totalNumCacheKey = "net_book_total_num";
-            Long totalNum = redisClientService.getNumber(totalNumCacheKey);
-            if (totalNum == null || totalNum < 0) {
-                totalNum = (long) bookViewService.getTotalCountByType(IpTypeEnums.net.getType());
-                redisClientService.setNumber(totalNumCacheKey, totalNum);
-            }
-
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
             if (rankNum != null) {
                 rankNum++;

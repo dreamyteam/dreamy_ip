@@ -1,32 +1,24 @@
 package com.dreamy.admin.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.net.NetBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.net.NetManage;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
-import com.dreamy.enums.CrawlerSourceEnums;
-import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
-import com.dreamy.enums.IpTypeEnums;
-import com.dreamy.mogodb.beans.BookInfo;
-import com.dreamy.mogodb.beans.NetBookInfo;
+import com.dreamy.enums.IndexRankEnums.net.NetActivityRandEnums;
+import com.dreamy.enums.IndexRankEnums.net.NetHotIndexRandEnums;
+import com.dreamy.enums.IndexRankEnums.net.NetPropagationIndexRandEnums;
 import com.dreamy.mogodb.beans.history.TieBaHistory;
 import com.dreamy.mogodb.beans.tieba.TieBa;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookIndexHistoryService;
-import com.dreamy.service.iface.ipcool.BookScoreService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.PeopleChartService;
-import com.dreamy.service.iface.mongo.BookInfoService;
-import com.dreamy.service.iface.mongo.NetBookInfoService;
 import com.dreamy.service.iface.mongo.TieBaHistoryService;
 import com.dreamy.service.iface.mongo.TieBaService;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +38,9 @@ import java.util.Map;
 public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
     private static final Logger Log = LoggerFactory.getLogger(CrawlerNetbookFinishQueueHandler.class);
 
-    @Autowired
-    private BookInfoService bookInfoService;
 
     @Autowired
     private BookViewService bookViewService;
-
-    @Autowired
-    private BookScoreService bookScoreService;
 
     @Autowired
     private RedisClientService redisClientService;
@@ -61,9 +48,6 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     private BookIndexHistoryService bookIndexHistoryService;
-
-    @Autowired
-    private NetBookInfoService netBookInfoService;
 
     @Autowired
     private TieBaService tieBaService;
@@ -131,7 +115,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         updateHistoryIndex(bookView);
 
         //指数写入到redis用于排名
-        updateRank(bookView); 
+        updateRank(bookView);
     }
 
 
@@ -147,6 +131,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
             for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
                 Integer temp = netBookSourceBaseHandler.getHotIndex(bookView);
                 index += temp;
+            }
+
+            NetHotIndexRandEnums[] netHotIndexRandEnumses = NetHotIndexRandEnums.values();
+            for (Integer i = 0, length = netHotIndexRandEnumses.length; i < length; i++) {
+                NetHotIndexRandEnums netHotIndexRandEnums = netHotIndexRandEnumses[i];
+                Integer start = netHotIndexRandEnums.getStart();
+                Integer end = netHotIndexRandEnums.getEnd();
+                if (index >= start && index <= end) {
+                    NetHotIndexRandEnums nextChubanHotIndexRandEnums = netHotIndexRandEnumses[i + 1];
+                    Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - netHotIndexRandEnums.getScore()) * 1.0;
+
+                    Double temp = tailScore(index,start,end,scoreGap);
+                    index = netHotIndexRandEnums.getScore() + temp.intValue();
+                    break;
+                }
             }
 
             if (index == 0) {
@@ -175,6 +174,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
             for (NetBookSourceBaseHandler netBookSourceBaseHandler : netBookSourceBaseHandlerMap.values()) {
                 Integer temp = netBookSourceBaseHandler.getPropagationIndex(bookView);
                 index += temp;
+            }
+
+            NetPropagationIndexRandEnums[] indexRandEnumses = NetPropagationIndexRandEnums.values();
+            for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+                NetPropagationIndexRandEnums indexRankEnum = indexRandEnumses[i];
+                Integer start = indexRankEnum.getStart();
+                Integer end = indexRankEnum.getEnd();
+                if (index >= start && index <= end) {
+                    NetPropagationIndexRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                    Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
+
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = indexRankEnum.getScore() + temp.intValue();
+                    break;
+                }
             }
 
             if (index == 0) {
@@ -216,6 +230,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
                     Double randomIndex = Math.random() * 10;
                     index = randomIndex.intValue();
                 }
+            }
+        }
+
+        NetActivityRandEnums[] indexRandEnumses = NetActivityRandEnums.values();
+        for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+            NetActivityRandEnums indexRankEnum = indexRandEnumses[i];
+            Integer start = indexRankEnum.getStart();
+            Integer end = indexRankEnum.getEnd();
+            if (index >= start && index <= end) {
+                NetActivityRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
+
+                Double temp = tailScore(index, start, end, scoreGap);
+                index = indexRankEnum.getScore() + temp.intValue();
+                break;
             }
         }
 
@@ -300,6 +329,17 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         redisClientService.zadd(BookRankEnums.propagation_net.getCacheKey(), bookView.getPropagateIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.hot_net.getCacheKey(), bookView.getHotIndex(), bookView.getBookId().toString());
         redisClientService.zadd(BookRankEnums.activity_net.getCacheKey(), bookView.getActivityIndex(), bookView.getBookId().toString());
+    }
+
+    private Double tailScore(Integer index, Integer start, Integer end, Double scoreGap) {
+        Double temp = (index - start) * (scoreGap / (end - start));
+        if (temp < 1.0) {
+            temp = Math.random() * 10;
+        } else {
+            temp = temp * 1.0012345;
+        }
+
+        return temp;
     }
 
 }

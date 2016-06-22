@@ -98,5 +98,11 @@ public interface BookViewService {
      */
     public BookView getByBookId(Integer bookId);
 
+    /**
+     *
+     * @param id
+     */
+    void deleteById(Integer id);
+
 
 }

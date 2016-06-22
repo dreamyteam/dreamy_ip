@@ -173,4 +173,9 @@ public class BookViewServiceImpl implements BookViewService {
         }
         return null;
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        bookViewDao.deleteById(id);
+    }
 }
