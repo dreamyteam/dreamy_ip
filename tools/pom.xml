@@ -74,6 +74,7 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
+
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -110,11 +111,6 @@
             <version>4.5.2</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
-        </dependency>
-        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
@@ -139,31 +135,11 @@
             <artifactId>hadoop-client</artifactId>
             <version>2.5.1</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>us.codecraft</groupId>-->
-        <!--<artifactId>webmagic-core</artifactId>-->
-        <!--<version>0.5.3</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>us.codecraft</groupId>-->
-        <!--<artifactId>webmagic-extension</artifactId>-->
-        <!--<version>0.5.3</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>us.codecraft</groupId>-->
-        <!--&lt;!&ndash;<artifactId>webmagic-selenium</artifactId>&ndash;&gt;-->
-        <!--&lt;!&ndash;<version>0.5.4-SNAPSHOT</version>&ndash;&gt;-->
-        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>org.seleniumhq.selenium</groupId>-->
-        <!--<artifactId>selenium-java</artifactId>-->
-        <!--<version>2.46.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.github.detro</groupId>-->
-        <!--<artifactId>phantomjsdriver</artifactId>-->
-        <!--<version>1.2.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
     </dependencies>
 
 </project>
