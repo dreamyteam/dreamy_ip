@@ -10,7 +10,7 @@ import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.mapper.ipcool.BookIndexHistoryMapper;
 import com.dreamy.service.iface.admin.SysModelService;
-import com.dreamy.service.cache.CommonService;
+//import com.dreamy.service.cache.CommonService;
 import com.dreamy.test.base.BaseJunitTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +33,7 @@ public class Test extends BaseJunitTest {
     @Resource
     AdminUserDao adminUserDao;
     @Resource
-    CommonService commonService;
+//    CommonService commonService;
 
 
     @org.junit.Test
@@ -68,7 +68,7 @@ public class Test extends BaseJunitTest {
     public void  insertAdminUuser(){
         AdminUser adminUser=new AdminUser().userName("test");
         adminUserDao.save(adminUser);
-        commonService.getCacheService().put("1","1");
+//        commonService.getCacheService().put("1","1");
 
 
     }
