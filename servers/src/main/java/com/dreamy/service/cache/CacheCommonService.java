@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
  * Created by wangyongxing on 16/4/8.
  */
 @Service
-public class CommonService {
+public class CacheCommonService {
 
-    @Value("${devModel}")
+    @Value("${service}")
     private String devModel;
 
     @Autowired
@@ -19,7 +19,6 @@ public class CommonService {
 
     @Autowired
     private RedisCache redisCache;
-
 
 
     public boolean isDev() {
@@ -30,14 +29,10 @@ public class CommonService {
     }
 
 
-
-
     public CacheService getCacheService() {
         CacheService cacheService = isDev() ? localCache : redisCache;
         return cacheService;
     }
-
-
 
 
 }

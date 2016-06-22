@@ -3,11 +3,8 @@ package com.dreamy.ipcool.interceptor;
 import com.dreamy.beans.UserSession;
 import com.dreamy.ipcool.controllers.IpcoolBaseController;
 import com.dreamy.ipcool.utils.IpcoolAssetsUtils;
-import com.dreamy.service.AssetsService;
-import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.CommonService;
 import com.dreamy.utils.HttpUtils;
-import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +28,9 @@ public class IpcoolWebContentInterceptor extends WebContentInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg) throws Exception {
         if (super.preHandle(request, response, arg)) {
             if (arg != null && arg instanceof IpcoolBaseController) {
-
                 request.setAttribute("isDev", commonService.isDev());
                 request.setAttribute("assetsDomain", commonService.getAssetsDomain());
-
                 assetsHandle();
-
-
                 IpcoolBaseController controller = (IpcoolBaseController) arg;
                 if (controller.enableUserSession() && controller.checkLogin()) {
                     UserSession userSession = controller.getUserSession(request);

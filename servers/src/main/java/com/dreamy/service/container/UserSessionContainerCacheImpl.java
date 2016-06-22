@@ -2,7 +2,7 @@ package com.dreamy.service.container;
 
 import com.dreamy.beans.CanonicalSession;
 import com.dreamy.beans.UserSessionContainer;
-import com.dreamy.service.cache.CommonService;
+import com.dreamy.service.cache.CacheCommonService;
 import com.dreamy.utils.ConstUtils;
 import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class UserSessionContainerCacheImpl<S extends CanonicalSession> implement
     }
 
     @Autowired
-    CommonService commonService;
+    CacheCommonService commonService;
 
     public String getPrefix() {
         return prefix;

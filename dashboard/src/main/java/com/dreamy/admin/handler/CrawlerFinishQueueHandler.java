@@ -10,7 +10,6 @@ import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanPropagationIndexRandEnums;
 import com.dreamy.enums.IndexRankEnums.chuban.ChubanReputationIndexRandEnums;
-import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
@@ -20,7 +19,6 @@ import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -42,9 +40,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
     @Autowired
     private BookViewService bookViewService;
-
-    @Autowired
-    private BookScoreService bookScoreService;
 
     @Autowired
     private PeopleChartService peopleChartService;
@@ -104,14 +99,25 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
 
             Integer developIndex = getNewDevelopIndex(bookView);
             bookView.developIndex(developIndex);
-//
+
             Integer compositeIndex = getNewCompositeIndex(bookView);
             bookView.compositeIndex(compositeIndex);
 
-            //更新指数
+            //更新存取计算结果
+//            BookViewCalculateResult result = new BookViewCalculateResult();
+//            result.bookId(bookId).name(bookView.getName())
+//                    .type(bookView.getType())
+//                    .compositeIndex(compositeIndex)
+//                    .hotIndex(hotIndex)
+//                    .propagateIndex(propagationIndex)
+//                    .reputationIndex(reputationIndex)
+//                    .developIndex(developIndex);
+//
+//            bookViewService.saveCalculateRes(result);
+
             bookViewService.update(bookView);
             updateHistoryIndex(bookView);
-//
+
             //指数写入到redis用于排名
             updateRank(bookView);
 
@@ -131,6 +137,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
                 index += chubanBookSourceHandler.getHotIndex(bookView);
             }
+
             ChubanHotIndexRandEnums[] chubanHotIndexRandEnumses = ChubanHotIndexRandEnums.values();
             for (Integer i = 0, length = chubanHotIndexRandEnumses.length; i < length; i++) {
                 ChubanHotIndexRandEnums chubanHotIndexRandEnums = chubanHotIndexRandEnumses[i];
@@ -145,6 +152,7 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     break;
                 }
             }
+
             return index;
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
@@ -165,7 +173,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                 Integer temp = chubanBookSourceHandler.getPropagationIndex(bookView);
                 index += temp;
             }
-
             ChubanPropagationIndexRandEnums[] indexRandEnumses = ChubanPropagationIndexRandEnums.values();
             for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
                 ChubanPropagationIndexRandEnums indexRankEnum = indexRandEnumses[i];
@@ -180,7 +187,6 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                     break;
                 }
             }
-
             return index;
         } catch (Exception e) {
             Log.error("update propagation index failed :" + bookView.getId(), e);

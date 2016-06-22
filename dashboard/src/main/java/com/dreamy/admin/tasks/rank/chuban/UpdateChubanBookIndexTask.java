@@ -1,4 +1,4 @@
-package com.dreamy.admin.tasks.rank;
+package com.dreamy.admin.tasks.rank.chuban;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
@@ -186,16 +186,20 @@ public class UpdateChubanBookIndexTask {
                     redisClientService.incrBy(cacheKey, -1L);
                 }
 
+                commonParams.put("word", commonParams.get("so_keyword"));
+                pushToQueue(soKeyWordQueue, commonParams);
+
                 commonParams.put("word", commonParams.get("index_keyword"));
                 pushToQueue(s360IndexQueue, commonParams);
 
-                commonParams.put("word", bookView.getName() + "AND" + bookView.getAuthor());
+                commonParams.put("word", commonParams.get("news_keyword"));
                 pushToQueue(newsSougouQueue, commonParams);
+
+                commonParams.put("word", commonParams.get("search_keyword"));
                 pushToQueue(baiduKeyWordQueue, commonParams);
-                pushToQueue(soKeyWordQueue, commonParams);
+
                 pushToQueue(wbKeyWordQueue, commonParams);
                 pushToQueue(wxKeyWordQueue, commonParams);
-
 
                 HotWord hotWord = hotWordService.getById(bookView.getBookId());
                 if (hotWord != null) {

@@ -2,10 +2,7 @@ package com.dreamy.admin.service;
 
 import com.dreamy.domain.sys.SysOption;
 import com.dreamy.enums.RedisConstEnums;
-import com.dreamy.service.cache.CommonService;
-import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.sys.SysOptionService;
-import com.dreamy.utils.ConstStrings;
 import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.sina.CrawSina;
 import com.dreamy.utils.sina.LoginSina;
@@ -15,7 +12,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * Created by wangyongxing on 16/5/11.

@@ -58,7 +58,6 @@ public class SearchController extends IpcoolController {
         List<Integer> bookIds = new LinkedList<Integer>();
 
         if (StringUtils.isNotEmpty(content)) {
-
             bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
@@ -69,6 +68,8 @@ public class SearchController extends IpcoolController {
                 bookIds.add(bookRank.getBookId());
                 rankMap.put(bookRank.getBookId(), bookRank.getRank());
             }
+
+            model.put("showChubanOnly", 1);
         }
 
         Map<Integer, BookView> bookViewMap = bookViewService.getListMapByBookIds(bookIds);
