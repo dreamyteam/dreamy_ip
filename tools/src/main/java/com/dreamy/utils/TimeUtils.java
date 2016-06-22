@@ -30,12 +30,12 @@ public class TimeUtils {
     }
 
 
-
     public static Date getDate(Date date) {
-        String time =toString(FORMAT_YMDA,date);
+        String time = toString(FORMAT_YMDA, date);
 
-        return getDateByStr(time,FORMAT_YMDA);
+        return getDateByStr(time, FORMAT_YMDA);
     }
+
     /**
      * 时间字符串转换为date类型
      *
@@ -425,15 +425,21 @@ public class TimeUtils {
     }
 
     public static long diff(Date date1, Date date2) {
-        long result=0;
+        long result = 0;
         result = date2.getTime() - date1.getTime();
         return result;
 
     }
 
+    public static Date transferLongToDate(Long millSec) {
+        Date date = new Date(millSec);
+        return date;
+    }
+
 
     public static void main(String[] args) {
-        System.out.println(getDate(new Date()));
+        System.out.println(transferLongToDate(System.currentTimeMillis()));
+        System.out.println(toString("yyyy-mm-dd HH:MM:ss",new Date()));
 //        // DateTime dt = new DateTime();
 //        // System.out.println("" + dt.getMonthOfYear());
 //        // System.out.println(getDateByStr("2015-04-20","yy-mm-dd"));

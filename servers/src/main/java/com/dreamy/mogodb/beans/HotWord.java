@@ -18,7 +18,7 @@ public class HotWord {
     private String title;
     private String cookie;
 
-    private Date updatedAt;
+    private String updatedAt;
 
     public String getCookie() {
         return cookie;
@@ -60,11 +60,11 @@ public class HotWord {
         this.title = title;
     }
 
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

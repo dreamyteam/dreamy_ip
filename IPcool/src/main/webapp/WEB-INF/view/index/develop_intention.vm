@@ -2,55 +2,54 @@
     <div class="vote movie" data-type="1">
         <span></span>
         <h5>电影</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
-    <div class="vote tvshow"  data-type="2">
+    <div class="vote tvshow" data-type="2">
         <span></span>
         <h5>电视剧</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
-    <div class="vote mobilegame"  data-type="3">
+    <div class="vote mobilegame" data-type="3">
         <span></span>
         <h5>手游</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
-    <div class="vote game"  data-type="4">
+    <div class="vote game" data-type="4">
         <span></span>
         <h5>游戏</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
-    <div class="vote peripheral"  data-type="5">
+    <div class="vote peripheral" data-type="5">
         <span></span>
         <h5>周边</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
-    <div class="vote others"  data-type="6">
+    <div class="vote others" data-type="6">
         <span></span>
         <h5>其他</h5>
-
-        <div class="vote_btns">
-            <button class="expext">期待</button>
-            <button class="wantDevelop">想开发</button>
-        </div>
+        <button class="interested">感兴趣</button>
     </div>
+</div>
+
+<div class="popup_box vote clearfix" id="pop_up_vote">
+    <button class="close"></button>
+    <h3 class="title">描绘下你感兴趣的开发特点吧！</h3>
+    <h5 class="label">特点标签：</h5>
+
+    <div class="tags_choosed_container">
+        <div class="choosed_container"></div>
+        <input type="text" name="newTag">
+    </div>
+    <p class="content">可以选择一下提供的标签，也可以自己用空格隔开自主创建</p>
+
+    <div class="tag_options_container">
+        <span class="tags" data-tag-id="1">标签1</span>
+        <span class="tags" data-tag-id="2">标签2</span>
+        <span class="tags" data-tag-id="3">标签3</span>
+        <span class="tags" data-tag-id="4">标签4</span>
+        <span class="tags" data-tag-id="5">标签5</span>
+    </div>
+    <h5 class="label">评论：</h5>
+    <textarea class="commit_vote" name="voteCommit"></textarea>
+    <button class="confirm">发布</button>
 </div>

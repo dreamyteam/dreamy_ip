@@ -11,19 +11,10 @@
         <ul class="home_page_nav_right">
 ##            <li><a href="#">动态</a></li>
             #if($!thisUser.userKey)
-                <li><a href="/user/auth?pageName=auth">认证</a></li>
-                <li>$!thisUser.username</li>
-                <li id="currentUser">
-                    <img src="$!thisUser.imageUrl">
-                    <div class="user_menu" id="user_menu">
-                        <ul class="user_menu_contaienr">
-                            <li><a href="/about/empty"><i class="icon_follow"></i>我关注的</a></li>
-                            <li><a href="/user/bio?pageName=bio"><i class="icon_info"></i>基本信息</a></li>
-                            <li><a href="/user/modify/password?pageName=password"><i class="icon_pwd"></i>修改密码</a></li>
-                            <li><a href="/logout"><i class="icon_logout"></i>退出登录</a></li>
-                        </ul>
-                    </div>
-                </li>
+##                <li><a href="/user/auth?pageName=auth">认证</a></li>
+                <li><a href="/about/empty">认证</a></li>
+                <li class="tooltip_trigger" id="currentUserTrigger">$!thisUser.username</li>
+                <li id="currentUser"><img src="$!thisUser.imageUrl"></li>
             #else
                 <li>
                     <button id="login">登录</button>
@@ -35,4 +26,6 @@
         </ul>
     </nav>
 </header>
+
+
 

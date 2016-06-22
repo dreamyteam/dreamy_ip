@@ -51,7 +51,7 @@ public class KeyWordTest extends BaseJunitTest {
                 map.put("bookId", info.getId());
                 map.put("key", "testkey");
                 map.put("operation", OperationEnums.update.getCode());
-                map.put("search_keyword", info.getSearchKeyword());
+                map.put("word", info.getSearchKeyword());
                 map.put("type", 1);
                 queueService.push(queueName1, map);
                 queueService.push(queueName2, map);

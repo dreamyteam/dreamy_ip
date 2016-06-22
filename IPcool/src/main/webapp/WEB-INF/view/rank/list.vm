@@ -5,6 +5,83 @@
     <!--搜索框-->
     #parse("/common/search.vm")
     <!--搜索框 end-->
+
+##    <section>
+##        <h1 class="title">文学排行榜</h1>
+##
+##        <div class="rank_container clearfix">
+##            <div class="rank_title_container clearfix">
+##                <h2 class="rank_title">出版文学</h2>
+##                <a class="more" href="/search?content=&type=[1]">更多></a>
+##            </div>
+##            <ul class="rank_top_three">
+##                #foreach($view in $clist)
+##                    #if($velocityCount <= 3)
+##                        <li>
+##                            <a href="/index/detail.html?ip=${view.id}" class="rank_pic_container">
+##                                <span class="rank_num">$!{view.rank}</span>
+##                                <img src="$!{view.imageUrl}" class="rank_pic">
+##                            </a>
+##
+##                            <h3 class="name"><a href="/index/detail.html?ip=${view.id}">$!{view.name}</a></h3>
+##
+##                            <p class="info">作者: $!{view.author}</p>
+##                        </li>
+##                    #end
+##                #end
+##            </ul>
+##            <ul class="rank_rest">
+##                #foreach($view in $clist)
+##                    #if($velocityCount > 3)
+##                        <li class="clearfix">
+##                            <span class="rank_num">$!{view.rank}</span>
+##
+##                            <h3 class="name"><a href="/index/detail.html?ip=${view.id}">$!{view.name}</a></h3>
+##                            <i class="trend">↑</i>
+##                        </li>
+##                    #end
+##                #end
+##            </ul>
+##        </div>
+##
+##
+##        <div class="rank_container clearfix">
+##            <div class="rank_title_container clearfix">
+##                <h2 class="rank_title">网络文学</h2>
+##                <a class="more" href="/search?content=&type=[2]">更多></a>
+##            </div>
+##            <ul class="rank_top_three">
+##                #foreach($view in $clist)
+##                    #if($velocityCount <= 3)
+##                        <li>
+##                            <a href="/index/detail.html?ip=${view.id}" class="rank_pic_container">
+##                                <span class="rank_num">$!{view.rank}</span>
+##                                <img src="$!{view.imageUrl}" class="rank_pic">
+##                            </a>
+##
+##                            <h3 class="name"><a href="/index/detail.html?ip=${view.id}">$!{view.name}</a></h3>
+##
+##                            <p class="info">作者: $!{view.author}</p>
+##                        </li>
+##                    #end
+##                #end
+##            </ul>
+##            <ul class="rank_rest">
+##                #foreach($view in $clist)
+##                    #if($velocityCount > 3)
+##                        <li class="clearfix">
+##                            <span class="rank_num">$!{view.rank}</span>
+##
+##                            <h3 class="name"><a href="/index/detail.html?ip=${view.id}">$!{view.name}</a></h3>
+##                            <i class="trend">↑</i>
+##                        </li>
+##                    #end
+##                #end
+##            </ul>
+##        </div>
+##    </section>
+
+
     <section class="rank_list">
         <div class="rank_list_table">
             <h2 class="title">综合排行<span class="date">榜单更新日期: $!{date}</span></h2>
