@@ -19,6 +19,7 @@ import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.TieBaHistoryService;
 import com.dreamy.service.iface.mongo.TieBaService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,17 +65,17 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
 
     @Override
     public void consume(JSONObject jsonObject) {
-//        String bookIdStr = jsonObject.getString("bookId");
-//        Log.info("starting book over : " + bookIdStr);
-//        if (StringUtils.isNotEmpty(bookIdStr)) {
-//            Integer bookId = Integer.parseInt(bookIdStr);
-//            try {
-//                BookView bookView = bookViewService.getByBookId(bookId);
-//                updateNet(bookView);
-//            } catch (Exception e) {
-//                Log.error("update rank failed :" + bookIdStr, e);
-//            }
-//        }
+        String bookIdStr = jsonObject.getString("bookId");
+        Log.info("starting book over : " + bookIdStr);
+        if (StringUtils.isNotEmpty(bookIdStr)) {
+            Integer bookId = Integer.parseInt(bookIdStr);
+            try {
+                BookView bookView = bookViewService.getByBookId(bookId);
+                updateNet(bookView);
+            } catch (Exception e) {
+                Log.error("update rank failed :" + bookIdStr, e);
+            }
+        }
 
     }
 
