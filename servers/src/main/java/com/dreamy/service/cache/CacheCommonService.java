@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CacheCommonService {
 
-    @Value("${devModel}")
+    @Value("${service}")
     private String devModel;
 
     @Autowired
@@ -19,7 +19,6 @@ public class CacheCommonService {
 
     @Autowired
     private RedisCache redisCache;
-
 
 
     public boolean isDev() {
@@ -30,14 +29,10 @@ public class CacheCommonService {
     }
 
 
-
-
     public CacheService getCacheService() {
         CacheService cacheService = isDev() ? localCache : redisCache;
         return cacheService;
     }
-
-
 
 
 }
