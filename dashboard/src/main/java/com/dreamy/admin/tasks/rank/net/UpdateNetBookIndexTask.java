@@ -1,9 +1,8 @@
-package com.dreamy.admin.tasks.rank;
+package com.dreamy.admin.tasks.rank.net;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookCrawlerInfo;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IpTypeEnums;
 import com.dreamy.enums.OperationEnums;
@@ -15,7 +14,6 @@ import com.dreamy.service.iface.ipcool.RankService;
 import com.dreamy.service.iface.mongo.HotWordService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.StringUtils;
 import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,10 +94,10 @@ public class UpdateNetBookIndexTask {
     private String newsSougouQueue;
 
 
-    //    @Scheduled(cron = "0 55 16 * * ?")
+    @Scheduled(cron = "0 55 1 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
-        int currentPage =25;
+        int currentPage = 1;
         Page page = new Page();
         page.setPageSize(500);
 
@@ -143,7 +140,7 @@ public class UpdateNetBookIndexTask {
         String cacheKey = commonParams.get("key");
         Long count = redisClientService.getNumber(cacheKey);
         if (count == null || count == 0) {
-            redisClientService.setNumber(cacheKey, 8L);
+            redisClientService.setNumber(cacheKey, 12L);
             if (CrawlerSourceEnums.qidian.getType().equals(crawlerInfo.getSource())) {
                 pushToQueue(qdMmQueue, commonParams);
             } else if (CrawlerSourceEnums.qidianmm.getType().equals(crawlerInfo.getSource())) {
@@ -156,22 +153,31 @@ public class UpdateNetBookIndexTask {
                 redisClientService.incrBy(cacheKey, -1L);
             }
 
-            pushToQueue(tbQueue, commonParams);
-            pushToQueue(newsSougouQueue, commonParams);
-            pushToQueue(s360IndexQueue, commonParams);
+            commonParams.put("word", commonParams.get("so_keyword"));
             pushToQueue(soKeyWordQueue, commonParams);
+
+            commonParams.put("word", commonParams.get("index_keyword"));
+            pushToQueue(s360IndexQueue, commonParams);
+
+            commonParams.put("word", commonParams.get("news_keyword"));
+            pushToQueue(newsSougouQueue, commonParams);
+
+            commonParams.put("word", commonParams.get("search_keyword"));
+            pushToQueue(baiduKeyWordQueue, commonParams);
+
+            commonParams.put("word", commonParams.get("tieba_keyword"));
+            pushToQueue(tbQueue, commonParams);
             pushToQueue(wbKeyWordQueue, commonParams);
             pushToQueue(wxKeyWordQueue, commonParams);
 
             HotWord hotWord = hotWordService.getById(bookView.getBookId());
             if (hotWord != null) {
+                commonParams.put("word", commonParams.get("index_keyword"));
                 commonParams.put("cookie", hotWord.getCookie());
                 pushToQueue(wbIndexQueue, commonParams);
             } else {
                 redisClientService.incrBy(cacheKey, -1L);
             }
-
-
         }
     }
 

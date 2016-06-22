@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamy.mapper.ipcool.BookViewCalculateResultMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamy.domain.ipcool.BookViewCalculateResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="composite_index" property="compositeIndex" jdbcType="INTEGER" />
+    <result column="hot_index" property="hotIndex" jdbcType="INTEGER" />
+    <result column="propagate_index" property="propagateIndex" jdbcType="INTEGER" />
+    <result column="activity_index" property="activityIndex" jdbcType="INTEGER" />
+    <result column="develop_index" property="developIndex" jdbcType="INTEGER" />
+    <result column="reputation_index" property="reputationIndex" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, book_id, name, type, composite_index, hot_index, propagate_index, activity_index, 
+    develop_index, reputation_index, created_at, updated_at
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResultConditions" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ip_book_view_calculate_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="paginationSql" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ip_book_view_calculate_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ip_book_view_calculate_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResultConditions" >
+    delete from ip_book_view_calculate_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResult" useGeneratedKeys="true" keyProperty="id" >
+    insert into ip_book_view_calculate_result (book_id, name, type, 
+      composite_index, hot_index, propagate_index, 
+      activity_index, develop_index, reputation_index, 
+      created_at, updated_at)
+    values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{compositeIndex,jdbcType=INTEGER}, #{hotIndex,jdbcType=INTEGER}, #{propagateIndex,jdbcType=INTEGER}, 
+      #{activityIndex,jdbcType=INTEGER}, #{developIndex,jdbcType=INTEGER}, #{reputationIndex,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResult" useGeneratedKeys="true" keyProperty="id" >
+    insert into ip_book_view_calculate_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="compositeIndex != null" >
+        composite_index,
+      </if>
+      <if test="hotIndex != null" >
+        hot_index,
+      </if>
+      <if test="propagateIndex != null" >
+        propagate_index,
+      </if>
+      <if test="activityIndex != null" >
+        activity_index,
+      </if>
+      <if test="developIndex != null" >
+        develop_index,
+      </if>
+      <if test="reputationIndex != null" >
+        reputation_index,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="compositeIndex != null" >
+        #{compositeIndex,jdbcType=INTEGER},
+      </if>
+      <if test="hotIndex != null" >
+        #{hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="propagateIndex != null" >
+        #{propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="activityIndex != null" >
+        #{activityIndex,jdbcType=INTEGER},
+      </if>
+      <if test="developIndex != null" >
+        #{developIndex,jdbcType=INTEGER},
+      </if>
+      <if test="reputationIndex != null" >
+        #{reputationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResultConditions" resultType="java.lang.Integer" >
+    select count(*) from ip_book_view_calculate_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ip_book_view_calculate_result
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.compositeIndex != null" >
+        composite_index = #{record.compositeIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotIndex != null" >
+        hot_index = #{record.hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.propagateIndex != null" >
+        propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityIndex != null" >
+        activity_index = #{record.activityIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.developIndex != null" >
+        develop_index = #{record.developIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.reputationIndex != null" >
+        reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ip_book_view_calculate_result
+    set id = #{record.id,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      composite_index = #{record.compositeIndex,jdbcType=INTEGER},
+      hot_index = #{record.hotIndex,jdbcType=INTEGER},
+      propagate_index = #{record.propagateIndex,jdbcType=INTEGER},
+      activity_index = #{record.activityIndex,jdbcType=INTEGER},
+      develop_index = #{record.developIndex,jdbcType=INTEGER},
+      reputation_index = #{record.reputationIndex,jdbcType=INTEGER},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResult" >
+    update ip_book_view_calculate_result
+    <set >
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="compositeIndex != null" >
+        composite_index = #{compositeIndex,jdbcType=INTEGER},
+      </if>
+      <if test="hotIndex != null" >
+        hot_index = #{hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="propagateIndex != null" >
+        propagate_index = #{propagateIndex,jdbcType=INTEGER},
+      </if>
+      <if test="activityIndex != null" >
+        activity_index = #{activityIndex,jdbcType=INTEGER},
+      </if>
+      <if test="developIndex != null" >
+        develop_index = #{developIndex,jdbcType=INTEGER},
+      </if>
+      <if test="reputationIndex != null" >
+        reputation_index = #{reputationIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dreamy.domain.ipcool.BookViewCalculateResult" >
+    update ip_book_view_calculate_result
+    set book_id = #{bookId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      composite_index = #{compositeIndex,jdbcType=INTEGER},
+      hot_index = #{hotIndex,jdbcType=INTEGER},
+      propagate_index = #{propagateIndex,jdbcType=INTEGER},
+      activity_index = #{activityIndex,jdbcType=INTEGER},
+      develop_index = #{developIndex,jdbcType=INTEGER},
+      reputation_index = #{reputationIndex,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="paginationSql" >
+    <if test="page != null" >
+      limit  #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
+    </if>
+  </sql>
+</mapper>

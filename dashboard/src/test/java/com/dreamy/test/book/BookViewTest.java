@@ -1,19 +1,14 @@
 package com.dreamy.test.book;
 
-import com.dreamy.admin.IndexCalculation.book.chuban.ChubanBookSourceBaseHandler;
 import com.dreamy.admin.IndexCalculation.book.chuban.ChubanManage;
 import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
-import com.dreamy.admin.tasks.rank.FlushBookRankToDb;
-import com.dreamy.admin.tasks.rank.UpdateChubanBookIndexTask;
-import com.dreamy.admin.tasks.rank.UpdateNetBookIndexTask;
-import com.dreamy.admin.thread.ExtractThreadManager;
+import com.dreamy.admin.tasks.rank.chuban.FlushBookRankToDb;
+import com.dreamy.admin.tasks.rank.chuban.UpdateChubanBookIndexTask;
+import com.dreamy.admin.tasks.rank.net.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.domain.ipcool.IpBook;
 import com.dreamy.enums.IpTypeEnums;
-import com.dreamy.enums.OperationEnums;
-import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.mogodb.beans.NetBookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookScoreService;
@@ -25,15 +20,12 @@ import com.dreamy.service.iface.mongo.NetBookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
-import com.dreamy.utils.HttpUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.

@@ -121,10 +121,14 @@
         <!--<table tableName="ip_people_chart" domainObjectName="ipcool.PeopleChart">-->
             <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
         <!--</table>-->
-        <table tableName="ip_user_auth" domainObjectName="user.UserAuth">
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
-        </table>
-        <table tableName="ip_user_part" domainObjectName="user.UserPart">
+        <!--<table tableName="ip_user_auth" domainObjectName="user.UserAuth">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="ip_user_part" domainObjectName="user.UserPart">-->
+            <!--<generatedKey column="id" sqlStatement="JDBC" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="ip_book_view_calculate_result" domainObjectName="ipcool.BookViewCalculateResult">
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
 

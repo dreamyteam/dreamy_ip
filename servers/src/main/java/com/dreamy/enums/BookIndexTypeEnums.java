@@ -11,7 +11,8 @@ public enum BookIndexTypeEnums {
     develop(2,"开发指数"),
     propagate(3,"传播指数"),
     reputation(4,"口碑指数"),
-    composite(5,"综合指数");
+    composite(5,"综合指数"),
+    active(6,"活跃指数");
     private Integer type;
 
     private String Description;

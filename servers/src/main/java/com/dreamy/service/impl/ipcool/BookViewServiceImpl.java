@@ -1,8 +1,11 @@
 package com.dreamy.service.impl.ipcool;
 
 import com.dreamy.beans.Page;
+import com.dreamy.dao.iface.ipcool.BookViewCalculateResultDao;
 import com.dreamy.dao.iface.ipcool.BookViewDao;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
+import com.dreamy.domain.ipcool.BookViewCalculateResultConditions;
 import com.dreamy.domain.ipcool.BookViewConditions;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.BeanUtils;
@@ -23,15 +26,37 @@ public class BookViewServiceImpl implements BookViewService {
     @Resource
     private BookViewDao bookViewDao;
 
+    @Resource
+    private BookViewCalculateResultDao bookViewCalculateResultDao;
+
     @Override
     public void save(BookView bookView) {
         bookViewDao.save(bookView);
     }
 
     @Override
+    public void saveCalculateRes(BookViewCalculateResult result) {
+        BookViewCalculateResultConditions conditions = new BookViewCalculateResultConditions();
+        conditions.createCriteria().andBookIdEqualTo(result.getBookId());
+        List<BookViewCalculateResult> bookViewCalculateResultConditionsList = bookViewCalculateResultDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookViewCalculateResultConditionsList)) {
+            BookViewCalculateResult temp = bookViewCalculateResultConditionsList.get(0);
+            result.id(temp.getId());
+            bookViewCalculateResultDao.update(result);
+        }
+        bookViewCalculateResultDao.save(result);
+    }
+
+    @Override
     public Integer update(BookView bookView) {
         return bookViewDao.update(bookView);
     }
+
+    @Override
+    public Integer updateCalculateRes(BookViewCalculateResult result) {
+        return bookViewCalculateResultDao.update(result);
+    }
+
 
     @Override
     public List<BookView> getList(BookView bookView, Page page, String order) {
@@ -64,6 +89,29 @@ public class BookViewServiceImpl implements BookViewService {
     @Override
     public BookView getById(Integer id) {
         return bookViewDao.selectById(id);
+    }
+
+
+    @Override
+    public BookViewCalculateResult getCalculateResByBookId(Integer bookId) {
+        BookViewCalculateResultConditions conditions = new BookViewCalculateResultConditions();
+        conditions.createCriteria().andBookIdEqualTo(bookId);
+
+        List<BookViewCalculateResult> bookViewCalculateResultList = bookViewCalculateResultDao.selectByExample(conditions);
+        if (CollectionUtils.isNotEmpty(bookViewCalculateResultList)) {
+            return bookViewCalculateResultList.get(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<BookViewCalculateResult> getCalculateResByPageAndOrder(Page page, String order) {
+        BookViewCalculateResultConditions conditions = new BookViewCalculateResultConditions();
+        conditions.setOrderByClause(order);
+        conditions.setPage(page);
+
+        return bookViewCalculateResultDao.selectByExample(conditions);
     }
 
     @Override
@@ -124,5 +172,10 @@ public class BookViewServiceImpl implements BookViewService {
             return map;
         }
         return null;
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        bookViewDao.deleteById(id);
     }
 }

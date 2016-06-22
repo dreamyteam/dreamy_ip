@@ -53,6 +53,7 @@
     ##      细节筛选
         <div class="sub_sizer_container">
             <h6 class="type_title">文学类型</h6>
+
             <div class="type_check_container">
                 <div class="input_content">
 ##                    <input type="checkbox" name="">
@@ -79,51 +80,14 @@
         #if($list)
 
             #foreach($view in $list)
-                <div class="sresult_ip clearfix">
-                    <a class="sresult_ip_img_cointainer" href="/index/detail.html?ip=${view.id}"><img
-                            src="$!{view.imageUrl}"></a>
+                #if($showChubanOnly == 1)
+                    #if($view.type ==1)
+                        #parse("/search/search_list.vm")
+                    #end
+                #else
+                    #parse("/search/search_list.vm")
+                #end
 
-                    <div class="sresult_content">
-                        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
-                            <span class="type">
-                                #foreach($bookType in $typeEnums)
-                               #if($bookType.getType() == $view.getType())
-                                    $bookType.getDescription()
-                                #end
-                            #end
-                            </span>
-                        </h2>
-
-                        <h6>作者: $!{view.author}</h6>
-                        <ul class="quotient">
-                            <li>
-                                <h6>开发潜力</h6>
-                                <span>$!{view.developIndex}</span>
-                            </li>
-                            <li>
-                                <h6>传播指数</h6>
-                                <span>$!{view.propagateIndex}</span>
-                            </li>
-                            <li>
-                                <h6>热度指数</h6>
-                                <span>$!{view.hotIndex}</span>
-                            </li>
-                            <li>
-                                <h6>受众口碑</h6>
-                                <span>$!{view.reputationIndex}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="overall">
-                        <h6>
-                            #foreach($bookType in $typeEnums)
-                                #if($bookType.getType() == $view.getType())
-                                    $bookType.getDescription()排名
-                                #end
-                            #end</h6>
-                        <span>$!rankMap.get($view.getBookId())</span>
-                    </div>
-                </div>
             #end
         #else
             <div class="sresult_none clearfix">

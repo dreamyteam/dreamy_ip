@@ -1,12 +1,15 @@
-package com.dreamy.admin.tasks.rank;
+package com.dreamy.admin.tasks.rank.net;
 
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IpTypeEnums;
+import com.dreamy.enums.config.ChubanBookLevelConfigEnums;
+import com.dreamy.enums.config.NetBookLevelConfigEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
@@ -18,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,9 +31,9 @@ import java.util.List;
  * Time: 上午11:57
  */
 @Component
-public class FlushBookRankToDb {
+public class FlushNetBookRankToDb {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlushBookRankToDb.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlushNetBookRankToDb.class);
 
     @Autowired
     private BookViewService bookViewService;
@@ -45,7 +48,7 @@ public class FlushBookRankToDb {
     private BookRankHistoryService bookRankHistoryService;
 
 
-    @Scheduled(cron = "0 40 3 * * ?")
+    @Scheduled(cron = "0 40 4 * * ?")
     public void run() {
         Page page = new Page();
         page.setPageSize(500);
@@ -54,7 +57,7 @@ public class FlushBookRankToDb {
         while (isLoop) {
             try {
                 page.setCurrentPage(currentPage);
-                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
+                List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.net.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
                         updateRank(bookView);
@@ -78,16 +81,16 @@ public class FlushBookRankToDb {
      * @param bookView
      */
     public void updateRank(BookView bookView) {
-        updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
-        updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
-        updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
-        updateRank(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
+        updateRank(bookView, BookRankEnums.composite_net.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
+        updateRank(bookView, BookRankEnums.develop_net.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
+        updateRank(bookView, BookRankEnums.propagation_net.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
+        updateRank(bookView, BookRankEnums.hot_net.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
+        updateRank(bookView, BookRankEnums.activity_net.getCacheKey(), BookIndexTypeEnums.active.getType(), bookView.getActivityIndex());
     }
 
     private void updateRank(BookView bookView, String cacheKey, Integer rankType, Integer index) {
         try {
             Integer bookId = bookView.getBookId();
-
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
             if (rankNum != null) {
                 rankNum++;
@@ -120,5 +123,48 @@ public class FlushBookRankToDb {
         } catch (Exception e) {
             LOGGER.error("update rank failed :id=" + bookView.getId() + ":type=" + rankType, e);
         }
+    }
+
+
+    public Integer getIndex() {
+
+        Integer showIndex = 0;
+        String chubanBookTotalCacheKey = "net_book_total_num";
+        Long totalNum = redisClientService.getNumber(chubanBookTotalCacheKey);
+        if (totalNum == null || totalNum == 0) {
+            totalNum = (long) bookViewService.getTotalCountByType(IpTypeEnums.net.getType());
+            redisClientService.setNumber(chubanBookTotalCacheKey, totalNum);
+        }
+
+        List<Integer> rankBottomList = new LinkedList<>();
+        if (totalNum > 0) {
+            NetBookLevelConfigEnums[] netBookLevelConfigEnumses = NetBookLevelConfigEnums.values();
+            Integer length = netBookLevelConfigEnumses.length;
+            Double percent = 0.0;
+
+            for (Integer i = 0; i < length; i++) {
+                percent += netBookLevelConfigEnumses[i].getPercent();
+                Double rankLimit = totalNum * percent * 0.01;
+                Integer rankBottom = (int) Math.ceil(rankLimit);
+                rankBottomList.add(rankBottom);
+            }
+
+            List<Integer> scoresList = new LinkedList<>();
+            Page page = new Page();
+            page.setPageSize(1);
+            page.setCurrentPage(1);
+            List<BookViewCalculateResult> firstTemp = bookViewService.getCalculateResByPageAndOrder(page, "composite_index asc");
+            scoresList.add(firstTemp.get(0).getCompositeIndex());
+            for (Integer num : rankBottomList) {
+                page.setCurrentPage(num);
+                List<BookViewCalculateResult> temp = bookViewService.getCalculateResByPageAndOrder(page, "composite_index asc");
+                if (CollectionUtils.isNotEmpty(temp)) {
+                    scoresList.add(temp.get(0).getCompositeIndex());
+                }
+            }
+            System.err.println("111");
+        }
+
+        return showIndex;
     }
 }
