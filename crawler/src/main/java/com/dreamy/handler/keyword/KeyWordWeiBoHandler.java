@@ -3,7 +3,7 @@ package com.dreamy.handler.keyword;
 import com.dreamy.domain.ipcool.KeyWord;
 import com.dreamy.enums.KeyWordEnums;
 import com.dreamy.enums.RedisConstEnums;
-import com.dreamy.service.cache.CommonService;
+import com.dreamy.service.cache.CacheCommonService;
 import com.dreamy.service.iface.ipcool.KeyWordService;
 import com.dreamy.service.iface.mongo.UserAgentService;
 import com.dreamy.utils.HttpUtils;
@@ -43,7 +43,7 @@ public class KeyWordWeiBoHandler {
     @Resource
     private KeyWordService keyWordService;
     @Resource
-    CommonService commonService;
+    CacheCommonService commonService;
 
     public void crawler(String word, Integer bookId) {
         getSina(word, bookId);

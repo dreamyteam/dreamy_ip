@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * Created by wangyongxing on 16/4/8.
  */
 @Service
-public class CommonService {
+public class CacheCommonService {
 
     @Value("${devModel}")
     private String devModel;
