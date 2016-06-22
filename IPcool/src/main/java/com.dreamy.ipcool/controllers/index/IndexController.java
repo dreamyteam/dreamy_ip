@@ -58,7 +58,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/comprehensive")
     public String comprehensive(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
 
         model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(IpTypeEnums.chuban.getType())));
@@ -75,7 +76,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/potential")
     public String potential(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/potential";
     }
 
@@ -86,7 +88,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/develop")
     public String develop(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/develop";
     }
 
@@ -98,9 +101,11 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/heat")
     public String heat(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
+        BookView bookView = bookViewService.getById(ipId);
+
         model.put("endDate", TimeUtils.toString("yyyy/MM/dd", TimeUtils.appointed(-1)));
         model.put("startDate", TimeUtils.toString("yyyy/MM/dd", TimeUtils.appointed(-8)));
-        getCommonDataOfPage(ipId, model, request);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/heat";
     }
 
@@ -111,7 +116,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/introduction")
     public String introduction(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/introduction";
     }
 
@@ -134,7 +140,7 @@ public class IndexController extends IpcoolController {
             model.put("comments", comments.getComments());
         }
 
-        getCommonDataOfPage(ipId, model, request);
+        getCommonDataOfPage(bookView, model, request);
 
         Integer rankIndex = Integer.parseInt(model.get("crank").toString());
         model.put("crankLevel", bookRankService.getRankClassByPosition(rankIndex, bookViewService.getTotalCountByType(IpTypeEnums.chuban.getType())));
@@ -157,7 +163,8 @@ public class IndexController extends IpcoolController {
      */
     @RequestMapping("/persona")
     public String personal(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/persona";
     }
 
@@ -169,7 +176,8 @@ public class IndexController extends IpcoolController {
     @RequestMapping("/propagation")
     public String propagation(@RequestParam(value = "ip", required = true) Integer ipId, ModelMap model, HttpServletRequest request) {
 
-        getCommonDataOfPage(ipId, model, request);
+        BookView bookView = bookViewService.getById(ipId);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/propagation";
     }
 
@@ -187,7 +195,7 @@ public class IndexController extends IpcoolController {
         if (comments != null) {
             model.put("comments", comments.getComments());
         }
-        getCommonDataOfPage(ipId, model, request);
+        getCommonDataOfPage(bookView, model, request);
         return "/index/user_reviews";
     }
 
@@ -213,10 +221,8 @@ public class IndexController extends IpcoolController {
         interfaceReturn(response, JsonUtils.toString(bean), callback);
     }
 
-    private void getCommonDataOfPage(Integer ipId, ModelMap model, HttpServletRequest request) {
+    private void getCommonDataOfPage(BookView bookView, ModelMap model, HttpServletRequest request) {
         String pageName = request.getParameter("pageName");
-
-        BookView bookView = bookViewService.getById(ipId);
         model.put("view", bookView);
 
         Integer bookId = bookView.getBookId();

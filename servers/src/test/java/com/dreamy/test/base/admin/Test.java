@@ -10,6 +10,7 @@ import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.service.iface.admin.SysModelService;
 import com.dreamy.service.cache.CacheCommonService;
+
 import com.dreamy.test.base.BaseJunitTest;
 
 import javax.annotation.Resource;
@@ -60,17 +61,17 @@ public class Test extends BaseJunitTest {
     public void find() {
         List<SysModel> list = sysModelService.getByUserId(2);
         System.out.println(1212);
-        list=sysModelService.getAll();
+        list = sysModelService.getAll();
     }
+
     @org.junit.Test
-    public void  insertAdminUuser(){
-        AdminUser adminUser=new AdminUser().userName("test");
+    public void insertAdminUuser() {
+        AdminUser adminUser = new AdminUser().userName("test");
         adminUserDao.save(adminUser);
-        commonService.getCacheService().put("1","1");
+//        commonService.getCacheService().put("1","1");
 
 
     }
-
 
 
 }

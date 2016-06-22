@@ -9,6 +9,7 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.SearchService;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,18 +48,21 @@ public class SearchController extends IpcoolController {
                          @RequestParam(value = "type", required = false) String typesStr
     ) {
 
-        List<Integer> types = null;
+        List<Integer> types = new LinkedList<Integer>();
         if (StringUtils.isNotEmpty(typesStr)) {
             types = JsonUtils.toList(Integer.class, typesStr);
         }
-
 
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
         List<Integer> bookIds = new LinkedList<Integer>();
 
         if (StringUtils.isNotEmpty(content)) {
-            bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
+            if (CollectionUtils.isNotEmpty(types) && types.contains(0)) {
+                bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, null);
+            } else {
+                bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
+            }
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
             List<BookRank> bookRankList = bookRankService.getBookRankByOrderAndType("rank asc", BookIndexTypeEnums.composite.getType(), page);
@@ -69,7 +73,12 @@ public class SearchController extends IpcoolController {
                 rankMap.put(bookRank.getBookId(), bookRank.getRank());
             }
 
-            model.put("showChubanOnly", 1);
+            Integer type = 1;
+            if (CollectionUtils.isNotEmpty(types)) {
+                type = types.get(0);
+            }
+            types.add(type);
+            model.put("type", type);
         }
 
         Map<Integer, BookView> bookViewMap = bookViewService.getListMapByBookIds(bookIds);

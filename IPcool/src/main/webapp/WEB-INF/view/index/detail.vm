@@ -145,24 +145,27 @@
                             </tr>
 
                             #foreach($rankPosition in $rankPositions)
-                                <tr
-                                    #if($rankPosition.getBookView().getBookId() == $view.getBookId())
-                                            class="current"
-                                        #set($trend=$rankPosition.getTrend())
-                                    #end>
-                                    <td>$rankPosition.getCompositeRank()</td>
-                                    <td>$rankPosition.getBookView().getName()</td>
-                                    <td>$rankPosition.getBookView().getCompositeIndex()</td>
-                                    <td>
-                                        #if($rankPosition.getTrend() == 0)
-                                            -
-                                        #elseif($rankPosition.getTrend() == 1)
-                                            ↑
-                                        #else
-                                            ↓
-                                        #end
-                                    </td>
-                                </tr>
+                                #if($rankPosition.getBookView().getType() == $!{view.type})
+
+                                    <tr
+                                        #if($rankPosition.getBookView().getBookId() == $view.getBookId())
+                                                class="current"
+                                            #set($trend=$rankPosition.getTrend())
+                                        #end>
+                                        <td>$rankPosition.getCompositeRank()</td>
+                                        <td>$rankPosition.getBookView().getName()</td>
+                                        <td>$rankPosition.getBookView().getCompositeIndex()</td>
+                                        <td>
+                                            #if($rankPosition.getTrend() == 0)
+                                                -
+                                            #elseif($rankPosition.getTrend() == 1)
+                                                ↑
+                                            #else
+                                                ↓
+                                            #end
+                                        </td>
+                                    </tr>
+                                #end
                             #end
 
                         </table>
@@ -175,12 +178,6 @@
                             趋势</h6>
                     </div>
                 </li>
-            ##                <li>
-            ##                    <p>同类内容</p>
-            ##                </li>
-            ##                <li>
-            ##                    <p>同期内容</p>
-            ##                </li>
             </ul>
         </div>
         <!-- 查看全部 -->
@@ -393,7 +390,10 @@
         </div>
     </section>
     <!-- 点评 -->
-    <section class="scroll_load">
+    <section class="scroll_load
+    #if($view.type == 2) hidden
+    #end
+">
         <h1 class="title">点评</h1>
         <!-- 点评指数 图表 容器 -->
         <div class="review_container">

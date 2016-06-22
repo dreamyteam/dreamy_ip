@@ -29,11 +29,20 @@
 
     <section class="search_sizer" id="sizer_search">
         <div class="main_sizer_container">
-            <h6 class="type_title">文学类型</h6>
+            <h6 class="type_title">IP类型</h6>
 
             <div class="type_check_container">
                 <div class="input_content">
-                    <input type="checkbox"
+                    <input type="radio"
+                        #if($!types.contains(0))
+                           checked
+                        #end
+                           name="type" value="0">
+                    <label>全部</label>
+                </div>
+                <div class="input_content">
+
+                    <input type="radio"
                         #if($!types.contains(1))
                            checked
                         #end
@@ -41,7 +50,7 @@
                     <label>出版文学</label>
                 </div>
                 <div class="input_content">
-                    <input type="checkbox" name="type"
+                    <input type="radio" name="type"
                         #if($!types.contains(2))
                            checked
                         #end
@@ -56,7 +65,7 @@
 
             <div class="type_check_container">
                 <div class="input_content">
-##                    <input type="checkbox" name="">
+                ##                    <input type="checkbox" name="">
                     <label style="color:#9b9b9b">筛选条件收集中...</label>
                 </div>
             </div>
@@ -77,11 +86,15 @@
 
         </div>
 
-        #if($list)
+        #if($list.size()>0)
 
             #foreach($view in $list)
-                #if($showChubanOnly == 1)
+                #if($type== 1)
                     #if($view.type ==1)
+                        #parse("/search/search_list.vm")
+                    #end
+                #elseif($type==2)
+                    #if($view.type ==2)
                         #parse("/search/search_list.vm")
                     #end
                 #else
@@ -99,12 +112,15 @@
 
             </div>
         #end
-        <!--分页器 -->
-        <div class="paging" id="paging"
-             data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
-             data-page-params='{"content":"$!content","type":"$!typestr"}'>
-        </div>
-        <!--分页器-->
+        #if($list.size()>0)
+            <!--分页器 -->
+            <div class="paging" id="paging"
+                 data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
+                 data-page-params='{"content":"$!content","type":"$!typestr"}'>
+            </div>
+            <!--分页器-->
+
+        #end
     </section>
 
 </div>
