@@ -11,8 +11,7 @@ import com.dreamy.domain.admin.SysModel;
 import com.dreamy.domain.admin.UserRole;
 import com.dreamy.domain.ipcool.BookIndexHistory;
 import com.dreamy.domain.ipcool.BookView;
-import com.dreamy.mapper.ipcool.BookIndexHistoryMapper;
-import com.dreamy.service.cache.CommonService;
+import com.dreamy.service.cache.CacheCommonService;
 import com.dreamy.service.iface.admin.SysModelService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.test.BaseJunitTest;
@@ -37,7 +36,7 @@ public class Test extends BaseJunitTest {
     @Resource
     AdminUserDao adminUserDao;
     @Resource
-    CommonService commonService;
+    CacheCommonService commonService;
     @Resource
     BookViewService bookViewService;
 
