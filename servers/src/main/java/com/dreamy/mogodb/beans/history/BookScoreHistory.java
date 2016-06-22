@@ -21,8 +21,7 @@ public class BookScoreHistory {
 
     private Integer saleSort;
 
-    private Date createdDate;
-
+    private String date;
 
     private Double score;
 
@@ -66,12 +65,12 @@ public class BookScoreHistory {
         this.saleSort = saleSort;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Double getScore() {
