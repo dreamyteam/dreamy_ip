@@ -1,7 +1,6 @@
 package com.dreamy.handler.book;
 
 import com.dreamy.enums.RedisConstEnums;
-import com.dreamy.service.cache.CommonService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.NumberUtils;
@@ -34,9 +33,6 @@ public class DouBanBookHandler {
 
     @Autowired
     QueueService queueService;
-    @Autowired
-    CommonService commonService;
-
     @Autowired
     private ListOperations<String, String> listOperations;
 
@@ -76,7 +72,7 @@ public class DouBanBookHandler {
             try {
                 Thread.sleep(NumberUtils.randomInt(5, 10) * 1000);
             } catch (InterruptedException e) {
-                log.error("DouBanBookHandler crawler is error ",e);
+                log.error("DouBanBookHandler crawler is error ", e);
             }
         }
 
@@ -134,9 +130,8 @@ public class DouBanBookHandler {
                         queueService.push(queueName, map);
                     }
                 }
-            }
-            else{
-                log.error("DouBanBookHandler http is error "+html);
+            } else {
+                log.error("DouBanBookHandler http is error " + html);
             }
         }
     }

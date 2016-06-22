@@ -46,7 +46,7 @@ public class RedisCache implements CacheService {
             try {
                 Object s = valueOperations.get(key);
                 if (s == null) {
-                    s= valueOperations.get(key);
+                    s = valueOperations.get(key);
                 }
                 return s;
             } catch (Throwable e) {
@@ -65,7 +65,7 @@ public class RedisCache implements CacheService {
 
     @Override
     public Boolean contains(String key) throws Exception {
-        return  valueOperations.getOperations().hasKey(key);
+        return valueOperations.getOperations().hasKey(key);
 
     }
 
@@ -86,7 +86,7 @@ public class RedisCache implements CacheService {
         return true;
     }
 
-    public void clear(String key){
+    public void clear(String key) {
         if (StringUtils.isNotEmpty(key)) {
             try {
                 valueOperations.getOperations().delete(key);
