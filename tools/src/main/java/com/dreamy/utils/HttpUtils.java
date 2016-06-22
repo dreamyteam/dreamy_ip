@@ -54,7 +54,7 @@ public class HttpUtils {
      * @param tempurl 网页链接
      * @return
      */
-    public static String getHtmlGetChangeCookie(String tempurl,String cookie) {
+    public static String getHtmlGetChangeCookie(String tempurl, String cookie) {
         return getHtmlGet(tempurl, CHARSET, null, 0, cookie, null, null, null);
     }
 
@@ -187,12 +187,12 @@ public class HttpUtils {
                 }
             } else {
                 sb.append(statusCode);
-                LOGGER.error(" tempurl: "+tempurl+" Response Code: " + statusCode);
+                LOGGER.error(" tempurl: " + tempurl + " Response Code: " + statusCode);
             }
         } catch (HttpException e) {
-            LOGGER.error(" tempurl: "+tempurl+"  HttpException error: " + e);
+            LOGGER.error(" tempurl: " + tempurl + "  HttpException error: " + e);
         } catch (IOException e) {
-            LOGGER.error(" tempurl: "+tempurl+" IOException error: " + e);
+            LOGGER.error(" tempurl: " + tempurl + " IOException error: " + e);
         } finally {
             method.releaseConnection();
         }
@@ -593,6 +593,34 @@ public class HttpUtils {
             }
         }
         return outBuffer.toString();
+    }
+
+
+    public static InputStream getInputStream(String path) {
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        try {
+            URL url = new URL(path);
+            if (url != null) {
+                httpURLConnection = (HttpURLConnection) url.openConnection();// 打开链接
+                // 设置连接网络的超时时间
+                httpURLConnection.setConnectTimeout(3000);
+                httpURLConnection.setDoInput(true);
+                //
+                httpURLConnection.setRequestMethod("GET");
+                int resposeCode = httpURLConnection.getResponseCode();
+                if (resposeCode == 200)// 如果请求成功
+                {
+                    // 从服务器中获得一个输入流
+                    inputStream = httpURLConnection.getInputStream();
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return inputStream;
     }
 
     public static final String CHARSET = "utf-8";

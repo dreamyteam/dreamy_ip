@@ -2,6 +2,7 @@ package com.dreamy.utils.filesystem.impl;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.*;
+import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.filesystem.FileSystemService;
 import org.apache.commons.io.IOUtils;
 
@@ -19,8 +20,13 @@ import java.util.List;
  * Created by wangyongxing on 16/6/21.
  */
 public class OSSFileSystem implements FileSystemService {
-    private static String bucketName = "wjstest";
+    private static String BUCKETNAME = "ipcool";
     private static OSSClient client = null;
+    private String accessKeyId;
+
+    private String endpoint;
+    private String accessKeySecret;
+    private String bucketName;
 
     /**
      * 初始化
@@ -32,35 +38,41 @@ public class OSSFileSystem implements FileSystemService {
      */
     public static final void init(String accessKeyId, String accessKeySecret, String endpoint, String bucketName1) {
         client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-        bucketName = bucketName1;
+        BUCKETNAME = bucketName1;
+    }
+
+    public void init() {
+        client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        BUCKETNAME = bucketName;
     }
 
     @Override
     public Boolean saveFile(Object src, String filePath) throws Exception {
         filePath = setPath(filePath);
-
         if (src instanceof File) {
             // 文件
-            client.putObject(new PutObjectRequest(bucketName, filePath, (File) src));
+            client.putObject(new PutObjectRequest(BUCKETNAME, filePath, (File) src));
             return true;
         } else if (src instanceof String) {
             // 保存文本
             InputStream is = new ByteArrayInputStream(((String) src).getBytes());
             try {
-                client.putObject(bucketName, filePath, is);
+                client.putObject(BUCKETNAME, filePath, is);
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 IOUtils.closeQuietly(is);
             }
             return true;
         } else if (src instanceof InputStream) {
             // 保存流
-            client.putObject(bucketName, filePath, (InputStream) src);
+            client.putObject(BUCKETNAME, filePath, (InputStream) src);
             return true;
         } else if (src instanceof BufferedImage) {
             // 保存图片
             InputStream is = getImageStream((BufferedImage) src);
             try {
-                client.putObject(bucketName, filePath, is);
+                client.putObject(BUCKETNAME, filePath, is);
             } finally {
                 IOUtils.closeQuietly(is);
             }
@@ -79,7 +91,7 @@ public class OSSFileSystem implements FileSystemService {
         destinationPath = setPath(destinationPath);
         InputStream in = object.getObjectContent();
         try {
-            client.putObject(bucketName, destinationPath, in);
+            client.putObject(BUCKETNAME, destinationPath, in);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -106,7 +118,7 @@ public class OSSFileSystem implements FileSystemService {
     @Override
     public Boolean deleteFile(String filePath) throws Exception {
         filePath = setPath(filePath);
-        client.deleteObject(bucketName, filePath);
+        client.deleteObject(BUCKETNAME, filePath);
         return true;
     }
 
@@ -139,7 +151,7 @@ public class OSSFileSystem implements FileSystemService {
     public Boolean deleteDir(String filePath) throws Exception {
         filePath = setPath(filePath);
         String[] keys = getFiles(filePath);
-        client.deleteObjects(new DeleteObjectsRequest(bucketName).withKeys(Arrays.asList(keys)));
+        client.deleteObjects(new DeleteObjectsRequest(BUCKETNAME).withKeys(Arrays.asList(keys)));
         return null;
     }
 
@@ -151,7 +163,7 @@ public class OSSFileSystem implements FileSystemService {
         boolean isTruncated = true;
         String nextMarker = null;
         while (isTruncated) {
-            ObjectListing objectListing = client.listObjects(new ListObjectsRequest(bucketName)
+            ObjectListing objectListing = client.listObjects(new ListObjectsRequest(BUCKETNAME)
                     .withMarker(nextMarker).withMaxKeys(maxKeys).withPrefix(dirPath));
             List<OSSObjectSummary> sums = objectListing.getObjectSummaries();
             for (OSSObjectSummary s : sums) {
@@ -205,7 +217,7 @@ public class OSSFileSystem implements FileSystemService {
     @Override
     public Boolean fileExists(String filePath) {
         filePath = setPath(filePath);
-        boolean exists = client.doesObjectExist(bucketName, filePath);
+        boolean exists = client.doesObjectExist(BUCKETNAME, filePath);
         return exists;
     }
 
@@ -279,8 +291,7 @@ public class OSSFileSystem implements FileSystemService {
 
     private OSSObject getOSSObject(String filePath) {
         filePath = setPath(filePath);
-
-        OSSObject object = client.getObject(new GetObjectRequest(bucketName, filePath));
+        OSSObject object = client.getObject(new GetObjectRequest(BUCKETNAME, filePath));
         return object;
     }
 
@@ -322,47 +333,47 @@ public class OSSFileSystem implements FileSystemService {
         String accessKeyId = "F5ySitlEtTLdJ3pp";
         String accessKeySecret = "wmF80JSkM1pe6jhh3xsKfl6XyPaktP";
 
+        OSSFileSystem.init(accessKeyId, accessKeySecret, endpoint, "ipcool");
         OSSFileSystem aliOssFileSystem = new OSSFileSystem();
-        OSSFileSystem.init(accessKeyId,accessKeySecret,endpoint,"test");
         try {
-            String[] str = null;
-            //File file=new File("D:\1.jpg");
-            //aliOssFileSystem.saveFile(file, "1.jpg");
-            //aliOssFileSystem.copyFile("w/j/s/2.txt", "w/8.txt");
-            //aliOssFileSystem.copyFileToLocal("w/j/s/2.txt","D:/temp.txt");
-            //aliOssFileSystem.deleteFile("b/3.txt");
-            //aliOssFileSystem.deleteDir("w/j/s/");
-
-			/*InputStream inputStream=aliOssFileSystem.getFileAsStream("b/2.txt");
-            System.out.println(inputStream.toString());*/
-			/*String str=aliOssFileSystem.getFileAsString("b/2.txt");
-			System.out.println(str);*/
-            //System.out.println(aliOssFileSystem.getPatentFile("w/j/s/2.txt"));
-            //System.out.println(aliOssFileSystem.getFileName("w/j/5.txt"));
-            //System.out.println(aliOssFileSystem.fileExists("w/j/5.txt"));
-            //System.out.println(aliOssFileSystem.getFileLength("w/j/5.txt"));
-            //System.out.println(aliOssFileSystem.getLastModified("w/j/5.txt"));
-            //aliOssFileSystem.cutFile("w/j/5.txt","w/j/51.txt");
-			/*File file=aliOssFileSystem.getFile("w/j/51.txt");
-			System.out.println(file.getPath());*/
-
-            System.out.println("==========");
-            str = aliOssFileSystem.getFiles("w/");
-            //str=aliOssFileSystem.getFilesName("w/");
-            print(str);
-
+            String liveImg = "/book/" + System.currentTimeMillis() + ".jpg";
+            String url = "https://img1.doubanio.com/mpic/s5821307.jpg";
+            InputStream dataInputStream = HttpUtils.getInputStream(url);
+            aliOssFileSystem.saveFile(dataInputStream, liveImg);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    private static void print(String[] str) {
-        if (str == null) {
-            return;
-        }
-        for (String str1 : str) {
-            System.out.println(str1);
-        }
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 }

@@ -37,6 +37,14 @@
         <property name="prefix" value="ipcool_sso_sid_"/>
     </bean>
 
+    <bean id="oSSFileSystem" class="com.dreamy.utils.filesystem.impl.OSSFileSystem" init-method="init">
+        <property name="endpoint" value="oss-cn-hangzhou.aliyuncs.com"/>
+        <property name="accessKeyId" value="F5ySitlEtTLdJ3pp"/>
+        <property name="accessKeySecret" value="wmF80JSkM1pe6jhh3xsKfl6XyPaktP"/>
+        <property name="bucketName" value="ipcool"/>
+    </bean>
+
+
     <bean id="sessionCookieHandler" class="com.dreamy.handlers.CookieHandler">
         <property name="cookieName" value="IPCOOL_SSO_SESSIONID"/>
         <!--<property name="cookieDomain" value="/"/>-->
