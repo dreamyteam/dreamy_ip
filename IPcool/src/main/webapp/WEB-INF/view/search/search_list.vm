@@ -1,0 +1,51 @@
+<div class="sresult_ip clearfix">
+    <a class="sresult_ip_img_cointainer" href="/index/detail.html?ip=${view.id}"><img
+            src="$!{view.imageUrl}"></a>
+
+    <div class="sresult_content">
+        <h2><a href="/index/detail.html?ip=${view.id}">$!{view.name} </a>
+                            <span class="type">
+                                #foreach($bookType in $typeEnums)
+                               #if($bookType.getType() == $view.getType())
+                                    $bookType.getDescription()
+                                #end
+                            #end
+                            </span>
+        </h2>
+
+        <h6>作者: $!{view.author}</h6>
+        <ul class="quotient">
+            <li>
+                <h6>开发潜力</h6>
+                <span>$!{view.developIndex}</span>
+            </li>
+            <li>
+                <h6>传播指数</h6>
+                <span>$!{view.propagateIndex}</span>
+            </li>
+            <li>
+                <h6>热度指数</h6>
+                <span>$!{view.hotIndex}</span>
+            </li>
+            <li>
+                #if($!view.type == 1)
+                    <h6>受众口碑</h6>
+                    <span>$!{view.reputationIndex}</span>
+                    #else
+                        <h6>活跃指数</h6>
+                        <span>$!{view.activityIndex}</span>
+                #end
+
+            </li>
+        </ul>
+    </div>
+    <div class="overall">
+        <h6>
+            #foreach($bookType in $typeEnums)
+                #if($bookType.getType() == $view.getType())
+                    $bookType.getDescription()排名
+                #end
+            #end</h6>
+        <span>$!rankMap.get($view.getBookId())</span>
+    </div>
+</div>
