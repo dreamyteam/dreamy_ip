@@ -9,6 +9,7 @@ import com.dreamy.ipcool.controllers.IpcoolController;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.SearchService;
+import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.JsonUtils;
 import com.dreamy.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,11 @@ public class SearchController extends IpcoolController {
                 rankMap.put(bookRank.getBookId(), bookRank.getRank());
             }
 
-            model.put("showChubanOnly", 1);
+            Integer type = 1;
+            if (CollectionUtils.isNotEmpty(types)) {
+                type = types.get(0);
+            }
+            model.put("type", type);
         }
 
         Map<Integer, BookView> bookViewMap = bookViewService.getListMapByBookIds(bookIds);

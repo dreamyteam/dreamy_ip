@@ -56,7 +56,7 @@
 
             <div class="type_check_container">
                 <div class="input_content">
-##                    <input type="checkbox" name="">
+                ##                    <input type="checkbox" name="">
                     <label style="color:#9b9b9b">筛选条件收集中...</label>
                 </div>
             </div>
@@ -80,8 +80,12 @@
         #if($list)
 
             #foreach($view in $list)
-                #if($showChubanOnly == 1)
+                #if($type== 1)
                     #if($view.type ==1)
+                        #parse("/search/search_list.vm")
+                    #end
+                #elseif($type==2)
+                    #if($view.type ==2)
                         #parse("/search/search_list.vm")
                     #end
                 #else

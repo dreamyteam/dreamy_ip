@@ -206,7 +206,8 @@ public class IpBookTest extends BaseJunitTest {
             List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    flushNetBookRankToDb.updateRank(bookView);
+//                    flushNetBookRankToDb.updateRank(bookView);
+                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
                 }
 
             }
