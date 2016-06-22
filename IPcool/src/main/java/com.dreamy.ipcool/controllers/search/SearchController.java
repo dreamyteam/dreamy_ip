@@ -53,12 +53,14 @@ public class SearchController extends IpcoolController {
             types = JsonUtils.toList(Integer.class, typesStr);
         }
 
-
         List<BookView> bookViewList = new LinkedList<BookView>();
         Map<Integer, Integer> rankMap = new HashMap<Integer, Integer>();
         List<Integer> bookIds = new LinkedList<Integer>();
 
         if (StringUtils.isNotEmpty(content)) {
+            if (CollectionUtils.isNotEmpty(types) && types.contains(0)) {
+                types = null;
+            }
             bookIds = searchService.getBookIdsFromSolrByNameAndType(content, page, types);
             rankMap = bookRankService.getCompositeRankMapByBookIds(bookIds);
         } else {
