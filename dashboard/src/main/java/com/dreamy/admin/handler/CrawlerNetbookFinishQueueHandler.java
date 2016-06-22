@@ -158,6 +158,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
         }
+
         return bookView.getHotIndex();
     }
 

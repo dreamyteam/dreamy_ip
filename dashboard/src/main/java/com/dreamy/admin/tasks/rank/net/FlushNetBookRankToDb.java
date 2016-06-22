@@ -4,9 +4,12 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IpTypeEnums;
+import com.dreamy.enums.config.ChubanBookLevelConfigEnums;
+import com.dreamy.enums.config.NetBookLevelConfigEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -130,7 +134,45 @@ public class FlushNetBookRankToDb {
     }
 
 
-    private void createScore(Integer totalNum, Integer rankNum, BookView bookView) {
+    public Integer getIndex() {
 
+        Integer showIndex = 0;
+        String chubanBookTotalCacheKey = "net_book_total_num";
+        Long totalNum = redisClientService.getNumber(chubanBookTotalCacheKey);
+        if (totalNum == null || totalNum == 0) {
+            totalNum = (long) bookViewService.getTotalCountByType(IpTypeEnums.net.getType());
+            redisClientService.setNumber(chubanBookTotalCacheKey, totalNum);
+        }
+
+        List<Integer> rankBottomList = new LinkedList<>();
+        if (totalNum > 0) {
+            NetBookLevelConfigEnums[] netBookLevelConfigEnumses = NetBookLevelConfigEnums.values();
+            Integer length = netBookLevelConfigEnumses.length;
+            Double percent = 0.0;
+
+            for (Integer i = 0; i < length; i++) {
+                percent += netBookLevelConfigEnumses[i].getPercent();
+                Double rankLimit = totalNum * percent * 0.01;
+                Integer rankBottom = (int) Math.ceil(rankLimit);
+                rankBottomList.add(rankBottom);
+            }
+
+            List<Integer> scoresList = new LinkedList<>();
+            Page page = new Page();
+            page.setPageSize(1);
+            page.setCurrentPage(1);
+            List<BookViewCalculateResult> firstTemp = bookViewService.getCalculateResByPageAndOrder(page, "composite_index asc");
+            scoresList.add(firstTemp.get(0).getCompositeIndex());
+            for (Integer num : rankBottomList) {
+                page.setCurrentPage(num);
+                List<BookViewCalculateResult> temp = bookViewService.getCalculateResByPageAndOrder(page, "composite_index asc");
+                if (CollectionUtils.isNotEmpty(temp)) {
+                    scoresList.add(temp.get(0).getCompositeIndex());
+                }
+            }
+            System.err.println("111");
+        }
+
+        return showIndex;
     }
 }

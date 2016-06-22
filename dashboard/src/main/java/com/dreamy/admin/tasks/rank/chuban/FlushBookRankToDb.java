@@ -4,9 +4,11 @@ import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookRank;
 import com.dreamy.domain.ipcool.BookRankHistory;
 import com.dreamy.domain.ipcool.BookView;
+import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.enums.BookIndexTypeEnums;
 import com.dreamy.enums.BookRankEnums;
 import com.dreamy.enums.IpTypeEnums;
+import com.dreamy.enums.config.ChubanBookLevelConfigEnums;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -56,7 +59,7 @@ public class FlushBookRankToDb {
                 List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id desc", IpTypeEnums.chuban.getType());
                 if (CollectionUtils.isNotEmpty(bookViewList)) {
                     for (BookView bookView : bookViewList) {
-                        updateRank(bookView);
+                        updateRankAndIndex(bookView);
                     }
 
                     currentPage++;
@@ -76,18 +79,20 @@ public class FlushBookRankToDb {
      *
      * @param bookView
      */
-    public void updateRank(BookView bookView) {
-        updateRank(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
-        updateRank(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
-        updateRank(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
-        updateRank(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
+    public void updateRankAndIndex(BookView bookView) {
+        update(bookView, BookRankEnums.composite.getCacheKey(), BookIndexTypeEnums.composite.getType(), bookView.getCompositeIndex());
+        update(bookView, BookRankEnums.develop.getCacheKey(), BookIndexTypeEnums.develop.getType(), bookView.getDevelopIndex());
+        update(bookView, BookRankEnums.propagation.getCacheKey(), BookIndexTypeEnums.propagate.getType(), bookView.getPropagateIndex());
+        update(bookView, BookRankEnums.hot.getCacheKey(), BookIndexTypeEnums.hot.getType(), bookView.getHotIndex());
     }
 
-    private void updateRank(BookView bookView, String cacheKey, Integer rankType, Integer index) {
+    private void update(BookView bookView, String cacheKey, Integer rankType, Integer index) {
+
         try {
             Integer bookId = bookView.getBookId();
 
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
+//            index = getIndex(index, rankNum, rankType);
             if (rankNum != null) {
                 rankNum++;
                 BookRank bookRank = new BookRank();

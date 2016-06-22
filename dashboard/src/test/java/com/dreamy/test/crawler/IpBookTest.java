@@ -5,6 +5,7 @@ import com.dreamy.admin.handler.CrawlerFinishQueueHandler;
 import com.dreamy.admin.handler.CrawlerNetbookFinishQueueHandler;
 import com.dreamy.admin.tasks.rank.chuban.FlushBookRankToDb;
 import com.dreamy.admin.tasks.rank.chuban.UpdateChubanBookIndexTask;
+import com.dreamy.admin.tasks.rank.net.FlushNetBookRankToDb;
 import com.dreamy.admin.tasks.rank.net.UpdateNetBookIndexTask;
 import com.dreamy.beans.Page;
 import com.dreamy.domain.ipcool.BookView;
@@ -50,6 +51,9 @@ public class IpBookTest extends BaseJunitTest {
 
     @Autowired
     private FlushBookRankToDb flushBookRankToDb;
+
+    @Autowired
+    private FlushNetBookRankToDb flushNetBookRankToDb;
 
     @Autowired
     private CrawlerFinishQueueHandler crawlerFinishQueueHandler;
@@ -278,24 +282,26 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-        int currentPage = 7;
-        Page page = new Page();
-        page.setPageSize(1000);
+//        int currentPage = 7;
+//        Page page = new Page();
+//        page.setPageSize(1000);
+//
+//        try {
+//            page.setCurrentPage(currentPage);
+//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+//            if (CollectionUtils.isNotEmpty(bookViewList)) {
+//                for (BookView bookView : bookViewList) {
+////                    crawlerFinishQueueHandler.updateRankAndIndex(bookView);
+//                    flushBookRankToDb.updateRankAndIndex(bookView);
+//                }
+//
+//            }
+//
+//        } catch (Exception e) {
+//            System.err.println("errlr");
+//        }
 
-        try {
-            page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
-            if (CollectionUtils.isNotEmpty(bookViewList)) {
-                for (BookView bookView : bookViewList) {
-//                    crawlerFinishQueueHandler.updateRank(bookView);
-                    flushBookRankToDb.updateRank(bookView);
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.err.println("errlr");
-        }
+        flushNetBookRankToDb.getIndex();
     }
 
 }

@@ -106,6 +106,15 @@ public class BookViewServiceImpl implements BookViewService {
     }
 
     @Override
+    public List<BookViewCalculateResult> getCalculateResByPageAndOrder(Page page, String order) {
+        BookViewCalculateResultConditions conditions = new BookViewCalculateResultConditions();
+        conditions.setOrderByClause(order);
+        conditions.setPage(page);
+
+        return bookViewCalculateResultDao.selectByExample(conditions);
+    }
+
+    @Override
     public List<BookView> getListByBookIds(List<Integer> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return null;

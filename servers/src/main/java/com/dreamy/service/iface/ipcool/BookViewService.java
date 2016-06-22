@@ -66,6 +66,14 @@ public interface BookViewService {
     BookViewCalculateResult getCalculateResByBookId(Integer bookId);
 
     /**
+     *
+     * @param page
+     * @param order
+     * @return
+     */
+    List<BookViewCalculateResult> getCalculateResByPageAndOrder(Page page,String order);
+
+    /**
      * @param ids
      * @return
      */

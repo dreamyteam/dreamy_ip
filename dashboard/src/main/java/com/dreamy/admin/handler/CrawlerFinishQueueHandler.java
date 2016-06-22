@@ -8,6 +8,8 @@ import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.BookViewCalculateResult;
 import com.dreamy.domain.ipcool.PeopleChart;
 import com.dreamy.enums.BookRankEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanHotIndexRandEnums;
+import com.dreamy.enums.IndexRankEnums.chuban.ChubanPropagationIndexRandEnums;
 import com.dreamy.mogodb.beans.BookInfo;
 import com.dreamy.service.cache.RedisClientService;
 import com.dreamy.service.iface.ipcool.*;
@@ -131,6 +133,27 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
             for (ChubanBookSourceBaseHandler chubanBookSourceHandler : chubanBookSourceHandlerMap.values()) {
                 index += chubanBookSourceHandler.getHotIndex(bookView);
             }
+
+            ChubanHotIndexRandEnums[] chubanHotIndexRandEnumses = ChubanHotIndexRandEnums.values();
+            for (Integer i = 0, length = chubanHotIndexRandEnumses.length; i < length; i++) {
+                ChubanHotIndexRandEnums chubanHotIndexRandEnums = chubanHotIndexRandEnumses[i];
+                Integer start = chubanHotIndexRandEnums.getStart();
+                Integer end = chubanHotIndexRandEnums.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanHotIndexRandEnums nextChubanHotIndexRandEnums = chubanHotIndexRandEnumses[i + 1];
+                    Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - chubanHotIndexRandEnums.getScore()) * 1.0;
+
+                    Double temp = (index - start) * (scoreGap / (end - start));
+                    if (temp < 1.0) {
+                        temp = Math.random() * 10;
+                    } else {
+                        temp = temp * 1.0012345;
+                    }
+                    index = chubanHotIndexRandEnums.getScore() + temp.intValue();
+                    break;
+                }
+            }
+
             return index;
         } catch (Exception e) {
             Log.error("update hot index failed :" + bookView.getId(), e);
@@ -151,7 +174,20 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
                 Integer temp = chubanBookSourceHandler.getPropagationIndex(bookView);
                 index += temp;
             }
+            ChubanPropagationIndexRandEnums[] indexRandEnumses = ChubanPropagationIndexRandEnums.values();
+            for (Integer i = 0, length = indexRandEnumses.length; i < length; i++) {
+                ChubanPropagationIndexRandEnums indexRankEnum = indexRandEnumses[i];
+                Integer start = indexRankEnum.getStart();
+                Integer end = indexRankEnum.getEnd();
+                if (index >= start && index <= end) {
+                    ChubanPropagationIndexRandEnums nextIndexRankEnum = indexRandEnumses[i + 1];
+                    Double scoreGap = (nextIndexRankEnum.getScore() - indexRankEnum.getScore()) * 1.0;
 
+                    Double temp = tailScore(index, start, end, scoreGap);
+                    index = indexRankEnum.getScore() + temp.intValue();
+                    break;
+                }
+            }
             return index;
         } catch (Exception e) {
             Log.error("update propagation index failed :" + bookView.getId(), e);
