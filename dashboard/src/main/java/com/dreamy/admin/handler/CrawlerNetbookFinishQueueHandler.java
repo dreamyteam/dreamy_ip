@@ -195,7 +195,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
      * @return
      */
     private Integer getNewActiveIndex(BookView bookView) {
-        Integer index = 10;
+        Integer index = 0;
         TieBa tieBa = tieBaService.getById(bookView.getBookId());
         if (tieBa != null) {
             TieBaHistory tieBaHistory = tieBaHistoryService.getLatestHistoryByBookId(bookView.getBookId());
@@ -212,7 +212,8 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
             } else {
                 index = tieBa.getFollowNum();
                 if (index == null || index == 0) {
-                    index = 10;
+                    Double randomIndex = Math.random() * 10;
+                    index = randomIndex.intValue();
                 }
             }
         }
