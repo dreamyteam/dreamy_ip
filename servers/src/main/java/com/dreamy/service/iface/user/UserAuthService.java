@@ -1,7 +1,11 @@
 package com.dreamy.service.iface.user;
 
+import com.dreamy.beans.Page;
+import com.dreamy.domain.user.User;
 import com.dreamy.domain.user.UserAuth;
 import com.dreamy.enums.ErrorCodeEnums;
+
+import java.util.List;
 
 /**
  * Created by mac on 16/6/14.
@@ -28,4 +32,42 @@ public interface UserAuthService {
      * @return
      */
     ErrorCodeEnums doBusinessAuthCheckCode(Integer userId, String valideCode);
+
+    /**
+     * 
+     * @param userAuth
+     * @param page
+     * @return
+     */
+    List<UserAuth> getList(UserAuth userAuth, Page page);
+
+    /**
+     * 非认证用户
+     * @param userAuth
+     * @param page
+     * @return
+     */
+    List<User> noAuthList(UserAuth userAuth, Page page);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    UserAuth getUserAuthById(Integer id);
+
+    /**
+     *
+     * @param userAuth
+     * @return
+     */
+    UserAuth doVerify(UserAuth userAuth);
+
+    /**
+     *
+     * @param userAuth
+     * @param page
+     * @return
+     */
+    List<UserAuth> getBusinessAuthList(UserAuth userAuth, Page page);
 }

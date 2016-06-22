@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>无标题文档</title>
+    <link href="$!{staticPath}/static/css/admin_style.css" rel="stylesheet" type="text/css"/>
+    <link href="$!{staticPath}/static/css/select.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="$!{staticPath}/static/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="$!{staticPath}/static/js/select-ui.min.js"></script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">用户管理</a></li>
+        <li><a href="#">用户认证</a></li>
+    </ul>
+</div>
+<div class="rightinfo" style="overflow:auto;" id="contentDiv">
+    <div class="formbody">
+        <div class="formtitle"><span class="sp">认证资料</span></div>
+        <ul class="forminfo">
+            <li><label>申请人姓名：</label>$!{userAuth.userName}</li>
+            <li><label>#if ($userAuth.type==2)公司类型:#else 身份： #end</label> $!{userAuth.part} </li>
+            <li><label>申请人身份证：</label>$!{userAuth.cardNo}</li>
+            #if ($userAuth.type==2)
+                <li><label>企业名称：</label>$!{userAuth.companyName}</li>
+                <li><label>开户行：</label>$!{userAuth.bankName}</li>
+                <li><label>收款银行户名：</label>$!{userAuth.bankRealyName}</li>
+                <li><label>收款银行账号：</label>$!{userAuth.bankNo}</li>
+            #end
+            <li><label>邮箱：</label>$!{userAuth.email}</li>
+            <li><label>电话：</label>$!{userAuth.phone}</li>
+            <li><label>身份证照片：</label>
+                <img src="$!{userAuth.cardFront}" />
+                <img src="$!{userAuth.cardBack}" />
+            </li>
+            #if ($userAuth.type==2)
+                <li><label>企业执照：</label>
+                    <img src="$!{userAuth.businessLicense}" />
+                </li>
+                <li><label>授权协议：</label>
+                    <img src="$!{userAuth.licenseAgreement}" />
+                </li>
+            #else
+                <li><label>职业证明：</label>
+                    <img src="$!{userAuth.professionInfo}" />
+                </li>
+            #end
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery("#contentDiv").width(jQuery("#mainFrame", window.parent.parent.document).width() - 45).height(jQuery("#mainFrame", window.parent.parent.document).height() - 60);
+</script>
+</body>
+</html>

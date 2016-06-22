@@ -8,6 +8,7 @@
         <ul class="user_identify_container">
             <li class=" active">
                 <h1 class="title">身份选择</h1>
+                <input type="hidden" id="authApplyToken" name="authApplyToken" value="$!{authApplyToken}">
                 <div class="character_choose_container">
                     <h2 class="character_choose_title">请选择角色</h2>
                     <div class="character_choose_form" id="company_choose_form">

@@ -1,0 +1,76 @@
+<div class="page-heading">
+    <h3>
+        用户管理
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">用户管理</a></li>
+
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="pjax-url">
+                    <a class="pjax-url" href="/userAuth/list?status=2&type=1">认证用户</a>
+                </li>
+                <li role="presentation" class="pjax-url active">
+                    <a class="pjax-url" href="/userAuth/noAuthList">非认证用户</a>
+                </li>
+            </ul>
+
+            <section class="panel">
+                <div class="panel-body">
+                ##                    搜索框
+                    <div class="well searchBox">
+                        <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
+                              action="">
+                            <input type="hidden" name="source" value="$!source">
+
+                            <div class="searchContent">
+
+                                <!-- <button type="submit" class="btn btn-default dt-btn-submit">搜索</button> -->
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div id="albumListBox" class="adv-table">
+                        <table class="display table table-bordered table-striped dt-data-table" id="dynamic-table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>注册时间</th>
+                                <th>手机</th>
+                                <th class="hidden-phone">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                #foreach($user in $list)
+                                <tr class="gradeC">
+                                    <td class="center">$!{user.id}</td>
+                                    <td class="center">$!{user.userName}</td>
+                                    <td class="center">$!dateUtils.toString(
+                                        "yyyy-MM-dd HH:mm:ss",$user.createdAt)</td>
+                                    <td class="center">$!{user.phone}</td>
+                                    <td class="center hidden-phone">
+                                        <a href="/userAuth/noAuthView?id=$!{user.id}" class="tablelink">查看</a>
+                                        <!-- <a href="/userAuth/del?id=$!{user.id}" class="tablelink">删除</a> -->
+                                    </td>
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                        <div class="dt-page" data-current-page="$!page.currentPage" data-view-page-count="6"
+                             data-page-total="$!page.getTotalPage()"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

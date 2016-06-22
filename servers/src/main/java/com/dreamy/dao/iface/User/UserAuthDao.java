@@ -10,4 +10,5 @@ import com.dreamy.domain.user.UserAuthConditions;
 public interface UserAuthDao extends BaseDao<UserAuth, Integer, UserAuthConditions> {
 
     UserAuth getUserAuthByUserId(Integer userId);
+
 }
