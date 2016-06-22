@@ -44,7 +44,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>名称</th>
-                                <th>头像</th>
                                 <th>注册时间</th>
                                 <th>手机</th>
                                 <th class="hidden-phone">操作</th>
@@ -55,13 +54,12 @@
                                 <tr class="gradeC">
                                     <td class="center">$!{user.id}</td>
                                     <td class="center">$!{user.userName}</td>
-                                    <td class="center"></td>
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$user.createdAt)</td>
                                     <td class="center">$!{user.phone}</td>
                                     <td class="center hidden-phone">
                                         <a href="/userAuth/noAuthView?id=$!{user.id}" class="tablelink">查看</a>
-                                        <a href="/userAuth/del?id=$!{user.id}" class="tablelink">删除</a>
+                                        <!-- <a href="/userAuth/del?id=$!{user.id}" class="tablelink">删除</a> -->
                                     </td>
                                 </tr>
                                 #end

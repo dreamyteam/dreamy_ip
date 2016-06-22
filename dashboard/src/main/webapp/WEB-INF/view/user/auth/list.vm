@@ -48,7 +48,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>名称</th>
-                                <th>头像</th>
                                 <th>认证时间</th>
                                 <th>#if ($type==1) 职业 #else 公司类型 #end</th>
                                 <th>申请人手机</th>
@@ -60,14 +59,13 @@
                                 <tr class="gradeC">
                                     <td class="center">$!{userAuth.userId}</td>
                                     <td class="center">$!{userAuth.userName}</td>
-                                    <td class="center"></td>
                                     <td class="center">$!dateUtils.toString(
                                         "yyyy-MM-dd HH:mm:ss",$userAuth.updatedAt)</td>
                                     <td class="center">$!{userAuth.part}</td>
                                     <td class="center">$!{userAuth.phone}</td>
                                     <td class="center hidden-phone">
                                         <a href="/userAuth/view?id=$!{userAuth.id}" class="tablelink">查看</a>
-                                        <a href="/userAuth/del?id=$!{userAuth.id}" class="tablelink">删除</a>
+                                        <!-- <a href="/userAuth/del?id=$!{userAuth.id}" class="tablelink">删除</a> -->
                                     </td>
                                 </tr>
                                 #end
