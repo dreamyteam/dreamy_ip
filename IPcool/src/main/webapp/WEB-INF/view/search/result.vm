@@ -86,7 +86,7 @@
 
         </div>
 
-        #if($list)
+        #if($list.size()>0)
 
             #foreach($view in $list)
                 #if($type== 1)
@@ -112,12 +112,15 @@
 
             </div>
         #end
-        <!--分页器 -->
-        <div class="paging" id="paging"
-             data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
-             data-page-params='{"content":"$!content","type":"$!typestr"}'>
-        </div>
-        <!--分页器-->
+        #if($list.size()>0)
+            <!--分页器 -->
+            <div class="paging" id="paging"
+                 data-page-attach='{"totalNum":$!page.totalNum,"currentPage":$!page.currentPage,"pageSize":$!page.pageSize}'
+                 data-page-params='{"content":"$!content","type":"$!typestr"}'>
+            </div>
+            <!--分页器-->
+
+        #end
     </section>
 
 </div>
