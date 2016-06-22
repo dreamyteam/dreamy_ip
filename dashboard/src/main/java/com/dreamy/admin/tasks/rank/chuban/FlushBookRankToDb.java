@@ -92,7 +92,6 @@ public class FlushBookRankToDb {
             Integer bookId = bookView.getBookId();
 
             Long rankNum = redisClientService.reverseZrank(cacheKey, bookView.getBookId().toString());
-//            index = getIndex(index, rankNum, rankType);
             if (rankNum != null) {
                 rankNum++;
                 BookRank bookRank = new BookRank();

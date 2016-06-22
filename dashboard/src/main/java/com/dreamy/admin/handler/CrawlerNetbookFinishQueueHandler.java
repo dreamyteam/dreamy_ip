@@ -117,20 +117,21 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         bookView.compositeIndex(compositeIndex);
 
         //更新存取计算结果
-        BookViewCalculateResult result = new BookViewCalculateResult();
-        result.bookId(bookView.getBookId()).name(bookView.getName())
-                .type(bookView.getType())
-                .compositeIndex(compositeIndex)
-                .hotIndex(hotIndex)
-                .propagateIndex(propagationIndex)
-                .activityIndex(activeIndex)
-                .developIndex(developIndex);
-
-        bookViewService.saveCalculateRes(result);
+//        BookViewCalculateResult result = new BookViewCalculateResult();
+//        result.bookId(bookView.getBookId()).name(bookView.getName())
+//                .type(bookView.getType())
+//                .compositeIndex(compositeIndex)
+//                .hotIndex(hotIndex)
+//                .propagateIndex(propagationIndex)
+//                .activityIndex(activeIndex)
+//                .developIndex(developIndex);
+//
+//        bookViewService.saveCalculateRes(result);
+        bookViewService.update(bookView);
+        updateHistoryIndex(bookView);
 
         //指数写入到redis用于排名
-        updateRank(bookView);
-
+        updateRank(bookView); 
     }
 
 
