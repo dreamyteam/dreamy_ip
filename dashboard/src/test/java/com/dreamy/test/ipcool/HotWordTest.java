@@ -9,9 +9,11 @@ import com.dreamy.service.iface.ipcool.IpBookService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.HttpUtils;
 import com.dreamy.utils.JsonUtils;
+import com.dreamy.utils.TimeUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,7 @@ public class HotWordTest extends BaseJunitTest {
                             hotWord.setWid(list.get(0).get("wid"));
                             hotWord.setWname(list.get(0).get("wname"));
                             hotWord.setTitle(book.getTitle());
+                            hotWord.setUpdatedAt(TimeUtils.toString("yyyy-mm-dd HH:MM:ss", new Date()));
                             hotWordDao.updateInser(hotWord);
                         }
                     }
@@ -72,9 +75,10 @@ public class HotWordTest extends BaseJunitTest {
 
     @Test
     public void createNetBookHotWord() {
-        int current = 1;
+        int current = 50;
         IpBook entity = new IpBook();
         entity.setType(IpTypeEnums.net.getType());
+
         while (true) {
             Page page = new Page();
             page.setPageSize(200);
@@ -96,6 +100,7 @@ public class HotWordTest extends BaseJunitTest {
                             hotWord.setTitle(book.getTitle());
                             hotWord.setWid(list.get(0).get("wid"));
                             hotWord.setWname(list.get(0).get("wname"));
+                            hotWord.setUpdatedAt(TimeUtils.toString("yyyy-mm-dd HH:MM:ss", new Date()));
                             hotWordDao.updateInser(hotWord);
                         }
                     }

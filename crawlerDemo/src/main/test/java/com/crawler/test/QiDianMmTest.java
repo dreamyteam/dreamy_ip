@@ -43,7 +43,6 @@ public class QiDianMmTest extends BaseJunitTest {
                 String utl = urls.get(j);
                 info.setTitle(names.get(j));
                 info.setAuthor(authoers.get(j));
-                info.setAuthor(authoers.get(j));
                 info.setAuthorUrl(authoerUrls.get(j));
                 String code = PatternUtils.getNum(utl);
                 info.setImage("http://image.cmfu.com/books/" + code + "/" + code + ".jpg");
