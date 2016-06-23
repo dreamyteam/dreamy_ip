@@ -1,13 +1,21 @@
 package com.dreamy.test.ipcool;
 
 import com.dreamy.admin.tasks.HuaYuTask;
+import com.dreamy.beans.Page;
+import com.dreamy.domain.ipcool.BookCrawlerInfo;
+import com.dreamy.domain.ipcool.BookView;
 import com.dreamy.domain.ipcool.PeopleChart;
+import com.dreamy.enums.CrawlerSourceEnums;
 import com.dreamy.enums.IndexSourceEnums;
 import com.dreamy.mogodb.beans.BookIndexData;
+import com.dreamy.mogodb.beans.qidian.QiDianFan;
+import com.dreamy.service.iface.ipcool.BookCrawlerInfoService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.service.iface.ipcool.PeopleChartService;
 import com.dreamy.service.iface.mongo.BookIndexDataService;
 import com.dreamy.test.BaseJunitTest;
+import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,37 +35,68 @@ public class PeopleChartTest extends BaseJunitTest {
     @Autowired
     HuaYuTask huaYuTicketTask;
 
+    @Autowired
+    private BookCrawlerInfoService bookCrawlerInfoService;
+
+
+    public void s() {
+        BookCrawlerInfo entity = new BookCrawlerInfo().source(CrawlerSourceEnums.zongheng.getType());
+        Page page = new Page();
+        page.setPageSize(500);
+        int current = 1;
+        while (true) {
+            page.setCurrentPage(current);
+            List<BookCrawlerInfo> list = bookCrawlerInfoService.getListByRecord(entity, page);
+            for (BookCrawlerInfo info : list) {
+
+            }
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            current++;
+        }
+    }
+
     @Test
     public void save() {
-        huaYuTicketTask.run();
-//        Page page = new Page();
-//        page.setPageSize(7000);
-//        page.setCurrentPage(1);
-//        List<BookView> views = bookViewService.getList(new BookView().type(1), page, null);
-//
-//        for (BookView bookView : views) {
-//            List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
-//            double female = 0.0;
-//            double male = 0.0;
-//            int i = 1;
-//            for (BookIndexData data : list) {
-//                i = list.size();
-//                if (StringUtils.isNotEmpty(data.getFemale())) {
-//                    female += Double.valueOf(data.getFemale());
-//                }
-//                if (StringUtils.isNotEmpty(data.getMale())) {
-//                    male += Double.valueOf(data.getMale());
-//                }
-//
-//            }
-//            PeopleChart peopleChart = new PeopleChart();
-//            peopleChart.setBookId(bookView.getBookId());
-//            peopleChart.setMale(male / i);
-//            peopleChart.setFemale(female / i);
-//            age(i, list, peopleChart);
-//
-//        }
+        //huaYuTicketTask.run();
+        Page page = new Page();
+        page.setPageSize(200);
+        int current = 1;
+        while (true) {
+            page.setCurrentPage(current);
+            List<BookView> views = bookViewService.getList(new BookView().type(2), page, null);
+            for (BookView bookView : views) {
+                List<BookIndexData> list = bookIndexDataService.getByBookId(bookView.getBookId());
+                double female = 0.0;
+                double male = 0.0;
+                int i = 1;
+                if (CollectionUtils.isNotEmpty(list)) {
+                    for (BookIndexData data : list) {
+                        i = list.size();
+                        if (StringUtils.isNotEmpty(data.getFemale())) {
+                            female += Double.valueOf(data.getFemale());
+                        }
+                        if (StringUtils.isNotEmpty(data.getMale())) {
+                            male += Double.valueOf(data.getMale());
+                        }
 
+                    }
+                    PeopleChart peopleChart = new PeopleChart();
+                    peopleChart.setBookId(bookView.getBookId());
+                    peopleChart.setMale(male / i);
+                    peopleChart.setFemale(female / i);
+                    age(i, list, peopleChart);
+
+
+                }
+            }
+            if (!page.isHasNextPage()) {
+                break;
+            }
+            current++;
+
+        }
 
     }
 
