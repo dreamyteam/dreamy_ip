@@ -13,8 +13,8 @@
             #if($!thisUser.userKey)
 ##                <li><a href="/user/auth?pageName=auth">认证</a></li>
                 <li><a href="/about/empty">认证</a></li>
-                <li class="tooltip_trigger" id="currentUserTrigger">$!thisUser.username</li>
-                <li id="currentUser"><img src="$!thisUser.imageUrl"></li>
+                <li class="tooltip_trigger">$!thisUser.username</li>
+                <li id="currentUser"><a href="/user/bio?pageName=bio"><img src="$!thisUser.imageUrl"></a></li>
             #else
                 <li>
                     <button id="login">登录</button>
