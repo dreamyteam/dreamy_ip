@@ -28,7 +28,7 @@ public class ImageTest extends BaseJunitTest {
 
     @Test
     public void upload() throws Exception {
-        BookView entity = new BookView().type(1);
+        BookView entity = new BookView().type(2);
         int current = 1;
         String path = "";
         while (true) {
@@ -41,7 +41,7 @@ public class ImageTest extends BaseJunitTest {
                 InputStream iamgeStream = HttpUtils.getInputStream(bookView.getImageUrl());
                 path = "/ipbook/" + bookView.getBookId() + ".jpg";
                 System.out.println("ipcool.oss-cn-hangzhou.aliyuncs.com" + "/" + path);
-                //ossFileSystem.saveFile(iamgeStream, path);
+                ossFileSystem.saveFile(iamgeStream, path);
                 BookView nea=new BookView().id(bookView.getId()).remark("ipcool.oss-cn-hangzhou.aliyuncs.com"+ path);
                 bookViewService.update(nea);
 
