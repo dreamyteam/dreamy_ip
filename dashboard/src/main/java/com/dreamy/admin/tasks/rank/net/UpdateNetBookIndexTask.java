@@ -94,7 +94,7 @@ public class UpdateNetBookIndexTask {
     private String newsSougouQueue;
 
 
-    @Scheduled(cron = "0 45 11 * * ?")
+    @Scheduled(cron = "0 45 2 * * ?")
     public void run() {
         LOGGER.info("start update rank job.." + TimeUtils.toString("yyyy-MM-dd HH:mm:ss", new Date()));
         int currentPage = 1;
@@ -140,7 +140,7 @@ public class UpdateNetBookIndexTask {
         String cacheKey = commonParams.get("key");
         Long count = redisClientService.getNumber(cacheKey);
         if (count == null || count == 0) {
-            redisClientService.setNumber(cacheKey, 12L);
+            redisClientService.setNumber(cacheKey, 9L);
             if (CrawlerSourceEnums.qidian.getType().equals(crawlerInfo.getSource())) {
                 pushToQueue(qdMmQueue, commonParams);
             } else if (CrawlerSourceEnums.qidianmm.getType().equals(crawlerInfo.getSource())) {
