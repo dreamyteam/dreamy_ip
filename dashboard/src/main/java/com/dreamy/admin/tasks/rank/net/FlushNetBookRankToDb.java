@@ -48,7 +48,7 @@ public class FlushNetBookRankToDb {
     private BookRankHistoryService bookRankHistoryService;
 
 
-    @Scheduled(cron = "0 40 14 * * ?")
+    @Scheduled(cron = "0 40 15 * * ?")
     public void run() {
         Page page = new Page();
         page.setPageSize(500);
