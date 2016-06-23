@@ -14,12 +14,14 @@ import com.dreamy.service.iface.ipcool.BookRankHistoryService;
 import com.dreamy.service.iface.ipcool.BookRankService;
 import com.dreamy.service.iface.ipcool.BookViewService;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class FlushBookRankToDb {
     private BookRankHistoryService bookRankHistoryService;
 
 
-    @Scheduled(cron = "0 10 8 * * ?")
+    @Scheduled(cron = "0 10 4 * * ?")
     public void run() {
         Page page = new Page();
         page.setPageSize(500);
@@ -120,6 +122,10 @@ public class FlushBookRankToDb {
                 rankHistory.type(rankType);
                 rankHistory.rankIndex(index);
                 rankHistory.source(bookView.getType());
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, -1);
+
+                rankHistory.createdAt(TimeUtils.getDate(calendar.getTime()));
 
                 bookRankHistoryService.save(rankHistory);
             }

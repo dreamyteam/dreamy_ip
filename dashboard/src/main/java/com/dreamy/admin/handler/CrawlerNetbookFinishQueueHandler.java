@@ -20,11 +20,13 @@ import com.dreamy.service.iface.mongo.TieBaHistoryService;
 import com.dreamy.service.iface.mongo.TieBaService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -143,7 +145,7 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
                     NetHotIndexRandEnums nextChubanHotIndexRandEnums = netHotIndexRandEnumses[i + 1];
                     Double scoreGap = (nextChubanHotIndexRandEnums.getScore() - netHotIndexRandEnums.getScore()) * 1.0;
 
-                    Double temp = tailScore(index,start,end,scoreGap);
+                    Double temp = tailScore(index, start, end, scoreGap);
                     index = netHotIndexRandEnums.getScore() + temp.intValue();
                     break;
                 }
@@ -321,6 +323,11 @@ public class CrawlerNetbookFinishQueueHandler extends AbstractQueueHandler {
         history.setDevelopIndex(bookView.getDevelopIndex());
         history.setBookId(bookView.getBookId());
         history.setStatus(1);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+
+        history.createdAt(TimeUtils.getDate(calendar.getTime()));
         bookIndexHistoryService.save(history);
     }
 

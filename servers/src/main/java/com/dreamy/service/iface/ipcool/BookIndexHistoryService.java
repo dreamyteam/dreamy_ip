@@ -48,6 +48,12 @@ public interface BookIndexHistoryService {
     BookIndexHistory getByBookIdAndDate(Integer bookId, Date date);
 
 
+    /**
+     *
+     * @param bookId
+     * @param date
+     * @return
+     */
     public Integer delByBookIdAndDate(Integer bookId,Date date);
 
 }

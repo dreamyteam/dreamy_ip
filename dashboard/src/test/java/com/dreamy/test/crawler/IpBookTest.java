@@ -23,14 +23,13 @@ import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.service.mq.QueueService;
 import com.dreamy.test.BaseJunitTest;
 import com.dreamy.utils.CollectionUtils;
+import com.dreamy.utils.TimeUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by wangyongxing on 16/4/26.
@@ -197,16 +196,16 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void lnTest() {
-        int currentPage = 1;
+        int currentPage = 5;
         Page page = new Page();
         page.setPageSize(1100);
 
         try {
             page.setCurrentPage(currentPage);
-            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
             if (CollectionUtils.isNotEmpty(bookViewList)) {
                 for (BookView bookView : bookViewList) {
-                    updateChubanBookIndexTask.updateByBookView(bookView);
+                    crawlerNetbookFinishQueueHandler.updateNet(bookView);
                 }
 
             }
@@ -283,17 +282,20 @@ public class IpBookTest extends BaseJunitTest {
 
     @Test
     public void flushRank() {
-//        int currentPage = 7;
+//        int currentPage = 3;
 //        Page page = new Page();
-//        page.setPageSize(1000);
+//        page.setPageSize(1100);
 //
 //        try {
 //            page.setCurrentPage(currentPage);
-//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.chuban.getType());
+//            List<BookView> bookViewList = bookViewService.getListByPageAndOrderAndType(page, "id asc", IpTypeEnums.net.getType());
 //            if (CollectionUtils.isNotEmpty(bookViewList)) {
 //                for (BookView bookView : bookViewList) {
-////                    crawlerFinishQueueHandler.updateRankAndIndex(bookView);
+//                    crawlerFinishQueueHandler.updateRank(bookView);
 //                    flushBookRankToDb.updateRankAndIndex(bookView);
+
+//                    crawlerNetbookFinishQueueHandler.updateRank(bookView);
+//                    flushNetBookRankToDb.updateRank(bookView);
 //                }
 //
 //            }
@@ -302,7 +304,11 @@ public class IpBookTest extends BaseJunitTest {
 //            System.err.println("errlr");
 //        }
 
-        flushNetBookRankToDb.getIndex();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+        Date date = TimeUtils.getDate(calendar.getTime());
+        System.err.println("111");
+
     }
 
 }

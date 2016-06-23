@@ -16,11 +16,13 @@ import com.dreamy.service.iface.ipcool.*;
 import com.dreamy.service.iface.mongo.BookInfoService;
 import com.dreamy.utils.CollectionUtils;
 import com.dreamy.utils.StringUtils;
+import com.dreamy.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -301,6 +303,11 @@ public class CrawlerFinishQueueHandler extends AbstractQueueHandler {
         history.setDevelopIndex(bookView.getDevelopIndex());
         history.setBookId(bookView.getBookId());
         history.setStatus(1);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+
+        history.createdAt(TimeUtils.getDate(calendar.getTime()));
         bookIndexHistoryService.save(history);
     }
 
