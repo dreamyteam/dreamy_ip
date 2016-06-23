@@ -1196,6 +1196,11 @@ public class BookViewConditions {
             addCriterion("upper(remark) like", value.toUpperCase(), "remark");
             return (Criteria) this;
         }
+
+        public Criteria andWhereSql(String sql) {
+            addCriterion(sql);
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,0 +1,114 @@
+<div class="page-heading">
+    <h3>
+        数据管理
+    </h3>
+    <ul class="breadcrumb">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">数据管理</a></li>
+        <li><a href="#">数据查询</a></li>
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    数据列表
+                    <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <a href="javascript:;" class="fa fa-times"></a>
+                 </span>
+                </header>
+                <div class="panel-body">
+                ##                    搜索框
+                    <div class="well searchBox">
+                        <form id="pagerForm" class="form-inline dt-form dt-datatable-search-form" method="post"
+                              action="">
+                            <input type="hidden" name="source" value="$!source">
+
+                            <div class="searchContent">
+                                <div class="form-group">
+                                    <select name="">
+                                        <option value="">文学</option>
+                                        <option value="">影视</option>
+                                        <option value="">人物</option>
+                                        <option value="">机构</option>
+                                    </select>
+                                    <select name="type">
+                                        <option value="1" #if ($type=='1') selected="true" #end >出版文学</option>
+                                        <option value="2" #if ($type=='2') selected="true" #end >网络小说</option>
+                                        <option value="">日韩漫画</option>
+                                        <option value="">国产漫画</option>
+                                    </select>
+                                    <select name="order">
+                                        <option value="1" #if ($order=='1') selected="true" #end>综合排序</option>
+                                        <option value="2" #if ($order=='2') selected="true" #end>热度排序</option>
+                                        <option value="3" #if ($order=='3') selected="true" #end>传播排序</option>
+                                        <option value="4" #if ($order=='4') selected="true" #end>活跃排序</option>
+                                        <option value="5" #if ($order=='5') selected="true" #end>开发排序</option>
+                                        <option value="6" #if ($order=='6') selected="true" #end>口碑排序</option>
+                                    </select>
+
+                                    <input type="text" class="form-control textInput" id="exampleInputName2"
+                                           name="name"
+                                           placeholder="根据id,名称,作者查询" value="$!{name}">
+                                </div>
+                                <button type="submit" class="btn btn-default dt-btn-submit">查询</button>
+                            </div>
+                        </form>
+                    </div>
+                ##                    标记tab
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="#if(!$source) active #else #end"><a
+                                class="pjax-url " href="">全部</a></li>
+                    </ul>
+
+                ##                     展示表格
+                    <div id="albumListBox" class="adv-table">
+                        <table class="display table table-bordered table-striped dt-data-table" id="dynamic-table">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>名称</th>
+                                <th>作者</th>
+                                <th>评分</th>
+                                <th>综合指数</th>
+                                <th>热度指数</th>
+                                <th>传播能力指数</th>
+                                <th>用户活跃指数</th>
+                                <th>开发能力指数</th>
+                                <th>口碑指数</th>
+                                <th class="hidden-phone">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                #foreach($item in $list)
+                                <tr class="gradeC">
+                                    <td class="center">$!{item.bookId}</td>
+                                    <td class="center">$!{item.name}</td>
+                                    <td class="center">$!{item.author}</td>
+                                    <td class="center">$!{item.score}</td>
+                                    <td class="center">$!{item.compositeIndex}</td>
+                                    <td class="center">$!{item.hotIndex}</td>
+                                    <td class="center">$!{item.propagateIndex}</td>
+                                    <td class="center">$!{item.activityIndex}</td>
+                                    <td class="center">$!{item.developIndex}</td>
+                                    <td class="center">$!{item.reputationIndex}</td>
+                                    <td class="center hidden-phone">
+                                        <a href="/query/bookDetail?id=$!{item.id}" class="tablelink">详情</a>
+                                        <a href="/adminUser/view?id=$!{item.id}" class="tablelink">站点查看</a>
+                                    </td>
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                        <div class="dt-page" data-current-page="$!page.currentPage" data-view-page-count="6"
+                             data-page-total="$!page.getTotalPage()"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+

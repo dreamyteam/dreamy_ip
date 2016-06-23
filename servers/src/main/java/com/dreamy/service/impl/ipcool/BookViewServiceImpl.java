@@ -178,4 +178,51 @@ public class BookViewServiceImpl implements BookViewService {
     public void deleteById(Integer id) {
         bookViewDao.deleteById(id);
     }
+
+    @Override
+    public List<BookView> getListByPageAndWhere(BookView bookView, Page page, String order) {
+        BookViewConditions conditions = new BookViewConditions();
+        StringBuffer sql = new StringBuffer(" 1=1 ");
+        if(bookView != null) {
+            if(bookView.getType() != null) {
+                sql.append(" and type="+bookView.getType());
+            }
+            if(StringUtils.isNotEmpty(bookView.getName())) {
+                sql.append(" and (book_id='"+bookView.getName() + "' or name like '%"+bookView.getName()+"%' or author like '%"+bookView.getName()+"%') ");
+            }
+        }
+        conditions.createCriteria().andWhereSql(sql.toString());
+        if (page != null) {
+            page.setTotalNum(bookViewDao.countByExample(conditions));
+            conditions.setPage(page);
+        }
+        if (StringUtils.isNotEmpty(order)) {
+            String orders;
+            switch (Integer.parseInt(order)) {
+                case 1:
+                    orders = "composite_index desc";
+                    break;
+                case 2:
+                    orders = "hot_index desc";
+                    break;
+                case 3:
+                    orders = "propagate_index desc";
+                    break;
+                case 4:
+                    orders = "activity_index desc";
+                    break;
+                case 5:
+                    orders = "develop_index desc";
+                    break;
+                case 6:
+                    orders = "reputation_index desc";
+                    break;
+                default:
+                    orders = "composite_index desc";
+                    break;
+            }
+            conditions.setOrderByClause(orders);
+        }
+        return bookViewDao.selectByExample(conditions);
+    }
 }

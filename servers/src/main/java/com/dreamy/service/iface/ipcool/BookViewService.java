@@ -104,5 +104,12 @@ public interface BookViewService {
      */
     void deleteById(Integer id);
 
-
+    /**
+     *
+     * @param bookView
+     * @param page
+     * @param order
+     * @return
+     */
+    List<BookView> getListByPageAndWhere(BookView bookView, Page page, String order);
 }
